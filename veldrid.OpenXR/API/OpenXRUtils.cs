@@ -1,5 +1,4 @@
-﻿using System;
-using System.Runtime.CompilerServices;
+﻿using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using Veldrid.OpenXR.Native;
 
@@ -12,9 +11,12 @@ public static class OpenXRUtils
             arr[i] = value;
         return arr;
     }
+    /// <summary> Create a <see cref="XrInstance"/> with the given extensions </summary>
     public static unsafe XrResult CreateXRInstance(ReadOnlySpan<string> requiredExtensions, out XrInstance instance)
     {
+        //allow returns without explicitly setting to default, might save some time
         Unsafe.SkipInit(out instance);
+
         uint extCount = 0;
         XrResult r = OpenXRNative.xrEnumerateInstanceExtensionProperties(null, 0, &extCount, null);
         if (r != XrResult.XR_SUCCESS) return r;
@@ -22,13 +24,13 @@ public static class OpenXRUtils
         XrExtensionProperties[] xrExts = new XrExtensionProperties[extCount].Populate(new() { type = XrStructureType.XR_TYPE_EXTENSION_PROPERTIES });
 
         byte** enabledExtensionNames = (byte**)Marshal.AllocHGlobal(sizeof(byte*) * requiredExtensions.Length);
+        using autoMarshalDispose ad0 = new((IntPtr)enabledExtensionNames);
 
         fixed (XrExtensionProperties* ptr = xrExts)
         {
             r = OpenXRNative.xrEnumerateInstanceExtensionProperties(null, extCount, &extCount, ptr);
             if (r != XrResult.XR_SUCCESS)
             {
-                free();
                 return r;
             }
             for (int i = 0; i < requiredExtensions.Length; i++)
@@ -46,7 +48,6 @@ public static class OpenXRUtils
                     enabledExtensionNames[i] = ptr[i].extensionName;
                 else
                 {
-                    free();
                     return XrResult.XR_ERROR_EXTENSION_NOT_PRESENT;
                 }
             }
@@ -67,17 +68,25 @@ public static class OpenXRUtils
         fixed (XrInstance* instancePtr = &instance)
             OpenXRNative.xrCreateInstance(&instanceCreateInfo, instancePtr);
 
-        void free()
-        {
-            if(enabledExtensionNames != null) Marshal.FreeHGlobal((IntPtr)enabledExtensionNames);
-        }
-        free();
         return r;
     }
-    private struct autoMarshalDispose; IDisposable
+    private struct autoMarshalDispose : IDisposable
     {
-        IntPtr ptr;
+        public IntPtr ptr;
+        public autoMarshalDispose (IntPtr intPtr)
+        {
+            ptr = intPtr;
+        }
+        public void Dispose()
+        {
+            if(ptr != IntPtr.Zero)
+                Marshal.FreeHGlobal(ptr);
+            ptr = IntPtr.Zero;
+        }
     }
+    /// <summary> gets the available OpenXR extensions </summary>
+    /// <param name="availableExtensions"></param>
+    /// <returns>an array of available extensions</returns>
     public static unsafe XrResult GetAvailableExtensions(out XrExtensionProperties[] availableExtensions)
     {
         availableExtensions = null;
