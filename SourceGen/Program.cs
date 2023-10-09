@@ -163,6 +163,7 @@ internal static partial class Program
         // Handles
         sb.AppendLine("using System;\n");
         sb.AppendLine("namespace Veldrid.OpenXR.Native;");
+        sb.AppendLine("#pragma warning disable IDE0250 // Make struct 'readonly'");
         foreach (var handle in openXRVersion.Handles)
         {
             sb.AppendLine($"public partial struct {handle.Name} : IEquatable<{handle.Name}>");
@@ -173,17 +174,18 @@ internal static partial class Program
             sb.AppendLine($"\tpublic readonly {handleType} Handle;");
 
             sb.AppendLine($"\tpublic {handle.Name}({handleType} existingHandle) {{ Handle = existingHandle; }}");
-            sb.AppendLine($"\tpublic static {handle.Name} Null => new {handle.Name}({nullValue});");
-            sb.AppendLine($"\tpublic static implicit operator {handle.Name}({handleType} handle) => new {handle.Name}(handle);");
+            sb.AppendLine($"\tpublic static {handle.Name} Null => new({nullValue});");
+            sb.AppendLine($"\tpublic static implicit operator {handle.Name}({handleType} handle) => new(handle);");
             sb.AppendLine($"\tpublic static bool operator ==({handle.Name} left, {handle.Name} right) => left.Handle == right.Handle;");
             sb.AppendLine($"\tpublic static bool operator !=({handle.Name} left, {handle.Name} right) => left.Handle != right.Handle;");
             sb.AppendLine($"\tpublic static bool operator ==({handle.Name} left, {handleType} right) => left.Handle == right;");
             sb.AppendLine($"\tpublic static bool operator !=({handle.Name} left, {handleType} right) => left.Handle != right;");
-            sb.AppendLine($"\tpublic bool Equals({handle.Name} h) => Handle == h.Handle;");
-            sb.AppendLine($"\tpublic override bool Equals(object o) => o is {handle.Name} h && Equals(h);");
-            sb.AppendLine($"\tpublic override int GetHashCode() => Handle.GetHashCode();");
+            sb.AppendLine($"\tpublic readonly bool Equals({handle.Name} h) => Handle == h.Handle;");
+            sb.AppendLine($"\tpublic readonly override bool Equals(object o) => o is {handle.Name} h && Equals(h);");
+            sb.AppendLine($"\tpublic readonly override int GetHashCode() => Handle.GetHashCode();");
             sb.AppendLine("}\n");
         }
+        sb.AppendLine($"#pragma warning restore IDE0250 // Make struct 'readonly'");
         WriteToFile(outputDir + @"\Handles.cs", sb);
 
         // Commands

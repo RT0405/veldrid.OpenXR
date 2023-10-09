@@ -12,7 +12,7 @@ public class EnumDefinition
 {
     public string Name;
     public EnumType Type;
-    public List<EnumValue> Values = new List<EnumValue>();
+    public List<EnumValue> Values = new();
 
     public static EnumDefinition FromXML(XElement elem)
     {
