@@ -22,4 +22,13 @@ internal static class Utils
             ptr = IntPtr.Zero;
         }
     }
+    internal struct DisposeCallback : IDisposable
+    {
+        public Action OnDispose;
+        public DisposeCallback(Action onDispose) => OnDispose = onDispose;
+        public readonly void Dispose()
+        {
+            OnDispose?.Invoke();
+        }
+    }
 }

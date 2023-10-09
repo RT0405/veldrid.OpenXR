@@ -1,11 +1,13 @@
-﻿using System.Runtime.CompilerServices;
+﻿using System.Numerics;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Text;
 using Veldrid.OpenXR.Native;
 using Vulkan;
+using static Veldrid.OpenXR.Utils;
 
 namespace Veldrid.OpenXR;
-public static class OpenXRUtils
+public static partial class OpenXRUtils
 {
     private static T[] Populate<T>(this T[] arr, T value)
     {
@@ -85,20 +87,97 @@ public static class OpenXRUtils
 
         return r;
     }
-    private struct autoMarshalDispose : IDisposable
+    public static unsafe XrResult CreateXRSession(XrInstance instance, GraphicsDevice graphicsDevice, XrFormFactor formFactor, out ulong systemID, out XrSession session)
     {
-        public IntPtr ptr;
-        public autoMarshalDispose (IntPtr intPtr)
+        XrSystemGetInfo systemGetInfo = new()
         {
-            ptr = intPtr;
+            type = XrStructureType.XR_TYPE_SYSTEM_GET_INFO,
+            next = null,
+            formFactor = formFactor,
+        };
+
+        XrResult r;
+        Unsafe.SkipInit(out systemID);
+        fixed(ulong* ptr =  &systemID)
+            r = OpenXRNative.xrGetSystem(instance, &systemGetInfo, ptr);
+        if (r != XrResult.XR_SUCCESS)
+        {
+            session = default;
+            return r;
         }
-        public void Dispose()
+        return CreateXRSession(instance, graphicsDevice, systemID, out session);
+    }
+    public static unsafe XrResult CreateXRSession(XrInstance instance, GraphicsDevice graphicsDevice, ulong systemID, out XrSession session)
+    {
+        XrGraphicsBindingFromGraphicsDevice(graphicsDevice, out void* bindingPtr, out IDisposable ptrDisposer);
+        using IDisposable d = ptrDisposer; // will call dispose once it leaves this method no matter what happens
+        XrSessionCreateInfo sessionCreateInfo = new()
         {
-            if(ptr != IntPtr.Zero)
-                Marshal.FreeHGlobal(ptr);
-            ptr = IntPtr.Zero;
+            type = XrStructureType.XR_TYPE_SESSION_CREATE_INFO,
+            next = bindingPtr,
+            createFlags = (ulong)XrSessionCreateFlags.None,
+            systemId = systemID, 
+        };
+
+        Unsafe.SkipInit(out session);
+        fixed (XrSession* ptr = &session)
+            return OpenXRNative.xrCreateSession(instance, &sessionCreateInfo, ptr);
+    }
+    public static unsafe bool XrGraphicsBindingFromGraphicsDevice(GraphicsDevice graphicsDevice, out void* bindingPtr, out IDisposable ptrDisposer)
+    {
+        switch (graphicsDevice.BackendType)
+        {
+            case GraphicsBackend.Direct3D11:
+                {
+                    BackendInfoD3D11 backendInfoD3D11 = graphicsDevice.GetD3D11Info();
+                    XrGraphicsBindingD3D11KHR binding = new()
+                    {
+                        type = XrStructureType.XR_TYPE_GRAPHICS_BINDING_D3D11_KHR,
+                        next = null,
+                        device = backendInfoD3D11.Device
+                    };
+                    void* ptr = NativeMemory.Alloc((nuint)sizeof(XrGraphicsBindingD3D11KHR));
+                    *(XrGraphicsBindingD3D11KHR*)ptr = binding;
+                    ptrDisposer = new DisposeCallback(() => { NativeMemory.Free(ptr); });
+                    bindingPtr = ptr;
+                    return true;
+                }
+            case GraphicsBackend.Vulkan:
+                {
+                    BackendInfoVulkan backendInfoVulkan = graphicsDevice.GetVulkanInfo();
+                    VkInstance vkInstance = backendInfoVulkan.Instance;
+                    XrGraphicsBindingVulkanKHR binding = new()
+                    {
+                        type = XrStructureType.XR_TYPE_GRAPHICS_BINDING_VULKAN_KHR,
+                        next = null,
+                        device = backendInfoVulkan.Device,
+                        instance = backendInfoVulkan.Instance,
+                        physicalDevice = backendInfoVulkan.PhysicalDevice,
+                        queueFamilyIndex = backendInfoVulkan.GraphicsQueueFamilyIndex,
+                        queueIndex = 0,// don't know if this is correct, but looking at https://github.com/tdbe/openxr-vulkan-project-fundamentals/blob/d4d3d9ccf70b2c3b685c4eea4df4f755c59c29bf/src/Headset.cpp#L120 that's what they did... so idk
+                    };
+                    void* ptr = NativeMemory.Alloc((nuint)sizeof(XrGraphicsBindingVulkanKHR));
+                    *(XrGraphicsBindingVulkanKHR*)ptr = binding;
+                    ptrDisposer = new DisposeCallback(() => { NativeMemory.Free(ptr); });
+                    bindingPtr = ptr;
+                    return true;
+                }
+            case GraphicsBackend.OpenGL: throw new NotImplementedException("Creating an xr graphics binding from a GraphicsDevice for OpenGL is not implemented");
+            case GraphicsBackend.OpenGLES: throw new NotImplementedException("Creating an xr graphics binding from a GraphicsDevice for OpenGLES is not implemented");
+            case GraphicsBackend.Metal: throw new PlatformNotSupportedException("Cannot create an openxr isntance with metal backend");
+            default: throw new InvalidOperationException("invalid graphics backend type");
         }
     }
+    /// <summary> returns whether the given GraphicsBackend is supported by this Velrid.OpenXR </summary>
+    public static bool IsGraphicsBackendSupported(GraphicsBackend backend) => backend switch
+    {
+        GraphicsBackend.Direct3D11 => true,
+        GraphicsBackend.Vulkan => true,
+        GraphicsBackend.OpenGL => false,
+        GraphicsBackend.OpenGLES => false,
+        GraphicsBackend.Metal => false,
+        _ => false,
+    };
     /// <summary> gets the available OpenXR extensions. Consider using <see cref="GetAvailableExtensions(out XRExtensionDescriptor[])"/> which uses more a .net-like syntax datatype </summary>
     /// <returns>
     ///       Success Codes:
@@ -150,5 +229,32 @@ public static class OpenXRUtils
         for (int i = 0; i < availableExtensions.Length; i++)
             availableExtensions[i] = (XRExtensionDescriptor)xrExts[i];
         return r;
+    }
+    /// <summary> get the number of available OpenXR extensions </summary>
+    public static unsafe XrResult GetExtensionCount(out uint extensionCount)
+    {
+        fixed(uint* ptr = &extensionCount)  
+            return OpenXRNative.xrEnumerateInstanceExtensionProperties(null, 0, ptr, null);
+    }
+    public static unsafe XrResult CreateReferenceSpace(XrSession session, XrReferenceSpaceType referenceSpaceType, out XrSpace space)
+    {
+        return CreateReferenceSpace(session, Quaternion.Identity, Vector3.Zero, referenceSpaceType, out space);
+    }
+    public static unsafe XrResult CreateReferenceSpace(XrSession session, Quaternion rotation, Vector3 position, XrReferenceSpaceType referenceSpaceType, out XrSpace space)
+    {
+        return CreateReferenceSpace(session, new() { orientation = Unsafe.As<Quaternion, XrQuaternionf>(ref rotation), position = Unsafe.As<Vector3, XrVector3f>(ref position) }, referenceSpaceType, out space);
+    }
+    public static unsafe XrResult CreateReferenceSpace(XrSession session, XrPosef pose, XrReferenceSpaceType referenceSpaceType, out XrSpace space)
+    {
+        XrReferenceSpaceCreateInfo info = new()
+        {
+            type = XrStructureType.XR_TYPE_REFERENCE_SPACE_CREATE_INFO,
+            next = null,
+            poseInReferenceSpace = pose,
+            referenceSpaceType = referenceSpaceType,
+        };
+        Unsafe.SkipInit(out space);
+        fixed (XrSpace* ptr = &space)
+            return OpenXRNative.xrCreateReferenceSpace(session, &info, ptr);
     }
 }
