@@ -5,7 +5,7 @@ namespace SourceGen;
 internal static partial class Program
 {
     private const string projectPath = @"..\..\..\..\veldrid.OpenXR";
-    private const string specFileDir = @"..\..\..\..\KhronosRegistry\xr.xml";
+    private const string specFileDir = @"..\..\..\..\SourceGen\KhronosRegistry\xr.xml";
     private const string outputDir = @"..\..\..\..\veldrid.OpenXR\Native\Generated";
     static void Main()
     {

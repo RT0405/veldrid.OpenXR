@@ -171,12 +171,12 @@ public static partial class OpenXRUtils
             default: throw new InvalidOperationException("invalid graphics backend type");
         }
     }
-    /// <summary> returns whether the given GraphicsBackend is supported by this Velrid.OpenXR </summary>
+    /// <summary> returns whether the given GraphicsBackend is supported by the current OpenXR Runtime </summary>
     public static bool IsGraphicsBackendSupported(GraphicsBackend backend)
     {
         if (backend == GraphicsBackend.Direct3D11)
             return Check(XRExtensionDescriptor.XR_KHR_D3D11_ENABLE);
-        if(backend == GraphicsBackend.Vulkan)
+        if (backend == GraphicsBackend.Vulkan)
             return Check(XRExtensionDescriptor.XR_KHR_VULKAN_ENABLE2);
         return false;
 
@@ -189,6 +189,8 @@ public static partial class OpenXRUtils
             return false;
         }
     }
+    /// <summary> returns whether the given GraphicsBackend is supported by this version of Velrid.OpenXR </summary>
+    public static bool IsValidOpenXRGraphicsBackend(GraphicsBackend backend) => backend is GraphicsBackend.Direct3D11 or GraphicsBackend.Vulkan;
     public static unsafe void PollXREvents(XrInstance instance, Action<XrEventDataBuffer> perEventCallback)
     {
         XrEventDataBuffer eventBuffer = new() { type = XrStructureType.XR_TYPE_EVENT_DATA_BUFFER };
@@ -275,5 +277,49 @@ public static partial class OpenXRUtils
         Unsafe.SkipInit(out space);
         fixed (XrSpace* ptr = &space)
             return OpenXRNative.xrCreateReferenceSpace(session, &info, ptr);
+    }
+    public static unsafe XrResult GetViewconfigurations(XrInstance instance, ulong systemID, out XrViewConfigurationType[] configViews)
+    {
+        uint viewCount = 0;
+        configViews = null;
+        XrResult r = OpenXRNative.xrEnumerateViewConfigurations(instance, systemID, 0, &viewCount, null);
+        if (r != XrResult.XR_SUCCESS) return r;
+        configViews = new XrViewConfigurationType[viewCount];
+        fixed (XrViewConfigurationType* configViewsPtr = configViews)
+            return OpenXRNative.xrEnumerateViewConfigurations(instance, systemID, viewCount, &viewCount, configViewsPtr);
+    }
+    public static unsafe XrResult GetViewconfigurationViews(XrInstance instance, ulong systemID, XrViewConfigurationType configView, out XrViewConfigurationView[] configViews)
+    {
+        uint viewCount = 0;
+        configViews = null;
+        XrResult r = OpenXRNative.xrEnumerateViewConfigurationViews(instance, systemID, configView, 0, &viewCount, null);
+        if (r != XrResult.XR_SUCCESS) return r;
+        configViews = new XrViewConfigurationView[viewCount].Populate(new() { type = XrStructureType.XR_TYPE_VIEW_CONFIGURATION_VIEW });
+        fixed (XrViewConfigurationView* configViewsPtr = configViews)
+            return OpenXRNative.xrEnumerateViewConfigurationViews(instance, systemID, configView, viewCount, &viewCount, configViewsPtr);
+    }
+    public static unsafe XrResult GetValidSwapchainFormats(XrSession session, GraphicsDevice graphicsDevice) => GetValidSwapchainFormats(session, graphicsDevice.BackendType);
+    public static unsafe XrResult GetValidSwapchainFormats(XrSession session, GraphicsBackend backend, out PixelFormat[] formats)
+    {
+        formats = null;
+        if (!IsValidOpenXRGraphicsBackend(backend)) return XrResult.XR_ERROR_GRAPHICS_DEVICE_INVALID;
+        uint formatCount = 0;
+        XrResult r = OpenXRNative.xrEnumerateSwapchainFormats(session, 0, &formatCount, null);
+        if (r != XrResult.XR_SUCCESS) return r;
+        long* lformats = stackalloc long[(int)formatCount];
+        r = OpenXRNative.xrEnumerateSwapchainFormats(session, formatCount, &formatCount, lformats);
+        if (r != XrResult.XR_SUCCESS) return r;
+
+        formats = new PixelFormat[formatCount];
+        switch (backend)
+        {
+            case GraphicsBackend.Direct3D11:
+                for(int i = 0; i < formatCount is++)
+                    
+                break;
+            case GraphicsBackend.Vulkan:
+
+                break;
+        }
     }
 }

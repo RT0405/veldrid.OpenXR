@@ -10,11 +10,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		.editorconfig = .editorconfig
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "KhronosRegistry", "KhronosRegistry", "{719A2C2D-0008-47F0-9BF4-59C40279C705}"
-	ProjectSection(SolutionItems) = preProject
-		KhronosRegistry\xr.xml = KhronosRegistry\xr.xml
-	EndProjectSection
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Veldrid.OpenXR", "veldrid.OpenXR\Veldrid.OpenXR.csproj", "{87AC866D-016D-43B0-ABA2-8EF34468E5FD}"
 EndProject
 Global
