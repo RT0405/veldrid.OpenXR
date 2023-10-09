@@ -4,6 +4,7 @@ using System.Text;
 namespace SourceGen;
 internal static partial class Program
 {
+    private const string projectPath = @"..\..\..\..\veldrid.OpenXR";
     private const string specFileDir = @"..\..\..\..\KhronosRegistry\xr.xml";
     private const string outputDir = @"..\..\..\..\veldrid.OpenXR\Native\Generated";
     static void Main()
@@ -24,7 +25,7 @@ internal static partial class Program
             sb.AppendLine("public static partial class OpenXRNative");
             sb.AppendLine("{");
             sbe.AppendLine("namespace Veldrid.OpenXR.Native;");
-            sbe.AppendLine("public static class OpenXRNativeExtensionCosntants");
+            sbe.AppendLine("public static class OpenXRNativeExtensionConstants");
             sbe.AppendLine("{");
             foreach (var constant in openXRVersion.Constants)
             {
@@ -50,6 +51,18 @@ internal static partial class Program
             sbe.Append(extensionSpecVersions);
             sbe.AppendLine("}");
             WriteToFile(outputDir + @"\OpenXRNativeExtensionConstants.cs", sbe);
+        }
+
+        // Extension "consts"
+        {
+            foreach (var constant in openXRVersion.Constants)
+            {
+                if (constant.Name.EndsWith("_EXTENSION_NAME"))
+                    sb.AppendLine($"\tpublic static XRExtensionDescriptor {constant.Name[..^15]} => new(OpenXRNativeExtensionConstants.{constant.Name}, OpenXRNativeExtensionConstants.{constant.Value.Trim('"') + "_SPEC_VERSION"});");
+            }
+            const string path = projectPath + @"\API\Structs\XRExtensionDescriptor.cs";
+            WriteToFile(path, Helpers.Replace(File.ReadAllText(path), "#region Extensions\r\n", "    #endregion", sb.ToString()));
+            sb.Clear();
         }
 
         // Enums
@@ -183,7 +196,23 @@ internal static partial class Program
         foreach (var command in openXRVersion.Commands)
         {
             string convertedType = Helpers.ConvertToCSharpType(command.Prototype.Type, 0, openXRSpec);
-
+            if(command.Comment != null)
+            {
+                sb.AppendLine("/// <summary>");
+                sb.AppendLine("/// " + command.Comment.Replace("\n", "\n/// <br/> "));
+                sb.AppendLine("/// </summary>");
+            }
+            if(command.SuccessCodes != null)
+            {
+                sb.AppendLine("/// <returns>");
+                sb.AppendLine("///       Success Codes:");
+                for(int i = 0; i < command.SuccessCodes.Length; i++)
+                    sb.AppendLine($"/// <br/> ⠀⠀<see cref=\"XrResult.{command.SuccessCodes[i]}\"/>");
+                sb.AppendLine("/// <br/> Error Codes:");
+                for(int i = 0; i < command.ErrorCodes.Length; i++)
+                    sb.AppendLine($"/// <br/> ⠀⠀<see cref=\"XrResult.{command.ErrorCodes[i]}\"/>");
+                sb.AppendLine("/// </returns>");
+            }
             sb.AppendLine("\t[DllImport(dllName, CallingConvention = callConv)]");
             sb.AppendLine($"\tpublic static extern {convertedType} {command.Prototype.Name}({command.GetParametersSignature(openXRSpec)});");
         }

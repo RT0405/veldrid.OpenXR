@@ -1,5 +1,5 @@
 namespace Veldrid.OpenXR.Native;
-public static class OpenXRNativeExtensionCosntants
+public static class OpenXRNativeExtensionConstants
 {
     public const string XR_KHR_ANDROID_THREAD_SETTINGS_EXTENSION_NAME = "XR_KHR_android_thread_settings";
     public const string XR_KHR_ANDROID_SURFACE_SWAPCHAIN_EXTENSION_NAME = "XR_KHR_android_surface_swapchain";

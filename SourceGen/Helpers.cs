@@ -1,4 +1,6 @@
-﻿namespace SourceGen;
+﻿using System.Text;
+
+namespace SourceGen;
 public static class Helpers
 {
     public static string ToCSharp(this ConstantType type)
@@ -194,5 +196,31 @@ public static class Helpers
                 return false;
         }
 #pragma warning restore IDE0066 // Convert switch statement to expression
+    }
+    /// <summary> replaces the text in between  </summary>
+    /// <param name="src"></param>
+    /// <param name="start"></param>
+    /// <param name="end"></param>
+    /// <param name="replace"></param>
+    /// <returns></returns>
+    public static string Replace(string src, string start, string end, string replace)
+    {
+        try
+        {
+            StringBuilder sb = new();
+            string[] split = src.Split(start, 2);
+            sb.Append(split[0]);
+            sb.Append(start);
+            split = split[1].Split(end, 2);
+            sb.Append(replace);
+            sb.Append(end);
+            sb.Append(split[1]);
+            return sb.ToString();
+        }
+        catch
+        {
+            Console.WriteLine("Replace Failed");
+            return src;
+        }
     }
 }
