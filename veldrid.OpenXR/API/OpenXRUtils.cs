@@ -1,5 +1,6 @@
 ﻿using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
+using System.Text;
 using Veldrid.OpenXR.Native;
 using Vulkan;
 
@@ -17,18 +18,19 @@ public static class OpenXRUtils
     /// <see cref="XrResult.XR_SUCCESS"/> if instance creation was successful <br/>
     /// <see cref="XrResult.XR_ERROR_EXTENSION_NOT_PRESENT"/> if any of the <paramref name="requiredExtensions"/> were unavailable
     /// </returns>
-    public static unsafe XrResult CreateXRInstance(ReadOnlySpan<XRExtensionDescriptor> requiredExtensions, out XrInstance instance)
-    {
-        string[] exts = new string[requiredExtensions.Length];
-        for(int i = 0; i < requiredExtensions.Length; i++)
-            exts[i] = requiredExtensions[i].ExtensionName;
-        return CreateXRInstance(exts, out instance);
-    }
+    public static unsafe XrResult CreateXRInstance(ReadOnlySpan<string> requiredExtensions, out XrInstance instance) => CreateXRInstance(requiredExtensions, out instance, "Veldrid OpenXR Application", 0, "Veldrid", 0);
     /// <summary> Create a <see cref="XrInstance"/> with the given extensions </summary>
-    public static unsafe XrResult CreateXRInstance(ReadOnlySpan<string> requiredExtensions, out XrInstance instance)
+    /// <returns>
+    /// <see cref="XrResult.XR_SUCCESS"/> if instance creation was successful <br/>
+    /// <see cref="XrResult.XR_ERROR_EXTENSION_NOT_PRESENT"/> if any of the <paramref name="requiredExtensions"/> were unavailable
+    /// <see cref="XrResult.XR_ERROR_NAME_INVALID"/> if either <paramref name="appName"/> or <paramref name="engineName"/> is too long or have unsupported characters
+    /// </returns>
+    public static unsafe XrResult CreateXRInstance(ReadOnlySpan<string> requiredExtensions, out XrInstance instance, string appName, uint appVersion, string engineName, uint engineVersion)
     {
-        //allow returns without explicitly setting to default, might save some time
-        Unsafe.SkipInit(out instance);
+        instance = default;
+        if (Encoding.UTF8.GetByteCount(appName) >= OpenXRNative.XR_MAX_APPLICATION_NAME_SIZE) return XrResult.XR_ERROR_NAME_INVALID;
+        if (Encoding.UTF8.GetByteCount(engineName) >= OpenXRNative.XR_MAX_ENGINE_NAME_SIZE) return XrResult.XR_ERROR_NAME_INVALID;
+
 
         uint extCount = 0;
         XrResult r = OpenXRNative.xrEnumerateInstanceExtensionProperties(null, 0, &extCount, null);
@@ -71,12 +73,17 @@ public static class OpenXRUtils
             type = XrStructureType.XR_TYPE_INSTANCE_CREATE_INFO,
             applicationInfo = new()
             {
-                apiVersion = new XRVersion(1, 0, 30), 
+                apiVersion = new XRVersion(1, 0, 30),
+                applicationVersion = appVersion,
+                engineVersion = engineVersion,
             },
             createFlags = (ulong)XrInstanceCreateFlags.None,
             enabledExtensionCount = extCount,
             enabledExtensionNames = enabledExtensionNames,
         };
+
+        OpenXRNative.StringToUTF8NullTerminated(appName, new Span<byte>(instanceCreateInfo.applicationInfo.applicationName, (int)OpenXRNative.XR_MAX_APPLICATION_NAME_SIZE));
+        OpenXRNative.StringToUTF8NullTerminated(appName, new Span<byte>(instanceCreateInfo.applicationInfo.engineName, (int)OpenXRNative.XR_MAX_ENGINE_NAME_SIZE));
 
         fixed (XrInstance* instancePtr = &instance)
             OpenXRNative.xrCreateInstance(&instanceCreateInfo, instancePtr);
