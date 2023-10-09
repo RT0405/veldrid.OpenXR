@@ -1,0 +1,1 @@
+﻿this projedct (Veldrid.OpenXR.SourceGen) is a modified version of Evergines [OpenXR.net](https://github.com/EvergineTeam/OpenXR.NET)
