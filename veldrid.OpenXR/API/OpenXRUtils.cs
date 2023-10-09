@@ -6,6 +6,8 @@ using Veldrid.OpenXR.Native;
 using Vulkan;
 using static Veldrid.OpenXR.Utils;
 
+//https://github.com/maluoi/OpenXRSamples/blob/master/SingleFileExample/main.cpp is a very good single-file example of openxr, and this code wa written along with it
+
 namespace Veldrid.OpenXR;
 public static partial class OpenXRUtils
 {
@@ -76,7 +78,7 @@ public static partial class OpenXRUtils
             createFlags = (ulong)XrInstanceCreateFlags.None,
             enabledExtensionCount = (uint)requiredExtensions.Length,
             enabledExtensionNames = enabledExtensionNames,
-            
+
         };
 
         OpenXRNative.StringToUTF8NullTerminated(appName, new Span<byte>(instanceCreateInfo.applicationInfo.applicationName, (int)OpenXRNative.XR_MAX_APPLICATION_NAME_SIZE));
@@ -98,7 +100,7 @@ public static partial class OpenXRUtils
 
         XrResult r;
         Unsafe.SkipInit(out systemID);
-        fixed(ulong* ptr =  &systemID)
+        fixed (ulong* ptr = &systemID)
             r = OpenXRNative.xrGetSystem(instance, &systemGetInfo, ptr);
         if (r != XrResult.XR_SUCCESS)
         {
@@ -109,21 +111,22 @@ public static partial class OpenXRUtils
     }
     public static unsafe XrResult CreateXRSession(XrInstance instance, GraphicsDevice graphicsDevice, ulong systemID, out XrSession session)
     {
-        XrGraphicsBindingFromGraphicsDevice(graphicsDevice, out void* bindingPtr, out IDisposable ptrDisposer);
-        using IDisposable d = ptrDisposer; // will call dispose once it leaves this method no matter what happens
+        XrGraphicsBindingFromGraphicsDevice(graphicsDevice, out void* bindingPtr, out DisposeCallback ptrDisposer);
+        using DisposeCallback d = ptrDisposer; // will call dispose once it leaves this method no matter what happens
         XrSessionCreateInfo sessionCreateInfo = new()
         {
             type = XrStructureType.XR_TYPE_SESSION_CREATE_INFO,
             next = bindingPtr,
             createFlags = (ulong)XrSessionCreateFlags.None,
-            systemId = systemID, 
+            systemId = systemID,
         };
 
         Unsafe.SkipInit(out session);
         fixed (XrSession* ptr = &session)
             return OpenXRNative.xrCreateSession(instance, &sessionCreateInfo, ptr);
     }
-    public static unsafe bool XrGraphicsBindingFromGraphicsDevice(GraphicsDevice graphicsDevice, out void* bindingPtr, out IDisposable ptrDisposer)
+    public static unsafe bool XrGraphicsBindingFromGraphicsDevice(GraphicsDevice graphicsDevice, out void* bindingPtr, out IDisposable ptrDisposer) => XrGraphicsBindingFromGraphicsDevice(graphicsDevice, out bindingPtr, out ptrDisposer);
+    internal static unsafe bool XrGraphicsBindingFromGraphicsDevice(GraphicsDevice graphicsDevice, out void* bindingPtr, out DisposeCallback ptrDisposer)
     {
         switch (graphicsDevice.BackendType)
         {
@@ -169,15 +172,32 @@ public static partial class OpenXRUtils
         }
     }
     /// <summary> returns whether the given GraphicsBackend is supported by this Velrid.OpenXR </summary>
-    public static bool IsGraphicsBackendSupported(GraphicsBackend backend) => backend switch
+    public static bool IsGraphicsBackendSupported(GraphicsBackend backend)
     {
-        GraphicsBackend.Direct3D11 => true,
-        GraphicsBackend.Vulkan => true,
-        GraphicsBackend.OpenGL => false,
-        GraphicsBackend.OpenGLES => false,
-        GraphicsBackend.Metal => false,
-        _ => false,
-    };
+        if (backend == GraphicsBackend.Direct3D11)
+            return Check(XRExtensionDescriptor.XR_KHR_D3D11_ENABLE);
+        if(backend == GraphicsBackend.Vulkan)
+            return Check(XRExtensionDescriptor.XR_KHR_VULKAN_ENABLE2);
+        return false;
+
+        static bool Check(string extension)
+        {
+            GetAvailableExtensions(out XRExtensionDescriptor[] availableExtensions);
+            for (int i = 0; i < availableExtensions.Length; i++)
+                if (availableExtensions[i].ExtensionName == extension)
+                    return true;
+            return false;
+        }
+    }
+    public static unsafe void PollXREvents(XrInstance instance, Action<XrEventDataBuffer> perEventCallback)
+    {
+        XrEventDataBuffer eventBuffer = new() { type = XrStructureType.XR_TYPE_EVENT_DATA_BUFFER };
+        while(OpenXRNative.xrPollEvent(instance, &eventBuffer) == XrResult.XR_SUCCESS)
+        {
+            perEventCallback?.Invoke(eventBuffer);
+            eventBuffer.type = XrStructureType.XR_TYPE_EVENT_DATA_BUFFER;
+        }
+    }
     /// <summary> gets the available OpenXR extensions. Consider using <see cref="GetAvailableExtensions(out XRExtensionDescriptor[])"/> which uses more a .net-like syntax datatype </summary>
     /// <returns>
     ///       Success Codes:
@@ -194,13 +214,12 @@ public static partial class OpenXRUtils
     {
         availableExtensions = null;
         uint extCount = 0;
-        XrResult r = OpenXRNative.xrEnumerateInstanceExtensionProperties(null, 0, &extCount, null);
-        if (r != XrResult.XR_SUCCESS) return r;
+        XrResult r;
+        if ((r = OpenXRNative.xrEnumerateInstanceExtensionProperties(null, 0, &extCount, null)) != XrResult.XR_SUCCESS) return r;
 
         availableExtensions = new XrExtensionProperties[extCount].Populate(new() { type = XrStructureType.XR_TYPE_EXTENSION_PROPERTIES });
         fixed (XrExtensionProperties* ptr = availableExtensions)
-            r = OpenXRNative.xrEnumerateInstanceExtensionProperties(null, extCount, &extCount, ptr);
-        return r;
+            return OpenXRNative.xrEnumerateInstanceExtensionProperties(null, extCount, &extCount, ptr);
     }
     /// <summary> gets the available OpenXR extensions </summary>
     /// <param name="availableExtensions"></param>
@@ -233,7 +252,7 @@ public static partial class OpenXRUtils
     /// <summary> get the number of available OpenXR extensions </summary>
     public static unsafe XrResult GetExtensionCount(out uint extensionCount)
     {
-        fixed(uint* ptr = &extensionCount)  
+        fixed (uint* ptr = &extensionCount)
             return OpenXRNative.xrEnumerateInstanceExtensionProperties(null, 0, ptr, null);
     }
     public static unsafe XrResult CreateReferenceSpace(XrSession session, XrReferenceSpaceType referenceSpaceType, out XrSpace space)
