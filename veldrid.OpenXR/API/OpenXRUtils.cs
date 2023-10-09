@@ -44,27 +44,21 @@ public static class OpenXRUtils
         fixed (XrExtensionProperties* ptr = xrExts)
         {
             r = OpenXRNative.xrEnumerateInstanceExtensionProperties(null, extCount, &extCount, ptr);
-            if (r != XrResult.XR_SUCCESS)
-            {
-                return r;
-            }
+            if (r != XrResult.XR_SUCCESS) return r;
             for (int i = 0; i < requiredExtensions.Length; i++)
             {
                 bool contains = false;
                 for (int n = 0; n < xrExts.Length; n++)
                 {
-                    if (Marshal.PtrToStringUTF8((IntPtr)ptr[i].extensionName) == requiredExtensions[i])
+                    if (Marshal.PtrToStringUTF8((IntPtr)ptr[n].extensionName) == requiredExtensions[i])
                     {
                         contains = true;
+                        enabledExtensionNames[i] = ptr[n].extensionName;
                         break;
                     }
                 }
-                if (contains)
-                    enabledExtensionNames[i] = ptr[i].extensionName;
-                else
-                {
+                if (!contains)
                     return XrResult.XR_ERROR_EXTENSION_NOT_PRESENT;
-                }
             }
         }
 
@@ -78,15 +72,16 @@ public static class OpenXRUtils
                 engineVersion = engineVersion,
             },
             createFlags = (ulong)XrInstanceCreateFlags.None,
-            enabledExtensionCount = extCount,
+            enabledExtensionCount = (uint)requiredExtensions.Length,
             enabledExtensionNames = enabledExtensionNames,
+            
         };
 
         OpenXRNative.StringToUTF8NullTerminated(appName, new Span<byte>(instanceCreateInfo.applicationInfo.applicationName, (int)OpenXRNative.XR_MAX_APPLICATION_NAME_SIZE));
-        OpenXRNative.StringToUTF8NullTerminated(appName, new Span<byte>(instanceCreateInfo.applicationInfo.engineName, (int)OpenXRNative.XR_MAX_ENGINE_NAME_SIZE));
+        OpenXRNative.StringToUTF8NullTerminated(engineName, new Span<byte>(instanceCreateInfo.applicationInfo.engineName, (int)OpenXRNative.XR_MAX_ENGINE_NAME_SIZE));
 
         fixed (XrInstance* instancePtr = &instance)
-            OpenXRNative.xrCreateInstance(&instanceCreateInfo, instancePtr);
+            r = OpenXRNative.xrCreateInstance(&instanceCreateInfo, instancePtr);
 
         return r;
     }
