@@ -3,6 +3,7 @@ using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Text;
 using Veldrid.OpenXR.Native;
+using Vortice.DXGI;
 using Vulkan;
 using static Veldrid.OpenXR.Utils;
 
@@ -298,7 +299,7 @@ public static partial class OpenXRUtils
         fixed (XrViewConfigurationView* configViewsPtr = configViews)
             return OpenXRNative.xrEnumerateViewConfigurationViews(instance, systemID, configView, viewCount, &viewCount, configViewsPtr);
     }
-    public static unsafe XrResult GetValidSwapchainFormats(XrSession session, GraphicsDevice graphicsDevice) => GetValidSwapchainFormats(session, graphicsDevice.BackendType);
+    public static unsafe XrResult GetValidSwapchainFormats(XrSession session, GraphicsDevice graphicsDevice, out PixelFormat[] formats) => GetValidSwapchainFormats(session, graphicsDevice.BackendType, out formats);
     public static unsafe XrResult GetValidSwapchainFormats(XrSession session, GraphicsBackend backend, out PixelFormat[] formats)
     {
         formats = null;
@@ -306,8 +307,8 @@ public static partial class OpenXRUtils
         uint formatCount = 0;
         XrResult r = OpenXRNative.xrEnumerateSwapchainFormats(session, 0, &formatCount, null);
         if (r != XrResult.XR_SUCCESS) return r;
-        long* lformats = stackalloc long[(int)formatCount];
-        r = OpenXRNative.xrEnumerateSwapchainFormats(session, formatCount, &formatCount, lformats);
+        long* rawFormats = stackalloc long[(int)formatCount];
+        r = OpenXRNative.xrEnumerateSwapchainFormats(session, formatCount, &formatCount, rawFormats);
         if (r != XrResult.XR_SUCCESS) return r;
 
         formats = new PixelFormat[formatCount];
@@ -315,7 +316,7 @@ public static partial class OpenXRUtils
         {
             case GraphicsBackend.Direct3D11:
                 for(int i = 0; i < formatCount is++)
-                    
+                    formats[i] = D3D11ToVdPixelFormat((Format)rawFormats)
                 break;
             case GraphicsBackend.Vulkan:
 
