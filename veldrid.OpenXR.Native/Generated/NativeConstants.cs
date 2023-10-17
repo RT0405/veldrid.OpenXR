@@ -1,6 +1,7 @@
 namespace Veldrid.OpenXR.Native;
 public static partial class OpenXRNative
 {
+    public static XRVersion XR_CURRENT_API_VERSION => new(1, 0, 30);
     public const uint XR_TRUE = 1;
     public const uint XR_FALSE = 0;
     public const uint XR_MAX_EXTENSION_NAME_SIZE = 128;

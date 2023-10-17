@@ -17,6 +17,7 @@ public class OpenXRSpecification
     public Dictionary<string, string> BaseTypes = new();
     public Dictionary<string, string> Alias = new();
     public List<ExtensionDefinition> Extensions = new();
+    public string Version;
     public static OpenXRSpecification FromFile(string filePath)
     {
         XDocument file = XDocument.Load(filePath);
@@ -53,6 +54,9 @@ public class OpenXRSpecification
         }
 
         var types = registry.Elements("types");
+
+        spec.Version = types.Elements("type").Where(x => x.Element("name")?.Value == "XR_CURRENT_API_VERSION").ElementAt(0)?.Value;
+        spec.Version = spec.Version[spec.Version.LastIndexOf('(')..];
 
         // FuncPointers
         var funcPointers = types.Elements("type").Where(f => f.Attribute("category")?.Value == "funcpointer");
@@ -127,7 +131,7 @@ public class OpenXRSpecification
         var extensions = registry.Element("extensions").Elements("extension");
         foreach (var extension in extensions)
         {
-            spec.Extensions.Add(ExtensionDefinition.FromXML(extension));
+            spec.Extensions.Add(ExtensionDefinition.FromXML(extension, spec.Commands));
         }
 
         return spec;

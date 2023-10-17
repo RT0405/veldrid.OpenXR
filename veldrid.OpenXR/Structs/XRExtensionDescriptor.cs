@@ -28,8 +28,8 @@ public readonly struct XRExtensionDescriptor
         extProps.extensionName[Encoding.UTF8.GetBytes(extension.ExtensionName.AsSpan(), new Span<byte>(extProps.extensionName, (int)OpenXRNative.XR_MAX_EXTENSION_NAME_SIZE)) + 1] = 0;
         return extProps;
     }
-    public static unsafe explicit operator XRExtensionDescriptor(XrExtensionProperties extension) => new(extension);
-    public static unsafe implicit operator string(XRExtensionDescriptor extension) => extension.ExtensionName;
+    public static explicit operator XRExtensionDescriptor(XrExtensionProperties extension) => new(extension);
+    public static implicit operator string(XRExtensionDescriptor extension) => extension.ExtensionName;
     #region Extensions
     public static XRExtensionDescriptor XR_KHR_ANDROID_THREAD_SETTINGS => new(OpenXRNativeExtensionConstants.XR_KHR_ANDROID_THREAD_SETTINGS_EXTENSION_NAME, OpenXRNativeExtensionConstants.XR_KHR_android_thread_settings_SPEC_VERSION);
     public static XRExtensionDescriptor XR_KHR_ANDROID_SURFACE_SWAPCHAIN => new(OpenXRNativeExtensionConstants.XR_KHR_ANDROID_SURFACE_SWAPCHAIN_EXTENSION_NAME, OpenXRNativeExtensionConstants.XR_KHR_android_surface_swapchain_SPEC_VERSION);

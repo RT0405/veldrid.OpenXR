@@ -5,6 +5,8 @@ namespace SourceGen;
 public class CommandDefinition
 {
     public Proto Prototype;
+    public string Name;
+    public string ReturnType;
     public List<Param> Parameters = new();
     public string[] Queues;
     public string RenderPass;
@@ -13,6 +15,7 @@ public class CommandDefinition
     public string[] SuccessCodes;
     public string[] ErrorCodes;
     public string Comment;
+    public ExtensionDefinition extension;
 
     public static CommandDefinition FromXML(XElement elem)
     {

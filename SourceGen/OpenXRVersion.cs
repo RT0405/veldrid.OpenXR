@@ -102,7 +102,7 @@ public class OpenXRVersion
             // Add commands
             foreach (var command in extension.Commands)
             {
-                string name = command;
+                string name = command.Prototype.Name;
                 if (spec.Alias.TryGetValue(name, out string alias))
                     name = alias;
 

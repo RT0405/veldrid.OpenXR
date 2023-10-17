@@ -6,7 +6,7 @@ internal static partial class Program
 {
     private const string projectPath = @"..\..\..\..\veldrid.OpenXR";
     private const string specFileDir = @"..\..\..\..\SourceGen\KhronosRegistry\xr.xml";
-    private const string outputDir = @"..\..\..\..\veldrid.OpenXR\Native\Generated";
+    private const string outputDir = @"..\..\..\..\veldrid.OpenXR.Native\Generated";
     static void Main()
     {
         Console.WriteLine(Path.GetFullPath(specFileDir));
@@ -24,6 +24,9 @@ internal static partial class Program
             sb.AppendLine("namespace Veldrid.OpenXR.Native;");
             sb.AppendLine("public static partial class OpenXRNative");
             sb.AppendLine("{");
+
+            sb.AppendLine($"\tpublic static XRVersion XR_CURRENT_API_VERSION => new{openXRSpec.Version};");
+
             sbe.AppendLine("namespace Veldrid.OpenXR.Native;");
             sbe.AppendLine("public static class OpenXRNativeExtensionConstants");
             sbe.AppendLine("{");
@@ -58,9 +61,18 @@ internal static partial class Program
             foreach (var constant in openXRVersion.Constants)
             {
                 if (constant.Name.EndsWith("_EXTENSION_NAME"))
+                {
+                    ExtensionDefinition extension = null;
+                    foreach (var e in openXRSpec.Extensions)
+                    {
+                        if (e.Name == constant.Name)
+                            extension = e;
+                    }
+
                     sb.AppendLine($"\tpublic static XRExtensionDescriptor {constant.Name[..^15]} => new(OpenXRNativeExtensionConstants.{constant.Name}, OpenXRNativeExtensionConstants.{constant.Value.Trim('"') + "_SPEC_VERSION"});");
+                }
             }
-            const string path = projectPath + @"\API\Structs\XRExtensionDescriptor.cs";
+            const string path = projectPath + @"\Structs\XRExtensionDescriptor.cs";
             WriteToFile(path, Helpers.Replace(File.ReadAllText(path), "#region Extensions\r\n", "    #endregion", sb.ToString()));
             sb.Clear();
         }
@@ -189,38 +201,120 @@ internal static partial class Program
         WriteToFile(outputDir + @"\Handles.cs", sb);
 
         // Commands
-        sb.AppendLine("using System;");
-        sb.AppendLine("using System.Runtime.InteropServices;\n");
-        sb.AppendLine("namespace Veldrid.OpenXR.Native;");
-        sb.AppendLine("public static unsafe partial class OpenXRNative");
-        sb.AppendLine("{");
-        sb.AppendLine("#pragma warning disable CA1401 // P/Invokes should not be visible");
-        foreach (var command in openXRVersion.Commands)
+        Commands(true);
+        Commands(false);
+        void Commands(bool instance)
         {
-            string convertedType = Helpers.ConvertToCSharpType(command.Prototype.Type, 0, openXRSpec);
-            if(command.Comment != null)
+            sb.AppendLine("using System;");
+            sb.AppendLine("using System.Runtime.CompilerServices;");
+            sb.AppendLine("using System.Runtime.InteropServices;\n");
+            sb.AppendLine("namespace Veldrid.OpenXR.Native;");
+            sb.AppendLine($"public{(instance ? null : " static")} unsafe partial class OpenXRNative{(instance?"Instance":null)}");
+            sb.AppendLine("{");
+            foreach (var command in openXRVersion.Commands)
             {
-                sb.AppendLine("/// <summary>");
-                sb.AppendLine("/// " + command.Comment.Replace("\n", "\n/// <br/> "));
-                sb.AppendLine("/// </summary>");
+                string convertedType = Helpers.ConvertToCSharpType(command.Prototype.Type, 0, openXRSpec);
+                if(!instance && command.Prototype.Name == "xrCreateInstance")
+                {
+                    sb.AppendLine("\t[MethodImpl(MethodImplOptions.AggressiveInlining)]");
+                    sb.AppendLine($"\t[DllImport(LoaderName, CallingConvention = CallConv, EntryPoint = \"xrCreateInstance\")]");
+                    sb.AppendLine($"\tpublic static extern {convertedType} {command.Prototype.Name}Native({command.GetParametersSignature(openXRSpec)});");
+                    CommandComment(command);
+                    sb.AppendLine($"\tpublic static {convertedType} {command.Prototype.Name}({command.GetParametersSignature(openXRSpec)})");
+                    sb.AppendLine("\t{");
+                    sb.AppendLine($"\t\tXrResult result = xrCreateInstanceNative({command.GetParametersSignature(openXRSpec, useTypes: false)});");
+                    sb.AppendLine($"\t\tif(result == XrResult.XR_SUCCESS && (*createInfo).enabledExtensionCount != 0)");
+                    sb.AppendLine($"\t\t\tInstance = new(*createInfo, *instance);");
+                    sb.AppendLine($"\t\treturn result;");
+                    sb.AppendLine("\t}");
+
+                    continue;
+                }
+                if (command.extension != null)
+                {
+                    if (instance)
+                    {
+                        sb.AppendLine("\t\t[UnmanagedFunctionPointer(OpenXRNative.CallConv)]");
+                        // Delegate
+                        sb.AppendLine($"\t\tprivate delegate {convertedType} {command.Prototype.Name}Delegate({command.GetParametersSignature(openXRSpec)});");
+                        // internal function
+                        sb.AppendLine($"\t\tprivate {(instance ? null : "static")} {command.Prototype.Name}Delegate {command.Prototype.Name}_ptr;");
+                        // comments
+                        CommandComment(command);
+                        // public function
+                        sb.AppendLine("\t[MethodImpl(MethodImplOptions.AggressiveInlining)]");
+                        sb.AppendLine($"\tpublic {convertedType} {command.Prototype.Name}({command.GetParametersSignature(openXRSpec)})");
+                        sb.AppendLine($"\t\t=> {command.Prototype.Name}_ptr({command.GetParametersSignature(openXRSpec, useTypes: false)});");
+                    }
+                    else
+                    {
+                        CommandComment(command);
+                        sb.AppendLine("\t[MethodImpl(MethodImplOptions.AggressiveInlining)]");
+                        sb.AppendLine($"\tpublic static {convertedType} {command.Prototype.Name}({command.GetParametersSignature(openXRSpec)})");
+                        sb.AppendLine($"\t\t=> Instance.{command.Prototype.Name}({command.GetParametersSignature(openXRSpec, useTypes: false)});");
+                    }
+                }
+                else
+                {
+                    if (instance)
+                    {
+                        CommandComment(command);
+                        sb.AppendLine("\t[MethodImpl(MethodImplOptions.AggressiveInlining)]");
+                        sb.AppendLine($"\tpublic {convertedType} {command.Prototype.Name}({command.GetParametersSignature(openXRSpec)})");
+                        sb.AppendLine($"\t\t=> OpenXRNative.{command.Prototype.Name}({command.GetParametersSignature(openXRSpec, useTypes: false)});");
+                    }
+                    else
+                    {
+                        CommandComment(command);
+                        sb.AppendLine("\t[MethodImpl(MethodImplOptions.AggressiveInlining)]");
+                        sb.AppendLine($"\t[DllImport(LoaderName, CallingConvention = CallConv)]");
+                        sb.AppendLine($"\tpublic static extern {convertedType} {command.Prototype.Name}({command.GetParametersSignature(openXRSpec)});");
+                    }
+                }
+                sb.AppendLine();
             }
-            if(command.SuccessCodes != null)
+            if (instance)
             {
-                sb.AppendLine("/// <returns>");
-                sb.AppendLine("///       Success Codes:");
-                for(int i = 0; i < command.SuccessCodes.Length; i++)
-                    sb.AppendLine($"/// <br/> ⠀⠀<see cref=\"XrResult.{command.SuccessCodes[i]}\"/>");
-                sb.AppendLine("/// <br/> Error Codes:");
-                for(int i = 0; i < command.ErrorCodes.Length; i++)
-                    sb.AppendLine($"/// <br/> ⠀⠀<see cref=\"XrResult.{command.ErrorCodes[i]}\"/>");
-                sb.AppendLine("/// </returns>");
+                sb.AppendLine($"\tpublic void LoadFunctionPointers(XrInstance instance = default)");
+                sb.AppendLine("\t{");
+                sb.AppendLine("\t\tif (instance != default)");
+                sb.AppendLine("\t\t\tnativeLib.instance = instance;");
+                sb.AppendLine();
+
+                foreach (var command in openXRVersion.Commands)
+                    if (command.extension != null)
+                        sb.AppendLine($"\t\tnativeLib.LoadFunction(\"{command.Prototype.Name}\",  out {command.Prototype.Name}_ptr);");
+
+                sb.AppendLine("\t}");
             }
-            sb.AppendLine("\t[DllImport(dllName, CallingConvention = callConv)]");
-            sb.AppendLine($"\tpublic static extern {convertedType} {command.Prototype.Name}({command.GetParametersSignature(openXRSpec)});");
+            sb.AppendLine("}");
+            WriteToFile(outputDir + @$"\Commands{(instance ? "Instance" : null)}.cs", sb);
+
+            void CommandComment(CommandDefinition command)
+            {
+                if(command.extension != null)
+                {
+                    sb.AppendLine($"\t/// <summary> Requires XR extension \"{command.extension.Name}\" </summary>");
+                }
+                if (command.Comment != null)
+                {
+                    sb.AppendLine("\t/// <remarks>");
+                    sb.AppendLine("\t/// " + command.Comment.Replace("\n", "\n/// <br/> "));
+                    sb.AppendLine("\t/// </remarks>");
+                }
+                if (command.SuccessCodes != null)
+                {
+                    sb.AppendLine("\t/// <returns>");
+                    sb.AppendLine("\t///       Success Codes:");
+                    for (int i = 0; i < command.SuccessCodes.Length; i++)
+                        sb.AppendLine($"\t/// <br/> ⠀⠀<see cref=\"XrResult.{command.SuccessCodes[i]}\"/>");
+                    sb.AppendLine("\t/// <br/> Error Codes:");
+                    for (int i = 0; i < command.ErrorCodes.Length; i++)
+                        sb.AppendLine($"\t/// <br/> ⠀⠀<see cref=\"XrResult.{command.ErrorCodes[i]}\"/>");
+                    sb.AppendLine("\t/// </returns>");
+                }
+            }
         }
-        sb.AppendLine("#pragma warning restore CA1401 // P/Invokes should not be visible");
-        sb.AppendLine("}");
-        WriteToFile(outputDir + @"\Commands.cs", sb);
     }
     private static void WriteToFile(string dir, StringBuilder sb) { WriteToFile(dir, sb.ToString()); sb.Clear(); }
     private static void WriteToFile(string dir, string text)
@@ -234,11 +328,11 @@ internal static partial class Program
         // Trim trailing spaces that could have come from code gen.
         var lines = text.Split(new string[] { Environment.NewLine }, StringSplitOptions.None);
 
-        for(int i = 0; i < lines.Length; ++i)
+        for (int i = 0; i < lines.Length; ++i)
             lines[i] = lines[i].TrimEnd(' ');
 
         text = string.Join("\r\n", lines);
-        text = text.TrimEnd('\r','\n', ' ');
+        text = text.TrimEnd('\r', '\n', ' ');
         File.WriteAllText(dir, text);
     }
     public static string Replace(string src, string start, string end, string replace)

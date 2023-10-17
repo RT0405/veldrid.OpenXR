@@ -5,33 +5,26 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>annotations</Nullable>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <ProduceReferenceAssembly>True</ProduceReferenceAssembly>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <DebugType>embedded</DebugType>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <DebugType>embedded</DebugType>
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Native\openxr_loader.dll" />
+    <PackageReference Include="Vk" Version="1.0.25" />
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="..\.editorconfig" Link=".editorconfig" />
+    <ProjectReference Include="..\veldrid.OpenXR.Native\Veldrid.OpenXR.Native.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Veldrid" Version="4.9.0" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Resource Include="Native\openxr_loader.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
+    <Reference Include="Veldrid">
+      <HintPath>..\..\veldrid\bin\Debug\Veldrid\net6.0\Veldrid.dll</HintPath>
+    </Reference>
+    <Reference Include="Veldrid.MetalBindings">
+      <HintPath>..\..\veldrid\bin\Debug\Veldrid\net6.0\Veldrid.MetalBindings.dll</HintPath>
+    </Reference>
+    <Reference Include="Veldrid.OpenGLBindings">
+      <HintPath>..\..\veldrid\bin\Debug\Veldrid\net6.0\Veldrid.OpenGLBindings.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
 </Project>

@@ -82,8 +82,8 @@ public static partial class OpenXRUtils
 
         };
 
-        OpenXRNative.StringToUTF8NullTerminated(appName, new Span<byte>(instanceCreateInfo.applicationInfo.applicationName, (int)OpenXRNative.XR_MAX_APPLICATION_NAME_SIZE));
-        OpenXRNative.StringToUTF8NullTerminated(engineName, new Span<byte>(instanceCreateInfo.applicationInfo.engineName, (int)OpenXRNative.XR_MAX_ENGINE_NAME_SIZE));
+        StringToUTF8NullTerminated(appName, new Span<byte>(instanceCreateInfo.applicationInfo.applicationName, (int)OpenXRNative.XR_MAX_APPLICATION_NAME_SIZE));
+        StringToUTF8NullTerminated(engineName, new Span<byte>(instanceCreateInfo.applicationInfo.engineName, (int)OpenXRNative.XR_MAX_ENGINE_NAME_SIZE));
 
         fixed (XrInstance* instancePtr = &instance)
             r = OpenXRNative.xrCreateInstance(&instanceCreateInfo, instancePtr);
@@ -252,6 +252,25 @@ public static partial class OpenXRUtils
             availableExtensions[i] = (XRExtensionDescriptor)xrExts[i];
         return r;
     }
+    /// <summary> gets the available OpenXR extensions </summary>
+    /// <param name="availableExtensions"></param>
+    /// <returns>
+    ///       Success Codes:
+    /// <br/> ⠀⠀<see cref="XrResult.XR_SUCCESS"/>
+    /// <br/> Error Codes:
+    /// <br/> ⠀⠀<see cref="XrResult.XR_ERROR_VALIDATION_FAILURE"/>
+    /// <br/> ⠀⠀<see cref="XrResult.XR_ERROR_RUNTIME_FAILURE"/>
+    /// <br/> ⠀⠀<see cref="XrResult.XR_ERROR_OUT_OF_MEMORY"/>
+    /// <br/> ⠀⠀<see cref="XrResult.XR_ERROR_SIZE_INSUFFICIENT"/>
+    /// <br/> ⠀⠀<see cref="XrResult.XR_ERROR_RUNTIME_UNAVAILABLE"/>
+    /// <br/> ⠀⠀<see cref="XrResult.XR_ERROR_API_LAYER_NOT_PRESENT"/>
+    /// </returns>
+    public static unsafe XrResult GetAvailableExtensions(Span<XrExtensionProperties> extensionsBuffer, out uint propertyCount)
+    {
+        fixed (uint* propCountPtr = &propertyCount)
+        fixed (XrExtensionProperties* bufferPtr = extensionsBuffer)
+            return OpenXRNative.xrEnumerateInstanceExtensionProperties(null, (uint)extensionsBuffer.Length, propCountPtr, bufferPtr);
+    }
     /// <summary> get the number of available OpenXR extensions </summary>
     public static unsafe XrResult GetExtensionCount(out uint extensionCount)
     {
@@ -315,12 +334,14 @@ public static partial class OpenXRUtils
         switch (backend)
         {
             case GraphicsBackend.Direct3D11:
-                for(int i = 0; i < formatCount is++)
-                    formats[i] = D3D11ToVdPixelFormat((Format)rawFormats)
+                for (int i = 0; i < formatCount; i++)
+                    formats[i] = D3D11ToVdPixelFormat((Format)rawFormats[i]);
                 break;
             case GraphicsBackend.Vulkan:
-
+                for (int i = 0; i < formatCount; i++)
+                    formats[i] = VkToVdPixelFormat((VkFormat)rawFormats[i]);
                 break;
         }
+        return XrResult.XR_SUCCESS;
     }
 }

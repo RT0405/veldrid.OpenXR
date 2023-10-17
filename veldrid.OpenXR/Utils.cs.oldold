@@ -295,4 +295,14 @@ public static partial class OpenXRUtils
                 throw new Exception();
         }
     }
+    internal static bool StringToUTF8NullTerminated(string str, Span<byte> dst)
+    {
+        if (Encoding.UTF8.GetByteCount(str) >= dst.Length)
+        {
+            dst[0] = 0;
+            return false;
+        }
+        dst[Encoding.UTF8.GetBytes(str.AsSpan(), dst[..^1])] = 0;
+        return true;
+    }
 }

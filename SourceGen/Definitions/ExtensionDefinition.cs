@@ -15,12 +15,15 @@ public class ExtensionDefinition
     public int SortOrder;
     public string Comment;
 
+    public string SpecVersionConstName;
+    public string ExtensionNameConstName;
+
     public List<EnumExtension> Enums = new();
     public List<ConstantExtension> Constants = new();
     public List<string> Types = new();
-    public List<string> Commands = new();
+    public List<CommandDefinition> Commands = new();
 
-    public static ExtensionDefinition FromXML(XElement elem)
+    public static ExtensionDefinition FromXML(XElement elem, List<CommandDefinition> specCommands)
     {
         ExtensionDefinition extension = new()
         {
@@ -97,6 +100,12 @@ public class ExtensionDefinition
 
                     extension.Constants.Add(constant);
                 }
+
+                string name = e.Attribute("name")?.Value;
+                if (name.EndsWith("_SPEC_VERSION"))
+                    extension.SpecVersionConstName = name;
+                else if (name.EndsWith("_EXTENSION_NAME"))
+                    extension.ExtensionNameConstName = name;
             }
 
             var types = requires.Elements("type");
@@ -110,7 +119,19 @@ public class ExtensionDefinition
             foreach (var command in commands)
             {
                 string name = command.Attribute("name").Value;
-                extension.Commands.Add(name);
+                CommandDefinition cdef = null;
+                foreach(CommandDefinition c in specCommands)
+                {
+                    if(c.Prototype.Name == name)
+                    {
+                        cdef = c;
+                        cdef.extension = extension;
+                    }
+                }
+                if (cdef == null)
+                    Console.WriteLine(name + " failed to be found");
+                else
+                    extension.Commands.Add(cdef);
             }
         }
 
