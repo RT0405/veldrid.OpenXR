@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Veldrid.OpenXR.Native;
 
 namespace Veldrid.OpenXR;
-public class XRSession
+public readonly struct XrSessionInfo
 {
-    public readonly XRInstance Instance;
+    public readonly XrInstance Instance;
     public readonly ulong SystemID;
+    public readonly XrSession Session;
 }

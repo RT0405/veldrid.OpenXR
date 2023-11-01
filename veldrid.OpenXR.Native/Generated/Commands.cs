@@ -50,7 +50,7 @@ public static unsafe partial class OpenXRNative
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     [DllImport(LoaderName, CallingConvention = CallConv, EntryPoint = "xrCreateInstance")]
-    public static extern XrResult xrCreateInstanceNative(XrInstanceCreateInfo* createInfo, XrInstance* instance);
+    private static extern XrResult xrCreateInstanceNative(XrInstanceCreateInfo* createInfo, XrInstance* instance);
     /// <returns>
     ///       Success Codes:
     /// <br/> ⠀⠀<see cref="XrResult.XR_SUCCESS"/>
@@ -69,8 +69,8 @@ public static unsafe partial class OpenXRNative
     public static XrResult xrCreateInstance(XrInstanceCreateInfo* createInfo, XrInstance* instance)
     {
         XrResult result = xrCreateInstanceNative(createInfo, instance);
-        if(result == XrResult.XR_SUCCESS && (*createInfo).enabledExtensionCount != 0)
-            Instance = new(*createInfo, *instance);
+        if(result == XrResult.XR_SUCCESS)
+            Instance = new(*instance, *createInfo);
         return result;
     }
     /// <returns>

@@ -38,6 +38,7 @@ public class XRInstance : IDisposable
     }
     private void Dispose(bool disposing)
     {
+        _ = disposing;
         if (!IsDisposed)
         {
             LibraryInstance.Dispose();

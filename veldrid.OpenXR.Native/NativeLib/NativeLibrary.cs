@@ -41,12 +41,13 @@ namespace Evergine.Bindings.OpenXR
             else
             {
                 field = default;
-                //Debug.WriteLine($" ===> Error loading function {name}");
+                Debug.WriteLine($" ===> Error loading function {name}");
             }
         }
 
         public void Dispose()
         {
+            GC.SuppressFinalize(this);
             FreeLibrary(libraryHandle);
         }
 
@@ -81,7 +82,7 @@ namespace Evergine.Bindings.OpenXR
 
             protected override void FreeLibrary(IntPtr libraryHandle)
             {
-                Kernel32.FreeLibrary(libraryHandle);
+                _ = Kernel32.FreeLibrary(libraryHandle);
             }
 
             protected override IntPtr LoadFunction(string functionName)

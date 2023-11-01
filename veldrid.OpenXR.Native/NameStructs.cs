@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Common;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -45,6 +46,20 @@ public struct XrExtensionName
     public static implicit operator XrExtensionName(string value) => new(value);
     public static unsafe implicit operator byte*(XrExtensionName value) => value.Ptr;
     public static unsafe implicit operator XrExtensionName(byte* value) => new(value);
+    public static bool operator !=(XrExtensionName lhs, XrExtensionName rhs) => !(lhs == rhs);
+    public static unsafe bool operator ==(XrExtensionName lhs, XrExtensionName rhs)
+    {
+        for(int i =0; i < MaxLength; i++)
+        {
+            if(lhs.bytes[i] != rhs.bytes[i])
+                return false;
+            if(lhs.bytes[i] == 0)
+                return true;
+        }
+        return false;
+    }
+    public readonly override bool Equals(object obj) => obj is XrExtensionName e && this == e;
+    public override int GetHashCode() => Name.GetHashCode();
 }
 public struct XrApiLayerName
 {

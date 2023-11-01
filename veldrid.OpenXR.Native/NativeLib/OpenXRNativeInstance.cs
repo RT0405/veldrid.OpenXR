@@ -6,6 +6,9 @@ public unsafe partial class OpenXRNativeInstance : IDisposable
 {
     public bool IsDisposed { get; private set; }
     private readonly NativeLib nativeLib;
+    public readonly ReadOnlyMemory<XrExtensionName> EnabledExtensions;
+    public readonly ReadOnlyMemory<XrApiLayerName> EnabledApiLayers;
+
     ~OpenXRNativeInstance()
     {
         Dispose(false);
@@ -17,14 +20,22 @@ public unsafe partial class OpenXRNativeInstance : IDisposable
     }
     private void Dispose(bool disposing)
     {
-        if(!IsDisposed)
+        if(disposing && !IsDisposed)
             nativeLib.Dispose();
         IsDisposed = true;
     }
-    internal OpenXRNativeInstance(XrInstanceCreateInfo createInfo, XrInstance instance)
+    internal OpenXRNativeInstance(XrInstance instance, XrInstanceCreateInfo createInfo)
     {
         nativeLib = LoadNativeLibrary();
         LoadFunctionPointers(instance);
+        XrExtensionName[] enabledExtensions = new XrExtensionName[createInfo.enabledExtensionCount];
+        for(int i = 0; i < createInfo.enabledExtensionCount; i++)
+            enabledExtensions[i] = createInfo.enabledExtensionNames[i];
+        EnabledExtensions = enabledExtensions;
+        XrApiLayerName[] enabledApiLayers = new XrApiLayerName[createInfo.enabledExtensionCount];
+        for(int i = 0; i < createInfo.enabledApiLayerCount; i++)
+            enabledApiLayers[i] = createInfo.enabledApiLayerNames[i];
+        EnabledApiLayers = enabledApiLayers;
     }
     private static NativeLib LoadNativeLibrary()
     {

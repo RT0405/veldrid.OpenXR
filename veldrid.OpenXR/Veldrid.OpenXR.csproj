@@ -1,30 +1,58 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
+	
+    <PropertyGroup>
+        <TargetFramework>net6.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>annotations</Nullable>
+        <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+        <AssemblyName>$(MSBuildProjectName)</AssemblyName>
+    </PropertyGroup>
 
-  <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>annotations</Nullable>
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-  </PropertyGroup>
+    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+        <DebugType>portable</DebugType>
+    </PropertyGroup>
 
-  <ItemGroup>
-    <PackageReference Include="Vk" Version="1.0.25" />
-  </ItemGroup>
+    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+        <DebugType>portable</DebugType>
+    </PropertyGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\veldrid.OpenXR.Native\Veldrid.OpenXR.Native.csproj" />
-  </ItemGroup>
+    <ItemGroup>
+        <PackageReference Include="IgnoresAccessChecksToGenerator" Version="0.6.0" />
+        <PackageReference Include="Vk" Version="1.0.25" />
+        <PackageReference Include="Vortice.D3DCompiler" Version="2.4.2" />
+        <PackageReference Include="Vortice.Direct3D11" Version="2.4.2" />
+    </ItemGroup>
 
-  <ItemGroup>
-    <Reference Include="Veldrid">
-      <HintPath>..\..\veldrid\bin\Debug\Veldrid\net6.0\Veldrid.dll</HintPath>
-    </Reference>
-    <Reference Include="Veldrid.MetalBindings">
-      <HintPath>..\..\veldrid\bin\Debug\Veldrid\net6.0\Veldrid.MetalBindings.dll</HintPath>
-    </Reference>
-    <Reference Include="Veldrid.OpenGLBindings">
-      <HintPath>..\..\veldrid\bin\Debug\Veldrid\net6.0\Veldrid.OpenGLBindings.dll</HintPath>
-    </Reference>
-  </ItemGroup>
+    <ItemGroup>
+        <ProjectReference Include="..\veldrid.OpenXR.Native\Veldrid.OpenXR.Native.csproj" />
+    </ItemGroup>
+	
+	<!-- the following two blocks are for internal veldrid access -->
+    <ItemGroup>
+		<InternalsAssemblyName Include="Veldrid" />
+    </ItemGroup>
+	<PropertyGroup>
+		<InternalsAssemblyUseEmptyMethodBodies>false</InternalsAssemblyUseEmptyMethodBodies>
+	</PropertyGroup>
+	<ItemGroup>
+		<Reference Include="Veldrid">
+			<HintPath>..\..\veldrid\bin\Debug\Veldrid\net6.0\Veldrid.dll</HintPath>
+		</Reference>
+		<Reference Include="Veldrid.MetalBindings">
+			<HintPath>..\..\veldrid\bin\Debug\Veldrid\net6.0\Veldrid.MetalBindings.dll</HintPath>
+		</Reference>
+		<Reference Include="Veldrid.OpenGLBindings">
+			<HintPath>..\..\veldrid\bin\Debug\Veldrid\net6.0\Veldrid.OpenGLBindings.dll</HintPath>
+		</Reference>
+	</ItemGroup>
 
+    <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+        <ItemGroup>
+            <DLLName Include="$(OutDir)$(MSBuildProjectName).dll" />
+        </ItemGroup>
+        <Move SourceFiles="@(DLLName)" DestinationFiles="@(DLLName -&gt; Replace('dll', 'dll2'))" />
+        <Exec Command="start ..\Velrdid.OpenXR.PostCompilerFixup\bin\$(Configuration)\net6.0\Veldrid.OpenXR.PostCompileFixup.exe $(Configuration)" />
+        <Delete Files="@(DLLName -&gt; Replace('dll', 'dll2'))" />
+    </Target>
+	
 </Project>

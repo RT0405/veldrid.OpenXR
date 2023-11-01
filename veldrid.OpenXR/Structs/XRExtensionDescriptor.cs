@@ -1,11 +1,9 @@
-using System.Runtime.InteropServices;
-using System.Text;
 using Veldrid.OpenXR.Native;
 
 namespace Veldrid.OpenXR;
 public readonly struct XRExtensionDescriptor
 {
-    public readonly string ExtensionName;
+    public readonly XrExtensionName ExtensionName;
     public readonly uint ExtensionVersion;
     public XRExtensionDescriptor(string extensionName, uint extensionVersion)
     {
@@ -14,7 +12,7 @@ public readonly struct XRExtensionDescriptor
     }
     public unsafe XRExtensionDescriptor(XrExtensionProperties extension)
     {
-        ExtensionName = Marshal.PtrToStringUTF8((IntPtr)extension.extensionName);
+        ExtensionName = extension.extensionName;
         ExtensionVersion = extension.extensionVersion;
     }
     public static unsafe explicit operator XrExtensionProperties(XRExtensionDescriptor extension)
@@ -25,7 +23,7 @@ public readonly struct XRExtensionDescriptor
             extensionVersion = extension.ExtensionVersion,
             next = null
         };
-        extProps.extensionName[Encoding.UTF8.GetBytes(extension.ExtensionName.AsSpan(), new Span<byte>(extProps.extensionName, (int)OpenXRNative.XR_MAX_EXTENSION_NAME_SIZE)) + 1] = 0;
+        *(XrExtensionName*)extProps.extensionName = extension.ExtensionName;
         return extProps;
     }
     public static explicit operator XRExtensionDescriptor(XrExtensionProperties extension) => new(extension);

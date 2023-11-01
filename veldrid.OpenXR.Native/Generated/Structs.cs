@@ -109,6 +109,9 @@ public unsafe partial struct XrApiLayerProperties
     public ulong specVersion;
     public uint layerVersion;
     public fixed byte description[(int)OpenXRNative.XR_MAX_API_LAYER_DESCRIPTION_SIZE];
+    /// <returns>a new <see cref="XrApiLayerProperties"> with it's type member set to </returns>
+    public static XrApiLayerProperties New() =>
+        new() { type = XrStructureType.XR_TYPE_API_LAYER_PROPERTIES };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrExtensionProperties
@@ -117,6 +120,9 @@ public unsafe partial struct XrExtensionProperties
     public void* next;
     public fixed byte extensionName[(int)OpenXRNative.XR_MAX_EXTENSION_NAME_SIZE];
     public uint extensionVersion;
+    /// <returns>a new <see cref="XrExtensionProperties"> with it's type member set to </returns>
+    public static XrExtensionProperties New() =>
+        new() { type = XrStructureType.XR_TYPE_EXTENSION_PROPERTIES };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrApplicationInfo
@@ -138,6 +144,9 @@ public unsafe partial struct XrInstanceCreateInfo
     public byte** enabledApiLayerNames;
     public uint enabledExtensionCount;
     public byte** enabledExtensionNames;
+    /// <returns>a new <see cref="XrInstanceCreateInfo"> with it's type member set to </returns>
+    public static XrInstanceCreateInfo New() =>
+        new() { type = XrStructureType.XR_TYPE_INSTANCE_CREATE_INFO };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrInstanceProperties
@@ -146,6 +155,9 @@ public unsafe partial struct XrInstanceProperties
     public void* next;
     public ulong runtimeVersion;
     public fixed byte runtimeName[(int)OpenXRNative.XR_MAX_RUNTIME_NAME_SIZE];
+    /// <returns>a new <see cref="XrInstanceProperties"> with it's type member set to </returns>
+    public static XrInstanceProperties New() =>
+        new() { type = XrStructureType.XR_TYPE_INSTANCE_PROPERTIES };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrSystemGetInfo
@@ -153,6 +165,9 @@ public unsafe partial struct XrSystemGetInfo
     public XrStructureType type;
     public void* next;
     public XrFormFactor formFactor;
+    /// <returns>a new <see cref="XrSystemGetInfo"> with it's type member set to </returns>
+    public static XrSystemGetInfo New() =>
+        new() { type = XrStructureType.XR_TYPE_SYSTEM_GET_INFO };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrSystemProperties
@@ -164,6 +179,9 @@ public unsafe partial struct XrSystemProperties
     public fixed byte systemName[(int)OpenXRNative.XR_MAX_SYSTEM_NAME_SIZE];
     public XrSystemGraphicsProperties graphicsProperties;
     public XrSystemTrackingProperties trackingProperties;
+    /// <returns>a new <see cref="XrSystemProperties"> with it's type member set to </returns>
+    public static XrSystemProperties New() =>
+        new() { type = XrStructureType.XR_TYPE_SYSTEM_PROPERTIES };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrSystemGraphicsProperties
@@ -185,6 +203,9 @@ public unsafe partial struct XrGraphicsBindingOpenGLWin32KHR
     public void* next;
     public IntPtr hDC;
     public IntPtr hGLRC;
+    /// <returns>a new <see cref="XrGraphicsBindingOpenGLWin32KHR"> with it's type member set to </returns>
+    public static XrGraphicsBindingOpenGLWin32KHR New() =>
+        new() { type = XrStructureType.XR_TYPE_GRAPHICS_BINDING_OPENGL_WIN32_KHR };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrGraphicsBindingOpenGLXlibKHR
@@ -196,6 +217,9 @@ public unsafe partial struct XrGraphicsBindingOpenGLXlibKHR
     public IntPtr glxFBConfig;
     public IntPtr glxDrawable;
     public IntPtr glxContext;
+    /// <returns>a new <see cref="XrGraphicsBindingOpenGLXlibKHR"> with it's type member set to </returns>
+    public static XrGraphicsBindingOpenGLXlibKHR New() =>
+        new() { type = XrStructureType.XR_TYPE_GRAPHICS_BINDING_OPENGL_XLIB_KHR };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrGraphicsBindingOpenGLXcbKHR
@@ -208,6 +232,9 @@ public unsafe partial struct XrGraphicsBindingOpenGLXcbKHR
     public IntPtr visualid;
     public IntPtr glxDrawable;
     public IntPtr glxContext;
+    /// <returns>a new <see cref="XrGraphicsBindingOpenGLXcbKHR"> with it's type member set to </returns>
+    public static XrGraphicsBindingOpenGLXcbKHR New() =>
+        new() { type = XrStructureType.XR_TYPE_GRAPHICS_BINDING_OPENGL_XCB_KHR };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrGraphicsBindingOpenGLWaylandKHR
@@ -215,6 +242,9 @@ public unsafe partial struct XrGraphicsBindingOpenGLWaylandKHR
     public XrStructureType type;
     public void* next;
     public IntPtr display;
+    /// <returns>a new <see cref="XrGraphicsBindingOpenGLWaylandKHR"> with it's type member set to </returns>
+    public static XrGraphicsBindingOpenGLWaylandKHR New() =>
+        new() { type = XrStructureType.XR_TYPE_GRAPHICS_BINDING_OPENGL_WAYLAND_KHR };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrGraphicsBindingD3D11KHR
@@ -222,6 +252,9 @@ public unsafe partial struct XrGraphicsBindingD3D11KHR
     public XrStructureType type;
     public void* next;
     public IntPtr device;
+    /// <returns>a new <see cref="XrGraphicsBindingD3D11KHR"> with it's type member set to </returns>
+    public static XrGraphicsBindingD3D11KHR New() =>
+        new() { type = XrStructureType.XR_TYPE_GRAPHICS_BINDING_D3D11_KHR };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrGraphicsBindingD3D12KHR
@@ -230,6 +263,9 @@ public unsafe partial struct XrGraphicsBindingD3D12KHR
     public void* next;
     public IntPtr device;
     public IntPtr queue;
+    /// <returns>a new <see cref="XrGraphicsBindingD3D12KHR"> with it's type member set to </returns>
+    public static XrGraphicsBindingD3D12KHR New() =>
+        new() { type = XrStructureType.XR_TYPE_GRAPHICS_BINDING_D3D12_KHR };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrGraphicsBindingOpenGLESAndroidKHR
@@ -239,6 +275,9 @@ public unsafe partial struct XrGraphicsBindingOpenGLESAndroidKHR
     public IntPtr display;
     public IntPtr config;
     public IntPtr context;
+    /// <returns>a new <see cref="XrGraphicsBindingOpenGLESAndroidKHR"> with it's type member set to </returns>
+    public static XrGraphicsBindingOpenGLESAndroidKHR New() =>
+        new() { type = XrStructureType.XR_TYPE_GRAPHICS_BINDING_OPENGL_ES_ANDROID_KHR };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrGraphicsBindingVulkanKHR
@@ -250,6 +289,9 @@ public unsafe partial struct XrGraphicsBindingVulkanKHR
     public IntPtr device;
     public uint queueFamilyIndex;
     public uint queueIndex;
+    /// <returns>a new <see cref="XrGraphicsBindingVulkanKHR"> with it's type member set to </returns>
+    public static XrGraphicsBindingVulkanKHR New() =>
+        new() { type = XrStructureType.XR_TYPE_GRAPHICS_BINDING_VULKAN_KHR };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrSessionCreateInfo
@@ -258,6 +300,9 @@ public unsafe partial struct XrSessionCreateInfo
     public void* next;
     public ulong createFlags;
     public ulong systemId;
+    /// <returns>a new <see cref="XrSessionCreateInfo"> with it's type member set to </returns>
+    public static XrSessionCreateInfo New() =>
+        new() { type = XrStructureType.XR_TYPE_SESSION_CREATE_INFO };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrSessionBeginInfo
@@ -265,6 +310,9 @@ public unsafe partial struct XrSessionBeginInfo
     public XrStructureType type;
     public void* next;
     public XrViewConfigurationType primaryViewConfigurationType;
+    /// <returns>a new <see cref="XrSessionBeginInfo"> with it's type member set to </returns>
+    public static XrSessionBeginInfo New() =>
+        new() { type = XrStructureType.XR_TYPE_SESSION_BEGIN_INFO };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrSwapchainCreateInfo
@@ -280,6 +328,9 @@ public unsafe partial struct XrSwapchainCreateInfo
     public uint faceCount;
     public uint arraySize;
     public uint mipCount;
+    /// <returns>a new <see cref="XrSwapchainCreateInfo"> with it's type member set to </returns>
+    public static XrSwapchainCreateInfo New() =>
+        new() { type = XrStructureType.XR_TYPE_SWAPCHAIN_CREATE_INFO };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrSwapchainImageBaseHeader
@@ -293,6 +344,9 @@ public unsafe partial struct XrSwapchainImageOpenGLKHR
     public XrStructureType type;
     public void* next;
     public uint image;
+    /// <returns>a new <see cref="XrSwapchainImageOpenGLKHR"> with it's type member set to </returns>
+    public static XrSwapchainImageOpenGLKHR New() =>
+        new() { type = XrStructureType.XR_TYPE_SWAPCHAIN_IMAGE_OPENGL_KHR };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrSwapchainImageOpenGLESKHR
@@ -300,6 +354,9 @@ public unsafe partial struct XrSwapchainImageOpenGLESKHR
     public XrStructureType type;
     public void* next;
     public uint image;
+    /// <returns>a new <see cref="XrSwapchainImageOpenGLESKHR"> with it's type member set to </returns>
+    public static XrSwapchainImageOpenGLESKHR New() =>
+        new() { type = XrStructureType.XR_TYPE_SWAPCHAIN_IMAGE_OPENGL_ES_KHR };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrSwapchainImageVulkanKHR
@@ -307,6 +364,9 @@ public unsafe partial struct XrSwapchainImageVulkanKHR
     public XrStructureType type;
     public void* next;
     public IntPtr image;
+    /// <returns>a new <see cref="XrSwapchainImageVulkanKHR"> with it's type member set to </returns>
+    public static XrSwapchainImageVulkanKHR New() =>
+        new() { type = XrStructureType.XR_TYPE_SWAPCHAIN_IMAGE_VULKAN_KHR };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrSwapchainImageD3D11KHR
@@ -314,6 +374,9 @@ public unsafe partial struct XrSwapchainImageD3D11KHR
     public XrStructureType type;
     public void* next;
     public IntPtr texture;
+    /// <returns>a new <see cref="XrSwapchainImageD3D11KHR"> with it's type member set to </returns>
+    public static XrSwapchainImageD3D11KHR New() =>
+        new() { type = XrStructureType.XR_TYPE_SWAPCHAIN_IMAGE_D3D11_KHR };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrSwapchainImageD3D12KHR
@@ -321,12 +384,18 @@ public unsafe partial struct XrSwapchainImageD3D12KHR
     public XrStructureType type;
     public void* next;
     public IntPtr texture;
+    /// <returns>a new <see cref="XrSwapchainImageD3D12KHR"> with it's type member set to </returns>
+    public static XrSwapchainImageD3D12KHR New() =>
+        new() { type = XrStructureType.XR_TYPE_SWAPCHAIN_IMAGE_D3D12_KHR };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrSwapchainImageAcquireInfo
 {
     public XrStructureType type;
     public void* next;
+    /// <returns>a new <see cref="XrSwapchainImageAcquireInfo"> with it's type member set to </returns>
+    public static XrSwapchainImageAcquireInfo New() =>
+        new() { type = XrStructureType.XR_TYPE_SWAPCHAIN_IMAGE_ACQUIRE_INFO };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrSwapchainImageWaitInfo
@@ -334,12 +403,18 @@ public unsafe partial struct XrSwapchainImageWaitInfo
     public XrStructureType type;
     public void* next;
     public long timeout;
+    /// <returns>a new <see cref="XrSwapchainImageWaitInfo"> with it's type member set to </returns>
+    public static XrSwapchainImageWaitInfo New() =>
+        new() { type = XrStructureType.XR_TYPE_SWAPCHAIN_IMAGE_WAIT_INFO };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrSwapchainImageReleaseInfo
 {
     public XrStructureType type;
     public void* next;
+    /// <returns>a new <see cref="XrSwapchainImageReleaseInfo"> with it's type member set to </returns>
+    public static XrSwapchainImageReleaseInfo New() =>
+        new() { type = XrStructureType.XR_TYPE_SWAPCHAIN_IMAGE_RELEASE_INFO };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrReferenceSpaceCreateInfo
@@ -348,6 +423,9 @@ public unsafe partial struct XrReferenceSpaceCreateInfo
     public void* next;
     public XrReferenceSpaceType referenceSpaceType;
     public XrPosef poseInReferenceSpace;
+    /// <returns>a new <see cref="XrReferenceSpaceCreateInfo"> with it's type member set to </returns>
+    public static XrReferenceSpaceCreateInfo New() =>
+        new() { type = XrStructureType.XR_TYPE_REFERENCE_SPACE_CREATE_INFO };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrActionSpaceCreateInfo
@@ -357,6 +435,9 @@ public unsafe partial struct XrActionSpaceCreateInfo
     public XrAction action;
     public ulong subactionPath;
     public XrPosef poseInActionSpace;
+    /// <returns>a new <see cref="XrActionSpaceCreateInfo"> with it's type member set to </returns>
+    public static XrActionSpaceCreateInfo New() =>
+        new() { type = XrStructureType.XR_TYPE_ACTION_SPACE_CREATE_INFO };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrSpaceLocation
@@ -365,6 +446,9 @@ public unsafe partial struct XrSpaceLocation
     public void* next;
     public ulong locationFlags;
     public XrPosef pose;
+    /// <returns>a new <see cref="XrSpaceLocation"> with it's type member set to </returns>
+    public static XrSpaceLocation New() =>
+        new() { type = XrStructureType.XR_TYPE_SPACE_LOCATION };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrSpaceVelocity
@@ -374,6 +458,9 @@ public unsafe partial struct XrSpaceVelocity
     public ulong velocityFlags;
     public XrVector3f linearVelocity;
     public XrVector3f angularVelocity;
+    /// <returns>a new <see cref="XrSpaceVelocity"> with it's type member set to </returns>
+    public static XrSpaceVelocity New() =>
+        new() { type = XrStructureType.XR_TYPE_SPACE_VELOCITY };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrFovf
@@ -390,6 +477,9 @@ public unsafe partial struct XrView
     public void* next;
     public XrPosef pose;
     public XrFovf fov;
+    /// <returns>a new <see cref="XrView"> with it's type member set to </returns>
+    public static XrView New() =>
+        new() { type = XrStructureType.XR_TYPE_VIEW };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrViewLocateInfo
@@ -399,6 +489,9 @@ public unsafe partial struct XrViewLocateInfo
     public XrViewConfigurationType viewConfigurationType;
     public long displayTime;
     public XrSpace space;
+    /// <returns>a new <see cref="XrViewLocateInfo"> with it's type member set to </returns>
+    public static XrViewLocateInfo New() =>
+        new() { type = XrStructureType.XR_TYPE_VIEW_LOCATE_INFO };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrViewState
@@ -406,6 +499,9 @@ public unsafe partial struct XrViewState
     public XrStructureType type;
     public void* next;
     public ulong viewStateFlags;
+    /// <returns>a new <see cref="XrViewState"> with it's type member set to </returns>
+    public static XrViewState New() =>
+        new() { type = XrStructureType.XR_TYPE_VIEW_STATE };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrViewConfigurationView
@@ -418,6 +514,9 @@ public unsafe partial struct XrViewConfigurationView
     public uint maxImageRectHeight;
     public uint recommendedSwapchainSampleCount;
     public uint maxSwapchainSampleCount;
+    /// <returns>a new <see cref="XrViewConfigurationView"> with it's type member set to </returns>
+    public static XrViewConfigurationView New() =>
+        new() { type = XrStructureType.XR_TYPE_VIEW_CONFIGURATION_VIEW };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrSwapchainSubImage
@@ -442,6 +541,9 @@ public unsafe partial struct XrCompositionLayerProjectionView
     public XrPosef pose;
     public XrFovf fov;
     public XrSwapchainSubImage subImage;
+    /// <returns>a new <see cref="XrCompositionLayerProjectionView"> with it's type member set to </returns>
+    public static XrCompositionLayerProjectionView New() =>
+        new() { type = XrStructureType.XR_TYPE_COMPOSITION_LAYER_PROJECTION_VIEW };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrCompositionLayerProjection
@@ -452,6 +554,9 @@ public unsafe partial struct XrCompositionLayerProjection
     public XrSpace space;
     public uint viewCount;
     public XrCompositionLayerProjectionView* views;
+    /// <returns>a new <see cref="XrCompositionLayerProjection"> with it's type member set to </returns>
+    public static XrCompositionLayerProjection New() =>
+        new() { type = XrStructureType.XR_TYPE_COMPOSITION_LAYER_PROJECTION };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrCompositionLayerQuad
@@ -464,6 +569,9 @@ public unsafe partial struct XrCompositionLayerQuad
     public XrSwapchainSubImage subImage;
     public XrPosef pose;
     public XrExtent2Df size;
+    /// <returns>a new <see cref="XrCompositionLayerQuad"> with it's type member set to </returns>
+    public static XrCompositionLayerQuad New() =>
+        new() { type = XrStructureType.XR_TYPE_COMPOSITION_LAYER_QUAD };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrCompositionLayerCylinderKHR
@@ -478,6 +586,9 @@ public unsafe partial struct XrCompositionLayerCylinderKHR
     public float radius;
     public float centralAngle;
     public float aspectRatio;
+    /// <returns>a new <see cref="XrCompositionLayerCylinderKHR"> with it's type member set to </returns>
+    public static XrCompositionLayerCylinderKHR New() =>
+        new() { type = XrStructureType.XR_TYPE_COMPOSITION_LAYER_CYLINDER_KHR };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrCompositionLayerCubeKHR
@@ -490,6 +601,9 @@ public unsafe partial struct XrCompositionLayerCubeKHR
     public XrSwapchain swapchain;
     public uint imageArrayIndex;
     public XrQuaternionf orientation;
+    /// <returns>a new <see cref="XrCompositionLayerCubeKHR"> with it's type member set to </returns>
+    public static XrCompositionLayerCubeKHR New() =>
+        new() { type = XrStructureType.XR_TYPE_COMPOSITION_LAYER_CUBE_KHR };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrCompositionLayerEquirectKHR
@@ -504,6 +618,9 @@ public unsafe partial struct XrCompositionLayerEquirectKHR
     public float radius;
     public XrVector2f scale;
     public XrVector2f bias;
+    /// <returns>a new <see cref="XrCompositionLayerEquirectKHR"> with it's type member set to </returns>
+    public static XrCompositionLayerEquirectKHR New() =>
+        new() { type = XrStructureType.XR_TYPE_COMPOSITION_LAYER_EQUIRECT_KHR };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrCompositionLayerDepthInfoKHR
@@ -515,12 +632,18 @@ public unsafe partial struct XrCompositionLayerDepthInfoKHR
     public float maxDepth;
     public float nearZ;
     public float farZ;
+    /// <returns>a new <see cref="XrCompositionLayerDepthInfoKHR"> with it's type member set to </returns>
+    public static XrCompositionLayerDepthInfoKHR New() =>
+        new() { type = XrStructureType.XR_TYPE_COMPOSITION_LAYER_DEPTH_INFO_KHR };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrFrameBeginInfo
 {
     public XrStructureType type;
     public void* next;
+    /// <returns>a new <see cref="XrFrameBeginInfo"> with it's type member set to </returns>
+    public static XrFrameBeginInfo New() =>
+        new() { type = XrStructureType.XR_TYPE_FRAME_BEGIN_INFO };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrFrameEndInfo
@@ -531,12 +654,18 @@ public unsafe partial struct XrFrameEndInfo
     public XrEnvironmentBlendMode environmentBlendMode;
     public uint layerCount;
     public XrCompositionLayerBaseHeader** layers;
+    /// <returns>a new <see cref="XrFrameEndInfo"> with it's type member set to </returns>
+    public static XrFrameEndInfo New() =>
+        new() { type = XrStructureType.XR_TYPE_FRAME_END_INFO };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrFrameWaitInfo
 {
     public XrStructureType type;
     public void* next;
+    /// <returns>a new <see cref="XrFrameWaitInfo"> with it's type member set to </returns>
+    public static XrFrameWaitInfo New() =>
+        new() { type = XrStructureType.XR_TYPE_FRAME_WAIT_INFO };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrFrameState
@@ -546,6 +675,9 @@ public unsafe partial struct XrFrameState
     public long predictedDisplayTime;
     public long predictedDisplayPeriod;
     public XrBool32 shouldRender;
+    /// <returns>a new <see cref="XrFrameState"> with it's type member set to </returns>
+    public static XrFrameState New() =>
+        new() { type = XrStructureType.XR_TYPE_FRAME_STATE };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrHapticBaseHeader
@@ -561,6 +693,9 @@ public unsafe partial struct XrHapticVibration
     public long duration;
     public float frequency;
     public float amplitude;
+    /// <returns>a new <see cref="XrHapticVibration"> with it's type member set to </returns>
+    public static XrHapticVibration New() =>
+        new() { type = XrStructureType.XR_TYPE_HAPTIC_VIBRATION };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrEventDataBaseHeader
@@ -4573,6 +4708,9 @@ public unsafe partial struct XrEventDataBuffer
     public byte varying_3997;
     public byte varying_3998;
     public byte varying_3999;
+    /// <returns>a new <see cref="XrEventDataBuffer"> with it's type member set to </returns>
+    public static XrEventDataBuffer New() =>
+        new() { type = XrStructureType.XR_TYPE_EVENT_DATA_BUFFER };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrEventDataEventsLost
@@ -4580,6 +4718,9 @@ public unsafe partial struct XrEventDataEventsLost
     public XrStructureType type;
     public void* next;
     public uint lostEventCount;
+    /// <returns>a new <see cref="XrEventDataEventsLost"> with it's type member set to </returns>
+    public static XrEventDataEventsLost New() =>
+        new() { type = XrStructureType.XR_TYPE_EVENT_DATA_EVENTS_LOST };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrEventDataInstanceLossPending
@@ -4587,6 +4728,9 @@ public unsafe partial struct XrEventDataInstanceLossPending
     public XrStructureType type;
     public void* next;
     public long lossTime;
+    /// <returns>a new <see cref="XrEventDataInstanceLossPending"> with it's type member set to </returns>
+    public static XrEventDataInstanceLossPending New() =>
+        new() { type = XrStructureType.XR_TYPE_EVENT_DATA_INSTANCE_LOSS_PENDING };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrEventDataSessionStateChanged
@@ -4596,6 +4740,9 @@ public unsafe partial struct XrEventDataSessionStateChanged
     public XrSession session;
     public XrSessionState state;
     public long time;
+    /// <returns>a new <see cref="XrEventDataSessionStateChanged"> with it's type member set to </returns>
+    public static XrEventDataSessionStateChanged New() =>
+        new() { type = XrStructureType.XR_TYPE_EVENT_DATA_SESSION_STATE_CHANGED };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrEventDataReferenceSpaceChangePending
@@ -4607,6 +4754,9 @@ public unsafe partial struct XrEventDataReferenceSpaceChangePending
     public long changeTime;
     public XrBool32 poseValid;
     public XrPosef poseInPreviousSpace;
+    /// <returns>a new <see cref="XrEventDataReferenceSpaceChangePending"> with it's type member set to </returns>
+    public static XrEventDataReferenceSpaceChangePending New() =>
+        new() { type = XrStructureType.XR_TYPE_EVENT_DATA_REFERENCE_SPACE_CHANGE_PENDING };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrEventDataPerfSettingsEXT
@@ -4617,6 +4767,9 @@ public unsafe partial struct XrEventDataPerfSettingsEXT
     public XrPerfSettingsSubDomainEXT subDomain;
     public XrPerfSettingsNotificationLevelEXT fromLevel;
     public XrPerfSettingsNotificationLevelEXT toLevel;
+    /// <returns>a new <see cref="XrEventDataPerfSettingsEXT"> with it's type member set to </returns>
+    public static XrEventDataPerfSettingsEXT New() =>
+        new() { type = XrStructureType.XR_TYPE_EVENT_DATA_PERF_SETTINGS_EXT };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrEventDataVisibilityMaskChangedKHR
@@ -4626,6 +4779,9 @@ public unsafe partial struct XrEventDataVisibilityMaskChangedKHR
     public XrSession session;
     public XrViewConfigurationType viewConfigurationType;
     public uint viewIndex;
+    /// <returns>a new <see cref="XrEventDataVisibilityMaskChangedKHR"> with it's type member set to </returns>
+    public static XrEventDataVisibilityMaskChangedKHR New() =>
+        new() { type = XrStructureType.XR_TYPE_EVENT_DATA_VISIBILITY_MASK_CHANGED_KHR };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrViewConfigurationProperties
@@ -4634,6 +4790,9 @@ public unsafe partial struct XrViewConfigurationProperties
     public void* next;
     public XrViewConfigurationType viewConfigurationType;
     public XrBool32 fovMutable;
+    /// <returns>a new <see cref="XrViewConfigurationProperties"> with it's type member set to </returns>
+    public static XrViewConfigurationProperties New() =>
+        new() { type = XrStructureType.XR_TYPE_VIEW_CONFIGURATION_PROPERTIES };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrActionStateBoolean
@@ -4644,6 +4803,9 @@ public unsafe partial struct XrActionStateBoolean
     public XrBool32 changedSinceLastSync;
     public long lastChangeTime;
     public XrBool32 isActive;
+    /// <returns>a new <see cref="XrActionStateBoolean"> with it's type member set to </returns>
+    public static XrActionStateBoolean New() =>
+        new() { type = XrStructureType.XR_TYPE_ACTION_STATE_BOOLEAN };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrActionStateFloat
@@ -4654,6 +4816,9 @@ public unsafe partial struct XrActionStateFloat
     public XrBool32 changedSinceLastSync;
     public long lastChangeTime;
     public XrBool32 isActive;
+    /// <returns>a new <see cref="XrActionStateFloat"> with it's type member set to </returns>
+    public static XrActionStateFloat New() =>
+        new() { type = XrStructureType.XR_TYPE_ACTION_STATE_FLOAT };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrActionStateVector2f
@@ -4664,6 +4829,9 @@ public unsafe partial struct XrActionStateVector2f
     public XrBool32 changedSinceLastSync;
     public long lastChangeTime;
     public XrBool32 isActive;
+    /// <returns>a new <see cref="XrActionStateVector2f"> with it's type member set to </returns>
+    public static XrActionStateVector2f New() =>
+        new() { type = XrStructureType.XR_TYPE_ACTION_STATE_VECTOR2F };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrActionStatePose
@@ -4671,6 +4839,9 @@ public unsafe partial struct XrActionStatePose
     public XrStructureType type;
     public void* next;
     public XrBool32 isActive;
+    /// <returns>a new <see cref="XrActionStatePose"> with it's type member set to </returns>
+    public static XrActionStatePose New() =>
+        new() { type = XrStructureType.XR_TYPE_ACTION_STATE_POSE };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrActionStateGetInfo
@@ -4679,6 +4850,9 @@ public unsafe partial struct XrActionStateGetInfo
     public void* next;
     public XrAction action;
     public ulong subactionPath;
+    /// <returns>a new <see cref="XrActionStateGetInfo"> with it's type member set to </returns>
+    public static XrActionStateGetInfo New() =>
+        new() { type = XrStructureType.XR_TYPE_ACTION_STATE_GET_INFO };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrHapticActionInfo
@@ -4687,6 +4861,9 @@ public unsafe partial struct XrHapticActionInfo
     public void* next;
     public XrAction action;
     public ulong subactionPath;
+    /// <returns>a new <see cref="XrHapticActionInfo"> with it's type member set to </returns>
+    public static XrHapticActionInfo New() =>
+        new() { type = XrStructureType.XR_TYPE_HAPTIC_ACTION_INFO };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrActionSetCreateInfo
@@ -4696,6 +4873,9 @@ public unsafe partial struct XrActionSetCreateInfo
     public fixed byte actionSetName[(int)OpenXRNative.XR_MAX_ACTION_SET_NAME_SIZE];
     public fixed byte localizedActionSetName[(int)OpenXRNative.XR_MAX_LOCALIZED_ACTION_SET_NAME_SIZE];
     public uint priority;
+    /// <returns>a new <see cref="XrActionSetCreateInfo"> with it's type member set to </returns>
+    public static XrActionSetCreateInfo New() =>
+        new() { type = XrStructureType.XR_TYPE_ACTION_SET_CREATE_INFO };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrActionSuggestedBinding
@@ -4711,6 +4891,9 @@ public unsafe partial struct XrInteractionProfileSuggestedBinding
     public ulong interactionProfile;
     public uint countSuggestedBindings;
     public XrActionSuggestedBinding* suggestedBindings;
+    /// <returns>a new <see cref="XrInteractionProfileSuggestedBinding"> with it's type member set to </returns>
+    public static XrInteractionProfileSuggestedBinding New() =>
+        new() { type = XrStructureType.XR_TYPE_INTERACTION_PROFILE_SUGGESTED_BINDING };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrActiveActionSet
@@ -4725,6 +4908,9 @@ public unsafe partial struct XrSessionActionSetsAttachInfo
     public void* next;
     public uint countActionSets;
     public XrActionSet* actionSets;
+    /// <returns>a new <see cref="XrSessionActionSetsAttachInfo"> with it's type member set to </returns>
+    public static XrSessionActionSetsAttachInfo New() =>
+        new() { type = XrStructureType.XR_TYPE_SESSION_ACTION_SETS_ATTACH_INFO };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrActionsSyncInfo
@@ -4733,6 +4919,9 @@ public unsafe partial struct XrActionsSyncInfo
     public void* next;
     public uint countActiveActionSets;
     public XrActiveActionSet* activeActionSets;
+    /// <returns>a new <see cref="XrActionsSyncInfo"> with it's type member set to </returns>
+    public static XrActionsSyncInfo New() =>
+        new() { type = XrStructureType.XR_TYPE_ACTIONS_SYNC_INFO };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrBoundSourcesForActionEnumerateInfo
@@ -4740,6 +4929,9 @@ public unsafe partial struct XrBoundSourcesForActionEnumerateInfo
     public XrStructureType type;
     public void* next;
     public XrAction action;
+    /// <returns>a new <see cref="XrBoundSourcesForActionEnumerateInfo"> with it's type member set to </returns>
+    public static XrBoundSourcesForActionEnumerateInfo New() =>
+        new() { type = XrStructureType.XR_TYPE_BOUND_SOURCES_FOR_ACTION_ENUMERATE_INFO };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrInputSourceLocalizedNameGetInfo
@@ -4748,6 +4940,9 @@ public unsafe partial struct XrInputSourceLocalizedNameGetInfo
     public void* next;
     public ulong sourcePath;
     public ulong whichComponents;
+    /// <returns>a new <see cref="XrInputSourceLocalizedNameGetInfo"> with it's type member set to </returns>
+    public static XrInputSourceLocalizedNameGetInfo New() =>
+        new() { type = XrStructureType.XR_TYPE_INPUT_SOURCE_LOCALIZED_NAME_GET_INFO };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrEventDataInteractionProfileChanged
@@ -4755,6 +4950,9 @@ public unsafe partial struct XrEventDataInteractionProfileChanged
     public XrStructureType type;
     public void* next;
     public XrSession session;
+    /// <returns>a new <see cref="XrEventDataInteractionProfileChanged"> with it's type member set to </returns>
+    public static XrEventDataInteractionProfileChanged New() =>
+        new() { type = XrStructureType.XR_TYPE_EVENT_DATA_INTERACTION_PROFILE_CHANGED };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrInteractionProfileState
@@ -4762,6 +4960,9 @@ public unsafe partial struct XrInteractionProfileState
     public XrStructureType type;
     public void* next;
     public ulong interactionProfile;
+    /// <returns>a new <see cref="XrInteractionProfileState"> with it's type member set to </returns>
+    public static XrInteractionProfileState New() =>
+        new() { type = XrStructureType.XR_TYPE_INTERACTION_PROFILE_STATE };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrActionCreateInfo
@@ -4773,6 +4974,9 @@ public unsafe partial struct XrActionCreateInfo
     public uint countSubactionPaths;
     public ulong* subactionPaths;
     public fixed byte localizedActionName[(int)OpenXRNative.XR_MAX_LOCALIZED_ACTION_NAME_SIZE];
+    /// <returns>a new <see cref="XrActionCreateInfo"> with it's type member set to </returns>
+    public static XrActionCreateInfo New() =>
+        new() { type = XrStructureType.XR_TYPE_ACTION_CREATE_INFO };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrInstanceCreateInfoAndroidKHR
@@ -4781,6 +4985,9 @@ public unsafe partial struct XrInstanceCreateInfoAndroidKHR
     public void* next;
     public void* applicationVM;
     public void* applicationActivity;
+    /// <returns>a new <see cref="XrInstanceCreateInfoAndroidKHR"> with it's type member set to </returns>
+    public static XrInstanceCreateInfoAndroidKHR New() =>
+        new() { type = XrStructureType.XR_TYPE_INSTANCE_CREATE_INFO_ANDROID_KHR };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrVulkanSwapchainFormatListCreateInfoKHR
@@ -4789,6 +4996,9 @@ public unsafe partial struct XrVulkanSwapchainFormatListCreateInfoKHR
     public void* next;
     public uint viewFormatCount;
     public IntPtr viewFormats;
+    /// <returns>a new <see cref="XrVulkanSwapchainFormatListCreateInfoKHR"> with it's type member set to </returns>
+    public static XrVulkanSwapchainFormatListCreateInfoKHR New() =>
+        new() { type = XrStructureType.XR_TYPE_VULKAN_SWAPCHAIN_FORMAT_LIST_CREATE_INFO_KHR };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrDebugUtilsObjectNameInfoEXT
@@ -4798,6 +5008,9 @@ public unsafe partial struct XrDebugUtilsObjectNameInfoEXT
     public XrObjectType objectType;
     public ulong objectHandle;
     public byte* objectName;
+    /// <returns>a new <see cref="XrDebugUtilsObjectNameInfoEXT"> with it's type member set to </returns>
+    public static XrDebugUtilsObjectNameInfoEXT New() =>
+        new() { type = XrStructureType.XR_TYPE_DEBUG_UTILS_OBJECT_NAME_INFO_EXT };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrDebugUtilsLabelEXT
@@ -4805,6 +5018,9 @@ public unsafe partial struct XrDebugUtilsLabelEXT
     public XrStructureType type;
     public void* next;
     public byte* labelName;
+    /// <returns>a new <see cref="XrDebugUtilsLabelEXT"> with it's type member set to </returns>
+    public static XrDebugUtilsLabelEXT New() =>
+        new() { type = XrStructureType.XR_TYPE_DEBUG_UTILS_LABEL_EXT };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrDebugUtilsMessengerCallbackDataEXT
@@ -4818,6 +5034,9 @@ public unsafe partial struct XrDebugUtilsMessengerCallbackDataEXT
     public XrDebugUtilsObjectNameInfoEXT* objects;
     public uint sessionLabelCount;
     public XrDebugUtilsLabelEXT* sessionLabels;
+    /// <returns>a new <see cref="XrDebugUtilsMessengerCallbackDataEXT"> with it's type member set to </returns>
+    public static XrDebugUtilsMessengerCallbackDataEXT New() =>
+        new() { type = XrStructureType.XR_TYPE_DEBUG_UTILS_MESSENGER_CALLBACK_DATA_EXT };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrDebugUtilsMessengerCreateInfoEXT
@@ -4828,6 +5047,9 @@ public unsafe partial struct XrDebugUtilsMessengerCreateInfoEXT
     public ulong messageTypes;
     public IntPtr userCallback;
     public void* userData;
+    /// <returns>a new <see cref="XrDebugUtilsMessengerCreateInfoEXT"> with it's type member set to </returns>
+    public static XrDebugUtilsMessengerCreateInfoEXT New() =>
+        new() { type = XrStructureType.XR_TYPE_DEBUG_UTILS_MESSENGER_CREATE_INFO_EXT };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrVisibilityMaskKHR
@@ -4840,6 +5062,9 @@ public unsafe partial struct XrVisibilityMaskKHR
     public uint indexCapacityInput;
     public uint indexCountOutput;
     public uint* indices;
+    /// <returns>a new <see cref="XrVisibilityMaskKHR"> with it's type member set to </returns>
+    public static XrVisibilityMaskKHR New() =>
+        new() { type = XrStructureType.XR_TYPE_VISIBILITY_MASK_KHR };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrGraphicsRequirementsOpenGLKHR
@@ -4848,6 +5073,9 @@ public unsafe partial struct XrGraphicsRequirementsOpenGLKHR
     public void* next;
     public ulong minApiVersionSupported;
     public ulong maxApiVersionSupported;
+    /// <returns>a new <see cref="XrGraphicsRequirementsOpenGLKHR"> with it's type member set to </returns>
+    public static XrGraphicsRequirementsOpenGLKHR New() =>
+        new() { type = XrStructureType.XR_TYPE_GRAPHICS_REQUIREMENTS_OPENGL_KHR };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrGraphicsRequirementsOpenGLESKHR
@@ -4856,6 +5084,9 @@ public unsafe partial struct XrGraphicsRequirementsOpenGLESKHR
     public void* next;
     public ulong minApiVersionSupported;
     public ulong maxApiVersionSupported;
+    /// <returns>a new <see cref="XrGraphicsRequirementsOpenGLESKHR"> with it's type member set to </returns>
+    public static XrGraphicsRequirementsOpenGLESKHR New() =>
+        new() { type = XrStructureType.XR_TYPE_GRAPHICS_REQUIREMENTS_OPENGL_ES_KHR };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrGraphicsRequirementsVulkanKHR
@@ -4864,6 +5095,9 @@ public unsafe partial struct XrGraphicsRequirementsVulkanKHR
     public void* next;
     public ulong minApiVersionSupported;
     public ulong maxApiVersionSupported;
+    /// <returns>a new <see cref="XrGraphicsRequirementsVulkanKHR"> with it's type member set to </returns>
+    public static XrGraphicsRequirementsVulkanKHR New() =>
+        new() { type = XrStructureType.XR_TYPE_GRAPHICS_REQUIREMENTS_VULKAN_KHR };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrGraphicsRequirementsD3D11KHR
@@ -4872,6 +5106,9 @@ public unsafe partial struct XrGraphicsRequirementsD3D11KHR
     public void* next;
     public IntPtr adapterLuid;
     public uint minFeatureLevel;
+    /// <returns>a new <see cref="XrGraphicsRequirementsD3D11KHR"> with it's type member set to </returns>
+    public static XrGraphicsRequirementsD3D11KHR New() =>
+        new() { type = XrStructureType.XR_TYPE_GRAPHICS_REQUIREMENTS_D3D11_KHR };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrGraphicsRequirementsD3D12KHR
@@ -4880,6 +5117,9 @@ public unsafe partial struct XrGraphicsRequirementsD3D12KHR
     public void* next;
     public IntPtr adapterLuid;
     public uint minFeatureLevel;
+    /// <returns>a new <see cref="XrGraphicsRequirementsD3D12KHR"> with it's type member set to </returns>
+    public static XrGraphicsRequirementsD3D12KHR New() =>
+        new() { type = XrStructureType.XR_TYPE_GRAPHICS_REQUIREMENTS_D3D12_KHR };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrVulkanInstanceCreateInfoKHR
@@ -4891,6 +5131,9 @@ public unsafe partial struct XrVulkanInstanceCreateInfoKHR
     public IntPtr pfnGetInstanceProcAddr;
     public IntPtr vulkanCreateInfo;
     public IntPtr vulkanAllocator;
+    /// <returns>a new <see cref="XrVulkanInstanceCreateInfoKHR"> with it's type member set to </returns>
+    public static XrVulkanInstanceCreateInfoKHR New() =>
+        new() { type = XrStructureType.XR_TYPE_VULKAN_INSTANCE_CREATE_INFO_KHR };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrVulkanDeviceCreateInfoKHR
@@ -4903,6 +5146,9 @@ public unsafe partial struct XrVulkanDeviceCreateInfoKHR
     public IntPtr vulkanPhysicalDevice;
     public IntPtr vulkanCreateInfo;
     public IntPtr vulkanAllocator;
+    /// <returns>a new <see cref="XrVulkanDeviceCreateInfoKHR"> with it's type member set to </returns>
+    public static XrVulkanDeviceCreateInfoKHR New() =>
+        new() { type = XrStructureType.XR_TYPE_VULKAN_DEVICE_CREATE_INFO_KHR };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrVulkanGraphicsDeviceGetInfoKHR
@@ -4911,6 +5157,9 @@ public unsafe partial struct XrVulkanGraphicsDeviceGetInfoKHR
     public void* next;
     public ulong systemId;
     public IntPtr vulkanInstance;
+    /// <returns>a new <see cref="XrVulkanGraphicsDeviceGetInfoKHR"> with it's type member set to </returns>
+    public static XrVulkanGraphicsDeviceGetInfoKHR New() =>
+        new() { type = XrStructureType.XR_TYPE_VULKAN_GRAPHICS_DEVICE_GET_INFO_KHR };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrVulkanSwapchainCreateInfoMETA
@@ -4919,6 +5168,9 @@ public unsafe partial struct XrVulkanSwapchainCreateInfoMETA
     public void* next;
     public VkImageCreateFlags additionalCreateFlags;
     public VkImageUsageFlags additionalUsageFlags;
+    /// <returns>a new <see cref="XrVulkanSwapchainCreateInfoMETA"> with it's type member set to </returns>
+    public static XrVulkanSwapchainCreateInfoMETA New() =>
+        new() { type = XrStructureType.XR_TYPE_VULKAN_SWAPCHAIN_CREATE_INFO_META };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrSessionCreateInfoOverlayEXTX
@@ -4927,6 +5179,9 @@ public unsafe partial struct XrSessionCreateInfoOverlayEXTX
     public void* next;
     public ulong createFlags;
     public uint sessionLayersPlacement;
+    /// <returns>a new <see cref="XrSessionCreateInfoOverlayEXTX"> with it's type member set to </returns>
+    public static XrSessionCreateInfoOverlayEXTX New() =>
+        new() { type = XrStructureType.XR_TYPE_SESSION_CREATE_INFO_OVERLAY_EXTX };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrEventDataMainSessionVisibilityChangedEXTX
@@ -4935,6 +5190,9 @@ public unsafe partial struct XrEventDataMainSessionVisibilityChangedEXTX
     public void* next;
     public XrBool32 visible;
     public ulong flags;
+    /// <returns>a new <see cref="XrEventDataMainSessionVisibilityChangedEXTX"> with it's type member set to </returns>
+    public static XrEventDataMainSessionVisibilityChangedEXTX New() =>
+        new() { type = XrStructureType.XR_TYPE_EVENT_DATA_MAIN_SESSION_VISIBILITY_CHANGED_EXTX };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrEventDataDisplayRefreshRateChangedFB
@@ -4943,6 +5201,9 @@ public unsafe partial struct XrEventDataDisplayRefreshRateChangedFB
     public void* next;
     public float fromDisplayRefreshRate;
     public float toDisplayRefreshRate;
+    /// <returns>a new <see cref="XrEventDataDisplayRefreshRateChangedFB"> with it's type member set to </returns>
+    public static XrEventDataDisplayRefreshRateChangedFB New() =>
+        new() { type = XrStructureType.XR_TYPE_EVENT_DATA_DISPLAY_REFRESH_RATE_CHANGED_FB };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrViewConfigurationDepthRangeEXT
@@ -4953,6 +5214,9 @@ public unsafe partial struct XrViewConfigurationDepthRangeEXT
     public float minNearZ;
     public float recommendedFarZ;
     public float maxFarZ;
+    /// <returns>a new <see cref="XrViewConfigurationDepthRangeEXT"> with it's type member set to </returns>
+    public static XrViewConfigurationDepthRangeEXT New() =>
+        new() { type = XrStructureType.XR_TYPE_VIEW_CONFIGURATION_DEPTH_RANGE_EXT };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrViewConfigurationViewFovEPIC
@@ -4961,6 +5225,9 @@ public unsafe partial struct XrViewConfigurationViewFovEPIC
     public void* next;
     public XrFovf recommendedFov;
     public XrFovf maxMutableFov;
+    /// <returns>a new <see cref="XrViewConfigurationViewFovEPIC"> with it's type member set to </returns>
+    public static XrViewConfigurationViewFovEPIC New() =>
+        new() { type = XrStructureType.XR_TYPE_VIEW_CONFIGURATION_VIEW_FOV_EPIC };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrInteractionProfileDpadBindingEXT
@@ -4976,6 +5243,9 @@ public unsafe partial struct XrInteractionProfileDpadBindingEXT
     public XrBool32 isSticky;
     public XrHapticBaseHeader* onHaptic;
     public XrHapticBaseHeader* offHaptic;
+    /// <returns>a new <see cref="XrInteractionProfileDpadBindingEXT"> with it's type member set to </returns>
+    public static XrInteractionProfileDpadBindingEXT New() =>
+        new() { type = XrStructureType.XR_TYPE_INTERACTION_PROFILE_DPAD_BINDING_EXT };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrInteractionProfileAnalogThresholdVALVE
@@ -4988,6 +5258,9 @@ public unsafe partial struct XrInteractionProfileAnalogThresholdVALVE
     public float offThreshold;
     public XrHapticBaseHeader* onHaptic;
     public XrHapticBaseHeader* offHaptic;
+    /// <returns>a new <see cref="XrInteractionProfileAnalogThresholdVALVE"> with it's type member set to </returns>
+    public static XrInteractionProfileAnalogThresholdVALVE New() =>
+        new() { type = XrStructureType.XR_TYPE_INTERACTION_PROFILE_ANALOG_THRESHOLD_VALVE };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrBindingModificationsKHR
@@ -4996,6 +5269,9 @@ public unsafe partial struct XrBindingModificationsKHR
     public void* next;
     public uint bindingModificationCount;
     public XrBindingModificationBaseHeaderKHR** bindingModifications;
+    /// <returns>a new <see cref="XrBindingModificationsKHR"> with it's type member set to </returns>
+    public static XrBindingModificationsKHR New() =>
+        new() { type = XrStructureType.XR_TYPE_BINDING_MODIFICATIONS_KHR };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrBindingModificationBaseHeaderKHR
@@ -5009,6 +5285,9 @@ public unsafe partial struct XrSystemEyeGazeInteractionPropertiesEXT
     public XrStructureType type;
     public void* next;
     public XrBool32 supportsEyeGazeInteraction;
+    /// <returns>a new <see cref="XrSystemEyeGazeInteractionPropertiesEXT"> with it's type member set to </returns>
+    public static XrSystemEyeGazeInteractionPropertiesEXT New() =>
+        new() { type = XrStructureType.XR_TYPE_SYSTEM_EYE_GAZE_INTERACTION_PROPERTIES_EXT };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrEyeGazeSampleTimeEXT
@@ -5016,6 +5295,9 @@ public unsafe partial struct XrEyeGazeSampleTimeEXT
     public XrStructureType type;
     public void* next;
     public long time;
+    /// <returns>a new <see cref="XrEyeGazeSampleTimeEXT"> with it's type member set to </returns>
+    public static XrEyeGazeSampleTimeEXT New() =>
+        new() { type = XrStructureType.XR_TYPE_EYE_GAZE_SAMPLE_TIME_EXT };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrSpatialAnchorCreateInfoMSFT
@@ -5025,6 +5307,9 @@ public unsafe partial struct XrSpatialAnchorCreateInfoMSFT
     public XrSpace space;
     public XrPosef pose;
     public long time;
+    /// <returns>a new <see cref="XrSpatialAnchorCreateInfoMSFT"> with it's type member set to </returns>
+    public static XrSpatialAnchorCreateInfoMSFT New() =>
+        new() { type = XrStructureType.XR_TYPE_SPATIAL_ANCHOR_CREATE_INFO_MSFT };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrSpatialAnchorSpaceCreateInfoMSFT
@@ -5033,6 +5318,9 @@ public unsafe partial struct XrSpatialAnchorSpaceCreateInfoMSFT
     public void* next;
     public XrSpatialAnchorMSFT anchor;
     public XrPosef poseInAnchorSpace;
+    /// <returns>a new <see cref="XrSpatialAnchorSpaceCreateInfoMSFT"> with it's type member set to </returns>
+    public static XrSpatialAnchorSpaceCreateInfoMSFT New() =>
+        new() { type = XrStructureType.XR_TYPE_SPATIAL_ANCHOR_SPACE_CREATE_INFO_MSFT };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrCompositionLayerImageLayoutFB
@@ -5040,6 +5328,9 @@ public unsafe partial struct XrCompositionLayerImageLayoutFB
     public XrStructureType type;
     public void* next;
     public ulong flags;
+    /// <returns>a new <see cref="XrCompositionLayerImageLayoutFB"> with it's type member set to </returns>
+    public static XrCompositionLayerImageLayoutFB New() =>
+        new() { type = XrStructureType.XR_TYPE_COMPOSITION_LAYER_IMAGE_LAYOUT_FB };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrCompositionLayerAlphaBlendFB
@@ -5050,6 +5341,9 @@ public unsafe partial struct XrCompositionLayerAlphaBlendFB
     public XrBlendFactorFB dstFactorColor;
     public XrBlendFactorFB srcFactorAlpha;
     public XrBlendFactorFB dstFactorAlpha;
+    /// <returns>a new <see cref="XrCompositionLayerAlphaBlendFB"> with it's type member set to </returns>
+    public static XrCompositionLayerAlphaBlendFB New() =>
+        new() { type = XrStructureType.XR_TYPE_COMPOSITION_LAYER_ALPHA_BLEND_FB };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrGraphicsBindingEGLMNDX
@@ -5060,6 +5354,9 @@ public unsafe partial struct XrGraphicsBindingEGLMNDX
     public IntPtr display;
     public IntPtr config;
     public IntPtr context;
+    /// <returns>a new <see cref="XrGraphicsBindingEGLMNDX"> with it's type member set to </returns>
+    public static XrGraphicsBindingEGLMNDX New() =>
+        new() { type = XrStructureType.XR_TYPE_GRAPHICS_BINDING_EGL_MNDX };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrSpatialGraphNodeSpaceCreateInfoMSFT
@@ -5069,6 +5366,9 @@ public unsafe partial struct XrSpatialGraphNodeSpaceCreateInfoMSFT
     public XrSpatialGraphNodeTypeMSFT nodeType;
     public fixed byte nodeId[(int)OpenXRNative.XR_GUID_SIZE_MSFT];
     public XrPosef pose;
+    /// <returns>a new <see cref="XrSpatialGraphNodeSpaceCreateInfoMSFT"> with it's type member set to </returns>
+    public static XrSpatialGraphNodeSpaceCreateInfoMSFT New() =>
+        new() { type = XrStructureType.XR_TYPE_SPATIAL_GRAPH_NODE_SPACE_CREATE_INFO_MSFT };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrSpatialGraphStaticNodeBindingCreateInfoMSFT
@@ -5078,12 +5378,18 @@ public unsafe partial struct XrSpatialGraphStaticNodeBindingCreateInfoMSFT
     public XrSpace space;
     public XrPosef poseInSpace;
     public long time;
+    /// <returns>a new <see cref="XrSpatialGraphStaticNodeBindingCreateInfoMSFT"> with it's type member set to </returns>
+    public static XrSpatialGraphStaticNodeBindingCreateInfoMSFT New() =>
+        new() { type = XrStructureType.XR_TYPE_SPATIAL_GRAPH_STATIC_NODE_BINDING_CREATE_INFO_MSFT };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrSpatialGraphNodeBindingPropertiesGetInfoMSFT
 {
     public XrStructureType type;
     public void* next;
+    /// <returns>a new <see cref="XrSpatialGraphNodeBindingPropertiesGetInfoMSFT"> with it's type member set to </returns>
+    public static XrSpatialGraphNodeBindingPropertiesGetInfoMSFT New() =>
+        new() { type = XrStructureType.XR_TYPE_SPATIAL_GRAPH_NODE_BINDING_PROPERTIES_GET_INFO_MSFT };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrSpatialGraphNodeBindingPropertiesMSFT
@@ -5092,6 +5398,9 @@ public unsafe partial struct XrSpatialGraphNodeBindingPropertiesMSFT
     public void* next;
     public fixed byte nodeId[(int)OpenXRNative.XR_GUID_SIZE_MSFT];
     public XrPosef poseInNodeSpace;
+    /// <returns>a new <see cref="XrSpatialGraphNodeBindingPropertiesMSFT"> with it's type member set to </returns>
+    public static XrSpatialGraphNodeBindingPropertiesMSFT New() =>
+        new() { type = XrStructureType.XR_TYPE_SPATIAL_GRAPH_NODE_BINDING_PROPERTIES_MSFT };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrSystemHandTrackingPropertiesEXT
@@ -5099,6 +5408,9 @@ public unsafe partial struct XrSystemHandTrackingPropertiesEXT
     public XrStructureType type;
     public void* next;
     public XrBool32 supportsHandTracking;
+    /// <returns>a new <see cref="XrSystemHandTrackingPropertiesEXT"> with it's type member set to </returns>
+    public static XrSystemHandTrackingPropertiesEXT New() =>
+        new() { type = XrStructureType.XR_TYPE_SYSTEM_HAND_TRACKING_PROPERTIES_EXT };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrHandTrackerCreateInfoEXT
@@ -5107,6 +5419,9 @@ public unsafe partial struct XrHandTrackerCreateInfoEXT
     public void* next;
     public XrHandEXT hand;
     public XrHandJointSetEXT handJointSet;
+    /// <returns>a new <see cref="XrHandTrackerCreateInfoEXT"> with it's type member set to </returns>
+    public static XrHandTrackerCreateInfoEXT New() =>
+        new() { type = XrStructureType.XR_TYPE_HAND_TRACKER_CREATE_INFO_EXT };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrHandJointsLocateInfoEXT
@@ -5115,6 +5430,9 @@ public unsafe partial struct XrHandJointsLocateInfoEXT
     public void* next;
     public XrSpace baseSpace;
     public long time;
+    /// <returns>a new <see cref="XrHandJointsLocateInfoEXT"> with it's type member set to </returns>
+    public static XrHandJointsLocateInfoEXT New() =>
+        new() { type = XrStructureType.XR_TYPE_HAND_JOINTS_LOCATE_INFO_EXT };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrHandJointLocationEXT
@@ -5138,6 +5456,9 @@ public unsafe partial struct XrHandJointLocationsEXT
     public XrBool32 isActive;
     public uint jointCount;
     public XrHandJointLocationEXT* jointLocations;
+    /// <returns>a new <see cref="XrHandJointLocationsEXT"> with it's type member set to </returns>
+    public static XrHandJointLocationsEXT New() =>
+        new() { type = XrStructureType.XR_TYPE_HAND_JOINT_LOCATIONS_EXT };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrHandJointVelocitiesEXT
@@ -5146,6 +5467,9 @@ public unsafe partial struct XrHandJointVelocitiesEXT
     public void* next;
     public uint jointCount;
     public XrHandJointVelocityEXT* jointVelocities;
+    /// <returns>a new <see cref="XrHandJointVelocitiesEXT"> with it's type member set to </returns>
+    public static XrHandJointVelocitiesEXT New() =>
+        new() { type = XrStructureType.XR_TYPE_HAND_JOINT_VELOCITIES_EXT };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrSystemFaceTrackingPropertiesFB
@@ -5153,6 +5477,9 @@ public unsafe partial struct XrSystemFaceTrackingPropertiesFB
     public XrStructureType type;
     public void* next;
     public XrBool32 supportsFaceTracking;
+    /// <returns>a new <see cref="XrSystemFaceTrackingPropertiesFB"> with it's type member set to </returns>
+    public static XrSystemFaceTrackingPropertiesFB New() =>
+        new() { type = XrStructureType.XR_TYPE_SYSTEM_FACE_TRACKING_PROPERTIES_FB };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrFaceTrackerCreateInfoFB
@@ -5160,6 +5487,9 @@ public unsafe partial struct XrFaceTrackerCreateInfoFB
     public XrStructureType type;
     public void* next;
     public XrFaceExpressionSetFB faceExpressionSet;
+    /// <returns>a new <see cref="XrFaceTrackerCreateInfoFB"> with it's type member set to </returns>
+    public static XrFaceTrackerCreateInfoFB New() =>
+        new() { type = XrStructureType.XR_TYPE_FACE_TRACKER_CREATE_INFO_FB };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrFaceExpressionInfoFB
@@ -5167,6 +5497,9 @@ public unsafe partial struct XrFaceExpressionInfoFB
     public XrStructureType type;
     public void* next;
     public long time;
+    /// <returns>a new <see cref="XrFaceExpressionInfoFB"> with it's type member set to </returns>
+    public static XrFaceExpressionInfoFB New() =>
+        new() { type = XrStructureType.XR_TYPE_FACE_EXPRESSION_INFO_FB };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrFaceExpressionStatusFB
@@ -5185,6 +5518,9 @@ public unsafe partial struct XrFaceExpressionWeightsFB
     public float* confidences;
     public XrFaceExpressionStatusFB status;
     public long time;
+    /// <returns>a new <see cref="XrFaceExpressionWeightsFB"> with it's type member set to </returns>
+    public static XrFaceExpressionWeightsFB New() =>
+        new() { type = XrStructureType.XR_TYPE_FACE_EXPRESSION_WEIGHTS_FB };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrSystemBodyTrackingPropertiesFB
@@ -5192,6 +5528,9 @@ public unsafe partial struct XrSystemBodyTrackingPropertiesFB
     public XrStructureType type;
     public void* next;
     public XrBool32 supportsBodyTracking;
+    /// <returns>a new <see cref="XrSystemBodyTrackingPropertiesFB"> with it's type member set to </returns>
+    public static XrSystemBodyTrackingPropertiesFB New() =>
+        new() { type = XrStructureType.XR_TYPE_SYSTEM_BODY_TRACKING_PROPERTIES_FB };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrBodyTrackerCreateInfoFB
@@ -5199,6 +5538,9 @@ public unsafe partial struct XrBodyTrackerCreateInfoFB
     public XrStructureType type;
     public void* next;
     public XrBodyJointSetFB bodyJointSet;
+    /// <returns>a new <see cref="XrBodyTrackerCreateInfoFB"> with it's type member set to </returns>
+    public static XrBodyTrackerCreateInfoFB New() =>
+        new() { type = XrStructureType.XR_TYPE_BODY_TRACKER_CREATE_INFO_FB };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrBodySkeletonJointFB
@@ -5214,6 +5556,9 @@ public unsafe partial struct XrBodySkeletonFB
     public void* next;
     public uint jointCount;
     public XrBodySkeletonJointFB* joints;
+    /// <returns>a new <see cref="XrBodySkeletonFB"> with it's type member set to </returns>
+    public static XrBodySkeletonFB New() =>
+        new() { type = XrStructureType.XR_TYPE_BODY_SKELETON_FB };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrBodyJointsLocateInfoFB
@@ -5222,6 +5567,9 @@ public unsafe partial struct XrBodyJointsLocateInfoFB
     public void* next;
     public XrSpace baseSpace;
     public long time;
+    /// <returns>a new <see cref="XrBodyJointsLocateInfoFB"> with it's type member set to </returns>
+    public static XrBodyJointsLocateInfoFB New() =>
+        new() { type = XrStructureType.XR_TYPE_BODY_JOINTS_LOCATE_INFO_FB };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrBodyJointLocationFB
@@ -5240,6 +5588,9 @@ public unsafe partial struct XrBodyJointLocationsFB
     public XrBodyJointLocationFB* jointLocations;
     public uint skeletonChangedCount;
     public long time;
+    /// <returns>a new <see cref="XrBodyJointLocationsFB"> with it's type member set to </returns>
+    public static XrBodyJointLocationsFB New() =>
+        new() { type = XrStructureType.XR_TYPE_BODY_JOINT_LOCATIONS_FB };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrSystemEyeTrackingPropertiesFB
@@ -5247,12 +5598,18 @@ public unsafe partial struct XrSystemEyeTrackingPropertiesFB
     public XrStructureType type;
     public void* next;
     public XrBool32 supportsEyeTracking;
+    /// <returns>a new <see cref="XrSystemEyeTrackingPropertiesFB"> with it's type member set to </returns>
+    public static XrSystemEyeTrackingPropertiesFB New() =>
+        new() { type = XrStructureType.XR_TYPE_SYSTEM_EYE_TRACKING_PROPERTIES_FB };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrEyeTrackerCreateInfoFB
 {
     public XrStructureType type;
     public void* next;
+    /// <returns>a new <see cref="XrEyeTrackerCreateInfoFB"> with it's type member set to </returns>
+    public static XrEyeTrackerCreateInfoFB New() =>
+        new() { type = XrStructureType.XR_TYPE_EYE_TRACKER_CREATE_INFO_FB };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrEyeGazesInfoFB
@@ -5261,6 +5618,9 @@ public unsafe partial struct XrEyeGazesInfoFB
     public void* next;
     public XrSpace baseSpace;
     public long time;
+    /// <returns>a new <see cref="XrEyeGazesInfoFB"> with it's type member set to </returns>
+    public static XrEyeGazesInfoFB New() =>
+        new() { type = XrStructureType.XR_TYPE_EYE_GAZES_INFO_FB };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrEyeGazeFB
@@ -5276,6 +5636,9 @@ public unsafe partial struct XrEyeGazesFB
     public void* next;
     public XrEyeGazeFB gaze;
     public long time;
+    /// <returns>a new <see cref="XrEyeGazesFB"> with it's type member set to </returns>
+    public static XrEyeGazesFB New() =>
+        new() { type = XrStructureType.XR_TYPE_EYE_GAZES_FB };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrHandJointsMotionRangeInfoEXT
@@ -5283,6 +5646,9 @@ public unsafe partial struct XrHandJointsMotionRangeInfoEXT
     public XrStructureType type;
     public void* next;
     public XrHandJointsMotionRangeEXT handJointsMotionRange;
+    /// <returns>a new <see cref="XrHandJointsMotionRangeInfoEXT"> with it's type member set to </returns>
+    public static XrHandJointsMotionRangeInfoEXT New() =>
+        new() { type = XrStructureType.XR_TYPE_HAND_JOINTS_MOTION_RANGE_INFO_EXT };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrHandTrackingDataSourceInfoEXT
@@ -5291,6 +5657,9 @@ public unsafe partial struct XrHandTrackingDataSourceInfoEXT
     public void* next;
     public uint requestedDataSourceCount;
     public XrHandTrackingDataSourceEXT* requestedDataSources;
+    /// <returns>a new <see cref="XrHandTrackingDataSourceInfoEXT"> with it's type member set to </returns>
+    public static XrHandTrackingDataSourceInfoEXT New() =>
+        new() { type = XrStructureType.XR_TYPE_HAND_TRACKING_DATA_SOURCE_INFO_EXT };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrHandTrackingDataSourceStateEXT
@@ -5299,6 +5668,9 @@ public unsafe partial struct XrHandTrackingDataSourceStateEXT
     public void* next;
     public XrBool32 isActive;
     public XrHandTrackingDataSourceEXT dataSource;
+    /// <returns>a new <see cref="XrHandTrackingDataSourceStateEXT"> with it's type member set to </returns>
+    public static XrHandTrackingDataSourceStateEXT New() =>
+        new() { type = XrStructureType.XR_TYPE_HAND_TRACKING_DATA_SOURCE_STATE_EXT };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrHandMeshSpaceCreateInfoMSFT
@@ -5307,6 +5679,9 @@ public unsafe partial struct XrHandMeshSpaceCreateInfoMSFT
     public void* next;
     public XrHandPoseTypeMSFT handPoseType;
     public XrPosef poseInHandMeshSpace;
+    /// <returns>a new <see cref="XrHandMeshSpaceCreateInfoMSFT"> with it's type member set to </returns>
+    public static XrHandMeshSpaceCreateInfoMSFT New() =>
+        new() { type = XrStructureType.XR_TYPE_HAND_MESH_SPACE_CREATE_INFO_MSFT };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrHandMeshUpdateInfoMSFT
@@ -5315,6 +5690,9 @@ public unsafe partial struct XrHandMeshUpdateInfoMSFT
     public void* next;
     public long time;
     public XrHandPoseTypeMSFT handPoseType;
+    /// <returns>a new <see cref="XrHandMeshUpdateInfoMSFT"> with it's type member set to </returns>
+    public static XrHandMeshUpdateInfoMSFT New() =>
+        new() { type = XrStructureType.XR_TYPE_HAND_MESH_UPDATE_INFO_MSFT };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrHandMeshMSFT
@@ -5326,6 +5704,9 @@ public unsafe partial struct XrHandMeshMSFT
     public XrBool32 vertexBufferChanged;
     public XrHandMeshIndexBufferMSFT indexBuffer;
     public XrHandMeshVertexBufferMSFT vertexBuffer;
+    /// <returns>a new <see cref="XrHandMeshMSFT"> with it's type member set to </returns>
+    public static XrHandMeshMSFT New() =>
+        new() { type = XrStructureType.XR_TYPE_HAND_MESH_MSFT };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrHandMeshIndexBufferMSFT
@@ -5357,6 +5738,9 @@ public unsafe partial struct XrSystemHandTrackingMeshPropertiesMSFT
     public XrBool32 supportsHandTrackingMesh;
     public uint maxHandMeshIndexCount;
     public uint maxHandMeshVertexCount;
+    /// <returns>a new <see cref="XrSystemHandTrackingMeshPropertiesMSFT"> with it's type member set to </returns>
+    public static XrSystemHandTrackingMeshPropertiesMSFT New() =>
+        new() { type = XrStructureType.XR_TYPE_SYSTEM_HAND_TRACKING_MESH_PROPERTIES_MSFT };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrHandPoseTypeInfoMSFT
@@ -5364,6 +5748,9 @@ public unsafe partial struct XrHandPoseTypeInfoMSFT
     public XrStructureType type;
     public void* next;
     public XrHandPoseTypeMSFT handPoseType;
+    /// <returns>a new <see cref="XrHandPoseTypeInfoMSFT"> with it's type member set to </returns>
+    public static XrHandPoseTypeInfoMSFT New() =>
+        new() { type = XrStructureType.XR_TYPE_HAND_POSE_TYPE_INFO_MSFT };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrSecondaryViewConfigurationSessionBeginInfoMSFT
@@ -5372,6 +5759,9 @@ public unsafe partial struct XrSecondaryViewConfigurationSessionBeginInfoMSFT
     public void* next;
     public uint viewConfigurationCount;
     public XrViewConfigurationType* enabledViewConfigurationTypes;
+    /// <returns>a new <see cref="XrSecondaryViewConfigurationSessionBeginInfoMSFT"> with it's type member set to </returns>
+    public static XrSecondaryViewConfigurationSessionBeginInfoMSFT New() =>
+        new() { type = XrStructureType.XR_TYPE_SECONDARY_VIEW_CONFIGURATION_SESSION_BEGIN_INFO_MSFT };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrSecondaryViewConfigurationStateMSFT
@@ -5380,6 +5770,9 @@ public unsafe partial struct XrSecondaryViewConfigurationStateMSFT
     public void* next;
     public XrViewConfigurationType viewConfigurationType;
     public XrBool32 active;
+    /// <returns>a new <see cref="XrSecondaryViewConfigurationStateMSFT"> with it's type member set to </returns>
+    public static XrSecondaryViewConfigurationStateMSFT New() =>
+        new() { type = XrStructureType.XR_TYPE_SECONDARY_VIEW_CONFIGURATION_STATE_MSFT };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrSecondaryViewConfigurationFrameStateMSFT
@@ -5388,6 +5781,9 @@ public unsafe partial struct XrSecondaryViewConfigurationFrameStateMSFT
     public void* next;
     public uint viewConfigurationCount;
     public XrSecondaryViewConfigurationStateMSFT* viewConfigurationStates;
+    /// <returns>a new <see cref="XrSecondaryViewConfigurationFrameStateMSFT"> with it's type member set to </returns>
+    public static XrSecondaryViewConfigurationFrameStateMSFT New() =>
+        new() { type = XrStructureType.XR_TYPE_SECONDARY_VIEW_CONFIGURATION_FRAME_STATE_MSFT };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrSecondaryViewConfigurationFrameEndInfoMSFT
@@ -5396,6 +5792,9 @@ public unsafe partial struct XrSecondaryViewConfigurationFrameEndInfoMSFT
     public void* next;
     public uint viewConfigurationCount;
     public XrSecondaryViewConfigurationLayerInfoMSFT* viewConfigurationLayersInfo;
+    /// <returns>a new <see cref="XrSecondaryViewConfigurationFrameEndInfoMSFT"> with it's type member set to </returns>
+    public static XrSecondaryViewConfigurationFrameEndInfoMSFT New() =>
+        new() { type = XrStructureType.XR_TYPE_SECONDARY_VIEW_CONFIGURATION_FRAME_END_INFO_MSFT };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrSecondaryViewConfigurationLayerInfoMSFT
@@ -5406,6 +5805,9 @@ public unsafe partial struct XrSecondaryViewConfigurationLayerInfoMSFT
     public XrEnvironmentBlendMode environmentBlendMode;
     public uint layerCount;
     public XrCompositionLayerBaseHeader** layers;
+    /// <returns>a new <see cref="XrSecondaryViewConfigurationLayerInfoMSFT"> with it's type member set to </returns>
+    public static XrSecondaryViewConfigurationLayerInfoMSFT New() =>
+        new() { type = XrStructureType.XR_TYPE_SECONDARY_VIEW_CONFIGURATION_LAYER_INFO_MSFT };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrSecondaryViewConfigurationSwapchainCreateInfoMSFT
@@ -5413,6 +5815,9 @@ public unsafe partial struct XrSecondaryViewConfigurationSwapchainCreateInfoMSFT
     public XrStructureType type;
     public void* next;
     public XrViewConfigurationType viewConfigurationType;
+    /// <returns>a new <see cref="XrSecondaryViewConfigurationSwapchainCreateInfoMSFT"> with it's type member set to </returns>
+    public static XrSecondaryViewConfigurationSwapchainCreateInfoMSFT New() =>
+        new() { type = XrStructureType.XR_TYPE_SECONDARY_VIEW_CONFIGURATION_SWAPCHAIN_CREATE_INFO_MSFT };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrHolographicWindowAttachmentMSFT
@@ -5421,6 +5826,9 @@ public unsafe partial struct XrHolographicWindowAttachmentMSFT
     public void* next;
     public IntPtr holographicSpace;
     public IntPtr coreWindow;
+    /// <returns>a new <see cref="XrHolographicWindowAttachmentMSFT"> with it's type member set to </returns>
+    public static XrHolographicWindowAttachmentMSFT New() =>
+        new() { type = XrStructureType.XR_TYPE_HOLOGRAPHIC_WINDOW_ATTACHMENT_MSFT };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrAndroidSurfaceSwapchainCreateInfoFB
@@ -5428,6 +5836,9 @@ public unsafe partial struct XrAndroidSurfaceSwapchainCreateInfoFB
     public XrStructureType type;
     public void* next;
     public ulong createFlags;
+    /// <returns>a new <see cref="XrAndroidSurfaceSwapchainCreateInfoFB"> with it's type member set to </returns>
+    public static XrAndroidSurfaceSwapchainCreateInfoFB New() =>
+        new() { type = XrStructureType.XR_TYPE_ANDROID_SURFACE_SWAPCHAIN_CREATE_INFO_FB };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrSwapchainStateBaseHeaderFB
@@ -5442,6 +5853,9 @@ public unsafe partial struct XrSwapchainStateAndroidSurfaceDimensionsFB
     public void* next;
     public uint width;
     public uint height;
+    /// <returns>a new <see cref="XrSwapchainStateAndroidSurfaceDimensionsFB"> with it's type member set to </returns>
+    public static XrSwapchainStateAndroidSurfaceDimensionsFB New() =>
+        new() { type = XrStructureType.XR_TYPE_SWAPCHAIN_STATE_ANDROID_SURFACE_DIMENSIONS_FB };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrSwapchainStateSamplerOpenGLESFB
@@ -5458,6 +5872,9 @@ public unsafe partial struct XrSwapchainStateSamplerOpenGLESFB
     public IntPtr swizzleAlpha;
     public float maxAnisotropy;
     public XrColor4f borderColor;
+    /// <returns>a new <see cref="XrSwapchainStateSamplerOpenGLESFB"> with it's type member set to </returns>
+    public static XrSwapchainStateSamplerOpenGLESFB New() =>
+        new() { type = XrStructureType.XR_TYPE_SWAPCHAIN_STATE_SAMPLER_OPENGL_ES_FB };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrSwapchainStateSamplerVulkanFB
@@ -5475,6 +5892,9 @@ public unsafe partial struct XrSwapchainStateSamplerVulkanFB
     public IntPtr swizzleAlpha;
     public float maxAnisotropy;
     public XrColor4f borderColor;
+    /// <returns>a new <see cref="XrSwapchainStateSamplerVulkanFB"> with it's type member set to </returns>
+    public static XrSwapchainStateSamplerVulkanFB New() =>
+        new() { type = XrStructureType.XR_TYPE_SWAPCHAIN_STATE_SAMPLER_VULKAN_FB };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrCompositionLayerSecureContentFB
@@ -5482,6 +5902,9 @@ public unsafe partial struct XrCompositionLayerSecureContentFB
     public XrStructureType type;
     public void* next;
     public ulong flags;
+    /// <returns>a new <see cref="XrCompositionLayerSecureContentFB"> with it's type member set to </returns>
+    public static XrCompositionLayerSecureContentFB New() =>
+        new() { type = XrStructureType.XR_TYPE_COMPOSITION_LAYER_SECURE_CONTENT_FB };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrLoaderInitInfoBaseHeaderKHR
@@ -5496,6 +5919,9 @@ public unsafe partial struct XrLoaderInitInfoAndroidKHR
     public void* next;
     public void* applicationVM;
     public void* applicationContext;
+    /// <returns>a new <see cref="XrLoaderInitInfoAndroidKHR"> with it's type member set to </returns>
+    public static XrLoaderInitInfoAndroidKHR New() =>
+        new() { type = XrStructureType.XR_TYPE_LOADER_INIT_INFO_ANDROID_KHR };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrCompositionLayerEquirect2KHR
@@ -5511,6 +5937,9 @@ public unsafe partial struct XrCompositionLayerEquirect2KHR
     public float centralHorizontalAngle;
     public float upperVerticalAngle;
     public float lowerVerticalAngle;
+    /// <returns>a new <see cref="XrCompositionLayerEquirect2KHR"> with it's type member set to </returns>
+    public static XrCompositionLayerEquirect2KHR New() =>
+        new() { type = XrStructureType.XR_TYPE_COMPOSITION_LAYER_EQUIRECT2_KHR };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrCompositionLayerColorScaleBiasKHR
@@ -5519,6 +5948,9 @@ public unsafe partial struct XrCompositionLayerColorScaleBiasKHR
     public void* next;
     public XrColor4f colorScale;
     public XrColor4f colorBias;
+    /// <returns>a new <see cref="XrCompositionLayerColorScaleBiasKHR"> with it's type member set to </returns>
+    public static XrCompositionLayerColorScaleBiasKHR New() =>
+        new() { type = XrStructureType.XR_TYPE_COMPOSITION_LAYER_COLOR_SCALE_BIAS_KHR };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrControllerModelKeyStateMSFT
@@ -5526,6 +5958,9 @@ public unsafe partial struct XrControllerModelKeyStateMSFT
     public XrStructureType type;
     public void* next;
     public ulong modelKey;
+    /// <returns>a new <see cref="XrControllerModelKeyStateMSFT"> with it's type member set to </returns>
+    public static XrControllerModelKeyStateMSFT New() =>
+        new() { type = XrStructureType.XR_TYPE_CONTROLLER_MODEL_KEY_STATE_MSFT };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrControllerModelNodePropertiesMSFT
@@ -5534,6 +5969,9 @@ public unsafe partial struct XrControllerModelNodePropertiesMSFT
     public void* next;
     public fixed byte parentNodeName[(int)OpenXRNative.XR_MAX_CONTROLLER_MODEL_NODE_NAME_SIZE_MSFT];
     public fixed byte nodeName[(int)OpenXRNative.XR_MAX_CONTROLLER_MODEL_NODE_NAME_SIZE_MSFT];
+    /// <returns>a new <see cref="XrControllerModelNodePropertiesMSFT"> with it's type member set to </returns>
+    public static XrControllerModelNodePropertiesMSFT New() =>
+        new() { type = XrStructureType.XR_TYPE_CONTROLLER_MODEL_NODE_PROPERTIES_MSFT };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrControllerModelPropertiesMSFT
@@ -5543,6 +5981,9 @@ public unsafe partial struct XrControllerModelPropertiesMSFT
     public uint nodeCapacityInput;
     public uint nodeCountOutput;
     public XrControllerModelNodePropertiesMSFT* nodeProperties;
+    /// <returns>a new <see cref="XrControllerModelPropertiesMSFT"> with it's type member set to </returns>
+    public static XrControllerModelPropertiesMSFT New() =>
+        new() { type = XrStructureType.XR_TYPE_CONTROLLER_MODEL_PROPERTIES_MSFT };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrControllerModelNodeStateMSFT
@@ -5550,6 +5991,9 @@ public unsafe partial struct XrControllerModelNodeStateMSFT
     public XrStructureType type;
     public void* next;
     public XrPosef nodePose;
+    /// <returns>a new <see cref="XrControllerModelNodeStateMSFT"> with it's type member set to </returns>
+    public static XrControllerModelNodeStateMSFT New() =>
+        new() { type = XrStructureType.XR_TYPE_CONTROLLER_MODEL_NODE_STATE_MSFT };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrControllerModelStateMSFT
@@ -5559,6 +6003,9 @@ public unsafe partial struct XrControllerModelStateMSFT
     public uint nodeCapacityInput;
     public uint nodeCountOutput;
     public XrControllerModelNodeStateMSFT* nodeStates;
+    /// <returns>a new <see cref="XrControllerModelStateMSFT"> with it's type member set to </returns>
+    public static XrControllerModelStateMSFT New() =>
+        new() { type = XrStructureType.XR_TYPE_CONTROLLER_MODEL_STATE_MSFT };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrUuidMSFT
@@ -5585,12 +6032,18 @@ public unsafe partial struct XrSceneObserverCreateInfoMSFT
 {
     public XrStructureType type;
     public void* next;
+    /// <returns>a new <see cref="XrSceneObserverCreateInfoMSFT"> with it's type member set to </returns>
+    public static XrSceneObserverCreateInfoMSFT New() =>
+        new() { type = XrStructureType.XR_TYPE_SCENE_OBSERVER_CREATE_INFO_MSFT };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrSceneCreateInfoMSFT
 {
     public XrStructureType type;
     public void* next;
+    /// <returns>a new <see cref="XrSceneCreateInfoMSFT"> with it's type member set to </returns>
+    public static XrSceneCreateInfoMSFT New() =>
+        new() { type = XrStructureType.XR_TYPE_SCENE_CREATE_INFO_MSFT };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrNewSceneComputeInfoMSFT
@@ -5601,6 +6054,9 @@ public unsafe partial struct XrNewSceneComputeInfoMSFT
     public XrSceneComputeFeatureMSFT* requestedFeatures;
     public XrSceneComputeConsistencyMSFT consistency;
     public XrSceneBoundsMSFT bounds;
+    /// <returns>a new <see cref="XrNewSceneComputeInfoMSFT"> with it's type member set to </returns>
+    public static XrNewSceneComputeInfoMSFT New() =>
+        new() { type = XrStructureType.XR_TYPE_NEW_SCENE_COMPUTE_INFO_MSFT };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrVisualMeshComputeLodInfoMSFT
@@ -5608,6 +6064,9 @@ public unsafe partial struct XrVisualMeshComputeLodInfoMSFT
     public XrStructureType type;
     public void* next;
     public XrMeshComputeLodMSFT lod;
+    /// <returns>a new <see cref="XrVisualMeshComputeLodInfoMSFT"> with it's type member set to </returns>
+    public static XrVisualMeshComputeLodInfoMSFT New() =>
+        new() { type = XrStructureType.XR_TYPE_VISUAL_MESH_COMPUTE_LOD_INFO_MSFT };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrSceneSphereBoundMSFT
@@ -5656,6 +6115,9 @@ public unsafe partial struct XrSceneComponentsMSFT
     public uint componentCapacityInput;
     public uint componentCountOutput;
     public XrSceneComponentMSFT* components;
+    /// <returns>a new <see cref="XrSceneComponentsMSFT"> with it's type member set to </returns>
+    public static XrSceneComponentsMSFT New() =>
+        new() { type = XrStructureType.XR_TYPE_SCENE_COMPONENTS_MSFT };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrSceneComponentsGetInfoMSFT
@@ -5663,6 +6125,9 @@ public unsafe partial struct XrSceneComponentsGetInfoMSFT
     public XrStructureType type;
     public void* next;
     public XrSceneComponentTypeMSFT componentType;
+    /// <returns>a new <see cref="XrSceneComponentsGetInfoMSFT"> with it's type member set to </returns>
+    public static XrSceneComponentsGetInfoMSFT New() =>
+        new() { type = XrStructureType.XR_TYPE_SCENE_COMPONENTS_GET_INFO_MSFT };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrSceneComponentLocationMSFT
@@ -5677,6 +6142,9 @@ public unsafe partial struct XrSceneComponentLocationsMSFT
     public void* next;
     public uint locationCount;
     public XrSceneComponentLocationMSFT* locations;
+    /// <returns>a new <see cref="XrSceneComponentLocationsMSFT"> with it's type member set to </returns>
+    public static XrSceneComponentLocationsMSFT New() =>
+        new() { type = XrStructureType.XR_TYPE_SCENE_COMPONENT_LOCATIONS_MSFT };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrSceneComponentsLocateInfoMSFT
@@ -5687,6 +6155,9 @@ public unsafe partial struct XrSceneComponentsLocateInfoMSFT
     public long time;
     public uint componentIdCount;
     public XrUuidMSFT* componentIds;
+    /// <returns>a new <see cref="XrSceneComponentsLocateInfoMSFT"> with it's type member set to </returns>
+    public static XrSceneComponentsLocateInfoMSFT New() =>
+        new() { type = XrStructureType.XR_TYPE_SCENE_COMPONENTS_LOCATE_INFO_MSFT };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrSceneObjectMSFT
@@ -5700,6 +6171,9 @@ public unsafe partial struct XrSceneObjectsMSFT
     public void* next;
     public uint sceneObjectCount;
     public XrSceneObjectMSFT* sceneObjects;
+    /// <returns>a new <see cref="XrSceneObjectsMSFT"> with it's type member set to </returns>
+    public static XrSceneObjectsMSFT New() =>
+        new() { type = XrStructureType.XR_TYPE_SCENE_OBJECTS_MSFT };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrSceneComponentParentFilterInfoMSFT
@@ -5707,6 +6181,9 @@ public unsafe partial struct XrSceneComponentParentFilterInfoMSFT
     public XrStructureType type;
     public void* next;
     public XrUuidMSFT parentId;
+    /// <returns>a new <see cref="XrSceneComponentParentFilterInfoMSFT"> with it's type member set to </returns>
+    public static XrSceneComponentParentFilterInfoMSFT New() =>
+        new() { type = XrStructureType.XR_TYPE_SCENE_COMPONENT_PARENT_FILTER_INFO_MSFT };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrSceneObjectTypesFilterInfoMSFT
@@ -5715,6 +6192,9 @@ public unsafe partial struct XrSceneObjectTypesFilterInfoMSFT
     public void* next;
     public uint objectTypeCount;
     public XrSceneObjectTypeMSFT* objectTypes;
+    /// <returns>a new <see cref="XrSceneObjectTypesFilterInfoMSFT"> with it's type member set to </returns>
+    public static XrSceneObjectTypesFilterInfoMSFT New() =>
+        new() { type = XrStructureType.XR_TYPE_SCENE_OBJECT_TYPES_FILTER_INFO_MSFT };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrScenePlaneMSFT
@@ -5731,6 +6211,9 @@ public unsafe partial struct XrScenePlanesMSFT
     public void* next;
     public uint scenePlaneCount;
     public XrScenePlaneMSFT* scenePlanes;
+    /// <returns>a new <see cref="XrScenePlanesMSFT"> with it's type member set to </returns>
+    public static XrScenePlanesMSFT New() =>
+        new() { type = XrStructureType.XR_TYPE_SCENE_PLANES_MSFT };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrScenePlaneAlignmentFilterInfoMSFT
@@ -5739,6 +6222,9 @@ public unsafe partial struct XrScenePlaneAlignmentFilterInfoMSFT
     public void* next;
     public uint alignmentCount;
     public XrScenePlaneAlignmentTypeMSFT* alignments;
+    /// <returns>a new <see cref="XrScenePlaneAlignmentFilterInfoMSFT"> with it's type member set to </returns>
+    public static XrScenePlaneAlignmentFilterInfoMSFT New() =>
+        new() { type = XrStructureType.XR_TYPE_SCENE_PLANE_ALIGNMENT_FILTER_INFO_MSFT };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrSceneMeshMSFT
@@ -5753,6 +6239,9 @@ public unsafe partial struct XrSceneMeshesMSFT
     public void* next;
     public uint sceneMeshCount;
     public XrSceneMeshMSFT* sceneMeshes;
+    /// <returns>a new <see cref="XrSceneMeshesMSFT"> with it's type member set to </returns>
+    public static XrSceneMeshesMSFT New() =>
+        new() { type = XrStructureType.XR_TYPE_SCENE_MESHES_MSFT };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrSceneMeshBuffersGetInfoMSFT
@@ -5760,12 +6249,18 @@ public unsafe partial struct XrSceneMeshBuffersGetInfoMSFT
     public XrStructureType type;
     public void* next;
     public ulong meshBufferId;
+    /// <returns>a new <see cref="XrSceneMeshBuffersGetInfoMSFT"> with it's type member set to </returns>
+    public static XrSceneMeshBuffersGetInfoMSFT New() =>
+        new() { type = XrStructureType.XR_TYPE_SCENE_MESH_BUFFERS_GET_INFO_MSFT };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrSceneMeshBuffersMSFT
 {
     public XrStructureType type;
     public void* next;
+    /// <returns>a new <see cref="XrSceneMeshBuffersMSFT"> with it's type member set to </returns>
+    public static XrSceneMeshBuffersMSFT New() =>
+        new() { type = XrStructureType.XR_TYPE_SCENE_MESH_BUFFERS_MSFT };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrSceneMeshVertexBufferMSFT
@@ -5775,6 +6270,9 @@ public unsafe partial struct XrSceneMeshVertexBufferMSFT
     public uint vertexCapacityInput;
     public uint vertexCountOutput;
     public XrVector3f* vertices;
+    /// <returns>a new <see cref="XrSceneMeshVertexBufferMSFT"> with it's type member set to </returns>
+    public static XrSceneMeshVertexBufferMSFT New() =>
+        new() { type = XrStructureType.XR_TYPE_SCENE_MESH_VERTEX_BUFFER_MSFT };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrSceneMeshIndicesUint32MSFT
@@ -5784,6 +6282,9 @@ public unsafe partial struct XrSceneMeshIndicesUint32MSFT
     public uint indexCapacityInput;
     public uint indexCountOutput;
     public uint* indices;
+    /// <returns>a new <see cref="XrSceneMeshIndicesUint32MSFT"> with it's type member set to </returns>
+    public static XrSceneMeshIndicesUint32MSFT New() =>
+        new() { type = XrStructureType.XR_TYPE_SCENE_MESH_INDICES_UINT32_MSFT };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrSceneMeshIndicesUint16MSFT
@@ -5793,6 +6294,9 @@ public unsafe partial struct XrSceneMeshIndicesUint16MSFT
     public uint indexCapacityInput;
     public uint indexCountOutput;
     public ushort* indices;
+    /// <returns>a new <see cref="XrSceneMeshIndicesUint16MSFT"> with it's type member set to </returns>
+    public static XrSceneMeshIndicesUint16MSFT New() =>
+        new() { type = XrStructureType.XR_TYPE_SCENE_MESH_INDICES_UINT16_MSFT };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrSerializedSceneFragmentDataGetInfoMSFT
@@ -5800,6 +6304,9 @@ public unsafe partial struct XrSerializedSceneFragmentDataGetInfoMSFT
     public XrStructureType type;
     public void* next;
     public XrUuidMSFT sceneFragmentId;
+    /// <returns>a new <see cref="XrSerializedSceneFragmentDataGetInfoMSFT"> with it's type member set to </returns>
+    public static XrSerializedSceneFragmentDataGetInfoMSFT New() =>
+        new() { type = XrStructureType.XR_TYPE_SERIALIZED_SCENE_FRAGMENT_DATA_GET_INFO_MSFT };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrDeserializeSceneFragmentMSFT
@@ -5814,6 +6321,9 @@ public unsafe partial struct XrSceneDeserializeInfoMSFT
     public void* next;
     public uint fragmentCount;
     public XrDeserializeSceneFragmentMSFT* fragments;
+    /// <returns>a new <see cref="XrSceneDeserializeInfoMSFT"> with it's type member set to </returns>
+    public static XrSceneDeserializeInfoMSFT New() =>
+        new() { type = XrStructureType.XR_TYPE_SCENE_DESERIALIZE_INFO_MSFT };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrSystemColorSpacePropertiesFB
@@ -5821,6 +6331,9 @@ public unsafe partial struct XrSystemColorSpacePropertiesFB
     public XrStructureType type;
     public void* next;
     public XrColorSpaceFB colorSpace;
+    /// <returns>a new <see cref="XrSystemColorSpacePropertiesFB"> with it's type member set to </returns>
+    public static XrSystemColorSpacePropertiesFB New() =>
+        new() { type = XrStructureType.XR_TYPE_SYSTEM_COLOR_SPACE_PROPERTIES_FB };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrSystemSpatialEntityPropertiesFB
@@ -5828,6 +6341,9 @@ public unsafe partial struct XrSystemSpatialEntityPropertiesFB
     public XrStructureType type;
     public void* next;
     public XrBool32 supportsSpatialEntity;
+    /// <returns>a new <see cref="XrSystemSpatialEntityPropertiesFB"> with it's type member set to </returns>
+    public static XrSystemSpatialEntityPropertiesFB New() =>
+        new() { type = XrStructureType.XR_TYPE_SYSTEM_SPATIAL_ENTITY_PROPERTIES_FB };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrSpatialAnchorCreateInfoFB
@@ -5837,6 +6353,9 @@ public unsafe partial struct XrSpatialAnchorCreateInfoFB
     public XrSpace space;
     public XrPosef poseInSpace;
     public long time;
+    /// <returns>a new <see cref="XrSpatialAnchorCreateInfoFB"> with it's type member set to </returns>
+    public static XrSpatialAnchorCreateInfoFB New() =>
+        new() { type = XrStructureType.XR_TYPE_SPATIAL_ANCHOR_CREATE_INFO_FB };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrSpaceComponentStatusSetInfoFB
@@ -5846,6 +6365,9 @@ public unsafe partial struct XrSpaceComponentStatusSetInfoFB
     public XrSpaceComponentTypeFB componentType;
     public XrBool32 enabled;
     public long timeout;
+    /// <returns>a new <see cref="XrSpaceComponentStatusSetInfoFB"> with it's type member set to </returns>
+    public static XrSpaceComponentStatusSetInfoFB New() =>
+        new() { type = XrStructureType.XR_TYPE_SPACE_COMPONENT_STATUS_SET_INFO_FB };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrSpaceComponentStatusFB
@@ -5854,6 +6376,9 @@ public unsafe partial struct XrSpaceComponentStatusFB
     public void* next;
     public XrBool32 enabled;
     public XrBool32 changePending;
+    /// <returns>a new <see cref="XrSpaceComponentStatusFB"> with it's type member set to </returns>
+    public static XrSpaceComponentStatusFB New() =>
+        new() { type = XrStructureType.XR_TYPE_SPACE_COMPONENT_STATUS_FB };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrEventDataSpatialAnchorCreateCompleteFB
@@ -5864,6 +6389,9 @@ public unsafe partial struct XrEventDataSpatialAnchorCreateCompleteFB
     public XrResult result;
     public XrSpace space;
     public XrUuidEXT uuid;
+    /// <returns>a new <see cref="XrEventDataSpatialAnchorCreateCompleteFB"> with it's type member set to </returns>
+    public static XrEventDataSpatialAnchorCreateCompleteFB New() =>
+        new() { type = XrStructureType.XR_TYPE_EVENT_DATA_SPATIAL_ANCHOR_CREATE_COMPLETE_FB };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrEventDataSpaceSetStatusCompleteFB
@@ -5876,12 +6404,18 @@ public unsafe partial struct XrEventDataSpaceSetStatusCompleteFB
     public XrUuidEXT uuid;
     public XrSpaceComponentTypeFB componentType;
     public XrBool32 enabled;
+    /// <returns>a new <see cref="XrEventDataSpaceSetStatusCompleteFB"> with it's type member set to </returns>
+    public static XrEventDataSpaceSetStatusCompleteFB New() =>
+        new() { type = XrStructureType.XR_TYPE_EVENT_DATA_SPACE_SET_STATUS_COMPLETE_FB };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrFoveationProfileCreateInfoFB
 {
     public XrStructureType type;
     public void* next;
+    /// <returns>a new <see cref="XrFoveationProfileCreateInfoFB"> with it's type member set to </returns>
+    public static XrFoveationProfileCreateInfoFB New() =>
+        new() { type = XrStructureType.XR_TYPE_FOVEATION_PROFILE_CREATE_INFO_FB };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrSwapchainCreateInfoFoveationFB
@@ -5889,6 +6423,9 @@ public unsafe partial struct XrSwapchainCreateInfoFoveationFB
     public XrStructureType type;
     public void* next;
     public ulong flags;
+    /// <returns>a new <see cref="XrSwapchainCreateInfoFoveationFB"> with it's type member set to </returns>
+    public static XrSwapchainCreateInfoFoveationFB New() =>
+        new() { type = XrStructureType.XR_TYPE_SWAPCHAIN_CREATE_INFO_FOVEATION_FB };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrSwapchainStateFoveationFB
@@ -5897,6 +6434,9 @@ public unsafe partial struct XrSwapchainStateFoveationFB
     public void* next;
     public ulong flags;
     public XrFoveationProfileFB profile;
+    /// <returns>a new <see cref="XrSwapchainStateFoveationFB"> with it's type member set to </returns>
+    public static XrSwapchainStateFoveationFB New() =>
+        new() { type = XrStructureType.XR_TYPE_SWAPCHAIN_STATE_FOVEATION_FB };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrSwapchainImageFoveationVulkanFB
@@ -5906,6 +6446,9 @@ public unsafe partial struct XrSwapchainImageFoveationVulkanFB
     public IntPtr image;
     public uint width;
     public uint height;
+    /// <returns>a new <see cref="XrSwapchainImageFoveationVulkanFB"> with it's type member set to </returns>
+    public static XrSwapchainImageFoveationVulkanFB New() =>
+        new() { type = XrStructureType.XR_TYPE_SWAPCHAIN_IMAGE_FOVEATION_VULKAN_FB };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrFoveationLevelProfileCreateInfoFB
@@ -5915,6 +6458,9 @@ public unsafe partial struct XrFoveationLevelProfileCreateInfoFB
     public XrFoveationLevelFB level;
     public float verticalOffset;
     public XrFoveationDynamicFB dynamic;
+    /// <returns>a new <see cref="XrFoveationLevelProfileCreateInfoFB"> with it's type member set to </returns>
+    public static XrFoveationLevelProfileCreateInfoFB New() =>
+        new() { type = XrStructureType.XR_TYPE_FOVEATION_LEVEL_PROFILE_CREATE_INFO_FB };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrFoveationEyeTrackedProfileCreateInfoMETA
@@ -5922,6 +6468,9 @@ public unsafe partial struct XrFoveationEyeTrackedProfileCreateInfoMETA
     public XrStructureType type;
     public void* next;
     public ulong flags;
+    /// <returns>a new <see cref="XrFoveationEyeTrackedProfileCreateInfoMETA"> with it's type member set to </returns>
+    public static XrFoveationEyeTrackedProfileCreateInfoMETA New() =>
+        new() { type = XrStructureType.XR_TYPE_FOVEATION_EYE_TRACKED_PROFILE_CREATE_INFO_META };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrFoveationEyeTrackedStateMETA
@@ -5931,6 +6480,9 @@ public unsafe partial struct XrFoveationEyeTrackedStateMETA
     public XrVector2f foveationCenter_0;
     public XrVector2f foveationCenter_1;
     public ulong flags;
+    /// <returns>a new <see cref="XrFoveationEyeTrackedStateMETA"> with it's type member set to </returns>
+    public static XrFoveationEyeTrackedStateMETA New() =>
+        new() { type = XrStructureType.XR_TYPE_FOVEATION_EYE_TRACKED_STATE_META };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrSystemFoveationEyeTrackedPropertiesMETA
@@ -5938,6 +6490,9 @@ public unsafe partial struct XrSystemFoveationEyeTrackedPropertiesMETA
     public XrStructureType type;
     public void* next;
     public XrBool32 supportsFoveationEyeTracked;
+    /// <returns>a new <see cref="XrSystemFoveationEyeTrackedPropertiesMETA"> with it's type member set to </returns>
+    public static XrSystemFoveationEyeTrackedPropertiesMETA New() =>
+        new() { type = XrStructureType.XR_TYPE_SYSTEM_FOVEATION_EYE_TRACKED_PROPERTIES_META };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrVector4sFB
@@ -5967,6 +6522,9 @@ public unsafe partial struct XrHandTrackingMeshFB
     public uint indexCapacityInput;
     public uint indexCountOutput;
     public short* indices;
+    /// <returns>a new <see cref="XrHandTrackingMeshFB"> with it's type member set to </returns>
+    public static XrHandTrackingMeshFB New() =>
+        new() { type = XrStructureType.XR_TYPE_HAND_TRACKING_MESH_FB };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrHandTrackingScaleFB
@@ -5977,6 +6535,9 @@ public unsafe partial struct XrHandTrackingScaleFB
     public float currentOutput;
     public XrBool32 overrideHandScale;
     public float overrideValueInput;
+    /// <returns>a new <see cref="XrHandTrackingScaleFB"> with it's type member set to </returns>
+    public static XrHandTrackingScaleFB New() =>
+        new() { type = XrStructureType.XR_TYPE_HAND_TRACKING_SCALE_FB };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrHandTrackingAimStateFB
@@ -5989,6 +6550,9 @@ public unsafe partial struct XrHandTrackingAimStateFB
     public float pinchStrengthMiddle;
     public float pinchStrengthRing;
     public float pinchStrengthLittle;
+    /// <returns>a new <see cref="XrHandTrackingAimStateFB"> with it's type member set to </returns>
+    public static XrHandTrackingAimStateFB New() =>
+        new() { type = XrStructureType.XR_TYPE_HAND_TRACKING_AIM_STATE_FB };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrHandCapsuleFB
@@ -6022,6 +6586,9 @@ public unsafe partial struct XrHandTrackingCapsulesStateFB
     public XrHandCapsuleFB capsules_16;
     public XrHandCapsuleFB capsules_17;
     public XrHandCapsuleFB capsules_18;
+    /// <returns>a new <see cref="XrHandTrackingCapsulesStateFB"> with it's type member set to </returns>
+    public static XrHandTrackingCapsulesStateFB New() =>
+        new() { type = XrStructureType.XR_TYPE_HAND_TRACKING_CAPSULES_STATE_FB };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrRenderModelPathInfoFB
@@ -6029,6 +6596,9 @@ public unsafe partial struct XrRenderModelPathInfoFB
     public XrStructureType type;
     public void* next;
     public ulong path;
+    /// <returns>a new <see cref="XrRenderModelPathInfoFB"> with it's type member set to </returns>
+    public static XrRenderModelPathInfoFB New() =>
+        new() { type = XrStructureType.XR_TYPE_RENDER_MODEL_PATH_INFO_FB };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrRenderModelPropertiesFB
@@ -6040,6 +6610,9 @@ public unsafe partial struct XrRenderModelPropertiesFB
     public ulong modelKey;
     public uint modelVersion;
     public ulong flags;
+    /// <returns>a new <see cref="XrRenderModelPropertiesFB"> with it's type member set to </returns>
+    public static XrRenderModelPropertiesFB New() =>
+        new() { type = XrStructureType.XR_TYPE_RENDER_MODEL_PROPERTIES_FB };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrRenderModelBufferFB
@@ -6049,6 +6622,9 @@ public unsafe partial struct XrRenderModelBufferFB
     public uint bufferCapacityInput;
     public uint bufferCountOutput;
     public byte* buffer;
+    /// <returns>a new <see cref="XrRenderModelBufferFB"> with it's type member set to </returns>
+    public static XrRenderModelBufferFB New() =>
+        new() { type = XrStructureType.XR_TYPE_RENDER_MODEL_BUFFER_FB };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrRenderModelLoadInfoFB
@@ -6056,6 +6632,9 @@ public unsafe partial struct XrRenderModelLoadInfoFB
     public XrStructureType type;
     public void* next;
     public ulong modelKey;
+    /// <returns>a new <see cref="XrRenderModelLoadInfoFB"> with it's type member set to </returns>
+    public static XrRenderModelLoadInfoFB New() =>
+        new() { type = XrStructureType.XR_TYPE_RENDER_MODEL_LOAD_INFO_FB };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrSystemRenderModelPropertiesFB
@@ -6063,6 +6642,9 @@ public unsafe partial struct XrSystemRenderModelPropertiesFB
     public XrStructureType type;
     public void* next;
     public XrBool32 supportsRenderModelLoading;
+    /// <returns>a new <see cref="XrSystemRenderModelPropertiesFB"> with it's type member set to </returns>
+    public static XrSystemRenderModelPropertiesFB New() =>
+        new() { type = XrStructureType.XR_TYPE_SYSTEM_RENDER_MODEL_PROPERTIES_FB };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrRenderModelCapabilitiesRequestFB
@@ -6070,6 +6652,9 @@ public unsafe partial struct XrRenderModelCapabilitiesRequestFB
     public XrStructureType type;
     public void* next;
     public ulong flags;
+    /// <returns>a new <see cref="XrRenderModelCapabilitiesRequestFB"> with it's type member set to </returns>
+    public static XrRenderModelCapabilitiesRequestFB New() =>
+        new() { type = XrStructureType.XR_TYPE_RENDER_MODEL_CAPABILITIES_REQUEST_FB };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrSpaceQueryInfoBaseHeaderFB
@@ -6093,6 +6678,9 @@ public unsafe partial struct XrSpaceQueryInfoFB
     public long timeout;
     public XrSpaceFilterInfoBaseHeaderFB* filter;
     public XrSpaceFilterInfoBaseHeaderFB* excludeFilter;
+    /// <returns>a new <see cref="XrSpaceQueryInfoFB"> with it's type member set to </returns>
+    public static XrSpaceQueryInfoFB New() =>
+        new() { type = XrStructureType.XR_TYPE_SPACE_QUERY_INFO_FB };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrSpaceStorageLocationFilterInfoFB
@@ -6100,6 +6688,9 @@ public unsafe partial struct XrSpaceStorageLocationFilterInfoFB
     public XrStructureType type;
     public void* next;
     public XrSpaceStorageLocationFB location;
+    /// <returns>a new <see cref="XrSpaceStorageLocationFilterInfoFB"> with it's type member set to </returns>
+    public static XrSpaceStorageLocationFilterInfoFB New() =>
+        new() { type = XrStructureType.XR_TYPE_SPACE_STORAGE_LOCATION_FILTER_INFO_FB };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrSpaceUuidFilterInfoFB
@@ -6108,6 +6699,9 @@ public unsafe partial struct XrSpaceUuidFilterInfoFB
     public void* next;
     public uint uuidCount;
     public XrUuidEXT* uuids;
+    /// <returns>a new <see cref="XrSpaceUuidFilterInfoFB"> with it's type member set to </returns>
+    public static XrSpaceUuidFilterInfoFB New() =>
+        new() { type = XrStructureType.XR_TYPE_SPACE_UUID_FILTER_INFO_FB };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrSpaceComponentFilterInfoFB
@@ -6115,6 +6709,9 @@ public unsafe partial struct XrSpaceComponentFilterInfoFB
     public XrStructureType type;
     public void* next;
     public XrSpaceComponentTypeFB componentType;
+    /// <returns>a new <see cref="XrSpaceComponentFilterInfoFB"> with it's type member set to </returns>
+    public static XrSpaceComponentFilterInfoFB New() =>
+        new() { type = XrStructureType.XR_TYPE_SPACE_COMPONENT_FILTER_INFO_FB };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrSpaceQueryResultFB
@@ -6130,6 +6727,9 @@ public unsafe partial struct XrSpaceQueryResultsFB
     public uint resultCapacityInput;
     public uint resultCountOutput;
     public XrSpaceQueryResultFB* results;
+    /// <returns>a new <see cref="XrSpaceQueryResultsFB"> with it's type member set to </returns>
+    public static XrSpaceQueryResultsFB New() =>
+        new() { type = XrStructureType.XR_TYPE_SPACE_QUERY_RESULTS_FB };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrEventDataSpaceQueryResultsAvailableFB
@@ -6137,6 +6737,9 @@ public unsafe partial struct XrEventDataSpaceQueryResultsAvailableFB
     public XrStructureType type;
     public void* next;
     public ulong requestId;
+    /// <returns>a new <see cref="XrEventDataSpaceQueryResultsAvailableFB"> with it's type member set to </returns>
+    public static XrEventDataSpaceQueryResultsAvailableFB New() =>
+        new() { type = XrStructureType.XR_TYPE_EVENT_DATA_SPACE_QUERY_RESULTS_AVAILABLE_FB };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrEventDataSpaceQueryCompleteFB
@@ -6145,6 +6748,9 @@ public unsafe partial struct XrEventDataSpaceQueryCompleteFB
     public void* next;
     public ulong requestId;
     public XrResult result;
+    /// <returns>a new <see cref="XrEventDataSpaceQueryCompleteFB"> with it's type member set to </returns>
+    public static XrEventDataSpaceQueryCompleteFB New() =>
+        new() { type = XrStructureType.XR_TYPE_EVENT_DATA_SPACE_QUERY_COMPLETE_FB };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrSpaceSaveInfoFB
@@ -6154,6 +6760,9 @@ public unsafe partial struct XrSpaceSaveInfoFB
     public XrSpace space;
     public XrSpaceStorageLocationFB location;
     public XrSpacePersistenceModeFB persistenceMode;
+    /// <returns>a new <see cref="XrSpaceSaveInfoFB"> with it's type member set to </returns>
+    public static XrSpaceSaveInfoFB New() =>
+        new() { type = XrStructureType.XR_TYPE_SPACE_SAVE_INFO_FB };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrSpaceEraseInfoFB
@@ -6162,6 +6771,9 @@ public unsafe partial struct XrSpaceEraseInfoFB
     public void* next;
     public XrSpace space;
     public XrSpaceStorageLocationFB location;
+    /// <returns>a new <see cref="XrSpaceEraseInfoFB"> with it's type member set to </returns>
+    public static XrSpaceEraseInfoFB New() =>
+        new() { type = XrStructureType.XR_TYPE_SPACE_ERASE_INFO_FB };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrEventDataSpaceSaveCompleteFB
@@ -6173,6 +6785,9 @@ public unsafe partial struct XrEventDataSpaceSaveCompleteFB
     public XrSpace space;
     public XrUuidEXT uuid;
     public XrSpaceStorageLocationFB location;
+    /// <returns>a new <see cref="XrEventDataSpaceSaveCompleteFB"> with it's type member set to </returns>
+    public static XrEventDataSpaceSaveCompleteFB New() =>
+        new() { type = XrStructureType.XR_TYPE_EVENT_DATA_SPACE_SAVE_COMPLETE_FB };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrEventDataSpaceEraseCompleteFB
@@ -6184,6 +6799,9 @@ public unsafe partial struct XrEventDataSpaceEraseCompleteFB
     public XrSpace space;
     public XrUuidEXT uuid;
     public XrSpaceStorageLocationFB location;
+    /// <returns>a new <see cref="XrEventDataSpaceEraseCompleteFB"> with it's type member set to </returns>
+    public static XrEventDataSpaceEraseCompleteFB New() =>
+        new() { type = XrStructureType.XR_TYPE_EVENT_DATA_SPACE_ERASE_COMPLETE_FB };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrSpaceShareInfoFB
@@ -6194,6 +6812,9 @@ public unsafe partial struct XrSpaceShareInfoFB
     public XrSpace* spaces;
     public uint userCount;
     public XrSpaceUserFB* users;
+    /// <returns>a new <see cref="XrSpaceShareInfoFB"> with it's type member set to </returns>
+    public static XrSpaceShareInfoFB New() =>
+        new() { type = XrStructureType.XR_TYPE_SPACE_SHARE_INFO_FB };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrEventDataSpaceShareCompleteFB
@@ -6202,6 +6823,9 @@ public unsafe partial struct XrEventDataSpaceShareCompleteFB
     public void* next;
     public ulong requestId;
     public XrResult result;
+    /// <returns>a new <see cref="XrEventDataSpaceShareCompleteFB"> with it's type member set to </returns>
+    public static XrEventDataSpaceShareCompleteFB New() =>
+        new() { type = XrStructureType.XR_TYPE_EVENT_DATA_SPACE_SHARE_COMPLETE_FB };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrSpaceListSaveInfoFB
@@ -6211,6 +6835,9 @@ public unsafe partial struct XrSpaceListSaveInfoFB
     public uint spaceCount;
     public XrSpace* spaces;
     public XrSpaceStorageLocationFB location;
+    /// <returns>a new <see cref="XrSpaceListSaveInfoFB"> with it's type member set to </returns>
+    public static XrSpaceListSaveInfoFB New() =>
+        new() { type = XrStructureType.XR_TYPE_SPACE_LIST_SAVE_INFO_FB };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrEventDataSpaceListSaveCompleteFB
@@ -6219,6 +6846,9 @@ public unsafe partial struct XrEventDataSpaceListSaveCompleteFB
     public void* next;
     public ulong requestId;
     public XrResult result;
+    /// <returns>a new <see cref="XrEventDataSpaceListSaveCompleteFB"> with it's type member set to </returns>
+    public static XrEventDataSpaceListSaveCompleteFB New() =>
+        new() { type = XrStructureType.XR_TYPE_EVENT_DATA_SPACE_LIST_SAVE_COMPLETE_FB };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrSpaceContainerFB
@@ -6228,6 +6858,9 @@ public unsafe partial struct XrSpaceContainerFB
     public uint uuidCapacityInput;
     public uint uuidCountOutput;
     public XrUuidEXT* uuids;
+    /// <returns>a new <see cref="XrSpaceContainerFB"> with it's type member set to </returns>
+    public static XrSpaceContainerFB New() =>
+        new() { type = XrStructureType.XR_TYPE_SPACE_CONTAINER_FB };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrExtent3DfFB
@@ -6257,6 +6890,9 @@ public unsafe partial struct XrSemanticLabelsFB
     public uint bufferCapacityInput;
     public uint bufferCountOutput;
     public byte* buffer;
+    /// <returns>a new <see cref="XrSemanticLabelsFB"> with it's type member set to </returns>
+    public static XrSemanticLabelsFB New() =>
+        new() { type = XrStructureType.XR_TYPE_SEMANTIC_LABELS_FB };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrRoomLayoutFB
@@ -6268,6 +6904,9 @@ public unsafe partial struct XrRoomLayoutFB
     public uint wallUuidCapacityInput;
     public uint wallUuidCountOutput;
     public XrUuidEXT* wallUuids;
+    /// <returns>a new <see cref="XrRoomLayoutFB"> with it's type member set to </returns>
+    public static XrRoomLayoutFB New() =>
+        new() { type = XrStructureType.XR_TYPE_ROOM_LAYOUT_FB };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrBoundary2DFB
@@ -6277,6 +6916,9 @@ public unsafe partial struct XrBoundary2DFB
     public uint vertexCapacityInput;
     public uint vertexCountOutput;
     public XrVector2f* vertices;
+    /// <returns>a new <see cref="XrBoundary2DFB"> with it's type member set to </returns>
+    public static XrBoundary2DFB New() =>
+        new() { type = XrStructureType.XR_TYPE_BOUNDARY_2D_FB };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrSemanticLabelsSupportInfoFB
@@ -6285,6 +6927,9 @@ public unsafe partial struct XrSemanticLabelsSupportInfoFB
     public void* next;
     public ulong flags;
     public byte* recognizedLabels;
+    /// <returns>a new <see cref="XrSemanticLabelsSupportInfoFB"> with it's type member set to </returns>
+    public static XrSemanticLabelsSupportInfoFB New() =>
+        new() { type = XrStructureType.XR_TYPE_SEMANTIC_LABELS_SUPPORT_INFO_FB };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrSceneCaptureRequestInfoFB
@@ -6293,6 +6938,9 @@ public unsafe partial struct XrSceneCaptureRequestInfoFB
     public void* next;
     public uint requestByteCount;
     public byte* request;
+    /// <returns>a new <see cref="XrSceneCaptureRequestInfoFB"> with it's type member set to </returns>
+    public static XrSceneCaptureRequestInfoFB New() =>
+        new() { type = XrStructureType.XR_TYPE_SCENE_CAPTURE_REQUEST_INFO_FB };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrEventDataSceneCaptureCompleteFB
@@ -6301,6 +6949,9 @@ public unsafe partial struct XrEventDataSceneCaptureCompleteFB
     public void* next;
     public ulong requestId;
     public XrResult result;
+    /// <returns>a new <see cref="XrEventDataSceneCaptureCompleteFB"> with it's type member set to </returns>
+    public static XrEventDataSceneCaptureCompleteFB New() =>
+        new() { type = XrStructureType.XR_TYPE_EVENT_DATA_SCENE_CAPTURE_COMPLETE_FB };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrSystemKeyboardTrackingPropertiesFB
@@ -6308,6 +6959,9 @@ public unsafe partial struct XrSystemKeyboardTrackingPropertiesFB
     public XrStructureType type;
     public void* next;
     public XrBool32 supportsKeyboardTracking;
+    /// <returns>a new <see cref="XrSystemKeyboardTrackingPropertiesFB"> with it's type member set to </returns>
+    public static XrSystemKeyboardTrackingPropertiesFB New() =>
+        new() { type = XrStructureType.XR_TYPE_SYSTEM_KEYBOARD_TRACKING_PROPERTIES_FB };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrKeyboardTrackingDescriptionFB
@@ -6323,6 +6977,9 @@ public unsafe partial struct XrKeyboardSpaceCreateInfoFB
     public XrStructureType type;
     public void* next;
     public ulong trackedKeyboardId;
+    /// <returns>a new <see cref="XrKeyboardSpaceCreateInfoFB"> with it's type member set to </returns>
+    public static XrKeyboardSpaceCreateInfoFB New() =>
+        new() { type = XrStructureType.XR_TYPE_KEYBOARD_SPACE_CREATE_INFO_FB };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrKeyboardTrackingQueryFB
@@ -6330,6 +6987,9 @@ public unsafe partial struct XrKeyboardTrackingQueryFB
     public XrStructureType type;
     public void* next;
     public ulong flags;
+    /// <returns>a new <see cref="XrKeyboardTrackingQueryFB"> with it's type member set to </returns>
+    public static XrKeyboardTrackingQueryFB New() =>
+        new() { type = XrStructureType.XR_TYPE_KEYBOARD_TRACKING_QUERY_FB };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrCompositionLayerDepthTestVARJO
@@ -6338,6 +6998,9 @@ public unsafe partial struct XrCompositionLayerDepthTestVARJO
     public void* next;
     public float depthTestRangeNearZ;
     public float depthTestRangeFarZ;
+    /// <returns>a new <see cref="XrCompositionLayerDepthTestVARJO"> with it's type member set to </returns>
+    public static XrCompositionLayerDepthTestVARJO New() =>
+        new() { type = XrStructureType.XR_TYPE_COMPOSITION_LAYER_DEPTH_TEST_VARJO };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrViewLocateFoveatedRenderingVARJO
@@ -6345,6 +7008,9 @@ public unsafe partial struct XrViewLocateFoveatedRenderingVARJO
     public XrStructureType type;
     public void* next;
     public XrBool32 foveatedRenderingActive;
+    /// <returns>a new <see cref="XrViewLocateFoveatedRenderingVARJO"> with it's type member set to </returns>
+    public static XrViewLocateFoveatedRenderingVARJO New() =>
+        new() { type = XrStructureType.XR_TYPE_VIEW_LOCATE_FOVEATED_RENDERING_VARJO };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrFoveatedViewConfigurationViewVARJO
@@ -6352,6 +7018,9 @@ public unsafe partial struct XrFoveatedViewConfigurationViewVARJO
     public XrStructureType type;
     public void* next;
     public XrBool32 foveatedRenderingActive;
+    /// <returns>a new <see cref="XrFoveatedViewConfigurationViewVARJO"> with it's type member set to </returns>
+    public static XrFoveatedViewConfigurationViewVARJO New() =>
+        new() { type = XrStructureType.XR_TYPE_FOVEATED_VIEW_CONFIGURATION_VIEW_VARJO };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrSystemFoveatedRenderingPropertiesVARJO
@@ -6359,6 +7028,9 @@ public unsafe partial struct XrSystemFoveatedRenderingPropertiesVARJO
     public XrStructureType type;
     public void* next;
     public XrBool32 supportsFoveatedRendering;
+    /// <returns>a new <see cref="XrSystemFoveatedRenderingPropertiesVARJO"> with it's type member set to </returns>
+    public static XrSystemFoveatedRenderingPropertiesVARJO New() =>
+        new() { type = XrStructureType.XR_TYPE_SYSTEM_FOVEATED_RENDERING_PROPERTIES_VARJO };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrCompositionLayerReprojectionInfoMSFT
@@ -6366,6 +7038,9 @@ public unsafe partial struct XrCompositionLayerReprojectionInfoMSFT
     public XrStructureType type;
     public void* next;
     public XrReprojectionModeMSFT reprojectionMode;
+    /// <returns>a new <see cref="XrCompositionLayerReprojectionInfoMSFT"> with it's type member set to </returns>
+    public static XrCompositionLayerReprojectionInfoMSFT New() =>
+        new() { type = XrStructureType.XR_TYPE_COMPOSITION_LAYER_REPROJECTION_INFO_MSFT };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrCompositionLayerReprojectionPlaneOverrideMSFT
@@ -6375,6 +7050,9 @@ public unsafe partial struct XrCompositionLayerReprojectionPlaneOverrideMSFT
     public XrVector3f position;
     public XrVector3f normal;
     public XrVector3f velocity;
+    /// <returns>a new <see cref="XrCompositionLayerReprojectionPlaneOverrideMSFT"> with it's type member set to </returns>
+    public static XrCompositionLayerReprojectionPlaneOverrideMSFT New() =>
+        new() { type = XrStructureType.XR_TYPE_COMPOSITION_LAYER_REPROJECTION_PLANE_OVERRIDE_MSFT };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrTriangleMeshCreateInfoFB
@@ -6387,6 +7065,9 @@ public unsafe partial struct XrTriangleMeshCreateInfoFB
     public XrVector3f* vertexBuffer;
     public uint triangleCount;
     public uint* indexBuffer;
+    /// <returns>a new <see cref="XrTriangleMeshCreateInfoFB"> with it's type member set to </returns>
+    public static XrTriangleMeshCreateInfoFB New() =>
+        new() { type = XrStructureType.XR_TYPE_TRIANGLE_MESH_CREATE_INFO_FB };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrSystemPassthroughPropertiesFB
@@ -6394,6 +7075,9 @@ public unsafe partial struct XrSystemPassthroughPropertiesFB
     public XrStructureType type;
     public void* next;
     public XrBool32 supportsPassthrough;
+    /// <returns>a new <see cref="XrSystemPassthroughPropertiesFB"> with it's type member set to </returns>
+    public static XrSystemPassthroughPropertiesFB New() =>
+        new() { type = XrStructureType.XR_TYPE_SYSTEM_PASSTHROUGH_PROPERTIES_FB };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrSystemPassthroughProperties2FB
@@ -6401,6 +7085,9 @@ public unsafe partial struct XrSystemPassthroughProperties2FB
     public XrStructureType type;
     public void* next;
     public ulong capabilities;
+    /// <returns>a new <see cref="XrSystemPassthroughProperties2FB"> with it's type member set to </returns>
+    public static XrSystemPassthroughProperties2FB New() =>
+        new() { type = XrStructureType.XR_TYPE_SYSTEM_PASSTHROUGH_PROPERTIES2_FB };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrPassthroughCreateInfoFB
@@ -6408,6 +7095,9 @@ public unsafe partial struct XrPassthroughCreateInfoFB
     public XrStructureType type;
     public void* next;
     public ulong flags;
+    /// <returns>a new <see cref="XrPassthroughCreateInfoFB"> with it's type member set to </returns>
+    public static XrPassthroughCreateInfoFB New() =>
+        new() { type = XrStructureType.XR_TYPE_PASSTHROUGH_CREATE_INFO_FB };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrPassthroughLayerCreateInfoFB
@@ -6417,6 +7107,9 @@ public unsafe partial struct XrPassthroughLayerCreateInfoFB
     public XrPassthroughFB passthrough;
     public ulong flags;
     public XrPassthroughLayerPurposeFB purpose;
+    /// <returns>a new <see cref="XrPassthroughLayerCreateInfoFB"> with it's type member set to </returns>
+    public static XrPassthroughLayerCreateInfoFB New() =>
+        new() { type = XrStructureType.XR_TYPE_PASSTHROUGH_LAYER_CREATE_INFO_FB };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrCompositionLayerPassthroughFB
@@ -6426,6 +7119,9 @@ public unsafe partial struct XrCompositionLayerPassthroughFB
     public ulong flags;
     public XrSpace space;
     public XrPassthroughLayerFB layerHandle;
+    /// <returns>a new <see cref="XrCompositionLayerPassthroughFB"> with it's type member set to </returns>
+    public static XrCompositionLayerPassthroughFB New() =>
+        new() { type = XrStructureType.XR_TYPE_COMPOSITION_LAYER_PASSTHROUGH_FB };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrGeometryInstanceCreateInfoFB
@@ -6437,6 +7133,9 @@ public unsafe partial struct XrGeometryInstanceCreateInfoFB
     public XrSpace baseSpace;
     public XrPosef pose;
     public XrVector3f scale;
+    /// <returns>a new <see cref="XrGeometryInstanceCreateInfoFB"> with it's type member set to </returns>
+    public static XrGeometryInstanceCreateInfoFB New() =>
+        new() { type = XrStructureType.XR_TYPE_GEOMETRY_INSTANCE_CREATE_INFO_FB };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrGeometryInstanceTransformFB
@@ -6447,6 +7146,9 @@ public unsafe partial struct XrGeometryInstanceTransformFB
     public long time;
     public XrPosef pose;
     public XrVector3f scale;
+    /// <returns>a new <see cref="XrGeometryInstanceTransformFB"> with it's type member set to </returns>
+    public static XrGeometryInstanceTransformFB New() =>
+        new() { type = XrStructureType.XR_TYPE_GEOMETRY_INSTANCE_TRANSFORM_FB };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrPassthroughStyleFB
@@ -6455,6 +7157,9 @@ public unsafe partial struct XrPassthroughStyleFB
     public void* next;
     public float textureOpacityFactor;
     public XrColor4f edgeColor;
+    /// <returns>a new <see cref="XrPassthroughStyleFB"> with it's type member set to </returns>
+    public static XrPassthroughStyleFB New() =>
+        new() { type = XrStructureType.XR_TYPE_PASSTHROUGH_STYLE_FB };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrPassthroughColorMapMonoToRgbaFB
@@ -6717,6 +7422,9 @@ public unsafe partial struct XrPassthroughColorMapMonoToRgbaFB
     public XrColor4f textureColorMap_253;
     public XrColor4f textureColorMap_254;
     public XrColor4f textureColorMap_255;
+    /// <returns>a new <see cref="XrPassthroughColorMapMonoToRgbaFB"> with it's type member set to </returns>
+    public static XrPassthroughColorMapMonoToRgbaFB New() =>
+        new() { type = XrStructureType.XR_TYPE_PASSTHROUGH_COLOR_MAP_MONO_TO_RGBA_FB };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrPassthroughColorMapMonoToMonoFB
@@ -6724,6 +7432,9 @@ public unsafe partial struct XrPassthroughColorMapMonoToMonoFB
     public XrStructureType type;
     public void* next;
     public fixed byte textureColorMap[(int)OpenXRNative.XR_PASSTHROUGH_COLOR_MAP_MONO_SIZE_FB];
+    /// <returns>a new <see cref="XrPassthroughColorMapMonoToMonoFB"> with it's type member set to </returns>
+    public static XrPassthroughColorMapMonoToMonoFB New() =>
+        new() { type = XrStructureType.XR_TYPE_PASSTHROUGH_COLOR_MAP_MONO_TO_MONO_FB };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrPassthroughBrightnessContrastSaturationFB
@@ -6733,6 +7444,9 @@ public unsafe partial struct XrPassthroughBrightnessContrastSaturationFB
     public float brightness;
     public float contrast;
     public float saturation;
+    /// <returns>a new <see cref="XrPassthroughBrightnessContrastSaturationFB"> with it's type member set to </returns>
+    public static XrPassthroughBrightnessContrastSaturationFB New() =>
+        new() { type = XrStructureType.XR_TYPE_PASSTHROUGH_BRIGHTNESS_CONTRAST_SATURATION_FB };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrEventDataPassthroughStateChangedFB
@@ -6740,6 +7454,9 @@ public unsafe partial struct XrEventDataPassthroughStateChangedFB
     public XrStructureType type;
     public void* next;
     public ulong flags;
+    /// <returns>a new <see cref="XrEventDataPassthroughStateChangedFB"> with it's type member set to </returns>
+    public static XrEventDataPassthroughStateChangedFB New() =>
+        new() { type = XrStructureType.XR_TYPE_EVENT_DATA_PASSTHROUGH_STATE_CHANGED_FB };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrPassthroughKeyboardHandsIntensityFB
@@ -6748,6 +7465,9 @@ public unsafe partial struct XrPassthroughKeyboardHandsIntensityFB
     public void* next;
     public float leftHandIntensity;
     public float rightHandIntensity;
+    /// <returns>a new <see cref="XrPassthroughKeyboardHandsIntensityFB"> with it's type member set to </returns>
+    public static XrPassthroughKeyboardHandsIntensityFB New() =>
+        new() { type = XrStructureType.XR_TYPE_PASSTHROUGH_KEYBOARD_HANDS_INTENSITY_FB };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrLocalDimmingFrameEndInfoMETA
@@ -6755,6 +7475,9 @@ public unsafe partial struct XrLocalDimmingFrameEndInfoMETA
     public XrStructureType type;
     public void* next;
     public XrLocalDimmingModeMETA localDimmingMode;
+    /// <returns>a new <see cref="XrLocalDimmingFrameEndInfoMETA"> with it's type member set to </returns>
+    public static XrLocalDimmingFrameEndInfoMETA New() =>
+        new() { type = XrStructureType.XR_TYPE_LOCAL_DIMMING_FRAME_END_INFO_META };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrSpatialAnchorPersistenceNameMSFT
@@ -6768,6 +7491,9 @@ public unsafe partial struct XrSpatialAnchorPersistenceInfoMSFT
     public void* next;
     public XrSpatialAnchorPersistenceNameMSFT spatialAnchorPersistenceName;
     public XrSpatialAnchorMSFT spatialAnchor;
+    /// <returns>a new <see cref="XrSpatialAnchorPersistenceInfoMSFT"> with it's type member set to </returns>
+    public static XrSpatialAnchorPersistenceInfoMSFT New() =>
+        new() { type = XrStructureType.XR_TYPE_SPATIAL_ANCHOR_PERSISTENCE_INFO_MSFT };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrSpatialAnchorFromPersistedAnchorCreateInfoMSFT
@@ -6776,6 +7502,9 @@ public unsafe partial struct XrSpatialAnchorFromPersistedAnchorCreateInfoMSFT
     public void* next;
     public XrSpatialAnchorStoreConnectionMSFT spatialAnchorStore;
     public XrSpatialAnchorPersistenceNameMSFT spatialAnchorPersistenceName;
+    /// <returns>a new <see cref="XrSpatialAnchorFromPersistedAnchorCreateInfoMSFT"> with it's type member set to </returns>
+    public static XrSpatialAnchorFromPersistedAnchorCreateInfoMSFT New() =>
+        new() { type = XrStructureType.XR_TYPE_SPATIAL_ANCHOR_FROM_PERSISTED_ANCHOR_CREATE_INFO_MSFT };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrFacialTrackerCreateInfoHTC
@@ -6783,6 +7512,9 @@ public unsafe partial struct XrFacialTrackerCreateInfoHTC
     public XrStructureType type;
     public void* next;
     public XrFacialTrackingTypeHTC facialTrackingType;
+    /// <returns>a new <see cref="XrFacialTrackerCreateInfoHTC"> with it's type member set to </returns>
+    public static XrFacialTrackerCreateInfoHTC New() =>
+        new() { type = XrStructureType.XR_TYPE_FACIAL_TRACKER_CREATE_INFO_HTC };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrSystemFacialTrackingPropertiesHTC
@@ -6791,6 +7523,9 @@ public unsafe partial struct XrSystemFacialTrackingPropertiesHTC
     public void* next;
     public XrBool32 supportEyeFacialTracking;
     public XrBool32 supportLipFacialTracking;
+    /// <returns>a new <see cref="XrSystemFacialTrackingPropertiesHTC"> with it's type member set to </returns>
+    public static XrSystemFacialTrackingPropertiesHTC New() =>
+        new() { type = XrStructureType.XR_TYPE_SYSTEM_FACIAL_TRACKING_PROPERTIES_HTC };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrFacialExpressionsHTC
@@ -6801,6 +7536,9 @@ public unsafe partial struct XrFacialExpressionsHTC
     public long sampleTime;
     public uint expressionCount;
     public float* expressionWeightings;
+    /// <returns>a new <see cref="XrFacialExpressionsHTC"> with it's type member set to </returns>
+    public static XrFacialExpressionsHTC New() =>
+        new() { type = XrStructureType.XR_TYPE_FACIAL_EXPRESSIONS_HTC };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrPassthroughCreateInfoHTC
@@ -6808,6 +7546,9 @@ public unsafe partial struct XrPassthroughCreateInfoHTC
     public XrStructureType type;
     public void* next;
     public XrPassthroughFormHTC form;
+    /// <returns>a new <see cref="XrPassthroughCreateInfoHTC"> with it's type member set to </returns>
+    public static XrPassthroughCreateInfoHTC New() =>
+        new() { type = XrStructureType.XR_TYPE_PASSTHROUGH_CREATE_INFO_HTC };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrPassthroughColorHTC
@@ -6815,6 +7556,9 @@ public unsafe partial struct XrPassthroughColorHTC
     public XrStructureType type;
     public void* next;
     public float alpha;
+    /// <returns>a new <see cref="XrPassthroughColorHTC"> with it's type member set to </returns>
+    public static XrPassthroughColorHTC New() =>
+        new() { type = XrStructureType.XR_TYPE_PASSTHROUGH_COLOR_HTC };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrPassthroughMeshTransformInfoHTC
@@ -6829,6 +7573,9 @@ public unsafe partial struct XrPassthroughMeshTransformInfoHTC
     public long time;
     public XrPosef pose;
     public XrVector3f scale;
+    /// <returns>a new <see cref="XrPassthroughMeshTransformInfoHTC"> with it's type member set to </returns>
+    public static XrPassthroughMeshTransformInfoHTC New() =>
+        new() { type = XrStructureType.XR_TYPE_PASSTHROUGH_MESH_TRANSFORM_INFO_HTC };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrCompositionLayerPassthroughHTC
@@ -6839,6 +7586,9 @@ public unsafe partial struct XrCompositionLayerPassthroughHTC
     public XrSpace space;
     public XrPassthroughHTC passthrough;
     public XrPassthroughColorHTC color;
+    /// <returns>a new <see cref="XrCompositionLayerPassthroughHTC"> with it's type member set to </returns>
+    public static XrCompositionLayerPassthroughHTC New() =>
+        new() { type = XrStructureType.XR_TYPE_COMPOSITION_LAYER_PASSTHROUGH_HTC };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrViveTrackerPathsHTCX
@@ -6847,6 +7597,9 @@ public unsafe partial struct XrViveTrackerPathsHTCX
     public void* next;
     public ulong persistentPath;
     public ulong rolePath;
+    /// <returns>a new <see cref="XrViveTrackerPathsHTCX"> with it's type member set to </returns>
+    public static XrViveTrackerPathsHTCX New() =>
+        new() { type = XrStructureType.XR_TYPE_VIVE_TRACKER_PATHS_HTCX };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrEventDataViveTrackerConnectedHTCX
@@ -6854,6 +7607,9 @@ public unsafe partial struct XrEventDataViveTrackerConnectedHTCX
     public XrStructureType type;
     public void* next;
     public XrViveTrackerPathsHTCX* paths;
+    /// <returns>a new <see cref="XrEventDataViveTrackerConnectedHTCX"> with it's type member set to </returns>
+    public static XrEventDataViveTrackerConnectedHTCX New() =>
+        new() { type = XrStructureType.XR_TYPE_EVENT_DATA_VIVE_TRACKER_CONNECTED_HTCX };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrCompositionLayerSpaceWarpInfoFB
@@ -6868,6 +7624,9 @@ public unsafe partial struct XrCompositionLayerSpaceWarpInfoFB
     public float maxDepth;
     public float nearZ;
     public float farZ;
+    /// <returns>a new <see cref="XrCompositionLayerSpaceWarpInfoFB"> with it's type member set to </returns>
+    public static XrCompositionLayerSpaceWarpInfoFB New() =>
+        new() { type = XrStructureType.XR_TYPE_COMPOSITION_LAYER_SPACE_WARP_INFO_FB };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrSystemSpaceWarpPropertiesFB
@@ -6876,6 +7635,9 @@ public unsafe partial struct XrSystemSpaceWarpPropertiesFB
     public void* next;
     public uint recommendedMotionVectorImageRectWidth;
     public uint recommendedMotionVectorImageRectHeight;
+    /// <returns>a new <see cref="XrSystemSpaceWarpPropertiesFB"> with it's type member set to </returns>
+    public static XrSystemSpaceWarpPropertiesFB New() =>
+        new() { type = XrStructureType.XR_TYPE_SYSTEM_SPACE_WARP_PROPERTIES_FB };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrSystemMarkerTrackingPropertiesVARJO
@@ -6883,6 +7645,9 @@ public unsafe partial struct XrSystemMarkerTrackingPropertiesVARJO
     public XrStructureType type;
     public void* next;
     public XrBool32 supportsMarkerTracking;
+    /// <returns>a new <see cref="XrSystemMarkerTrackingPropertiesVARJO"> with it's type member set to </returns>
+    public static XrSystemMarkerTrackingPropertiesVARJO New() =>
+        new() { type = XrStructureType.XR_TYPE_SYSTEM_MARKER_TRACKING_PROPERTIES_VARJO };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrEventDataMarkerTrackingUpdateVARJO
@@ -6893,6 +7658,9 @@ public unsafe partial struct XrEventDataMarkerTrackingUpdateVARJO
     public XrBool32 isActive;
     public XrBool32 isPredicted;
     public long time;
+    /// <returns>a new <see cref="XrEventDataMarkerTrackingUpdateVARJO"> with it's type member set to </returns>
+    public static XrEventDataMarkerTrackingUpdateVARJO New() =>
+        new() { type = XrStructureType.XR_TYPE_EVENT_DATA_MARKER_TRACKING_UPDATE_VARJO };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrMarkerSpaceCreateInfoVARJO
@@ -6901,6 +7669,9 @@ public unsafe partial struct XrMarkerSpaceCreateInfoVARJO
     public void* next;
     public ulong markerId;
     public XrPosef poseInMarkerSpace;
+    /// <returns>a new <see cref="XrMarkerSpaceCreateInfoVARJO"> with it's type member set to </returns>
+    public static XrMarkerSpaceCreateInfoVARJO New() =>
+        new() { type = XrStructureType.XR_TYPE_MARKER_SPACE_CREATE_INFO_VARJO };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrUuidEXT
@@ -6914,6 +7685,9 @@ public unsafe partial struct XrGlobalDimmerFrameEndInfoML
     public void* next;
     public float dimmerValue;
     public ulong flags;
+    /// <returns>a new <see cref="XrGlobalDimmerFrameEndInfoML"> with it's type member set to </returns>
+    public static XrGlobalDimmerFrameEndInfoML New() =>
+        new() { type = XrStructureType.XR_TYPE_GLOBAL_DIMMER_FRAME_END_INFO_ML };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrDigitalLensControlALMALENCE
@@ -6921,6 +7695,9 @@ public unsafe partial struct XrDigitalLensControlALMALENCE
     public XrStructureType type;
     public void* next;
     public ulong flags;
+    /// <returns>a new <see cref="XrDigitalLensControlALMALENCE"> with it's type member set to </returns>
+    public static XrDigitalLensControlALMALENCE New() =>
+        new() { type = XrStructureType.XR_TYPE_DIGITAL_LENS_CONTROL_ALMALENCE };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrCompositionLayerSettingsFB
@@ -6928,6 +7705,9 @@ public unsafe partial struct XrCompositionLayerSettingsFB
     public XrStructureType type;
     public void* next;
     public ulong layerFlags;
+    /// <returns>a new <see cref="XrCompositionLayerSettingsFB"> with it's type member set to </returns>
+    public static XrCompositionLayerSettingsFB New() =>
+        new() { type = XrStructureType.XR_TYPE_COMPOSITION_LAYER_SETTINGS_FB };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrExternalCameraIntrinsicsOCULUS
@@ -6954,6 +7734,9 @@ public unsafe partial struct XrExternalCameraOCULUS
     public fixed byte name[(int)OpenXRNative.XR_MAX_EXTERNAL_CAMERA_NAME_SIZE_OCULUS];
     public XrExternalCameraIntrinsicsOCULUS intrinsics;
     public XrExternalCameraExtrinsicsOCULUS extrinsics;
+    /// <returns>a new <see cref="XrExternalCameraOCULUS"> with it's type member set to </returns>
+    public static XrExternalCameraOCULUS New() =>
+        new() { type = XrStructureType.XR_TYPE_EXTERNAL_CAMERA_OCULUS };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrPerformanceMetricsStateMETA
@@ -6961,6 +7744,9 @@ public unsafe partial struct XrPerformanceMetricsStateMETA
     public XrStructureType type;
     public void* next;
     public XrBool32 enabled;
+    /// <returns>a new <see cref="XrPerformanceMetricsStateMETA"> with it's type member set to </returns>
+    public static XrPerformanceMetricsStateMETA New() =>
+        new() { type = XrStructureType.XR_TYPE_PERFORMANCE_METRICS_STATE_META };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrPerformanceMetricsCounterMETA
@@ -6971,6 +7757,9 @@ public unsafe partial struct XrPerformanceMetricsCounterMETA
     public XrPerformanceMetricsCounterUnitMETA counterUnit;
     public uint uintValue;
     public float floatValue;
+    /// <returns>a new <see cref="XrPerformanceMetricsCounterMETA"> with it's type member set to </returns>
+    public static XrPerformanceMetricsCounterMETA New() =>
+        new() { type = XrStructureType.XR_TYPE_PERFORMANCE_METRICS_COUNTER_META };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrPassthroughPreferencesMETA
@@ -6978,6 +7767,9 @@ public unsafe partial struct XrPassthroughPreferencesMETA
     public XrStructureType type;
     public void* next;
     public ulong flags;
+    /// <returns>a new <see cref="XrPassthroughPreferencesMETA"> with it's type member set to </returns>
+    public static XrPassthroughPreferencesMETA New() =>
+        new() { type = XrStructureType.XR_TYPE_PASSTHROUGH_PREFERENCES_META };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrSystemHeadsetIdPropertiesMETA
@@ -6985,6 +7777,9 @@ public unsafe partial struct XrSystemHeadsetIdPropertiesMETA
     public XrStructureType type;
     public void* next;
     public XrUuidEXT id;
+    /// <returns>a new <see cref="XrSystemHeadsetIdPropertiesMETA"> with it's type member set to </returns>
+    public static XrSystemHeadsetIdPropertiesMETA New() =>
+        new() { type = XrStructureType.XR_TYPE_SYSTEM_HEADSET_ID_PROPERTIES_META };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrPassthroughColorLutDataMETA
@@ -7000,6 +7795,9 @@ public unsafe partial struct XrPassthroughColorLutCreateInfoMETA
     public XrPassthroughColorLutChannelsMETA channels;
     public uint resolution;
     public XrPassthroughColorLutDataMETA data;
+    /// <returns>a new <see cref="XrPassthroughColorLutCreateInfoMETA"> with it's type member set to </returns>
+    public static XrPassthroughColorLutCreateInfoMETA New() =>
+        new() { type = XrStructureType.XR_TYPE_PASSTHROUGH_COLOR_LUT_CREATE_INFO_META };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrPassthroughColorLutUpdateInfoMETA
@@ -7007,6 +7805,9 @@ public unsafe partial struct XrPassthroughColorLutUpdateInfoMETA
     public XrStructureType type;
     public void* next;
     public XrPassthroughColorLutDataMETA data;
+    /// <returns>a new <see cref="XrPassthroughColorLutUpdateInfoMETA"> with it's type member set to </returns>
+    public static XrPassthroughColorLutUpdateInfoMETA New() =>
+        new() { type = XrStructureType.XR_TYPE_PASSTHROUGH_COLOR_LUT_UPDATE_INFO_META };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrPassthroughColorMapLutMETA
@@ -7015,6 +7816,9 @@ public unsafe partial struct XrPassthroughColorMapLutMETA
     public void* next;
     public XrPassthroughColorLutMETA colorLut;
     public float weight;
+    /// <returns>a new <see cref="XrPassthroughColorMapLutMETA"> with it's type member set to </returns>
+    public static XrPassthroughColorMapLutMETA New() =>
+        new() { type = XrStructureType.XR_TYPE_PASSTHROUGH_COLOR_MAP_LUT_META };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrPassthroughColorMapInterpolatedLutMETA
@@ -7024,6 +7828,9 @@ public unsafe partial struct XrPassthroughColorMapInterpolatedLutMETA
     public XrPassthroughColorLutMETA sourceColorLut;
     public XrPassthroughColorLutMETA targetColorLut;
     public float weight;
+    /// <returns>a new <see cref="XrPassthroughColorMapInterpolatedLutMETA"> with it's type member set to </returns>
+    public static XrPassthroughColorMapInterpolatedLutMETA New() =>
+        new() { type = XrStructureType.XR_TYPE_PASSTHROUGH_COLOR_MAP_INTERPOLATED_LUT_META };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrSystemPassthroughColorLutPropertiesMETA
@@ -7031,6 +7838,9 @@ public unsafe partial struct XrSystemPassthroughColorLutPropertiesMETA
     public XrStructureType type;
     public void* next;
     public uint maxColorLutResolution;
+    /// <returns>a new <see cref="XrSystemPassthroughColorLutPropertiesMETA"> with it's type member set to </returns>
+    public static XrSystemPassthroughColorLutPropertiesMETA New() =>
+        new() { type = XrStructureType.XR_TYPE_SYSTEM_PASSTHROUGH_COLOR_LUT_PROPERTIES_META };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrFoveationApplyInfoHTC
@@ -7040,6 +7850,9 @@ public unsafe partial struct XrFoveationApplyInfoHTC
     public XrFoveationModeHTC mode;
     public uint subImageCount;
     public XrSwapchainSubImage* subImages;
+    /// <returns>a new <see cref="XrFoveationApplyInfoHTC"> with it's type member set to </returns>
+    public static XrFoveationApplyInfoHTC New() =>
+        new() { type = XrStructureType.XR_TYPE_FOVEATION_APPLY_INFO_HTC };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrFoveationConfigurationHTC
@@ -7054,6 +7867,9 @@ public unsafe partial struct XrFoveationDynamicModeInfoHTC
     public XrStructureType type;
     public void* next;
     public ulong dynamicFlags;
+    /// <returns>a new <see cref="XrFoveationDynamicModeInfoHTC"> with it's type member set to </returns>
+    public static XrFoveationDynamicModeInfoHTC New() =>
+        new() { type = XrStructureType.XR_TYPE_FOVEATION_DYNAMIC_MODE_INFO_HTC };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrFoveationCustomModeInfoHTC
@@ -7062,6 +7878,9 @@ public unsafe partial struct XrFoveationCustomModeInfoHTC
     public void* next;
     public uint configCount;
     public XrFoveationConfigurationHTC* configs;
+    /// <returns>a new <see cref="XrFoveationCustomModeInfoHTC"> with it's type member set to </returns>
+    public static XrFoveationCustomModeInfoHTC New() =>
+        new() { type = XrStructureType.XR_TYPE_FOVEATION_CUSTOM_MODE_INFO_HTC };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrActiveActionSetPrioritiesEXT
@@ -7070,6 +7889,9 @@ public unsafe partial struct XrActiveActionSetPrioritiesEXT
     public void* next;
     public uint actionSetPriorityCount;
     public XrActiveActionSetPriorityEXT* actionSetPriorities;
+    /// <returns>a new <see cref="XrActiveActionSetPrioritiesEXT"> with it's type member set to </returns>
+    public static XrActiveActionSetPrioritiesEXT New() =>
+        new() { type = XrStructureType.XR_TYPE_ACTIVE_ACTION_SET_PRIORITIES_EXT };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrActiveActionSetPriorityEXT
@@ -7084,6 +7906,9 @@ public unsafe partial struct XrCompositionLayerDepthTestFB
     public void* next;
     public XrBool32 depthMask;
     public XrCompareOpFB compareOp;
+    /// <returns>a new <see cref="XrCompositionLayerDepthTestFB"> with it's type member set to </returns>
+    public static XrCompositionLayerDepthTestFB New() =>
+        new() { type = XrStructureType.XR_TYPE_COMPOSITION_LAYER_DEPTH_TEST_FB };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrCoordinateSpaceCreateInfoML
@@ -7092,6 +7917,9 @@ public unsafe partial struct XrCoordinateSpaceCreateInfoML
     public void* next;
     public IntPtr cfuid;
     public XrPosef poseInCoordinateSpace;
+    /// <returns>a new <see cref="XrCoordinateSpaceCreateInfoML"> with it's type member set to </returns>
+    public static XrCoordinateSpaceCreateInfoML New() =>
+        new() { type = XrStructureType.XR_TYPE_COORDINATE_SPACE_CREATE_INFO_ML };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrFrameEndInfoML
@@ -7100,6 +7928,9 @@ public unsafe partial struct XrFrameEndInfoML
     public void* next;
     public float focusDistance;
     public ulong flags;
+    /// <returns>a new <see cref="XrFrameEndInfoML"> with it's type member set to </returns>
+    public static XrFrameEndInfoML New() =>
+        new() { type = XrStructureType.XR_TYPE_FRAME_END_INFO_ML };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrHapticAmplitudeEnvelopeVibrationFB
@@ -7109,6 +7940,9 @@ public unsafe partial struct XrHapticAmplitudeEnvelopeVibrationFB
     public long duration;
     public uint amplitudeCount;
     public float* amplitudes;
+    /// <returns>a new <see cref="XrHapticAmplitudeEnvelopeVibrationFB"> with it's type member set to </returns>
+    public static XrHapticAmplitudeEnvelopeVibrationFB New() =>
+        new() { type = XrStructureType.XR_TYPE_HAPTIC_AMPLITUDE_ENVELOPE_VIBRATION_FB };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrHapticPcmVibrationFB
@@ -7120,6 +7954,9 @@ public unsafe partial struct XrHapticPcmVibrationFB
     public float sampleRate;
     public XrBool32 append;
     public uint* samplesConsumed;
+    /// <returns>a new <see cref="XrHapticPcmVibrationFB"> with it's type member set to </returns>
+    public static XrHapticPcmVibrationFB New() =>
+        new() { type = XrStructureType.XR_TYPE_HAPTIC_PCM_VIBRATION_FB };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrDevicePcmSampleRateStateFB
@@ -7127,6 +7964,9 @@ public unsafe partial struct XrDevicePcmSampleRateStateFB
     public XrStructureType type;
     public void* next;
     public float sampleRate;
+    /// <returns>a new <see cref="XrDevicePcmSampleRateStateFB"> with it's type member set to </returns>
+    public static XrDevicePcmSampleRateStateFB New() =>
+        new() { type = XrStructureType.XR_TYPE_DEVICE_PCM_SAMPLE_RATE_STATE_FB };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrSpaceUserCreateInfoFB
@@ -7134,6 +7974,9 @@ public unsafe partial struct XrSpaceUserCreateInfoFB
     public XrStructureType type;
     public void* next;
     public ulong userId;
+    /// <returns>a new <see cref="XrSpaceUserCreateInfoFB"> with it's type member set to </returns>
+    public static XrSpaceUserCreateInfoFB New() =>
+        new() { type = XrStructureType.XR_TYPE_SPACE_USER_CREATE_INFO_FB };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrSystemForceFeedbackCurlPropertiesMNDX
@@ -7141,6 +7984,9 @@ public unsafe partial struct XrSystemForceFeedbackCurlPropertiesMNDX
     public XrStructureType type;
     public void* next;
     public XrBool32 supportsForceFeedbackCurl;
+    /// <returns>a new <see cref="XrSystemForceFeedbackCurlPropertiesMNDX"> with it's type member set to </returns>
+    public static XrSystemForceFeedbackCurlPropertiesMNDX New() =>
+        new() { type = XrStructureType.XR_TYPE_SYSTEM_FORCE_FEEDBACK_CURL_PROPERTIES_MNDX };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrForceFeedbackCurlApplyLocationsMNDX
@@ -7149,6 +7995,9 @@ public unsafe partial struct XrForceFeedbackCurlApplyLocationsMNDX
     public void* next;
     public uint locationCount;
     public XrForceFeedbackCurlApplyLocationMNDX* locations;
+    /// <returns>a new <see cref="XrForceFeedbackCurlApplyLocationsMNDX"> with it's type member set to </returns>
+    public static XrForceFeedbackCurlApplyLocationsMNDX New() =>
+        new() { type = XrStructureType.XR_TYPE_FORCE_FEEDBACK_CURL_APPLY_LOCATIONS_MNDX };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrForceFeedbackCurlApplyLocationMNDX
@@ -7162,6 +8011,9 @@ public unsafe partial struct XrSystemPlaneDetectionPropertiesEXT
     public XrStructureType type;
     public void* next;
     public ulong supportedFeatures;
+    /// <returns>a new <see cref="XrSystemPlaneDetectionPropertiesEXT"> with it's type member set to </returns>
+    public static XrSystemPlaneDetectionPropertiesEXT New() =>
+        new() { type = XrStructureType.XR_TYPE_SYSTEM_PLANE_DETECTION_PROPERTIES_EXT };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrPlaneDetectorCreateInfoEXT
@@ -7169,6 +8021,9 @@ public unsafe partial struct XrPlaneDetectorCreateInfoEXT
     public XrStructureType type;
     public void* next;
     public ulong flags;
+    /// <returns>a new <see cref="XrPlaneDetectorCreateInfoEXT"> with it's type member set to </returns>
+    public static XrPlaneDetectorCreateInfoEXT New() =>
+        new() { type = XrStructureType.XR_TYPE_PLANE_DETECTOR_CREATE_INFO_EXT };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrPlaneDetectorBeginInfoEXT
@@ -7185,6 +8040,9 @@ public unsafe partial struct XrPlaneDetectorBeginInfoEXT
     public float minArea;
     public XrPosef boundingBoxPose;
     public XrExtent3DfEXT boundingBoxExtent;
+    /// <returns>a new <see cref="XrPlaneDetectorBeginInfoEXT"> with it's type member set to </returns>
+    public static XrPlaneDetectorBeginInfoEXT New() =>
+        new() { type = XrStructureType.XR_TYPE_PLANE_DETECTOR_BEGIN_INFO_EXT };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrPlaneDetectorGetInfoEXT
@@ -7193,6 +8051,9 @@ public unsafe partial struct XrPlaneDetectorGetInfoEXT
     public void* next;
     public XrSpace baseSpace;
     public long time;
+    /// <returns>a new <see cref="XrPlaneDetectorGetInfoEXT"> with it's type member set to </returns>
+    public static XrPlaneDetectorGetInfoEXT New() =>
+        new() { type = XrStructureType.XR_TYPE_PLANE_DETECTOR_GET_INFO_EXT };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrPlaneDetectorLocationsEXT
@@ -7202,6 +8063,9 @@ public unsafe partial struct XrPlaneDetectorLocationsEXT
     public uint planeLocationCapacityInput;
     public uint planeLocationCountOutput;
     public XrPlaneDetectorLocationEXT* planeLocations;
+    /// <returns>a new <see cref="XrPlaneDetectorLocationsEXT"> with it's type member set to </returns>
+    public static XrPlaneDetectorLocationsEXT New() =>
+        new() { type = XrStructureType.XR_TYPE_PLANE_DETECTOR_LOCATIONS_EXT };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrPlaneDetectorLocationEXT
@@ -7215,6 +8079,9 @@ public unsafe partial struct XrPlaneDetectorLocationEXT
     public XrPlaneDetectorOrientationEXT orientation;
     public XrPlaneDetectorSemanticTypeEXT semanticType;
     public uint polygonBufferCount;
+    /// <returns>a new <see cref="XrPlaneDetectorLocationEXT"> with it's type member set to </returns>
+    public static XrPlaneDetectorLocationEXT New() =>
+        new() { type = XrStructureType.XR_TYPE_PLANE_DETECTOR_LOCATION_EXT };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrPlaneDetectorPolygonBufferEXT
@@ -7224,6 +8091,9 @@ public unsafe partial struct XrPlaneDetectorPolygonBufferEXT
     public uint vertexCapacityInput;
     public uint vertexCountOutput;
     public XrVector2f* vertices;
+    /// <returns>a new <see cref="XrPlaneDetectorPolygonBufferEXT"> with it's type member set to </returns>
+    public static XrPlaneDetectorPolygonBufferEXT New() =>
+        new() { type = XrStructureType.XR_TYPE_PLANE_DETECTOR_POLYGON_BUFFER_EXT };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrSystemVirtualKeyboardPropertiesMETA
@@ -7231,12 +8101,18 @@ public unsafe partial struct XrSystemVirtualKeyboardPropertiesMETA
     public XrStructureType type;
     public void* next;
     public XrBool32 supportsVirtualKeyboard;
+    /// <returns>a new <see cref="XrSystemVirtualKeyboardPropertiesMETA"> with it's type member set to </returns>
+    public static XrSystemVirtualKeyboardPropertiesMETA New() =>
+        new() { type = XrStructureType.XR_TYPE_SYSTEM_VIRTUAL_KEYBOARD_PROPERTIES_META };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrVirtualKeyboardCreateInfoMETA
 {
     public XrStructureType type;
     public void* next;
+    /// <returns>a new <see cref="XrVirtualKeyboardCreateInfoMETA"> with it's type member set to </returns>
+    public static XrVirtualKeyboardCreateInfoMETA New() =>
+        new() { type = XrStructureType.XR_TYPE_VIRTUAL_KEYBOARD_CREATE_INFO_META };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrVirtualKeyboardSpaceCreateInfoMETA
@@ -7246,6 +8122,9 @@ public unsafe partial struct XrVirtualKeyboardSpaceCreateInfoMETA
     public XrVirtualKeyboardLocationTypeMETA locationType;
     public XrSpace space;
     public XrPosef poseInSpace;
+    /// <returns>a new <see cref="XrVirtualKeyboardSpaceCreateInfoMETA"> with it's type member set to </returns>
+    public static XrVirtualKeyboardSpaceCreateInfoMETA New() =>
+        new() { type = XrStructureType.XR_TYPE_VIRTUAL_KEYBOARD_SPACE_CREATE_INFO_META };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrVirtualKeyboardLocationInfoMETA
@@ -7256,6 +8135,9 @@ public unsafe partial struct XrVirtualKeyboardLocationInfoMETA
     public XrSpace space;
     public XrPosef poseInSpace;
     public float scale;
+    /// <returns>a new <see cref="XrVirtualKeyboardLocationInfoMETA"> with it's type member set to </returns>
+    public static XrVirtualKeyboardLocationInfoMETA New() =>
+        new() { type = XrStructureType.XR_TYPE_VIRTUAL_KEYBOARD_LOCATION_INFO_META };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrVirtualKeyboardModelVisibilitySetInfoMETA
@@ -7263,6 +8145,9 @@ public unsafe partial struct XrVirtualKeyboardModelVisibilitySetInfoMETA
     public XrStructureType type;
     public void* next;
     public XrBool32 visible;
+    /// <returns>a new <see cref="XrVirtualKeyboardModelVisibilitySetInfoMETA"> with it's type member set to </returns>
+    public static XrVirtualKeyboardModelVisibilitySetInfoMETA New() =>
+        new() { type = XrStructureType.XR_TYPE_VIRTUAL_KEYBOARD_MODEL_VISIBILITY_SET_INFO_META };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrVirtualKeyboardAnimationStateMETA
@@ -7271,6 +8156,9 @@ public unsafe partial struct XrVirtualKeyboardAnimationStateMETA
     public void* next;
     public int animationIndex;
     public float fraction;
+    /// <returns>a new <see cref="XrVirtualKeyboardAnimationStateMETA"> with it's type member set to </returns>
+    public static XrVirtualKeyboardAnimationStateMETA New() =>
+        new() { type = XrStructureType.XR_TYPE_VIRTUAL_KEYBOARD_ANIMATION_STATE_META };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrVirtualKeyboardModelAnimationStatesMETA
@@ -7280,6 +8168,9 @@ public unsafe partial struct XrVirtualKeyboardModelAnimationStatesMETA
     public uint stateCapacityInput;
     public uint stateCountOutput;
     public XrVirtualKeyboardAnimationStateMETA* states;
+    /// <returns>a new <see cref="XrVirtualKeyboardModelAnimationStatesMETA"> with it's type member set to </returns>
+    public static XrVirtualKeyboardModelAnimationStatesMETA New() =>
+        new() { type = XrStructureType.XR_TYPE_VIRTUAL_KEYBOARD_MODEL_ANIMATION_STATES_META };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrVirtualKeyboardTextureDataMETA
@@ -7291,6 +8182,9 @@ public unsafe partial struct XrVirtualKeyboardTextureDataMETA
     public uint bufferCapacityInput;
     public uint bufferCountOutput;
     public byte* buffer;
+    /// <returns>a new <see cref="XrVirtualKeyboardTextureDataMETA"> with it's type member set to </returns>
+    public static XrVirtualKeyboardTextureDataMETA New() =>
+        new() { type = XrStructureType.XR_TYPE_VIRTUAL_KEYBOARD_TEXTURE_DATA_META };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrVirtualKeyboardInputInfoMETA
@@ -7301,6 +8195,9 @@ public unsafe partial struct XrVirtualKeyboardInputInfoMETA
     public XrSpace inputSpace;
     public XrPosef inputPoseInSpace;
     public ulong inputState;
+    /// <returns>a new <see cref="XrVirtualKeyboardInputInfoMETA"> with it's type member set to </returns>
+    public static XrVirtualKeyboardInputInfoMETA New() =>
+        new() { type = XrStructureType.XR_TYPE_VIRTUAL_KEYBOARD_INPUT_INFO_META };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrVirtualKeyboardTextContextChangeInfoMETA
@@ -7308,6 +8205,9 @@ public unsafe partial struct XrVirtualKeyboardTextContextChangeInfoMETA
     public XrStructureType type;
     public void* next;
     public byte* textContext;
+    /// <returns>a new <see cref="XrVirtualKeyboardTextContextChangeInfoMETA"> with it's type member set to </returns>
+    public static XrVirtualKeyboardTextContextChangeInfoMETA New() =>
+        new() { type = XrStructureType.XR_TYPE_VIRTUAL_KEYBOARD_TEXT_CONTEXT_CHANGE_INFO_META };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrEventDataVirtualKeyboardCommitTextMETA
@@ -7316,6 +8216,9 @@ public unsafe partial struct XrEventDataVirtualKeyboardCommitTextMETA
     public void* next;
     public XrVirtualKeyboardMETA keyboard;
     public fixed byte text[(int)OpenXRNative.XR_MAX_VIRTUAL_KEYBOARD_COMMIT_TEXT_SIZE_META];
+    /// <returns>a new <see cref="XrEventDataVirtualKeyboardCommitTextMETA"> with it's type member set to </returns>
+    public static XrEventDataVirtualKeyboardCommitTextMETA New() =>
+        new() { type = XrStructureType.XR_TYPE_EVENT_DATA_VIRTUAL_KEYBOARD_COMMIT_TEXT_META };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrEventDataVirtualKeyboardBackspaceMETA
@@ -7323,6 +8226,9 @@ public unsafe partial struct XrEventDataVirtualKeyboardBackspaceMETA
     public XrStructureType type;
     public void* next;
     public XrVirtualKeyboardMETA keyboard;
+    /// <returns>a new <see cref="XrEventDataVirtualKeyboardBackspaceMETA"> with it's type member set to </returns>
+    public static XrEventDataVirtualKeyboardBackspaceMETA New() =>
+        new() { type = XrStructureType.XR_TYPE_EVENT_DATA_VIRTUAL_KEYBOARD_BACKSPACE_META };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrEventDataVirtualKeyboardEnterMETA
@@ -7330,6 +8236,9 @@ public unsafe partial struct XrEventDataVirtualKeyboardEnterMETA
     public XrStructureType type;
     public void* next;
     public XrVirtualKeyboardMETA keyboard;
+    /// <returns>a new <see cref="XrEventDataVirtualKeyboardEnterMETA"> with it's type member set to </returns>
+    public static XrEventDataVirtualKeyboardEnterMETA New() =>
+        new() { type = XrStructureType.XR_TYPE_EVENT_DATA_VIRTUAL_KEYBOARD_ENTER_META };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrEventDataVirtualKeyboardShownMETA
@@ -7337,6 +8246,9 @@ public unsafe partial struct XrEventDataVirtualKeyboardShownMETA
     public XrStructureType type;
     public void* next;
     public XrVirtualKeyboardMETA keyboard;
+    /// <returns>a new <see cref="XrEventDataVirtualKeyboardShownMETA"> with it's type member set to </returns>
+    public static XrEventDataVirtualKeyboardShownMETA New() =>
+        new() { type = XrStructureType.XR_TYPE_EVENT_DATA_VIRTUAL_KEYBOARD_SHOWN_META };
 }
 [StructLayout(LayoutKind.Sequential)]
 public unsafe partial struct XrEventDataVirtualKeyboardHiddenMETA
@@ -7344,4 +8256,7 @@ public unsafe partial struct XrEventDataVirtualKeyboardHiddenMETA
     public XrStructureType type;
     public void* next;
     public XrVirtualKeyboardMETA keyboard;
+    /// <returns>a new <see cref="XrEventDataVirtualKeyboardHiddenMETA"> with it's type member set to </returns>
+    public static XrEventDataVirtualKeyboardHiddenMETA New() =>
+        new() { type = XrStructureType.XR_TYPE_EVENT_DATA_VIRTUAL_KEYBOARD_HIDDEN_META };
 }

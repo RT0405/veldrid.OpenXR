@@ -8,15 +8,34 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{B05D9D8A-4A24-43E8-B685-5AA357FAB62C}"
 	ProjectSection(SolutionItems) = preProject
 		.editorconfig = .editorconfig
+		nuget.config = nuget.config
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Veldrid.OpenXR.Native", "veldrid.OpenXR.Native\Veldrid.OpenXR.Native.csproj", "{BA45E045-1D4A-4C40-8E3D-DB82D5D5A482}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Veldrid.OpenXR", "veldrid.OpenXR\Veldrid.OpenXR.csproj", "{8B7A5392-627A-4FC1-891A-A7E16EE654D4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Veldrid.OpenXR", "veldrid.OpenXR\Veldrid.OpenXR.csproj", "{8B7A5392-627A-4FC1-891A-A7E16EE654D4}"
+	ProjectSection(ProjectDependencies) = postProject
+		{3F9836C8-FFA2-4388-B0C0-543E8CEF75ED} = {3F9836C8-FFA2-4388-B0C0-543E8CEF75ED}
+	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Libs", "Libs", "{39BC1FA3-ECA0-44DF-829A-52A67CC09FA4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Veldrid.OpenXR.PostCompileFixup", "Velrdid.OpenXR.PostCompilerFixup\Veldrid.OpenXR.PostCompileFixup.csproj", "{3F9836C8-FFA2-4388-B0C0-543E8CEF75ED}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Veldrid", "Veldrid", "{438862D2-76A4-48E3-B401-AD0A85FAD393}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "KhronosRegistry", "KhronosRegistry", "{CFD93C77-0632-4211-81D9-F9AC90358FAB}"
+	ProjectSection(SolutionItems) = preProject
+		veldrid.OpenXR.Native\openxr_loader.dll = veldrid.OpenXR.Native\openxr_loader.dll
+		SourceGen\KhronosRegistry\xr.xml = SourceGen\KhronosRegistry\xr.xml
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Example", "Example\Example.csproj", "{2D02C097-57EE-4103-8C26-7261BAE7553B}"
+	ProjectSection(ProjectDependencies) = postProject
+		{8B7A5392-627A-4FC1-891A-A7E16EE654D4} = {8B7A5392-627A-4FC1-891A-A7E16EE654D4}
+		{BA45E045-1D4A-4C40-8E3D-DB82D5D5A482} = {BA45E045-1D4A-4C40-8E3D-DB82D5D5A482}
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "packages-local", "packages-local", "{05B1048F-5369-4E0B-9EA0-4FF2C7F2CE5E}"
+	ProjectSection(SolutionItems) = preProject
+		packages-local\IgnoresAccessChecksToGenerator.0.6.0.nupkg = packages-local\IgnoresAccessChecksToGenerator.0.6.0.nupkg
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -36,12 +55,17 @@ Global
 		{8B7A5392-627A-4FC1-891A-A7E16EE654D4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8B7A5392-627A-4FC1-891A-A7E16EE654D4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8B7A5392-627A-4FC1-891A-A7E16EE654D4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3F9836C8-FFA2-4388-B0C0-543E8CEF75ED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3F9836C8-FFA2-4388-B0C0-543E8CEF75ED}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3F9836C8-FFA2-4388-B0C0-543E8CEF75ED}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3F9836C8-FFA2-4388-B0C0-543E8CEF75ED}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2D02C097-57EE-4103-8C26-7261BAE7553B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2D02C097-57EE-4103-8C26-7261BAE7553B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2D02C097-57EE-4103-8C26-7261BAE7553B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2D02C097-57EE-4103-8C26-7261BAE7553B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(NestedProjects) = preSolution
-		{438862D2-76A4-48E3-B401-AD0A85FAD393} = {39BC1FA3-ECA0-44DF-829A-52A67CC09FA4}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {14D123DF-BBBE-464D-9D2F-7F0177EA7B37}

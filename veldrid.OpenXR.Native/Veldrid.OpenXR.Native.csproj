@@ -21,9 +21,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="openxr_loader.dll">
+    <None Update="openxr_loader.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
+    </None>
   </ItemGroup>
 
 </Project>

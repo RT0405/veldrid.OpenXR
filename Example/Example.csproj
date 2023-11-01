@@ -1,0 +1,21 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>annotations</Nullable>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Veldrid" Version="4.9.0" />
+    <PackageReference Include="Veldrid.SPIRV" Version="1.0.15" />
+  </ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\veldrid.OpenXR\Veldrid.OpenXR.csproj" />
+		<ProjectReference Include="..\veldrid.OpenXR.Native\Veldrid.OpenXR.Native.csproj" />
+	</ItemGroup>
+
+</Project>

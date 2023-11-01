@@ -1,88 +1,210 @@
-﻿using Veldrid.OpenXR.Native;
+﻿using Veldrid.D3D11;
+using Veldrid.OpenXR.Native;
 using Veldrid.OpenXR.Vk;
-using Veldrid.Vk;
-using Vulkan;
 using static Veldrid.OpenXR.Native.OpenXRNative;
 
 namespace Veldrid.OpenXR;
 public static partial class OpenXRUtils
 {
-    public static GraphicsDevice CreateGraphicsDevice(XrInstance instance, ulong systemID, GraphicsDeviceOptions options, GraphicsBackend backend)
+    #region GraphicsDevice Creation
+    public static GraphicsDevice CreateGraphicsDevice(XrInstance instance, ulong systemID, GraphicsDeviceOptions options, GraphicsBackend backend) => CreateGraphicsDevice(instance, systemID, options, backend, out _, out _);
+    public static GraphicsDevice CreateGraphicsDevice(XrInstance instance, ulong systemID, GraphicsDeviceOptions options, GraphicsBackend backend, out XrResult result, out string? message)
     {
-        switch (backend)
+        switch(backend)
         {
-
             case GraphicsBackend.Direct3D11:
 #if !EXCLUDE_D3D11_BACKEND
-                //return CreateDefaultD3D11GraphicsDevice(options, window);
+                return CreateD3D11GraphicsDevice(instance, systemID, options, out result, out message);
 #else
-                    throw new VeldridException("D3D11 support has not been included in this configuration of Veldrid");
+                        throw new VeldridException("D3D11 support has not been included in this configuration of Veldrid");
 #endif
             case GraphicsBackend.Vulkan:
 #if !EXCLUDE_VULKAN_BACKEND
-                return CreateVulkanGraphicsDevice(instance, systemID, options, out _);
+                return CreateVulkanGraphicsDevice(instance, systemID, options, out result, out message);
 #else
-                    throw new VeldridException("Vulkan support has not been included in this configuration of Veldrid");
+                        throw new VeldridException("Vulkan support has not been included in this configuration of Veldrid");
 #endif
-        }
+            default: throw NewInvalidBackendException("Unable to create GraphicsDevice", backend);
+        };
     }
 #if !EXCLUDE_VULKAN_BACKEND
-    public static unsafe GraphicsDevice CreateVulkanGraphicsDevice(XrInstance instance, ulong systemID, GraphicsDeviceOptions options, out XrResult result)
+    public static unsafe GraphicsDevice CreateVulkanGraphicsDevice(XrInstance instance, ulong systemID, GraphicsDeviceOptions options, out XrResult result, out string? errorMessage)
     {
-        XrGraphicsRequirementsVulkanKHR graphicsRequirements;
-        graphicsRequirements.type = XrStructureType.XR_TYPE_GRAPHICS_REQUIREMENTS_VULKAN_KHR;
-        graphicsRequirements.next = null;
-        result = xrGetVulkanGraphicsRequirementsKHR(instance, systemID, &graphicsRequirements);
-        if (result != XrResult.XR_SUCCESS)
-            return null;
-
-        string[] GetInstanceExtensions(out XrResult result)
+        try
         {
-            uint instanceExtensionsSize;
-            result = xrGetVulkanInstanceExtensionsKHR(instance, systemID, 0, &instanceExtensionsSize, null);
-            if (result != XrResult.XR_SUCCESS)
-                return null;
-
-            byte* buffer = stackalloc byte[(int)instanceExtensionsSize];
-
-            result = xrGetVulkanInstanceExtensionsKHR(instance, systemID, instanceExtensionsSize, &instanceExtensionsSize, buffer);
-            if (result != XrResult.XR_SUCCESS)
-                return null;
-
-            string vkInstanceExtensionsData = GetString(buffer);
-            int vkExtCount = 0;
-            for (int i = 0; i <= instanceExtensionsSize; i++)
-                if (i == instanceExtensionsSize || buffer[i] == ' ')
-                    vkExtCount++;
-            string[] vkInstanceExtensions = new string[vkExtCount];
-
-            int vkExtIndex = 0;
-            int last = 0;
-            for (int i = 0; i <= vkInstanceExtensionsData.Length; i++)
-            {
-                if (i == vkInstanceExtensionsData.Length || vkInstanceExtensionsData[i] == ' ')
-                {
-                    vkInstanceExtensions[vkExtIndex++] = vkInstanceExtensionsData[last..(i - last)];
-                    last = i + 1;
-                }
-            }
-            return vkInstanceExtensions;
+            errorMessage = null;
+            result = XrResult.XR_SUCCESS;
+            return new XrVkGraphicsDevice(instance, systemID, options, new());
         }
-        string[] GetDeviceExtensions(VkInstance vulkanInstance, out XrResult result, out VkPhysicalDevice physicalDevice)
+        catch(XRResultException e)
         {
-            VkPhysicalDevice device = VkPhysicalDevice.Null;
-            result = xrGetVulkanGraphicsDeviceKHR(instance, systemID, vulkanInstance.Handle, (IntPtr)&device);
-            physicalDevice = device;
+            errorMessage = e.Message;
+            result = e.Result;
+            return null;
         }
-        string[] vkinstexts = GetInstanceExtensions(out result);
-        if (result != XrResult.XR_SUCCESS)
-            return null;
-        string[] vkdevexts = GetDeviceExtensions(out result, out VkPhysicalDevice physicalDevice);
-        if (result != XrResult.XR_SUCCESS)
-            return null;
-        VulkanDeviceOptions deviceOptions = new(vkinstexts, vkdevexts);
-
-        return new XrVkGraphicsDevice(options, null, deviceOptions, physicalDevice);
     }
 #endif
+#if !EXCLUDE_D3D11_BACKEND
+    public static unsafe GraphicsDevice CreateD3D11GraphicsDevice(XrInstance instance, ulong systemID, GraphicsDeviceOptions options, out XrResult result, out string? errorMessage)
+    {
+        XrGraphicsRequirementsD3D11KHR requirements = XrGraphicsRequirementsD3D11KHR.New();
+        result = xrGetD3D11GraphicsRequirementsKHR(instance, systemID, &requirements);
+        if(result != XrResult.XR_SUCCESS)
+        {
+            errorMessage = "Unable to get XrGraphicsRequirementsD3D11KHR: " + result;
+            return null;
+        }
+        else
+            errorMessage = null;
+        return new D3D11GraphicsDevice(options, new D3D11DeviceOptions()
+        {
+            AdapterPtr = requirements.adapterLuid
+        }, null);
+    }
+#endif
+    #endregion
+    public static unsafe XrSession CreateXRSession(XrInstance instance, ulong systemID, GraphicsDevice graphicsDevice)
+    {
+        void* graphicsBindingPtr;
+        switch(graphicsDevice.BackendType)
+        {
+            case GraphicsBackend.Vulkan:
+            {
+                XrVkGraphicsDevice vkGraphicsDevice = (XrVkGraphicsDevice)graphicsDevice;
+                BackendInfoVulkan backendInfo = vkGraphicsDevice.GetVulkanInfo();
+                XrGraphicsBindingVulkanKHR graphicsBinding = new()
+                {
+                    type = XrStructureType.XR_TYPE_GRAPHICS_BINDING_VULKAN_KHR,
+                    next = null,
+                    device = backendInfo.Device,
+                    instance = backendInfo.Instance,
+                    physicalDevice = backendInfo.PhysicalDevice,
+                    queueFamilyIndex = backendInfo.GraphicsQueueFamilyIndex,
+                    queueIndex = 0,
+                };
+                graphicsBindingPtr = &graphicsBinding;
+            }
+            break;
+            case GraphicsBackend.Direct3D11:
+            {
+                D3D11GraphicsDevice d11GraphicsDevice = (D3D11GraphicsDevice)graphicsDevice;
+                BackendInfoD3D11 backendInfo = d11GraphicsDevice.GetD3D11Info();
+                XrGraphicsBindingD3D11KHR graphicsBinding = new()
+                {
+                    type = XrStructureType.XR_TYPE_GRAPHICS_BINDING_D3D11_KHR,
+                    next = null,
+                    device = backendInfo.Device,
+                };
+                graphicsBindingPtr = &graphicsBinding;
+            }
+            break;
+            default:
+                throw NewInvalidBackendException("Unable to create XrGraphicsBinding", graphicsDevice.BackendType);
+        }
+
+        XrSessionCreateInfo sessionCreateInfo = new()
+        {
+            type = XrStructureType.XR_TYPE_SESSION_CREATE_INFO,
+            next = graphicsBindingPtr,
+            createFlags = 0,
+            systemId = systemID
+        };
+
+        XrSession session;
+        XrResult result = xrCreateSession(instance, &sessionCreateInfo, &session);
+        if(result != XrResult.XR_SUCCESS)
+            throw new XRResultException(result, "Failed to create OpenXR session: " + result);
+
+        return session;
+    }
+    public static unsafe (XRSwapchain, XRSwapchain) AqquireSwapchainsStereo(XrInstance instance, ulong systemID, XrSession session, GraphicsDevice graphicsDevice, PixelFormat depthFormat)
+    {
+        const uint viewCount = 2;
+        XrViewConfigurationView* configViews = 
+            stackalloc XrViewConfigurationView[(int)viewCount].Populate(viewCount,
+            new XrViewConfigurationView() { type = XrStructureType.XR_TYPE_VIEW_CONFIGURATION_VIEW });
+        uint configViewCount = viewCount;
+        XrResult result = xrEnumerateViewConfigurationViews(instance, systemID, XrViewConfigurationType.XR_VIEW_CONFIGURATION_TYPE_PRIMARY_STEREO, viewCount, &configViewCount, configViews);
+        if(result != XrResult.XR_SUCCESS || configViewCount != viewCount)
+            throw new XRResultException(result, "Failed to enumerate view configuration views: " + result);
+
+        PixelFormat format = GetSwapchainFormats(session, graphicsDevice.BackendType)[0];
+
+        XrSwapchain* swapchains = stackalloc XrSwapchain[(int)viewCount];
+        XRSwapchain left, right;
+        for(int i = 0; i < viewCount; i++)
+        {
+            XrSwapchainCreateInfo swapchainCreateInfo;
+            swapchainCreateInfo.type = XrStructureType.XR_TYPE_SWAPCHAIN_CREATE_INFO;
+            swapchainCreateInfo.usageFlags = (ulong)XrSwapchainUsageFlags.XR_SWAPCHAIN_USAGE_COLOR_ATTACHMENT_BIT;
+            swapchainCreateInfo.format = FormatUtils.VeldridToNativeFormat(format, graphicsDevice.BackendType, false);
+            swapchainCreateInfo.sampleCount = 1;
+            swapchainCreateInfo.width = configViews[i].recommendedImageRectWidth;
+            swapchainCreateInfo.height = configViews[i].recommendedImageRectHeight;
+            swapchainCreateInfo.faceCount = 1;
+            swapchainCreateInfo.arraySize = 1;
+            swapchainCreateInfo.mipCount = 1;
+
+            result = xrCreateSwapchain(session, &swapchainCreateInfo, &swapchains[i]);
+            if(result != XrResult.XR_SUCCESS)
+                throw new XRResultException(result, "Failed to create swapchain: " + result);
+        }
+        left = new(graphicsDevice, new(swapchains[0], configViews[0].recommendedImageRectWidth, configViews[0].recommendedImageRectHeight, format, depthFormat));
+        right = new(graphicsDevice, new(swapchains[1], configViews[1].recommendedImageRectWidth, configViews[1].recommendedImageRectHeight, format, depthFormat));
+        return (left, right);
+    }
+    public static unsafe PixelFormat[] GetSwapchainFormats(XrSession session, GraphicsBackend backend)
+    {
+        uint formatCount = 0;
+        XrResult result = xrEnumerateSwapchainFormats(session, 0, &formatCount, null);
+        if(result != XrResult.XR_SUCCESS)
+            throw new XRResultException(result, "Failed to enumerate swapchain formats: " + result);
+        PixelFormat[] formats = new PixelFormat[formatCount];
+        fixed(PixelFormat* span = formats)
+            _ = GetSwapchainFormats(session, backend, new Span<PixelFormat>(span, (int)formatCount));
+        return formats;
+    }
+    /// <summary>
+    /// Fills a buffer with the available swapchain pixel formats for the session.<br/>
+    /// <b><i>Warning the buffer may not get completely filled</i></b>
+    /// </summary>
+    /// <param name="session">the session to get the available swapchain formats for</param>
+    /// <param name="backend">the graphics backend that is currently being used</param>
+    /// <param name="formats">a buffer to fill with the available formats</param>
+    /// <returns>the number of elements placed in the span, or the number of elements required</returns>
+    /// <exception cref="XRResultException"></exception>
+    public static unsafe int GetSwapchainFormats(XrSession session, GraphicsBackend backend, Span<PixelFormat> formats)
+    {
+        uint formatCount = 0;
+        XrResult result = xrEnumerateSwapchainFormats(session, 0, &formatCount, null);
+        if(result != XrResult.XR_SUCCESS)
+            throw new XRResultException(result, "Failed to enumerate swapchain formats: " + result);
+        long* formatBuffer = stackalloc long[(int)formatCount];
+        result = xrEnumerateSwapchainFormats(session, formatCount, &formatCount, formatBuffer);
+        if(result != XrResult.XR_SUCCESS)
+            throw new XRResultException(result, "Failed to enumerate swapchain formats: " + result);
+        switch(backend)
+        {
+            case GraphicsBackend.Vulkan:
+            case GraphicsBackend.Direct3D11:
+                int index = 0;
+                for(int i = 0; i < formatCount; i++)
+                {
+                    if(index == formats.Length)
+                    {
+                        //add the number of remaining valid formats to the count
+                        while(i < formatCount)
+                            if(FormatUtils.IsValidFormat(formatBuffer[i], backend))
+                                index++;
+                        break;
+                    }
+                    PixelFormat format = FormatUtils.NativeToVeldridFormat(formatBuffer[i], backend);
+                    if(FormatUtils.IsValidFormat(format))
+                        formats[index++] = format;
+                }
+                return index;
+            default:
+                throw NewInvalidBackendException("Failed to convert swapchain formats", backend);
+        }
+    }
 }

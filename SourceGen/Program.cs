@@ -1,11 +1,12 @@
 ﻿using System.Collections.Immutable;
 using System.Text;
+using System.Text.RegularExpressions;
 
 namespace SourceGen;
 internal static partial class Program
 {
     private const string projectPath = @"..\..\..\..\veldrid.OpenXR";
-    private const string specFileDir = @"..\..\..\..\SourceGen\KhronosRegistry\xr.xml";
+    private const string specFileDir = @"..\..\..\..\KhronosRegistry\xr.xml";
     private const string outputDir = @"..\..\..\..\veldrid.OpenXR.Native\Generated";
     static void Main()
     {
@@ -167,6 +168,17 @@ internal static partial class Program
                     sb.AppendLine($"\tpublic {csType} {Helpers.ValidatedName(member.Name)};");
                 }
             }
+            if(structure.Members?.Count >= 2 && structure.Members[0].Type == "XrStructureType" && !structure.Name.Contains("Base"))
+            {
+                string XrStructureTypeName = structure.Name switch
+                {
+                    "XrBoundary2DFB" => "XrStructureType.XR_TYPE_BOUNDARY_2D_FB",
+                    _ => "XrStructureType.XR_TYPE_" + Regex.Replace(structure.Name, @"((D3D1[1-2])|(OpenGL)|(ES)|(Win32)|(Xlib)|(XCB)|(Wayland)|(EGL)|(MNDX)|([A-Z]{1}([a-z]|([A-Z]*(?=[A-Z])))))", @"_$1")[4..].Replace("OpenGLES", "OpenGL_ES").ToUpper(),
+                };
+                sb.AppendLine($"\t/// <returns>a new <see cref=\"{structure.Name}\"> with it's type member set to <see cref=\"{XrStructureTypeName}\"/></returns>");
+                sb.AppendLine($"\tpublic static {structure.Name} New() =>");
+                sb.AppendLine($"\t\tnew() {{ type = {XrStructureTypeName} }};");
+            }
             sb.AppendLine("}");
         }
         WriteToFile(outputDir + @$"\Structs.cs", sb);
@@ -211,6 +223,8 @@ internal static partial class Program
             sb.AppendLine("namespace Veldrid.OpenXR.Native;");
             sb.AppendLine($"public{(instance ? null : " static")} unsafe partial class OpenXRNative{(instance?"Instance":null)}");
             sb.AppendLine("{");
+            if(instance)
+                sb.AppendLine("#pragma warning disable CA1822 // Mark members as static");
             foreach (var command in openXRVersion.Commands)
             {
                 string convertedType = Helpers.ConvertToCSharpType(command.Prototype.Type, 0, openXRSpec);
@@ -218,13 +232,13 @@ internal static partial class Program
                 {
                     sb.AppendLine("\t[MethodImpl(MethodImplOptions.AggressiveInlining)]");
                     sb.AppendLine($"\t[DllImport(LoaderName, CallingConvention = CallConv, EntryPoint = \"xrCreateInstance\")]");
-                    sb.AppendLine($"\tpublic static extern {convertedType} {command.Prototype.Name}Native({command.GetParametersSignature(openXRSpec)});");
+                    sb.AppendLine($"\tprivate static extern {convertedType} {command.Prototype.Name}Native({command.GetParametersSignature(openXRSpec)});");
                     CommandComment(command);
                     sb.AppendLine($"\tpublic static {convertedType} {command.Prototype.Name}({command.GetParametersSignature(openXRSpec)})");
                     sb.AppendLine("\t{");
                     sb.AppendLine($"\t\tXrResult result = xrCreateInstanceNative({command.GetParametersSignature(openXRSpec, useTypes: false)});");
-                    sb.AppendLine($"\t\tif(result == XrResult.XR_SUCCESS && (*createInfo).enabledExtensionCount != 0)");
-                    sb.AppendLine($"\t\t\tInstance = new(*createInfo, *instance);");
+                    sb.AppendLine($"\t\tif(result == XrResult.XR_SUCCESS)");
+                    sb.AppendLine($"\t\t\tInstance = new(*instance, *createInfo);");
                     sb.AppendLine($"\t\treturn result;");
                     sb.AppendLine("\t}");
 
@@ -238,7 +252,7 @@ internal static partial class Program
                         // Delegate
                         sb.AppendLine($"\t\tprivate delegate {convertedType} {command.Prototype.Name}Delegate({command.GetParametersSignature(openXRSpec)});");
                         // internal function
-                        sb.AppendLine($"\t\tprivate {(instance ? null : "static")} {command.Prototype.Name}Delegate {command.Prototype.Name}_ptr;");
+                        sb.AppendLine($"\t\tprivate {command.Prototype.Name}Delegate {command.Prototype.Name}_ptr;");
                         // comments
                         CommandComment(command);
                         // public function
@@ -287,6 +301,8 @@ internal static partial class Program
 
                 sb.AppendLine("\t}");
             }
+            if(instance)
+                sb.AppendLine("#pragma warning restore CA1822 // Mark members as static");
             sb.AppendLine("}");
             WriteToFile(outputDir + @$"\Commands{(instance ? "Instance" : null)}.cs", sb);
 
