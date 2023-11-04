@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using System.Runtime.CompilerServices;
+using System.Text;
 using Veldrid.D3D11;
 using Veldrid.OpenXR.Native;
 using Veldrid.Vk;

@@ -10,7 +10,8 @@ public static partial class OpenXRUtils
     public static GraphicsDevice CreateGraphicsDevice(XrInstance instance, ulong systemID, GraphicsDeviceOptions options, GraphicsBackend backend) => CreateGraphicsDevice(instance, systemID, options, backend, out _, out _);
     public static GraphicsDevice CreateGraphicsDevice(XrInstance instance, ulong systemID, GraphicsDeviceOptions options, GraphicsBackend backend, out XrResult result, out string? message)
     {
-        switch(backend)
+#pragma warning disable IDE0066 // Convert switch statement to expression
+        switch (backend)
         {
             case GraphicsBackend.Direct3D11:
 #if !EXCLUDE_D3D11_BACKEND
@@ -26,6 +27,7 @@ public static partial class OpenXRUtils
 #endif
             default: throw NewInvalidBackendException("Unable to create GraphicsDevice", backend);
         };
+#pragma warning restore IDE0066 // Convert switch statement to expression
     }
 #if !EXCLUDE_VULKAN_BACKEND
     public static unsafe GraphicsDevice CreateVulkanGraphicsDevice(XrInstance instance, ulong systemID, GraphicsDeviceOptions options, out XrResult result, out string? errorMessage)

@@ -17,7 +17,6 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="IgnoresAccessChecksToGenerator" Version="0.6.0" />
         <PackageReference Include="Vk" Version="1.0.25" />
         <PackageReference Include="Vortice.D3DCompiler" Version="2.4.2" />
         <PackageReference Include="Vortice.Direct3D11" Version="2.4.2" />
@@ -33,13 +32,11 @@
     </ItemGroup>
 	<PropertyGroup>
 		<InternalsAssemblyUseEmptyMethodBodies>false</InternalsAssemblyUseEmptyMethodBodies>
-	</PropertyGroup>
+		<PublicizeAssembly>false</PublicizeAssembly>
+	</PropertyGroup> 
 	<ItemGroup>
 		<Reference Include="Veldrid">
-			<HintPath>..\..\veldrid\bin\Debug\Veldrid\net6.0\Veldrid.dll</HintPath>
-		</Reference>
-		<Reference Include="Veldrid.MetalBindings">
-			<HintPath>..\..\veldrid\bin\Debug\Veldrid\net6.0\Veldrid.MetalBindings.dll</HintPath>
+		  <HintPath>..\..\veldrid\bin\Debug\Veldrid\netstandard2.0\Veldrid.dll</HintPath>
 		</Reference>
 		<Reference Include="Veldrid.OpenGLBindings">
 			<HintPath>..\..\veldrid\bin\Debug\Veldrid\net6.0\Veldrid.OpenGLBindings.dll</HintPath>

@@ -18,7 +18,9 @@ internal class Program
             //return;
             BinPath = $@"..\Veldrid.OpenXR\bin\{args[0]}\net6.0";
             Console.WriteLine("Removing Base Cosntructors");
-            RemoveBaseConstructors();
+            ModuleDefinition velridOpenXr = ModuleDefinition.ReadModule(BinPath + XRDll + '2', new() { AssemblyResolver = new CustomResolver() });
+            RemoveBaseConstructors(velridOpenXr);
+            velridOpenXr.Write(BinPath + XRDll);
             Console.WriteLine("complete");
         }
         catch(Exception e)
@@ -28,9 +30,17 @@ internal class Program
             Console.ReadKey();
         }
     }
-    public static void RemoveBaseConstructors()
+    //private static void AddIgnoreAccessChecksToAttribute(ModuleDefinition module)
+    //{
+    //    module.Assembly.CustomAttributes.Add(
+    //        new CustomAttribute(
+    //            module.ImportReference(
+    //                module.GetType("System.Runtime.CompilerServices", "IgnoresAccessChecksToAttribute")
+    //                .GetConstructors()
+    //                .Single((m) => m.Parameters.Count == 1 && m.Parameters[0].ParameterType.Name.Equals("string", StringComparison.OrdinalIgnoreCase)))));
+    //}
+    public static void RemoveBaseConstructors(ModuleDefinition module)
     {
-        ModuleDefinition module = ModuleDefinition.ReadModule(BinPath + XRDll + '2', new() { AssemblyResolver = new CustomResolver()});
         Instruction systemObjectConstructor;
         systemObjectConstructor = Instruction.Create(OpCodes.Call, module.ImportReference(module.ImportReference(typeof(object)).Resolve().GetConstructors().First()));
 
@@ -128,7 +138,6 @@ internal class Program
                 return instruction.OpCode == OpCodes.Call && instruction.Operand is MethodReference methodRef && methodRef.Resolve().IsConstructor;
             }
         }
-        module.Write(BinPath + XRDll);
     }
     public static void ExecuteForeachMethod(ModuleDefinition module, Action<MethodDefinition> PerMethod)
     {
@@ -145,7 +154,7 @@ internal class Program
     }
     private class CustomResolver : BaseAssemblyResolver
     {
-        private DefaultAssemblyResolver _defaultResolver;
+        private readonly DefaultAssemblyResolver _defaultResolver;
 
         public CustomResolver()
         {

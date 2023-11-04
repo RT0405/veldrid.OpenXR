@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Veldrid.D3D11;
+﻿using Veldrid.D3D11;
 using Veldrid.Vk;
 using Vortice.DXGI;
 using Vulkan;
@@ -19,6 +14,8 @@ namespace Veldrid.OpenXR
             => Enum.IsDefined(NativeToVeldridFormat(nativeFormat, backend));
         public static bool IsValidFormat(long nativeFormat, GraphicsBackend backend, out PixelFormat format)
             => Enum.IsDefined(format = NativeToVeldridFormat(nativeFormat, backend));
+
+#pragma warning disable IDE0066 // Convert switch statement to expression
         #region NativeToVeldridFormat
         public static PixelFormat NativeToVeldridFormat(long nativeFormat, GraphicsBackend backend)
         {
@@ -32,7 +29,7 @@ namespace Veldrid.OpenXR
 
         public static PixelFormat NativeToVeldridFormat(Format d3d11Format)
         {
-            switch(d3d11Format)
+            switch (d3d11Format)
             {
                 case Format.R8_UNorm:
                     return PixelFormat.R8_UNorm;
@@ -316,5 +313,6 @@ namespace Veldrid.OpenXR
             }
         }
         #endregion
+#pragma warning restore IDE0066 // Convert switch statement to expression
     }
 }
