@@ -153,7 +153,6 @@ public static partial class Program
         Console.WriteLine("Starting Main Loop");
         bool running = false;
         XrEventDataBuffer eventData;
-        ulong frameCount = 0;
         ConsoleSpace frameDebugSpace = new(8);
         while(!quit)
         {

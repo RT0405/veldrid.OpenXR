@@ -16,7 +16,7 @@ internal class Program
         {
             //File.Copy(BinPath + XRDll + '2', BinPath + XRDll);
             //return;
-            BinPath = $@"..\Veldrid.OpenXR\bin\{args[0]}\net6.0";
+            BinPath = $@"..\Veldrid.OpenXR\bin\{args[0]}\net7.0";
             Console.WriteLine("Removing Base Cosntructors");
             ModuleDefinition velridOpenXr = ModuleDefinition.ReadModule(BinPath + XRDll + '2', new() { AssemblyResolver = new CustomResolver() });
             RemoveBaseConstructors(velridOpenXr);

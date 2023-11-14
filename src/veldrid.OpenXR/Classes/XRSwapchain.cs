@@ -1,4 +1,5 @@
-﻿using System.Runtime.CompilerServices;
+﻿using SharpGen.Runtime;
+using System.Runtime.CompilerServices;
 using Veldrid.D3D11;
 using Veldrid.OpenXR.Classes;
 using Veldrid.OpenXR.Native;
@@ -132,6 +133,31 @@ public class XRSwapchain : IDisposable
 
         framebuffer = framebuffers[activeIndex];
         return XR_SUCCESS;
+    }
+    public unsafe XrResult AqquireNextFramebuffer(out Framebuffer framebuffer) => AqquireNextFramebuffer(out framebuffer, out _);
+    public unsafe XrResult AqquireNextFramebuffer(out Framebuffer framebuffer, out uint index)
+    {
+        framebuffer = null;
+        XrSwapchainImageAcquireInfo acquireImageInfo = XrSwapchainImageAcquireInfo.New();
+
+        uint activeIndex;
+        XrResult result = xrAcquireSwapchainImage(Swapchain, &acquireImageInfo, &activeIndex);
+        index = activeIndex;
+        if(result != XR_SUCCESS)
+            return result;
+
+        framebuffer = framebuffers[activeIndex];
+        return result;
+    }
+    public unsafe XrResult WaitFramebuffer(long timeoutNanoseconds = long.MaxValue)
+    {
+        XrSwapchainImageWaitInfo waitImageInfo = XrSwapchainImageWaitInfo.New();
+        waitImageInfo.timeout = timeoutNanoseconds;
+
+        XrResult result = xrWaitSwapchainImage(Swapchain, &waitImageInfo);
+        if(result != XR_SUCCESS)
+            return result;
+        return result;
     }
     public unsafe XrResult ReleaseFramebuffer()
     {

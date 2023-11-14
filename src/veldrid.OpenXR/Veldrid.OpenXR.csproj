@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 	
     <PropertyGroup>
-        <TargetFramework>net6.0</TargetFramework>
+        <TargetFramework>net7.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>annotations</Nullable>
         <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
@@ -36,10 +36,10 @@
 	</PropertyGroup> 
 	<ItemGroup>
 		<Reference Include="Veldrid">
-		  <HintPath>..\..\veldrid\bin\Debug\Veldrid\netstandard2.0\Veldrid.dll</HintPath>
+			<HintPath>..\..\..\veldridPublished\bin\Release\Veldrid\net7.0\Veldrid.dll</HintPath>
 		</Reference>
 		<Reference Include="Veldrid.OpenGLBindings">
-			<HintPath>..\..\veldrid\bin\Debug\Veldrid\net6.0\Veldrid.OpenGLBindings.dll</HintPath>
+			<HintPath>..\..\..\veldridPublished\bin\Release\Veldrid\net7.0\Veldrid.OpenGLBindings.dll</HintPath>
 		</Reference>
 	</ItemGroup>
 
