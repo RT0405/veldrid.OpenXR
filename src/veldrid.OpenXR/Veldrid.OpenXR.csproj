@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 	
     <PropertyGroup>
-        <TargetFramework>net7.0</TargetFramework>
+        <TargetFramework>net8.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>annotations</Nullable>
         <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
@@ -30,25 +30,22 @@
     <ItemGroup>
 		<InternalsAssemblyName Include="Veldrid" />
     </ItemGroup>
+    <ItemGroup>
+      <Reference Include="Veldrid">
+        <HintPath>libs\Veldrid.dll</HintPath>
+      </Reference>
+    </ItemGroup>
 	<PropertyGroup>
 		<InternalsAssemblyUseEmptyMethodBodies>false</InternalsAssemblyUseEmptyMethodBodies>
 		<PublicizeAssembly>false</PublicizeAssembly>
-	</PropertyGroup> 
-	<ItemGroup>
-		<Reference Include="Veldrid">
-			<HintPath>..\..\..\veldridPublished\bin\Release\Veldrid\net7.0\Veldrid.dll</HintPath>
-		</Reference>
-		<Reference Include="Veldrid.OpenGLBindings">
-			<HintPath>..\..\..\veldridPublished\bin\Release\Veldrid\net7.0\Veldrid.OpenGLBindings.dll</HintPath>
-		</Reference>
-	</ItemGroup>
+	</PropertyGroup>
 
     <Target Name="PostBuild" AfterTargets="PostBuildEvent">
         <ItemGroup>
             <DLLName Include="$(OutDir)$(MSBuildProjectName).dll" />
         </ItemGroup>
         <Move SourceFiles="@(DLLName)" DestinationFiles="@(DLLName -&gt; Replace('dll', 'dll2'))" />
-        <Exec Command="start ..\Velrdid.OpenXR.PostCompilerFixup\bin\$(Configuration)\net6.0\Veldrid.OpenXR.PostCompileFixup.exe $(Configuration)" />
+        <Exec Command="start ..\Velrdid.OpenXR.PostCompilerFixup\bin\$(Configuration)\net8.0\Veldrid.OpenXR.PostCompileFixup.exe $(Configuration)" />
         <Delete Files="@(DLLName -&gt; Replace('dll', 'dll2'))" />
     </Target>
 	
