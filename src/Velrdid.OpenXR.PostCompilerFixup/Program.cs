@@ -168,7 +168,7 @@ internal class Program
             {
                 assembly = _defaultResolver.Resolve(name);
             }
-            catch(AssemblyResolutionException ex)
+            catch
             {
                 assembly = SearchDirectory(name, new string[] { BinPath }, new());
                 if(assembly != null)
@@ -176,7 +176,7 @@ internal class Program
                 else
                 {
                     Console.WriteLine("oh noo");
-                    throw ex;
+                    throw;
                 }
             }
             return assembly;
