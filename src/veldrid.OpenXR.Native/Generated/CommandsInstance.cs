@@ -18,7 +18,7 @@ public unsafe partial class OpenXRNativeInstance
     /// <br/> ⠀⠀<see cref="XrResult.XR_ERROR_OUT_OF_MEMORY"/>
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public XrResult xrGetInstanceProcAddr(XrInstance instance, byte* name, IntPtr function)
+    public XrResult xrGetInstanceProcAddr(XrInstance instance, byte* name, void* function)
         => OpenXRNative.xrGetInstanceProcAddr(instance, name, function);
 
     /// <returns>
@@ -926,7 +926,7 @@ public unsafe partial class OpenXRNativeInstance
         => xrSetAndroidApplicationThreadKHR_ptr(session, threadType, threadId);
 
         [UnmanagedFunctionPointer(OpenXRNative.CallConv)]
-        private delegate XrResult xrCreateSwapchainAndroidSurfaceKHRDelegate(XrSession session, XrSwapchainCreateInfo* info, XrSwapchain* swapchain, IntPtr surface);
+        private delegate XrResult xrCreateSwapchainAndroidSurfaceKHRDelegate(XrSession session, XrSwapchainCreateInfo* info, XrSwapchain* swapchain, void* surface);
         private xrCreateSwapchainAndroidSurfaceKHRDelegate xrCreateSwapchainAndroidSurfaceKHR_ptr;
     /// <summary> Requires XR extension "XR_KHR_android_surface_swapchain" </summary>
     /// <returns>
@@ -944,7 +944,7 @@ public unsafe partial class OpenXRNativeInstance
     /// <br/> ⠀⠀<see cref="XrResult.XR_ERROR_LIMIT_REACHED"/>
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public XrResult xrCreateSwapchainAndroidSurfaceKHR(XrSession session, XrSwapchainCreateInfo* info, XrSwapchain* swapchain, IntPtr surface)
+    public XrResult xrCreateSwapchainAndroidSurfaceKHR(XrSession session, XrSwapchainCreateInfo* info, XrSwapchain* swapchain, void* surface)
         => xrCreateSwapchainAndroidSurfaceKHR_ptr(session, info, swapchain, surface);
 
         [UnmanagedFunctionPointer(OpenXRNative.CallConv)]
@@ -1198,7 +1198,7 @@ public unsafe partial class OpenXRNativeInstance
         => xrGetVulkanDeviceExtensionsKHR_ptr(instance, systemId, bufferCapacityInput, bufferCountOutput, buffer);
 
         [UnmanagedFunctionPointer(OpenXRNative.CallConv)]
-        private delegate XrResult xrGetVulkanGraphicsDeviceKHRDelegate(XrInstance instance, ulong systemId, IntPtr vkInstance, IntPtr vkPhysicalDevice);
+        private delegate XrResult xrGetVulkanGraphicsDeviceKHRDelegate(XrInstance instance, ulong systemId, void* vkInstance, void* vkPhysicalDevice);
         private xrGetVulkanGraphicsDeviceKHRDelegate xrGetVulkanGraphicsDeviceKHR_ptr;
     /// <summary> Requires XR extension "XR_KHR_vulkan_enable" </summary>
     /// <returns>
@@ -1213,7 +1213,7 @@ public unsafe partial class OpenXRNativeInstance
     /// <br/> ⠀⠀<see cref="XrResult.XR_ERROR_SYSTEM_INVALID"/>
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public XrResult xrGetVulkanGraphicsDeviceKHR(XrInstance instance, ulong systemId, IntPtr vkInstance, IntPtr vkPhysicalDevice)
+    public XrResult xrGetVulkanGraphicsDeviceKHR(XrInstance instance, ulong systemId, void* vkInstance, void* vkPhysicalDevice)
         => xrGetVulkanGraphicsDeviceKHR_ptr(instance, systemId, vkInstance, vkPhysicalDevice);
 
         [UnmanagedFunctionPointer(OpenXRNative.CallConv)]
@@ -1296,7 +1296,7 @@ public unsafe partial class OpenXRNativeInstance
         => xrGetVisibilityMaskKHR_ptr(session, viewConfigurationType, viewIndex, visibilityMaskType, visibilityMask);
 
         [UnmanagedFunctionPointer(OpenXRNative.CallConv)]
-        private delegate XrResult xrConvertWin32PerformanceCounterToTimeKHRDelegate(XrInstance instance, IntPtr performanceCounter, long* time);
+        private delegate XrResult xrConvertWin32PerformanceCounterToTimeKHRDelegate(XrInstance instance, void* performanceCounter, long* time);
         private xrConvertWin32PerformanceCounterToTimeKHRDelegate xrConvertWin32PerformanceCounterToTimeKHR_ptr;
     /// <summary> Requires XR extension "XR_KHR_win32_convert_performance_counter_time" </summary>
     /// <returns>
@@ -1311,11 +1311,11 @@ public unsafe partial class OpenXRNativeInstance
     /// <br/> ⠀⠀<see cref="XrResult.XR_ERROR_TIME_INVALID"/>
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public XrResult xrConvertWin32PerformanceCounterToTimeKHR(XrInstance instance, IntPtr performanceCounter, long* time)
+    public XrResult xrConvertWin32PerformanceCounterToTimeKHR(XrInstance instance, void* performanceCounter, long* time)
         => xrConvertWin32PerformanceCounterToTimeKHR_ptr(instance, performanceCounter, time);
 
         [UnmanagedFunctionPointer(OpenXRNative.CallConv)]
-        private delegate XrResult xrConvertTimeToWin32PerformanceCounterKHRDelegate(XrInstance instance, long time, IntPtr performanceCounter);
+        private delegate XrResult xrConvertTimeToWin32PerformanceCounterKHRDelegate(XrInstance instance, long time, void* performanceCounter);
         private xrConvertTimeToWin32PerformanceCounterKHRDelegate xrConvertTimeToWin32PerformanceCounterKHR_ptr;
     /// <summary> Requires XR extension "XR_KHR_win32_convert_performance_counter_time" </summary>
     /// <returns>
@@ -1330,11 +1330,11 @@ public unsafe partial class OpenXRNativeInstance
     /// <br/> ⠀⠀<see cref="XrResult.XR_ERROR_TIME_INVALID"/>
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public XrResult xrConvertTimeToWin32PerformanceCounterKHR(XrInstance instance, long time, IntPtr performanceCounter)
+    public XrResult xrConvertTimeToWin32PerformanceCounterKHR(XrInstance instance, long time, void* performanceCounter)
         => xrConvertTimeToWin32PerformanceCounterKHR_ptr(instance, time, performanceCounter);
 
         [UnmanagedFunctionPointer(OpenXRNative.CallConv)]
-        private delegate XrResult xrConvertTimespecTimeToTimeKHRDelegate(XrInstance instance, IntPtr timespecTime, long* time);
+        private delegate XrResult xrConvertTimespecTimeToTimeKHRDelegate(XrInstance instance, void* timespecTime, long* time);
         private xrConvertTimespecTimeToTimeKHRDelegate xrConvertTimespecTimeToTimeKHR_ptr;
     /// <summary> Requires XR extension "XR_KHR_convert_timespec_time" </summary>
     /// <returns>
@@ -1349,11 +1349,11 @@ public unsafe partial class OpenXRNativeInstance
     /// <br/> ⠀⠀<see cref="XrResult.XR_ERROR_TIME_INVALID"/>
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public XrResult xrConvertTimespecTimeToTimeKHR(XrInstance instance, IntPtr timespecTime, long* time)
+    public XrResult xrConvertTimespecTimeToTimeKHR(XrInstance instance, void* timespecTime, long* time)
         => xrConvertTimespecTimeToTimeKHR_ptr(instance, timespecTime, time);
 
         [UnmanagedFunctionPointer(OpenXRNative.CallConv)]
-        private delegate XrResult xrConvertTimeToTimespecTimeKHRDelegate(XrInstance instance, long time, IntPtr timespecTime);
+        private delegate XrResult xrConvertTimeToTimespecTimeKHRDelegate(XrInstance instance, long time, void* timespecTime);
         private xrConvertTimeToTimespecTimeKHRDelegate xrConvertTimeToTimespecTimeKHR_ptr;
     /// <summary> Requires XR extension "XR_KHR_convert_timespec_time" </summary>
     /// <returns>
@@ -1368,7 +1368,7 @@ public unsafe partial class OpenXRNativeInstance
     /// <br/> ⠀⠀<see cref="XrResult.XR_ERROR_TIME_INVALID"/>
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public XrResult xrConvertTimeToTimespecTimeKHR(XrInstance instance, long time, IntPtr timespecTime)
+    public XrResult xrConvertTimeToTimespecTimeKHR(XrInstance instance, long time, void* timespecTime)
         => xrConvertTimeToTimespecTimeKHR_ptr(instance, time, timespecTime);
 
         [UnmanagedFunctionPointer(OpenXRNative.CallConv)]
@@ -1815,7 +1815,7 @@ public unsafe partial class OpenXRNativeInstance
         => xrGetControllerModelStateMSFT_ptr(session, modelKey, state);
 
         [UnmanagedFunctionPointer(OpenXRNative.CallConv)]
-        private delegate XrResult xrCreateSpatialAnchorFromPerceptionAnchorMSFTDelegate(XrSession session, IntPtr perceptionAnchor, XrSpatialAnchorMSFT* anchor);
+        private delegate XrResult xrCreateSpatialAnchorFromPerceptionAnchorMSFTDelegate(XrSession session, void* perceptionAnchor, XrSpatialAnchorMSFT* anchor);
         private xrCreateSpatialAnchorFromPerceptionAnchorMSFTDelegate xrCreateSpatialAnchorFromPerceptionAnchorMSFT_ptr;
     /// <summary> Requires XR extension "XR_MSFT_perception_anchor_interop" </summary>
     /// <returns>
@@ -1832,11 +1832,11 @@ public unsafe partial class OpenXRNativeInstance
     /// <br/> ⠀⠀<see cref="XrResult.XR_ERROR_LIMIT_REACHED"/>
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public XrResult xrCreateSpatialAnchorFromPerceptionAnchorMSFT(XrSession session, IntPtr perceptionAnchor, XrSpatialAnchorMSFT* anchor)
+    public XrResult xrCreateSpatialAnchorFromPerceptionAnchorMSFT(XrSession session, void* perceptionAnchor, XrSpatialAnchorMSFT* anchor)
         => xrCreateSpatialAnchorFromPerceptionAnchorMSFT_ptr(session, perceptionAnchor, anchor);
 
         [UnmanagedFunctionPointer(OpenXRNative.CallConv)]
-        private delegate XrResult xrTryGetPerceptionAnchorFromSpatialAnchorMSFTDelegate(XrSession session, XrSpatialAnchorMSFT anchor, IntPtr perceptionAnchor);
+        private delegate XrResult xrTryGetPerceptionAnchorFromSpatialAnchorMSFTDelegate(XrSession session, XrSpatialAnchorMSFT anchor, void* perceptionAnchor);
         private xrTryGetPerceptionAnchorFromSpatialAnchorMSFTDelegate xrTryGetPerceptionAnchorFromSpatialAnchorMSFT_ptr;
     /// <summary> Requires XR extension "XR_MSFT_perception_anchor_interop" </summary>
     /// <returns>
@@ -1852,7 +1852,7 @@ public unsafe partial class OpenXRNativeInstance
     /// <br/> ⠀⠀<see cref="XrResult.XR_ERROR_OUT_OF_MEMORY"/>
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public XrResult xrTryGetPerceptionAnchorFromSpatialAnchorMSFT(XrSession session, XrSpatialAnchorMSFT anchor, IntPtr perceptionAnchor)
+    public XrResult xrTryGetPerceptionAnchorFromSpatialAnchorMSFT(XrSession session, XrSpatialAnchorMSFT anchor, void* perceptionAnchor)
         => xrTryGetPerceptionAnchorFromSpatialAnchorMSFT_ptr(session, anchor, perceptionAnchor);
 
         [UnmanagedFunctionPointer(OpenXRNative.CallConv)]
@@ -2011,7 +2011,7 @@ public unsafe partial class OpenXRNativeInstance
         => xrInitializeLoaderKHR_ptr(loaderInitInfo);
 
         [UnmanagedFunctionPointer(OpenXRNative.CallConv)]
-        private delegate XrResult xrCreateVulkanInstanceKHRDelegate(XrInstance instance, XrVulkanInstanceCreateInfoKHR* createInfo, IntPtr vulkanInstance, IntPtr vulkanResult);
+        private delegate XrResult xrCreateVulkanInstanceKHRDelegate(XrInstance instance, XrVulkanInstanceCreateInfoKHR* createInfo, void* vulkanInstance, void* vulkanResult);
         private xrCreateVulkanInstanceKHRDelegate xrCreateVulkanInstanceKHR_ptr;
     /// <summary> Requires XR extension "XR_KHR_vulkan_enable2" </summary>
     /// <returns>
@@ -2028,11 +2028,11 @@ public unsafe partial class OpenXRNativeInstance
     /// <br/> ⠀⠀<see cref="XrResult.XR_ERROR_SYSTEM_INVALID"/>
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public XrResult xrCreateVulkanInstanceKHR(XrInstance instance, XrVulkanInstanceCreateInfoKHR* createInfo, IntPtr vulkanInstance, IntPtr vulkanResult)
+    public XrResult xrCreateVulkanInstanceKHR(XrInstance instance, XrVulkanInstanceCreateInfoKHR* createInfo, void* vulkanInstance, void* vulkanResult)
         => xrCreateVulkanInstanceKHR_ptr(instance, createInfo, vulkanInstance, vulkanResult);
 
         [UnmanagedFunctionPointer(OpenXRNative.CallConv)]
-        private delegate XrResult xrCreateVulkanDeviceKHRDelegate(XrInstance instance, XrVulkanDeviceCreateInfoKHR* createInfo, IntPtr vulkanDevice, IntPtr vulkanResult);
+        private delegate XrResult xrCreateVulkanDeviceKHRDelegate(XrInstance instance, XrVulkanDeviceCreateInfoKHR* createInfo, void* vulkanDevice, void* vulkanResult);
         private xrCreateVulkanDeviceKHRDelegate xrCreateVulkanDeviceKHR_ptr;
     /// <summary> Requires XR extension "XR_KHR_vulkan_enable2" </summary>
     /// <returns>
@@ -2049,11 +2049,11 @@ public unsafe partial class OpenXRNativeInstance
     /// <br/> ⠀⠀<see cref="XrResult.XR_ERROR_SYSTEM_INVALID"/>
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public XrResult xrCreateVulkanDeviceKHR(XrInstance instance, XrVulkanDeviceCreateInfoKHR* createInfo, IntPtr vulkanDevice, IntPtr vulkanResult)
+    public XrResult xrCreateVulkanDeviceKHR(XrInstance instance, XrVulkanDeviceCreateInfoKHR* createInfo, void* vulkanDevice, void* vulkanResult)
         => xrCreateVulkanDeviceKHR_ptr(instance, createInfo, vulkanDevice, vulkanResult);
 
         [UnmanagedFunctionPointer(OpenXRNative.CallConv)]
-        private delegate XrResult xrGetVulkanGraphicsDevice2KHRDelegate(XrInstance instance, XrVulkanGraphicsDeviceGetInfoKHR* getInfo, IntPtr vulkanPhysicalDevice);
+        private delegate XrResult xrGetVulkanGraphicsDevice2KHRDelegate(XrInstance instance, XrVulkanGraphicsDeviceGetInfoKHR* getInfo, void* vulkanPhysicalDevice);
         private xrGetVulkanGraphicsDevice2KHRDelegate xrGetVulkanGraphicsDevice2KHR_ptr;
     /// <summary> Requires XR extension "XR_KHR_vulkan_enable2" </summary>
     /// <returns>
@@ -2068,7 +2068,7 @@ public unsafe partial class OpenXRNativeInstance
     /// <br/> ⠀⠀<see cref="XrResult.XR_ERROR_SYSTEM_INVALID"/>
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public XrResult xrGetVulkanGraphicsDevice2KHR(XrInstance instance, XrVulkanGraphicsDeviceGetInfoKHR* getInfo, IntPtr vulkanPhysicalDevice)
+    public XrResult xrGetVulkanGraphicsDevice2KHR(XrInstance instance, XrVulkanGraphicsDeviceGetInfoKHR* getInfo, void* vulkanPhysicalDevice)
         => xrGetVulkanGraphicsDevice2KHR_ptr(instance, getInfo, vulkanPhysicalDevice);
 
         [UnmanagedFunctionPointer(OpenXRNative.CallConv)]

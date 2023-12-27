@@ -18,7 +18,7 @@ public static unsafe partial class OpenXRNative
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     [DllImport(LoaderName, CallingConvention = CallConv)]
-    public static extern XrResult xrGetInstanceProcAddr(XrInstance instance, byte* name, IntPtr function);
+    public static extern XrResult xrGetInstanceProcAddr(XrInstance instance, byte* name, void* function);
 
     /// <returns>
     ///       Success Codes:
@@ -943,7 +943,7 @@ public static unsafe partial class OpenXRNative
     /// <br/> ⠀⠀<see cref="XrResult.XR_ERROR_LIMIT_REACHED"/>
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static XrResult xrCreateSwapchainAndroidSurfaceKHR(XrSession session, XrSwapchainCreateInfo* info, XrSwapchain* swapchain, IntPtr surface)
+    public static XrResult xrCreateSwapchainAndroidSurfaceKHR(XrSession session, XrSwapchainCreateInfo* info, XrSwapchain* swapchain, void* surface)
         => Instance.xrCreateSwapchainAndroidSurfaceKHR(session, info, swapchain, surface);
 
     /// <summary> Requires XR extension "XR_EXT_performance_settings" </summary>
@@ -1170,7 +1170,7 @@ public static unsafe partial class OpenXRNative
     /// <br/> ⠀⠀<see cref="XrResult.XR_ERROR_SYSTEM_INVALID"/>
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static XrResult xrGetVulkanGraphicsDeviceKHR(XrInstance instance, ulong systemId, IntPtr vkInstance, IntPtr vkPhysicalDevice)
+    public static XrResult xrGetVulkanGraphicsDeviceKHR(XrInstance instance, ulong systemId, void* vkInstance, void* vkPhysicalDevice)
         => Instance.xrGetVulkanGraphicsDeviceKHR(instance, systemId, vkInstance, vkPhysicalDevice);
 
     /// <summary> Requires XR extension "XR_KHR_vulkan_enable" </summary>
@@ -1253,7 +1253,7 @@ public static unsafe partial class OpenXRNative
     /// <br/> ⠀⠀<see cref="XrResult.XR_ERROR_TIME_INVALID"/>
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static XrResult xrConvertWin32PerformanceCounterToTimeKHR(XrInstance instance, IntPtr performanceCounter, long* time)
+    public static XrResult xrConvertWin32PerformanceCounterToTimeKHR(XrInstance instance, void* performanceCounter, long* time)
         => Instance.xrConvertWin32PerformanceCounterToTimeKHR(instance, performanceCounter, time);
 
     /// <summary> Requires XR extension "XR_KHR_win32_convert_performance_counter_time" </summary>
@@ -1269,7 +1269,7 @@ public static unsafe partial class OpenXRNative
     /// <br/> ⠀⠀<see cref="XrResult.XR_ERROR_TIME_INVALID"/>
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static XrResult xrConvertTimeToWin32PerformanceCounterKHR(XrInstance instance, long time, IntPtr performanceCounter)
+    public static XrResult xrConvertTimeToWin32PerformanceCounterKHR(XrInstance instance, long time, void* performanceCounter)
         => Instance.xrConvertTimeToWin32PerformanceCounterKHR(instance, time, performanceCounter);
 
     /// <summary> Requires XR extension "XR_KHR_convert_timespec_time" </summary>
@@ -1285,7 +1285,7 @@ public static unsafe partial class OpenXRNative
     /// <br/> ⠀⠀<see cref="XrResult.XR_ERROR_TIME_INVALID"/>
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static XrResult xrConvertTimespecTimeToTimeKHR(XrInstance instance, IntPtr timespecTime, long* time)
+    public static XrResult xrConvertTimespecTimeToTimeKHR(XrInstance instance, void* timespecTime, long* time)
         => Instance.xrConvertTimespecTimeToTimeKHR(instance, timespecTime, time);
 
     /// <summary> Requires XR extension "XR_KHR_convert_timespec_time" </summary>
@@ -1301,7 +1301,7 @@ public static unsafe partial class OpenXRNative
     /// <br/> ⠀⠀<see cref="XrResult.XR_ERROR_TIME_INVALID"/>
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static XrResult xrConvertTimeToTimespecTimeKHR(XrInstance instance, long time, IntPtr timespecTime)
+    public static XrResult xrConvertTimeToTimespecTimeKHR(XrInstance instance, long time, void* timespecTime)
         => Instance.xrConvertTimeToTimespecTimeKHR(instance, time, timespecTime);
 
     /// <summary> Requires XR extension "XR_MSFT_spatial_anchor" </summary>
@@ -1699,7 +1699,7 @@ public static unsafe partial class OpenXRNative
     /// <br/> ⠀⠀<see cref="XrResult.XR_ERROR_LIMIT_REACHED"/>
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static XrResult xrCreateSpatialAnchorFromPerceptionAnchorMSFT(XrSession session, IntPtr perceptionAnchor, XrSpatialAnchorMSFT* anchor)
+    public static XrResult xrCreateSpatialAnchorFromPerceptionAnchorMSFT(XrSession session, void* perceptionAnchor, XrSpatialAnchorMSFT* anchor)
         => Instance.xrCreateSpatialAnchorFromPerceptionAnchorMSFT(session, perceptionAnchor, anchor);
 
     /// <summary> Requires XR extension "XR_MSFT_perception_anchor_interop" </summary>
@@ -1716,7 +1716,7 @@ public static unsafe partial class OpenXRNative
     /// <br/> ⠀⠀<see cref="XrResult.XR_ERROR_OUT_OF_MEMORY"/>
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static XrResult xrTryGetPerceptionAnchorFromSpatialAnchorMSFT(XrSession session, XrSpatialAnchorMSFT anchor, IntPtr perceptionAnchor)
+    public static XrResult xrTryGetPerceptionAnchorFromSpatialAnchorMSFT(XrSession session, XrSpatialAnchorMSFT anchor, void* perceptionAnchor)
         => Instance.xrTryGetPerceptionAnchorFromSpatialAnchorMSFT(session, anchor, perceptionAnchor);
 
     /// <summary> Requires XR extension "XR_MSFT_composition_layer_reprojection" </summary>
@@ -1865,7 +1865,7 @@ public static unsafe partial class OpenXRNative
     /// <br/> ⠀⠀<see cref="XrResult.XR_ERROR_SYSTEM_INVALID"/>
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static XrResult xrCreateVulkanInstanceKHR(XrInstance instance, XrVulkanInstanceCreateInfoKHR* createInfo, IntPtr vulkanInstance, IntPtr vulkanResult)
+    public static XrResult xrCreateVulkanInstanceKHR(XrInstance instance, XrVulkanInstanceCreateInfoKHR* createInfo, void* vulkanInstance, void* vulkanResult)
         => Instance.xrCreateVulkanInstanceKHR(instance, createInfo, vulkanInstance, vulkanResult);
 
     /// <summary> Requires XR extension "XR_KHR_vulkan_enable2" </summary>
@@ -1883,7 +1883,7 @@ public static unsafe partial class OpenXRNative
     /// <br/> ⠀⠀<see cref="XrResult.XR_ERROR_SYSTEM_INVALID"/>
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static XrResult xrCreateVulkanDeviceKHR(XrInstance instance, XrVulkanDeviceCreateInfoKHR* createInfo, IntPtr vulkanDevice, IntPtr vulkanResult)
+    public static XrResult xrCreateVulkanDeviceKHR(XrInstance instance, XrVulkanDeviceCreateInfoKHR* createInfo, void* vulkanDevice, void* vulkanResult)
         => Instance.xrCreateVulkanDeviceKHR(instance, createInfo, vulkanDevice, vulkanResult);
 
     /// <summary> Requires XR extension "XR_KHR_vulkan_enable2" </summary>
@@ -1899,7 +1899,7 @@ public static unsafe partial class OpenXRNative
     /// <br/> ⠀⠀<see cref="XrResult.XR_ERROR_SYSTEM_INVALID"/>
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static XrResult xrGetVulkanGraphicsDevice2KHR(XrInstance instance, XrVulkanGraphicsDeviceGetInfoKHR* getInfo, IntPtr vulkanPhysicalDevice)
+    public static XrResult xrGetVulkanGraphicsDevice2KHR(XrInstance instance, XrVulkanGraphicsDeviceGetInfoKHR* getInfo, void* vulkanPhysicalDevice)
         => Instance.xrGetVulkanGraphicsDevice2KHR(instance, getInfo, vulkanPhysicalDevice);
 
     /// <summary> Requires XR extension "XR_MSFT_scene_understanding" </summary>

@@ -50,7 +50,7 @@ public static class Helpers
         string memberType = type;
 
         if (type.StartsWith("PFN") || IsIntPtr(memberType))
-            return "IntPtr";
+            return "void*";
 
         string result = ConvertBasicTypes(memberType);
         if (result == string.Empty)
@@ -108,7 +108,7 @@ public static class Helpers
             "int32_t*" => "int*",
             "int64_t" => "long",
             "int64_t*" => "long*",
-            "size_t" => "UIntPtr",
+            "size_t" => "nuint",//was UIntPtr
             "float" => "float",
             "float*" => "float*",
             "double" => "double",

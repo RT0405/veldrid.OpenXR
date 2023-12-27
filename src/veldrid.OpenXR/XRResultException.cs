@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Veldrid.OpenXR.Native;
+﻿using Veldrid.OpenXR.Native;
 
 namespace Veldrid.OpenXR
 {
