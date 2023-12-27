@@ -1,6 +1,4 @@
-﻿using SharpGen.Runtime;
-using System.Runtime.CompilerServices;
-using Veldrid.D3D11;
+﻿using Veldrid.D3D11;
 using Veldrid.OpenXR.Classes;
 using Veldrid.OpenXR.Native;
 using Veldrid.Vk;
@@ -53,7 +51,7 @@ public class XRSwapchain : IDisposable
             case GraphicsBackend.Direct3D11:
             {
                 XrSwapchainImageD3D11KHR* images = stackalloc XrSwapchainImageD3D11KHR[(int)imageCount]
-                    .Populate(imageCount, XrSwapchainImageD3D11KHR.New());
+                    .Populate(XrSwapchainImageD3D11KHR.New());
 
                 result = xrEnumerateSwapchainImages(Swapchain, imageCount, &imageCount, (XrSwapchainImageBaseHeader*)images);
                 if(result != XR_SUCCESS)
@@ -79,7 +77,7 @@ public class XRSwapchain : IDisposable
             case GraphicsBackend.Vulkan:
             {
                 XrSwapchainImageVulkanKHR* images = stackalloc XrSwapchainImageVulkanKHR[(int)imageCount]
-                    .Populate(imageCount, XrSwapchainImageVulkanKHR.New());
+                    .Populate(XrSwapchainImageVulkanKHR.New());
 
                 result = xrEnumerateSwapchainImages(Swapchain, imageCount, &imageCount, (XrSwapchainImageBaseHeader*)images);
                 if(result != XR_SUCCESS)

@@ -6,6 +6,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using Veldrid;
 using Veldrid.OpenXR;
+using Veldrid.OpenXR.Mathematics;
 using Veldrid.OpenXR.Native;
 using Vulkan;
 using static Veldrid.OpenXR.Native.OpenXRNative;
@@ -133,7 +134,7 @@ public static partial class Program
 
         progIndicator.Start("Aqquiring Swapchains");
         (XRSwapchain left, XRSwapchain right) = OpenXRUtils.AqquireSwapchainsStereo(xrInstance, xrSystemID, xrSession, graphicsDevice, PixelFormat.D32_Float_S8_UInt);
-        XRSwapchain[] swapchains = { left, right };
+        XRSwapchain[] swapchains = [left, right];
         disposables.Add(left);
         disposables.Add(right);
         progIndicator.Complete();
@@ -581,16 +582,17 @@ public static partial class Program
             float angleWidth = MathF.Tan(view.fov.angleRight) - MathF.Tan(view.fov.angleLeft);
             float angleHeight = MathF.Tan(view.fov.angleDown) - MathF.Tan(view.fov.angleUp);
 
-            Matrix4x4 projectionMatrix = new()
-            {
-                M11 = 2.0f / angleWidth,
-                M31 = (MathF.Tan(view.fov.angleRight) + MathF.Tan(view.fov.angleLeft)) / angleWidth,
-                M22 = 2.0f / angleHeight,
-                M32 = (MathF.Tan(view.fov.angleUp) + MathF.Tan(view.fov.angleDown)) / angleHeight,
-                M33 = -farDistance / (farDistance - nearDistance),
-                M43 = -(farDistance * nearDistance) / (farDistance - nearDistance),
-                M34 = -1
-            };
+            //Matrix4x4 projectionMatrix = new()
+            //{
+            //    M11 = 2.0f / angleWidth,
+            //    M31 = (MathF.Tan(view.fov.angleRight) + MathF.Tan(view.fov.angleLeft)) / angleWidth,
+            //    M22 = 2.0f / angleHeight,
+            //    M32 = (MathF.Tan(view.fov.angleUp) + MathF.Tan(view.fov.angleDown)) / angleHeight,
+            //    M33 = -farDistance / (farDistance - nearDistance),
+            //    M43 = -(farDistance * nearDistance) / (farDistance - nearDistance),
+            //    M34 = -1
+            //};
+            Matrix4x4 projectionMatrix = XRMath.ComposeProjectionMatrix(view.fov, .1f, 250f);
 
             projectionMatrix = Matrix4x4.Transpose(projectionMatrix);
 

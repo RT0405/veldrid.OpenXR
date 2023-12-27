@@ -3,6 +3,7 @@ using System.Text;
 using Veldrid.D3D11;
 using Veldrid.OpenXR.Native;
 using Veldrid.Vk;
+using Vortice.Direct3D11;
 using Vortice.DXGI;
 using Vulkan;
 
@@ -27,6 +28,7 @@ public static partial class OpenXRUtils
     }
     internal static unsafe T* Populate<T>(T* buffer, uint length, T value) where T : unmanaged => Populate(buffer, (int)length, value);
     internal static unsafe T* Populate<T>(this Span<T> buffer, uint length, T value) where T : unmanaged => Populate(buffer, (int)length, value);
+    internal static unsafe T* Populate<T>(this Span<T> buffer, T value) where T : unmanaged => Populate(buffer, buffer.Length, value);
     internal static unsafe T* Populate<T>(T* buffer, int length, T value) where T : unmanaged
     {
         for(int i = 0; i < length; i++)
