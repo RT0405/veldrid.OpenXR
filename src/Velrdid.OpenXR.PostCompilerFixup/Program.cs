@@ -1,8 +1,6 @@
 ﻿using Mono.Cecil;
 using Mono.Cecil.Cil;
-using Mono.Cecil.Mdb;
 using Mono.Cecil.Rocks;
-using Mono.Collections.Generic;
 
 namespace Velrdid.OpenXR.PostCompilerFixup;
 internal class Program
@@ -23,7 +21,7 @@ internal class Program
             velridOpenXr.Write(BinPath + XRDll);
             Console.WriteLine("complete");
         }
-        catch(Exception e)
+        catch (Exception e)
         {
             Console.WriteLine();
             Console.WriteLine(e.ToString());
@@ -46,20 +44,20 @@ internal class Program
 
         ExecuteForeachMethod(module, (m) =>
         {
-            if(m.CustomAttributes == null)
+            if (m.CustomAttributes == null)
                 return;
-            if(!m.IsConstructor)
+            if (!m.IsConstructor)
                 return;
             bool remove = false;
-            for(int i = 0; i < m.CustomAttributes.Count; i++)
+            for (int i = 0; i < m.CustomAttributes.Count; i++)
             {
-                if(m.CustomAttributes[i].AttributeType.FullName == "Veldrid.OpenXR.PostCompilerFixup.RemoveBaseConstructorCallAttribute")
+                if (m.CustomAttributes[i].AttributeType.FullName == "Veldrid.OpenXR.PostCompilerFixup.RemoveBaseConstructorCallAttribute")
                 {
                     remove = true;
                     m.CustomAttributes.RemoveAt(i);
                 }
             }
-            if(remove)
+            if (remove)
                 RemoveBaseConstructor(m);
         });
         void RemoveBaseConstructor(MethodDefinition constructor)
@@ -70,17 +68,17 @@ internal class Program
             Instruction prevInstruction = null;
 
             (int baseConstructorCallStart, int baseConstructorCallEnd) = IdentifyBaseConstructorCallInstructionRange(constructor);
-            if(baseConstructorCallEnd >= body.Instructions.Count) // base constructor call not found
+            if (baseConstructorCallEnd >= body.Instructions.Count) // base constructor call not found
                 throw new("Error: base constructor call not found");
 
             Instruction baseConstructorCallInstruction = body.Instructions[baseConstructorCallEnd];
-            for(int i = baseConstructorCallStart; i <= baseConstructorCallEnd - baseConstructorCallStart; i++)
+            for (int i = baseConstructorCallStart; i <= baseConstructorCallEnd - baseConstructorCallStart; i++)
                 processor.RemoveAt(baseConstructorCallStart);// if we were to use "i" here it would mess up since the index of the next instruction is moved back by one each time
 
-            if(baseConstructorCallInstruction.OpCode == OpCodes.Call && baseConstructorCallInstruction.Operand is MethodReference reference)// we use baseConstructorCallStart here since the 
+            if (baseConstructorCallInstruction.OpCode == OpCodes.Call && baseConstructorCallInstruction.Operand is MethodReference reference)// we use baseConstructorCallStart here since the 
             {
                 MethodDefinition baseConstructor = module.ImportReference(reference).Resolve();
-                if(baseConstructor.ReturnType.Name == "object")
+                if (baseConstructor.ReturnType.Name == "object")
                 {
                     throw new("Error: base constructor is system.object, ignoring");
                 }
@@ -94,7 +92,7 @@ internal class Program
 
             void AddToStart(Instruction instruction)
             {
-                if(prevInstruction == null)
+                if (prevInstruction == null)
                     processor.InsertBefore(processor.Body.Instructions[0], instruction);
                 else
                     processor.InsertAfter(prevInstruction, instruction);
@@ -102,9 +100,9 @@ internal class Program
             }
             Instruction ImportInstruction(Instruction instruction)
             {
-                if(instruction.OpCode == OpCodes.Newobj || instruction.OpCode == OpCodes.Call)
+                if (instruction.OpCode == OpCodes.Newobj || instruction.OpCode == OpCodes.Call)
                     return processor.Create(instruction.OpCode, module.ImportReference((MethodReference)instruction.Operand));
-                else if(instruction.OpCode == OpCodes.Stfld)
+                else if (instruction.OpCode == OpCodes.Stfld)
                     return processor.Create(instruction.OpCode, module.ImportReference((FieldReference)instruction.Operand));
                 else
                     return instruction;
@@ -114,10 +112,10 @@ internal class Program
                 Instruction prevInstructionR = prevInstruction;
                 prevInstruction = null;
                 (int InstructionCopyCount, int baseConstructorCallIndex) = IdentifyBaseConstructorCallInstructionRange(baseConstructor);
-                for(int i = 0; i < InstructionCopyCount; i++)
+                for (int i = 0; i < InstructionCopyCount; i++)
                     AddToStart(ImportInstruction(baseConstructor.Body.Instructions[i]));
 
-                if(baseConstructorCallIndex < baseConstructor.Body.Instructions.Count)
+                if (baseConstructorCallIndex < baseConstructor.Body.Instructions.Count)
                     CopyFieldAndPropertyInitilizationIL(((MethodReference)baseConstructor.Body.Instructions[baseConstructorCallIndex].Operand).Resolve());
                 prevInstruction = prevInstructionR;
             }
@@ -125,9 +123,9 @@ internal class Program
             {
                 int lastLdArg0 = 0;
                 int i;
-                for(i = 0; i < method.Body.Instructions.Count && !IsBaseConstructorCall(method.Body.Instructions[i]); i++)
+                for (i = 0; i < method.Body.Instructions.Count && !IsBaseConstructorCall(method.Body.Instructions[i]); i++)
                 {
-                    if(method.Body.Instructions[i].OpCode == OpCodes.Ldarg_0)
+                    if (method.Body.Instructions[i].OpCode == OpCodes.Ldarg_0)
                         lastLdArg0 = i;
                 }
                 Console.WriteLine($"{lastLdArg0}, {i}");
@@ -141,12 +139,12 @@ internal class Program
     }
     public static void ExecuteForeachMethod(ModuleDefinition module, Action<MethodDefinition> PerMethod)
     {
-        for(int t = 0; t < module.Types.Count; t++)
+        for (int t = 0; t < module.Types.Count; t++)
         {
             TypeDefinition type = module.Types[t];
-            if(type.BaseType == null)
+            if (type.BaseType == null)
                 continue;
-            for(int m = 0; m < type.Methods.Count; m++)
+            for (int m = 0; m < type.Methods.Count; m++)
             {
                 PerMethod?.Invoke(type.Methods[m]);
             }
@@ -171,7 +169,7 @@ internal class Program
             catch
             {
                 assembly = SearchDirectory(name, new string[] { BinPath }, new());
-                if(assembly != null)
+                if (assembly != null)
                     return assembly;
                 else
                 {

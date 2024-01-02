@@ -28,7 +28,7 @@ public static class Helpers
     public static string GetPrettyEnumName(string value)
     {
         int start;
-        if((start = value.IndexOf("bit", StringComparison.OrdinalIgnoreCase)) != -1)
+        if ((start = value.IndexOf("bit", StringComparison.OrdinalIgnoreCase)) != -1)
             return value.Remove(start, 3);
 
         return value;
@@ -47,23 +47,48 @@ public static class Helpers
 
     public static string ConvertToCSharpType(string type, int pointerlevel, OpenXRSpecification spec)
     {
-        string memberType = type;
+        string ResolvePFN()
+        {
+            switch (type)
+            {
+                case "PFN_xrDebugUtilsMessengerCallbackEXT":
+                    return "delegate* unmanaged [Stdcall]<XrDebugUtilsMessageSeverityFlagsEXT, XrDebugUtilsMessageTypeFlagsEXT, XrDebugUtilsMessengerCallbackDataEXT*, void*, XrBool32>";
+                case "PFN_xrVoidFunction":
+                    return "void*";
+                case "PFN_xrEglGetProcAddressMNDX":
+                    return "void*";//maybe should be delegate* unmanaged<byte*, void>, but I'm not sure
+                case "PFN_vkGetInstanceProcAddr":
+                    return "void*";
 
-        if (type.StartsWith("PFN") || IsIntPtr(memberType))
-            return "void*";
+                default:
+                    if (type.StartsWith("PFN"))
+                        Console.WriteLine($"{type} was unable to be resolved");
+                    if (IsIntPtr(type))
+                        return "nint";
+                    else
+                        return "void*";
+            }
+        }
+        if (type.StartsWith("PFN") || IsIntPtr(type))
+        {
+            string ret = ResolvePFN();
+            while (--pointerlevel >= 0)
+                ret += '*';
+            return ret;
+        }
 
-        string result = ConvertBasicTypes(memberType);
+        string result = ConvertBasicTypes(type);
         if (result == string.Empty)
         {
-            if (spec.Alias.TryGetValue(memberType, out string alias))
-                memberType = alias;
+            if (spec.Alias.TryGetValue(type, out string alias))
+                type = alias;
 
-            spec.BaseTypes.TryGetValue(memberType, out string baseType);
+            spec.BaseTypes.TryGetValue(type, out string baseType);
             if (baseType != null)
                 result = ConvertBasicTypes(baseType);
             else
             {
-                var typeDef = spec.TypeDefs.Find(t => t.Name == memberType);
+                var typeDef = spec.TypeDefs.Find(t => t.Name == type);
                 if (typeDef != null)
                 {
                     if (typeDef.Requires != null)
@@ -76,7 +101,7 @@ public static class Helpers
                     }
                 }
                 else
-                    result = memberType;
+                    result = type;
             }
         }
 

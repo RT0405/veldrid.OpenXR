@@ -1,5 +1,4 @@
 ﻿using System.Diagnostics;
-using System.Drawing;
 using System.Numerics;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
@@ -8,10 +7,9 @@ using Veldrid;
 using Veldrid.OpenXR;
 using Veldrid.OpenXR.Mathematics;
 using Veldrid.OpenXR.Native;
-using Vulkan;
 using static Veldrid.OpenXR.Native.OpenXRNative;
 
-namespace TLE_A2;
+namespace Example;
 public static partial class Program
 {
     internal static GraphicsDevice graphicsDevice;
@@ -32,7 +30,7 @@ public static partial class Program
     private static XrDebugUtilsMessengerEXT xrDebugMessenger;
 
     internal static OutputDescription swapchainDesc;
-    internal static readonly List<IDisposable> disposables = new();
+    internal static readonly List<IDisposable> disposables = [];
 
     private static bool quit;
     private const GraphicsBackend ChosenBackend = GraphicsBackend.Vulkan;
@@ -46,7 +44,7 @@ public static partial class Program
     }
     public static T[] Populate<T>(this T[] arr, T value)
     {
-        for(int i = 0; i < arr.Length; i++)
+        for (int i = 0; i < arr.Length; i++)
             arr[i] = value;
         return arr;
     }
@@ -73,7 +71,7 @@ public static partial class Program
     }
     private static unsafe void Main()
     {
-        if(!OpenXRUtils.IsBackendSupported(ChosenBackend))
+        if (!OpenXRUtils.IsBackendSupported(ChosenBackend))
             throw OpenXRUtils.NewInvalidBackendException("Unable To Start Program", ChosenBackend);
         ConsoleLineProgress progIndicator = new();
         /*progIndicator.Start("Getting Available Api Layers");
@@ -117,11 +115,11 @@ public static partial class Program
             HasMainSwapchain = false,
             PreferStandardClipSpaceYDirection = true,
             PreferDepthRangeZeroToOne = true,
-            ResourceBindingModel = ResourceBindingModel.Default,
+            ResourceBindingModel = ResourceBindingModel.Default
         };
         graphicsDevice = OpenXRUtils.CreateGraphicsDevice(xrInstance, xrSystemID, options, ChosenBackend, out XrResult r, out string m);
         progIndicator.Complete($"result: {r} message: {m}");
-        if(graphicsDevice == null || r != XrResult.XR_SUCCESS)
+        if (graphicsDevice == null || r != XrResult.XR_SUCCESS)
             throw new XRResultException(r, m);
 
         progIndicator.Start("Creating Graphics Resources");
@@ -155,16 +153,16 @@ public static partial class Program
         bool running = false;
         XrEventDataBuffer eventData;
         ConsoleSpace frameDebugSpace = new(8);
-        while(!quit)
+        while (!quit)
         {
             eventData.type = XrStructureType.XR_TYPE_EVENT_DATA_BUFFER;
             frameDebugSpace.Clear();
             progIndicator.Start("calling xrPollEvent", frameDebugSpace.top + frameDebugSpace.line++);
             XrResult result = xrPollEvent(xrInstance, &eventData);
             progIndicator.Complete($"result: {result} eventData type: {eventData.type}");
-            if(result == XrResult.XR_EVENT_UNAVAILABLE)
+            if (result == XrResult.XR_EVENT_UNAVAILABLE)
             {
-                if(running)
+                if (running)
                 {
                     XrFrameWaitInfo frameWaitInfo = XrFrameWaitInfo.New();
 
@@ -176,7 +174,7 @@ public static partial class Program
                     frameDebugSpace.WriteLine($"FrameState.shouldRender: {frameState.shouldRender}");
                     frameDebugSpace.WriteLine($"FrameState.predictedDisplayTime: {frameState.predictedDisplayTime}");
                     frameDebugSpace.WriteLine($"FrameState.predictedDisplayPeriod: {frameState.predictedDisplayPeriod}");
-                    if(result != XrResult.XR_SUCCESS)
+                    if (result != XrResult.XR_SUCCESS)
                     {
                         Console.WriteLine("Failed to wait for frame: " + result);
                         break;
@@ -185,14 +183,14 @@ public static partial class Program
                     quit = !Render(xrSpace, frameState.predictedDisplayTime, swapchains, frameState.shouldRender);
                 }
             }
-            else if(result != XrResult.XR_SUCCESS)
+            else if (result != XrResult.XR_SUCCESS)
             {
                 Console.WriteLine("Failed to poll events: " + result);
                 break;
             }
             else
             {
-                switch(eventData.type)
+                switch (eventData.type)
                 {
                     default:
                         Console.WriteLine("Unknown event type received: " + eventData.type);
@@ -211,58 +209,58 @@ public static partial class Program
                         Console.WriteLine("The reference space is changing.");
                         break;
                     case XrStructureType.XR_TYPE_EVENT_DATA_SESSION_STATE_CHANGED:
-                    {
-                        var e = (XrEventDataSessionStateChanged*)&eventData;
-                        Console.WriteLine($"{e->state}");
-                        switch(e->state)
                         {
-                            default:
-                            case XrSessionState.XR_SESSION_STATE_UNKNOWN:
-                                //case XR_SESSION_STATE_MAX_ENUM:
-                                Console.WriteLine("Unknown session state entered: " + e->state);
-                                break;
-                            case XrSessionState.XR_SESSION_STATE_IDLE:
-                                running = false;
-                                break;
-                            case XrSessionState.XR_SESSION_STATE_READY:
+                            var e = (XrEventDataSessionStateChanged*)&eventData;
+                            Console.WriteLine($"{e->state}");
+                            switch (e->state)
                             {
-                                XrSessionBeginInfo sessionBeginInfo = new()
-                                {
-                                    type = XrStructureType.XR_TYPE_SESSION_BEGIN_INFO,
-                                    primaryViewConfigurationType = XrViewConfigurationType.XR_VIEW_CONFIGURATION_TYPE_PRIMARY_STEREO
-                                };
+                                default:
+                                case XrSessionState.XR_SESSION_STATE_UNKNOWN:
+                                    //case XR_SESSION_STATE_MAX_ENUM:
+                                    Console.WriteLine("Unknown session state entered: " + e->state);
+                                    break;
+                                case XrSessionState.XR_SESSION_STATE_IDLE:
+                                    running = false;
+                                    break;
+                                case XrSessionState.XR_SESSION_STATE_READY:
+                                    {
+                                        XrSessionBeginInfo sessionBeginInfo = new()
+                                        {
+                                            type = XrStructureType.XR_TYPE_SESSION_BEGIN_INFO,
+                                            primaryViewConfigurationType = XrViewConfigurationType.XR_VIEW_CONFIGURATION_TYPE_PRIMARY_STEREO
+                                        };
 
-                                progIndicator.Start("calling xrBeginSession");
-                                result = xrBeginSession(xrSession, &sessionBeginInfo);
-                                progIndicator.Complete($"result: {result}");
+                                        progIndicator.Start("calling xrBeginSession");
+                                        result = xrBeginSession(xrSession, &sessionBeginInfo);
+                                        progIndicator.Complete($"result: {result}");
 
-                                if(result != XrResult.XR_SUCCESS)
-                                    Console.WriteLine("Failed to begin session: " + result);
+                                        if (result != XrResult.XR_SUCCESS)
+                                            Console.WriteLine("Failed to begin session: " + result);
 
-                                running = true;
-                                break;
+                                        running = true;
+                                        break;
+                                    }
+                                case XrSessionState.XR_SESSION_STATE_SYNCHRONIZED:
+                                case XrSessionState.XR_SESSION_STATE_VISIBLE:
+                                case XrSessionState.XR_SESSION_STATE_FOCUSED:
+                                    running = true;
+                                    break;
+                                case XrSessionState.XR_SESSION_STATE_STOPPING:
+                                    result = xrEndSession(xrSession);
+                                    if (result != XrResult.XR_SUCCESS)
+                                        Console.WriteLine("Failed to end session: " + result);
+                                    break;
+                                case XrSessionState.XR_SESSION_STATE_LOSS_PENDING:
+                                    Console.WriteLine("OpenXR session is shutting down.");
+                                    quit = true;
+                                    break;
+                                case XrSessionState.XR_SESSION_STATE_EXITING:
+                                    Console.WriteLine("OpenXR runtime requested shutdown.");
+                                    quit = true;
+                                    break;
                             }
-                            case XrSessionState.XR_SESSION_STATE_SYNCHRONIZED:
-                            case XrSessionState.XR_SESSION_STATE_VISIBLE:
-                            case XrSessionState.XR_SESSION_STATE_FOCUSED:
-                                running = true;
-                                break;
-                            case XrSessionState.XR_SESSION_STATE_STOPPING:
-                                result = xrEndSession(xrSession);
-                                if(result != XrResult.XR_SUCCESS)
-                                    Console.WriteLine("Failed to end session: " + result);
-                                break;
-                            case XrSessionState.XR_SESSION_STATE_LOSS_PENDING:
-                                Console.WriteLine("OpenXR session is shutting down.");
-                                quit = true;
-                                break;
-                            case XrSessionState.XR_SESSION_STATE_EXITING:
-                                Console.WriteLine("OpenXR runtime requested shutdown.");
-                                quit = true;
-                                break;
+                            break;
                         }
-                        break;
-                    }
                 }
             }
         }
@@ -270,7 +268,7 @@ public static partial class Program
         Console.WriteLine("Main Loop Exited, Disposing Objects");
 
         graphicsDevice.WaitForIdle();
-        for(int i = disposables.Count - 1; i >= 0; i--)
+        for (int i = disposables.Count - 1; i >= 0; i--)
         {
             disposables[i].Dispose();
             disposables.RemoveAt(i);
@@ -296,32 +294,30 @@ public static partial class Program
     {
 
         Span<XrExtensionProperties> requiredExtensions = ChosenBackend == GraphicsBackend.Vulkan ?
-            stackalloc XrExtensionProperties[]
-            {
+        [
             (XrExtensionProperties)XRExtensionDescriptor.XR_EXT_DEBUG_UTILS,
             (XrExtensionProperties)XRExtensionDescriptor.XR_KHR_VULKAN_ENABLE,
             (XrExtensionProperties)XRExtensionDescriptor.XR_KHR_VULKAN_ENABLE2,
-        } :
-            stackalloc XrExtensionProperties[]
-            {
+        ] :
+        [
             (XrExtensionProperties)XRExtensionDescriptor.XR_EXT_DEBUG_UTILS,
             (XrExtensionProperties)XRExtensionDescriptor.XR_KHR_D3D11_ENABLE,
-        };
+        ];
 
         byte** enabledExtensionNames = stackalloc byte*[requiredExtensions.Length];
-        fixed(XrExtensionProperties* requiredExtensionsPtr = requiredExtensions)
-            for(int i = 0; i < requiredExtensions.Length; i++)
+        fixed (XrExtensionProperties* requiredExtensionsPtr = requiredExtensions)
+            for (int i = 0; i < requiredExtensions.Length; i++)
                 enabledExtensionNames[i] = requiredExtensionsPtr[i].extensionName;
 
-        Span<FixedUTF8String256> apiLayers = stackalloc FixedUTF8String256[]
-        {
-            //"XR_APILAYER_LUNARG_core_validation",
-        };
+        Span<XrApiLayerName> apiLayers =
+        [
+            //"XR_APILAYER_LUNARG_core_validation"u8,
+        ];
         byte** apiLayerNames = stackalloc byte*[apiLayers.Length];
-        fixed(FixedUTF8String256* apiLayersPtr = apiLayers)
-            for(int i = 0; i < apiLayers.Length; i++)
+        fixed (XrApiLayerName* apiLayersPtr = apiLayers)
+            for (int i = 0; i < apiLayers.Length; i++)
                 apiLayerNames[i] = apiLayersPtr[i].bytes;
-        if(apiLayers.Length == 0) apiLayerNames = null;
+        if (apiLayers.Length == 0) apiLayerNames = null;
 
         XrInstanceCreateInfo instanceCreateInfo = new()
         {
@@ -345,7 +341,7 @@ public static partial class Program
 
         XrInstance instance;
         XrResult result = xrCreateInstance(&instanceCreateInfo, &instance);
-        if(result != XrResult.XR_SUCCESS)
+        if (result != XrResult.XR_SUCCESS)
             Crash("Failed to create OpenXR instance: " + result);
         Console.WriteLine(OpenXRNative.Instance);
         xrInstance = instance;
@@ -355,7 +351,7 @@ public static partial class Program
         public fixed byte bytes[256];
         public FixedUTF8String256(string value)
         {
-            fixed(byte* bytesPtr = bytes)
+            fixed (byte* bytesPtr = bytes)
                 Encoding.UTF8.GetBytes("OpenXR Test Example\0", new Span<byte>(bytesPtr, 256));
         }
         public static implicit operator FixedUTF8String256(string value) => new(value + '\0');
@@ -380,56 +376,69 @@ public static partial class Program
                 XrDebugUtilsMessageTypeFlagsEXT.XR_DEBUG_UTILS_MESSAGE_TYPE_GENERAL_BIT_EXT |
                 XrDebugUtilsMessageTypeFlagsEXT.XR_DEBUG_UTILS_MESSAGE_TYPE_PERFORMANCE_BIT_EXT |
                 XrDebugUtilsMessageTypeFlagsEXT.XR_DEBUG_UTILS_MESSAGE_TYPE_VALIDATION_BIT_EXT),
-            userCallback = Marshal.GetFunctionPointerForDelegate<XRDebugCallback>(DebugCallback),
+            userCallback = &DebugCallback,
             userData = null,
         };
 
         XrDebugUtilsMessengerEXT debugMessenger;
         XrResult result = xrCreateDebugUtilsMessengerEXT(xrInstance, &debugMessengerCreateInfo, &debugMessenger);
-        if(result != XrResult.XR_SUCCESS)
+        if (result != XrResult.XR_SUCCESS)
             Crash("Failed to create OpenXR debug messenger: " + result);
         xrDebugMessenger = debugMessenger;
     }
-    [UnmanagedFunctionPointer(CallingConvention.StdCall)]
-    unsafe delegate XrBool32 XRDebugCallback(XrDebugUtilsMessageSeverityFlagsEXT severity, XrDebugUtilsMessageTypeFlagsEXT type, XrDebugUtilsMessengerCallbackDataEXT* callbackData, void* userData);
+    [UnmanagedCallersOnly(CallConvs = [typeof(CallConvStdcall)])]
     private static unsafe XrBool32 DebugCallback(XrDebugUtilsMessageSeverityFlagsEXT severity, XrDebugUtilsMessageTypeFlagsEXT type, XrDebugUtilsMessengerCallbackDataEXT* callbackData, void* userData)
     {
-        Console.Write("OpenXR ");
-
-        switch(type)
-        {
-            case XrDebugUtilsMessageTypeFlagsEXT.XR_DEBUG_UTILS_MESSAGE_TYPE_GENERAL_BIT_EXT:
-                Console.Write("general ");
-                break;
-            case XrDebugUtilsMessageTypeFlagsEXT.XR_DEBUG_UTILS_MESSAGE_TYPE_VALIDATION_BIT_EXT:
-                Console.Write("validation ");
-                break;
-            case XrDebugUtilsMessageTypeFlagsEXT.XR_DEBUG_UTILS_MESSAGE_TYPE_PERFORMANCE_BIT_EXT:
-                Console.Write("performance ");
-                break;
-            case XrDebugUtilsMessageTypeFlagsEXT.XR_DEBUG_UTILS_MESSAGE_TYPE_CONFORMANCE_BIT_EXT:
-                Console.Write("conformance ");
-                break;
-        }
-
-        switch(severity)
+        switch (severity)
         {
             case XrDebugUtilsMessageSeverityFlagsEXT.XR_DEBUG_UTILS_MESSAGE_SEVERITY_VERBOSE_BIT_EXT:
-                Console.Write("(verbose): ");
+                
                 break;
             case XrDebugUtilsMessageSeverityFlagsEXT.XR_DEBUG_UTILS_MESSAGE_SEVERITY_INFO_BIT_EXT:
-                Console.Write("(info): ");
+                Console.BackgroundColor = ConsoleColor.DarkCyan;
                 break;
             case XrDebugUtilsMessageSeverityFlagsEXT.XR_DEBUG_UTILS_MESSAGE_SEVERITY_WARNING_BIT_EXT:
-                Console.Write("(warning): ");
+                Console.BackgroundColor = ConsoleColor.DarkYellow;
                 break;
             case XrDebugUtilsMessageSeverityFlagsEXT.XR_DEBUG_UTILS_MESSAGE_SEVERITY_ERROR_BIT_EXT:
-                Console.Write("(error): ");
+                Console.BackgroundColor = ConsoleColor.DarkRed;
                 break;
         }
-        Console.WriteLine();
-        Console.Write(Marshal.PtrToStringUTF8((IntPtr)callbackData->message));
-        Console.WriteLine();
+        Console.Write("[OpenXR]");
+
+        switch (type)
+        {
+            case XrDebugUtilsMessageTypeFlagsEXT.XR_DEBUG_UTILS_MESSAGE_TYPE_GENERAL_BIT_EXT:
+                Console.Write("[general]");
+                break;
+            case XrDebugUtilsMessageTypeFlagsEXT.XR_DEBUG_UTILS_MESSAGE_TYPE_VALIDATION_BIT_EXT:
+                Console.Write("[validation]");
+                break;
+            case XrDebugUtilsMessageTypeFlagsEXT.XR_DEBUG_UTILS_MESSAGE_TYPE_PERFORMANCE_BIT_EXT:
+                Console.Write("[performance]");
+                break;
+            case XrDebugUtilsMessageTypeFlagsEXT.XR_DEBUG_UTILS_MESSAGE_TYPE_CONFORMANCE_BIT_EXT:
+                Console.Write("[conformance]");
+                break;
+        }
+
+        switch (severity)
+        {
+            case XrDebugUtilsMessageSeverityFlagsEXT.XR_DEBUG_UTILS_MESSAGE_SEVERITY_VERBOSE_BIT_EXT:
+                Console.Write("[V]: ");
+                break;
+            case XrDebugUtilsMessageSeverityFlagsEXT.XR_DEBUG_UTILS_MESSAGE_SEVERITY_INFO_BIT_EXT:
+                Console.Write("[I]: ");
+                break;
+            case XrDebugUtilsMessageSeverityFlagsEXT.XR_DEBUG_UTILS_MESSAGE_SEVERITY_WARNING_BIT_EXT:
+                Console.Write("[W]: ");
+                break;
+            case XrDebugUtilsMessageSeverityFlagsEXT.XR_DEBUG_UTILS_MESSAGE_SEVERITY_ERROR_BIT_EXT:
+                Console.Write("[E]: ");
+                break;
+        }
+        Console.WriteLine(Marshal.PtrToStringUTF8((IntPtr)callbackData->message));
+        Console.ResetColor();
 
         return XrBool32.False;
     }
@@ -447,7 +456,7 @@ public static partial class Program
 
         XrResult result = xrGetSystem(xrInstance, &systemGetInfo, &systemID);
 
-        if(result != XrResult.XR_SUCCESS)
+        if (result != XrResult.XR_SUCCESS)
             Crash("Failed to get system: " + result);
 
         xrSystemID = systemID;
@@ -464,7 +473,7 @@ public static partial class Program
         XrSpace space;
         XrResult result = xrCreateReferenceSpace(xrSession, &spaceCreateInfo, &space);
 
-        if(result != XrResult.XR_SUCCESS)
+        if (result != XrResult.XR_SUCCESS)
         {
             Console.WriteLine("Failed to create space: " + result);
             return XrSpace.Null;
@@ -478,7 +487,7 @@ public static partial class Program
 
         XrResult result = xrBeginFrame(xrSession, &beginFrameInfo);
 
-        if(result != XrResult.XR_SUCCESS)
+        if (result != XrResult.XR_SUCCESS)
         {
             Console.WriteLine("Failed to begin frame: " + result);
             return false;
@@ -507,13 +516,13 @@ public static partial class Program
             &viewCount,
             views);
 
-        if(result != XrResult.XR_SUCCESS)
+        if (result != XrResult.XR_SUCCESS)
         {
             Console.WriteLine("Failed to locate views: " + result);
             return false;
         }
 
-        for(int i = 0; i < swapchains.Length; i++)
+        for (int i = 0; i < swapchains.Length; i++)
         {
             renderEye(
                 views[i],
@@ -522,7 +531,7 @@ public static partial class Program
 
         XrCompositionLayerProjectionView* projectedViews = stackalloc XrCompositionLayerProjectionView[2];
 
-        for(int i = 0; i < 2; i++)
+        for (int i = 0; i < 2; i++)
         {
             projectedViews[i].type = XrStructureType.XR_TYPE_COMPOSITION_LAYER_PROJECTION_VIEW;
             projectedViews[i].pose = views[i].pose;
@@ -559,7 +568,7 @@ public static partial class Program
 
         result = xrEndFrame(xrSession, &endFrameInfo);
 
-        if(result != XrResult.XR_SUCCESS)
+        if (result != XrResult.XR_SUCCESS)
         {
             Console.WriteLine("Failed to end frame: " + result);
             return false;
@@ -568,8 +577,8 @@ public static partial class Program
         return true;
         static bool renderEye(XrView view, XRSwapchain swapchain)
         {
-            const float farDistance = 100;
-            const float nearDistance = 100;
+            const float farDistance = 250f;
+            const float nearDistance = .1f;
             swapchain.AqquireAndWaitNextFramebuffer(out Framebuffer framebuffer);
 
             commandList.Begin();
@@ -592,7 +601,7 @@ public static partial class Program
             //    M43 = -(farDistance * nearDistance) / (farDistance - nearDistance),
             //    M34 = -1
             //};
-            Matrix4x4 projectionMatrix = XRMath.ComposeProjectionMatrix(view.fov, .1f, 250f);
+            Matrix4x4 projectionMatrix = XRMath.ComposeProjectionMatrix(view.fov, nearDistance, farDistance);
 
             projectionMatrix = Matrix4x4.Transpose(projectionMatrix);
 
@@ -636,7 +645,7 @@ class ConsoleSpace
     {
         line = 1;
         OverwriteLine(top, '-');
-        for(int i = 0; i < size; i++)
+        for (int i = 0; i < size; i++)
             OverwriteLine(top + i, ' ');
         OverwriteLine(top + size + 1, '-');
     }
@@ -668,57 +677,60 @@ struct ConsoleLineReference
 }
 class ConsoleLineProgress
 {
-    int top;
-    int left;
-    readonly Timer timer;
-    readonly Stopwatch stopwatch;
+    //int top;
+    //int left;
+    //readonly Timer timer;
+    //readonly Stopwatch stopwatch;
     bool isRunning;
+    string message;
     public ConsoleLineProgress()
     {
-        timer = new Timer((o) =>
-        {
-            UpdatePostFix(Ms());
-        }, null, Timeout.Infinite, Timeout.Infinite);
-        stopwatch = new();
+        //timer = new Timer((o) =>
+        //{
+        //    UpdatePostFix(Ms());
+        //}, null, Timeout.Infinite, Timeout.Infinite);
+        //stopwatch = new();
     }
     public void Start(string message) => Start(message, Console.CursorTop);
     public void Start(string message, int line)
     {
-        if(isRunning)
+        if (isRunning)
             Complete();
-        (int cl, int ct) = Console.GetCursorPosition();
-        Console.SetCursorPosition(0, line);
-        Console.Write(message + ": ");
-        (left, top) = Console.GetCursorPosition();
-        Console.WriteLine();
-        Console.SetCursorPosition(cl, ct);
-        timer.Change(0, 900);
+        //(int cl, int ct) = Console.GetCursorPosition();
+        //Console.SetCursorPosition(0, line);
+        Console.WriteLine(this.message = message);
+        //(left, top) = Console.GetCursorPosition();
+        //Console.WriteLine();
+        //Console.SetCursorPosition(cl, ct);
+        //timer.Change(0, 900);
         isRunning = true;
-        stopwatch.Restart();
+        //stopwatch.Restart();
     }
     public void Complete(string completionStatus = "Success")
     {
-        if(!isRunning)
+        if (!isRunning)
             return;
-        timer.Change(Timeout.Infinite, Timeout.Infinite);
-        UpdatePostFix(completionStatus + ", " + Ms());
+        //timer.Change(Timeout.Infinite, Timeout.Infinite);
+        //UpdatePostFix(completionStatus + ", " + Ms());
         isRunning = false;
-        stopwatch.Stop();
+        Console.WriteLine(message + ": " + completionStatus);
+        message = null;
+        //stopwatch.Stop();
     }
-    private void UpdatePostFix(string postfix)
-    {
-        (int cl, int ct) = Console.GetCursorPosition();
-        Console.SetCursorPosition(left, top);
-        Console.Write(postfix);
-        Console.SetCursorPosition(cl, ct);
-    }
-    public void Dispose()
-    {
-        timer.Dispose();
-    }
-    public string Ms()
-    {
-        long ms = stopwatch.ElapsedMilliseconds;
-        return $"{ms / 1000}.{(ms % 1000 / 10).ToString().PadLeft(2, '0')}s";
-    }
+    //private void UpdatePostFix(string postfix)
+    //{
+    //    //(int cl, int ct) = Console.GetCursorPosition();
+    //    //Console.SetCursorPosition(left, top);
+    //    //Console.Write(postfix);
+    //    //Console.SetCursorPosition(cl, ct);
+    //}
+    //public void Dispose()
+    //{
+    //    //timer.Dispose();
+    //}
+    //public string Ms()
+    //{
+    //    //long ms = stopwatch.ElapsedMilliseconds;
+    //    //return $"{ms / 1000}.{(ms % 1000 / 10).ToString().PadLeft(2, '0')}s";
+    //}
 }

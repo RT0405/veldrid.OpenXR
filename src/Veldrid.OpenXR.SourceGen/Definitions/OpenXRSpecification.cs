@@ -3,20 +3,20 @@
 namespace SourceGen;
 public class OpenXRSpecification
 {
-    public List<VendorDefinition> Vendors = [];
-    public List<TagDefinition> Tags = [];
-    public List<ConstantDefinition> Constants = [];
-    public List<TypedefDefinition> TypeDefs = [];
-    public List<FuncpointerDefinition> FuncPointers = [];
-    public List<EnumDefinition> Enums = [];
-    public List<StructureDefinition> Structs = [];
-    public List<StructureDefinition> Unions = [];
-    public List<HandleDefinition> Handles = [];
-    public List<CommandDefinition> Commands = [];
-    public List<FeatureDefinition> Features = [];
-    public Dictionary<string, string> BaseTypes = [];
-    public Dictionary<string, string> Alias = [];
-    public List<ExtensionDefinition> Extensions = [];
+    public List<VendorDefinition> Vendors = new();
+    public List<TagDefinition> Tags = new();
+    public List<ConstantDefinition> Constants = new();
+    public List<TypedefDefinition> TypeDefs = new();
+    public List<FuncpointerDefinition> FuncPointers = new();
+    public List<EnumDefinition> Enums = new();
+    public List<StructureDefinition> Structs = new();
+    public List<StructureDefinition> Unions = new();
+    public List<HandleDefinition> Handles = new();
+    public List<CommandDefinition> Commands = new();
+    public List<FeatureDefinition> Features = new();
+    public Dictionary<string, string> BaseTypes = new();
+    public Dictionary<string, string> Alias = new();
+    public List<ExtensionDefinition> Extensions = new();
     public string Version;
     public static OpenXRSpecification FromFile(string filePath)
     {
@@ -116,7 +116,7 @@ public class OpenXRSpecification
         var commands = registry.Element("commands").Elements("command").Where(c => c.Attribute("alias") == null);
         foreach (var command in commands)
         {
-            spec.Commands.Add(new(command));
+            spec.Commands.Add(CommandDefinition.FromXML(command));
         }
 
         // Features

@@ -2,10 +2,9 @@ using System;
 
 namespace Veldrid.OpenXR.Native;
 #pragma warning disable IDE0250 // Make struct 'readonly'
-public partial struct XrInstance : IEquatable<XrInstance>
+public partial struct XrInstance(ulong existingHandle) : IEquatable<XrInstance>
 {
-    public readonly ulong Handle;
-    public XrInstance(ulong existingHandle) { Handle = existingHandle; }
+    public readonly ulong Handle = existingHandle;
     public static XrInstance Null => new(0);
     public static implicit operator XrInstance(ulong handle) => new(handle);
     public static bool operator ==(XrInstance left, XrInstance right) => left.Handle == right.Handle;
@@ -17,10 +16,9 @@ public partial struct XrInstance : IEquatable<XrInstance>
     public readonly override int GetHashCode() => Handle.GetHashCode();
 }
 
-public partial struct XrSession : IEquatable<XrSession>
+public partial struct XrSession(ulong existingHandle) : IEquatable<XrSession>
 {
-    public readonly ulong Handle;
-    public XrSession(ulong existingHandle) { Handle = existingHandle; }
+    public readonly ulong Handle = existingHandle;
     public static XrSession Null => new(0);
     public static implicit operator XrSession(ulong handle) => new(handle);
     public static bool operator ==(XrSession left, XrSession right) => left.Handle == right.Handle;
@@ -32,10 +30,9 @@ public partial struct XrSession : IEquatable<XrSession>
     public readonly override int GetHashCode() => Handle.GetHashCode();
 }
 
-public partial struct XrActionSet : IEquatable<XrActionSet>
+public partial struct XrActionSet(ulong existingHandle) : IEquatable<XrActionSet>
 {
-    public readonly ulong Handle;
-    public XrActionSet(ulong existingHandle) { Handle = existingHandle; }
+    public readonly ulong Handle = existingHandle;
     public static XrActionSet Null => new(0);
     public static implicit operator XrActionSet(ulong handle) => new(handle);
     public static bool operator ==(XrActionSet left, XrActionSet right) => left.Handle == right.Handle;
@@ -47,10 +44,9 @@ public partial struct XrActionSet : IEquatable<XrActionSet>
     public readonly override int GetHashCode() => Handle.GetHashCode();
 }
 
-public partial struct XrAction : IEquatable<XrAction>
+public partial struct XrAction(ulong existingHandle) : IEquatable<XrAction>
 {
-    public readonly ulong Handle;
-    public XrAction(ulong existingHandle) { Handle = existingHandle; }
+    public readonly ulong Handle = existingHandle;
     public static XrAction Null => new(0);
     public static implicit operator XrAction(ulong handle) => new(handle);
     public static bool operator ==(XrAction left, XrAction right) => left.Handle == right.Handle;
@@ -62,10 +58,9 @@ public partial struct XrAction : IEquatable<XrAction>
     public readonly override int GetHashCode() => Handle.GetHashCode();
 }
 
-public partial struct XrSwapchain : IEquatable<XrSwapchain>
+public partial struct XrSwapchain(ulong existingHandle) : IEquatable<XrSwapchain>
 {
-    public readonly ulong Handle;
-    public XrSwapchain(ulong existingHandle) { Handle = existingHandle; }
+    public readonly ulong Handle = existingHandle;
     public static XrSwapchain Null => new(0);
     public static implicit operator XrSwapchain(ulong handle) => new(handle);
     public static bool operator ==(XrSwapchain left, XrSwapchain right) => left.Handle == right.Handle;
@@ -77,10 +72,9 @@ public partial struct XrSwapchain : IEquatable<XrSwapchain>
     public readonly override int GetHashCode() => Handle.GetHashCode();
 }
 
-public partial struct XrSpace : IEquatable<XrSpace>
+public partial struct XrSpace(ulong existingHandle) : IEquatable<XrSpace>
 {
-    public readonly ulong Handle;
-    public XrSpace(ulong existingHandle) { Handle = existingHandle; }
+    public readonly ulong Handle = existingHandle;
     public static XrSpace Null => new(0);
     public static implicit operator XrSpace(ulong handle) => new(handle);
     public static bool operator ==(XrSpace left, XrSpace right) => left.Handle == right.Handle;
@@ -92,10 +86,9 @@ public partial struct XrSpace : IEquatable<XrSpace>
     public readonly override int GetHashCode() => Handle.GetHashCode();
 }
 
-public partial struct XrDebugUtilsMessengerEXT : IEquatable<XrDebugUtilsMessengerEXT>
+public partial struct XrDebugUtilsMessengerEXT(ulong existingHandle) : IEquatable<XrDebugUtilsMessengerEXT>
 {
-    public readonly ulong Handle;
-    public XrDebugUtilsMessengerEXT(ulong existingHandle) { Handle = existingHandle; }
+    public readonly ulong Handle = existingHandle;
     public static XrDebugUtilsMessengerEXT Null => new(0);
     public static implicit operator XrDebugUtilsMessengerEXT(ulong handle) => new(handle);
     public static bool operator ==(XrDebugUtilsMessengerEXT left, XrDebugUtilsMessengerEXT right) => left.Handle == right.Handle;
@@ -107,10 +100,9 @@ public partial struct XrDebugUtilsMessengerEXT : IEquatable<XrDebugUtilsMessenge
     public readonly override int GetHashCode() => Handle.GetHashCode();
 }
 
-public partial struct XrSpatialAnchorMSFT : IEquatable<XrSpatialAnchorMSFT>
+public partial struct XrSpatialAnchorMSFT(ulong existingHandle) : IEquatable<XrSpatialAnchorMSFT>
 {
-    public readonly ulong Handle;
-    public XrSpatialAnchorMSFT(ulong existingHandle) { Handle = existingHandle; }
+    public readonly ulong Handle = existingHandle;
     public static XrSpatialAnchorMSFT Null => new(0);
     public static implicit operator XrSpatialAnchorMSFT(ulong handle) => new(handle);
     public static bool operator ==(XrSpatialAnchorMSFT left, XrSpatialAnchorMSFT right) => left.Handle == right.Handle;
@@ -122,10 +114,9 @@ public partial struct XrSpatialAnchorMSFT : IEquatable<XrSpatialAnchorMSFT>
     public readonly override int GetHashCode() => Handle.GetHashCode();
 }
 
-public partial struct XrHandTrackerEXT : IEquatable<XrHandTrackerEXT>
+public partial struct XrHandTrackerEXT(ulong existingHandle) : IEquatable<XrHandTrackerEXT>
 {
-    public readonly ulong Handle;
-    public XrHandTrackerEXT(ulong existingHandle) { Handle = existingHandle; }
+    public readonly ulong Handle = existingHandle;
     public static XrHandTrackerEXT Null => new(0);
     public static implicit operator XrHandTrackerEXT(ulong handle) => new(handle);
     public static bool operator ==(XrHandTrackerEXT left, XrHandTrackerEXT right) => left.Handle == right.Handle;
@@ -137,10 +128,9 @@ public partial struct XrHandTrackerEXT : IEquatable<XrHandTrackerEXT>
     public readonly override int GetHashCode() => Handle.GetHashCode();
 }
 
-public partial struct XrFoveationProfileFB : IEquatable<XrFoveationProfileFB>
+public partial struct XrFoveationProfileFB(ulong existingHandle) : IEquatable<XrFoveationProfileFB>
 {
-    public readonly ulong Handle;
-    public XrFoveationProfileFB(ulong existingHandle) { Handle = existingHandle; }
+    public readonly ulong Handle = existingHandle;
     public static XrFoveationProfileFB Null => new(0);
     public static implicit operator XrFoveationProfileFB(ulong handle) => new(handle);
     public static bool operator ==(XrFoveationProfileFB left, XrFoveationProfileFB right) => left.Handle == right.Handle;
@@ -152,10 +142,9 @@ public partial struct XrFoveationProfileFB : IEquatable<XrFoveationProfileFB>
     public readonly override int GetHashCode() => Handle.GetHashCode();
 }
 
-public partial struct XrTriangleMeshFB : IEquatable<XrTriangleMeshFB>
+public partial struct XrTriangleMeshFB(ulong existingHandle) : IEquatable<XrTriangleMeshFB>
 {
-    public readonly ulong Handle;
-    public XrTriangleMeshFB(ulong existingHandle) { Handle = existingHandle; }
+    public readonly ulong Handle = existingHandle;
     public static XrTriangleMeshFB Null => new(0);
     public static implicit operator XrTriangleMeshFB(ulong handle) => new(handle);
     public static bool operator ==(XrTriangleMeshFB left, XrTriangleMeshFB right) => left.Handle == right.Handle;
@@ -167,10 +156,9 @@ public partial struct XrTriangleMeshFB : IEquatable<XrTriangleMeshFB>
     public readonly override int GetHashCode() => Handle.GetHashCode();
 }
 
-public partial struct XrPassthroughFB : IEquatable<XrPassthroughFB>
+public partial struct XrPassthroughFB(ulong existingHandle) : IEquatable<XrPassthroughFB>
 {
-    public readonly ulong Handle;
-    public XrPassthroughFB(ulong existingHandle) { Handle = existingHandle; }
+    public readonly ulong Handle = existingHandle;
     public static XrPassthroughFB Null => new(0);
     public static implicit operator XrPassthroughFB(ulong handle) => new(handle);
     public static bool operator ==(XrPassthroughFB left, XrPassthroughFB right) => left.Handle == right.Handle;
@@ -182,10 +170,9 @@ public partial struct XrPassthroughFB : IEquatable<XrPassthroughFB>
     public readonly override int GetHashCode() => Handle.GetHashCode();
 }
 
-public partial struct XrPassthroughLayerFB : IEquatable<XrPassthroughLayerFB>
+public partial struct XrPassthroughLayerFB(ulong existingHandle) : IEquatable<XrPassthroughLayerFB>
 {
-    public readonly ulong Handle;
-    public XrPassthroughLayerFB(ulong existingHandle) { Handle = existingHandle; }
+    public readonly ulong Handle = existingHandle;
     public static XrPassthroughLayerFB Null => new(0);
     public static implicit operator XrPassthroughLayerFB(ulong handle) => new(handle);
     public static bool operator ==(XrPassthroughLayerFB left, XrPassthroughLayerFB right) => left.Handle == right.Handle;
@@ -197,10 +184,9 @@ public partial struct XrPassthroughLayerFB : IEquatable<XrPassthroughLayerFB>
     public readonly override int GetHashCode() => Handle.GetHashCode();
 }
 
-public partial struct XrGeometryInstanceFB : IEquatable<XrGeometryInstanceFB>
+public partial struct XrGeometryInstanceFB(ulong existingHandle) : IEquatable<XrGeometryInstanceFB>
 {
-    public readonly ulong Handle;
-    public XrGeometryInstanceFB(ulong existingHandle) { Handle = existingHandle; }
+    public readonly ulong Handle = existingHandle;
     public static XrGeometryInstanceFB Null => new(0);
     public static implicit operator XrGeometryInstanceFB(ulong handle) => new(handle);
     public static bool operator ==(XrGeometryInstanceFB left, XrGeometryInstanceFB right) => left.Handle == right.Handle;
@@ -212,10 +198,9 @@ public partial struct XrGeometryInstanceFB : IEquatable<XrGeometryInstanceFB>
     public readonly override int GetHashCode() => Handle.GetHashCode();
 }
 
-public partial struct XrFacialTrackerHTC : IEquatable<XrFacialTrackerHTC>
+public partial struct XrFacialTrackerHTC(ulong existingHandle) : IEquatable<XrFacialTrackerHTC>
 {
-    public readonly ulong Handle;
-    public XrFacialTrackerHTC(ulong existingHandle) { Handle = existingHandle; }
+    public readonly ulong Handle = existingHandle;
     public static XrFacialTrackerHTC Null => new(0);
     public static implicit operator XrFacialTrackerHTC(ulong handle) => new(handle);
     public static bool operator ==(XrFacialTrackerHTC left, XrFacialTrackerHTC right) => left.Handle == right.Handle;
@@ -227,10 +212,9 @@ public partial struct XrFacialTrackerHTC : IEquatable<XrFacialTrackerHTC>
     public readonly override int GetHashCode() => Handle.GetHashCode();
 }
 
-public partial struct XrPassthroughHTC : IEquatable<XrPassthroughHTC>
+public partial struct XrPassthroughHTC(ulong existingHandle) : IEquatable<XrPassthroughHTC>
 {
-    public readonly ulong Handle;
-    public XrPassthroughHTC(ulong existingHandle) { Handle = existingHandle; }
+    public readonly ulong Handle = existingHandle;
     public static XrPassthroughHTC Null => new(0);
     public static implicit operator XrPassthroughHTC(ulong handle) => new(handle);
     public static bool operator ==(XrPassthroughHTC left, XrPassthroughHTC right) => left.Handle == right.Handle;
@@ -242,10 +226,9 @@ public partial struct XrPassthroughHTC : IEquatable<XrPassthroughHTC>
     public readonly override int GetHashCode() => Handle.GetHashCode();
 }
 
-public partial struct XrFaceTrackerFB : IEquatable<XrFaceTrackerFB>
+public partial struct XrFaceTrackerFB(ulong existingHandle) : IEquatable<XrFaceTrackerFB>
 {
-    public readonly ulong Handle;
-    public XrFaceTrackerFB(ulong existingHandle) { Handle = existingHandle; }
+    public readonly ulong Handle = existingHandle;
     public static XrFaceTrackerFB Null => new(0);
     public static implicit operator XrFaceTrackerFB(ulong handle) => new(handle);
     public static bool operator ==(XrFaceTrackerFB left, XrFaceTrackerFB right) => left.Handle == right.Handle;
@@ -257,10 +240,9 @@ public partial struct XrFaceTrackerFB : IEquatable<XrFaceTrackerFB>
     public readonly override int GetHashCode() => Handle.GetHashCode();
 }
 
-public partial struct XrBodyTrackerFB : IEquatable<XrBodyTrackerFB>
+public partial struct XrBodyTrackerFB(ulong existingHandle) : IEquatable<XrBodyTrackerFB>
 {
-    public readonly ulong Handle;
-    public XrBodyTrackerFB(ulong existingHandle) { Handle = existingHandle; }
+    public readonly ulong Handle = existingHandle;
     public static XrBodyTrackerFB Null => new(0);
     public static implicit operator XrBodyTrackerFB(ulong handle) => new(handle);
     public static bool operator ==(XrBodyTrackerFB left, XrBodyTrackerFB right) => left.Handle == right.Handle;
@@ -272,10 +254,9 @@ public partial struct XrBodyTrackerFB : IEquatable<XrBodyTrackerFB>
     public readonly override int GetHashCode() => Handle.GetHashCode();
 }
 
-public partial struct XrEyeTrackerFB : IEquatable<XrEyeTrackerFB>
+public partial struct XrEyeTrackerFB(ulong existingHandle) : IEquatable<XrEyeTrackerFB>
 {
-    public readonly ulong Handle;
-    public XrEyeTrackerFB(ulong existingHandle) { Handle = existingHandle; }
+    public readonly ulong Handle = existingHandle;
     public static XrEyeTrackerFB Null => new(0);
     public static implicit operator XrEyeTrackerFB(ulong handle) => new(handle);
     public static bool operator ==(XrEyeTrackerFB left, XrEyeTrackerFB right) => left.Handle == right.Handle;
@@ -287,10 +268,9 @@ public partial struct XrEyeTrackerFB : IEquatable<XrEyeTrackerFB>
     public readonly override int GetHashCode() => Handle.GetHashCode();
 }
 
-public partial struct XrSpaceUserFB : IEquatable<XrSpaceUserFB>
+public partial struct XrSpaceUserFB(ulong existingHandle) : IEquatable<XrSpaceUserFB>
 {
-    public readonly ulong Handle;
-    public XrSpaceUserFB(ulong existingHandle) { Handle = existingHandle; }
+    public readonly ulong Handle = existingHandle;
     public static XrSpaceUserFB Null => new(0);
     public static implicit operator XrSpaceUserFB(ulong handle) => new(handle);
     public static bool operator ==(XrSpaceUserFB left, XrSpaceUserFB right) => left.Handle == right.Handle;
@@ -302,10 +282,9 @@ public partial struct XrSpaceUserFB : IEquatable<XrSpaceUserFB>
     public readonly override int GetHashCode() => Handle.GetHashCode();
 }
 
-public partial struct XrPassthroughColorLutMETA : IEquatable<XrPassthroughColorLutMETA>
+public partial struct XrPassthroughColorLutMETA(ulong existingHandle) : IEquatable<XrPassthroughColorLutMETA>
 {
-    public readonly ulong Handle;
-    public XrPassthroughColorLutMETA(ulong existingHandle) { Handle = existingHandle; }
+    public readonly ulong Handle = existingHandle;
     public static XrPassthroughColorLutMETA Null => new(0);
     public static implicit operator XrPassthroughColorLutMETA(ulong handle) => new(handle);
     public static bool operator ==(XrPassthroughColorLutMETA left, XrPassthroughColorLutMETA right) => left.Handle == right.Handle;
@@ -317,10 +296,9 @@ public partial struct XrPassthroughColorLutMETA : IEquatable<XrPassthroughColorL
     public readonly override int GetHashCode() => Handle.GetHashCode();
 }
 
-public partial struct XrPlaneDetectorEXT : IEquatable<XrPlaneDetectorEXT>
+public partial struct XrPlaneDetectorEXT(ulong existingHandle) : IEquatable<XrPlaneDetectorEXT>
 {
-    public readonly ulong Handle;
-    public XrPlaneDetectorEXT(ulong existingHandle) { Handle = existingHandle; }
+    public readonly ulong Handle = existingHandle;
     public static XrPlaneDetectorEXT Null => new(0);
     public static implicit operator XrPlaneDetectorEXT(ulong handle) => new(handle);
     public static bool operator ==(XrPlaneDetectorEXT left, XrPlaneDetectorEXT right) => left.Handle == right.Handle;
@@ -332,10 +310,9 @@ public partial struct XrPlaneDetectorEXT : IEquatable<XrPlaneDetectorEXT>
     public readonly override int GetHashCode() => Handle.GetHashCode();
 }
 
-public partial struct XrVirtualKeyboardMETA : IEquatable<XrVirtualKeyboardMETA>
+public partial struct XrVirtualKeyboardMETA(ulong existingHandle) : IEquatable<XrVirtualKeyboardMETA>
 {
-    public readonly ulong Handle;
-    public XrVirtualKeyboardMETA(ulong existingHandle) { Handle = existingHandle; }
+    public readonly ulong Handle = existingHandle;
     public static XrVirtualKeyboardMETA Null => new(0);
     public static implicit operator XrVirtualKeyboardMETA(ulong handle) => new(handle);
     public static bool operator ==(XrVirtualKeyboardMETA left, XrVirtualKeyboardMETA right) => left.Handle == right.Handle;
@@ -347,10 +324,9 @@ public partial struct XrVirtualKeyboardMETA : IEquatable<XrVirtualKeyboardMETA>
     public readonly override int GetHashCode() => Handle.GetHashCode();
 }
 
-public partial struct XrSpatialGraphNodeBindingMSFT : IEquatable<XrSpatialGraphNodeBindingMSFT>
+public partial struct XrSpatialGraphNodeBindingMSFT(ulong existingHandle) : IEquatable<XrSpatialGraphNodeBindingMSFT>
 {
-    public readonly ulong Handle;
-    public XrSpatialGraphNodeBindingMSFT(ulong existingHandle) { Handle = existingHandle; }
+    public readonly ulong Handle = existingHandle;
     public static XrSpatialGraphNodeBindingMSFT Null => new(0);
     public static implicit operator XrSpatialGraphNodeBindingMSFT(ulong handle) => new(handle);
     public static bool operator ==(XrSpatialGraphNodeBindingMSFT left, XrSpatialGraphNodeBindingMSFT right) => left.Handle == right.Handle;
@@ -362,10 +338,9 @@ public partial struct XrSpatialGraphNodeBindingMSFT : IEquatable<XrSpatialGraphN
     public readonly override int GetHashCode() => Handle.GetHashCode();
 }
 
-public partial struct XrSceneObserverMSFT : IEquatable<XrSceneObserverMSFT>
+public partial struct XrSceneObserverMSFT(ulong existingHandle) : IEquatable<XrSceneObserverMSFT>
 {
-    public readonly ulong Handle;
-    public XrSceneObserverMSFT(ulong existingHandle) { Handle = existingHandle; }
+    public readonly ulong Handle = existingHandle;
     public static XrSceneObserverMSFT Null => new(0);
     public static implicit operator XrSceneObserverMSFT(ulong handle) => new(handle);
     public static bool operator ==(XrSceneObserverMSFT left, XrSceneObserverMSFT right) => left.Handle == right.Handle;
@@ -377,10 +352,9 @@ public partial struct XrSceneObserverMSFT : IEquatable<XrSceneObserverMSFT>
     public readonly override int GetHashCode() => Handle.GetHashCode();
 }
 
-public partial struct XrSceneMSFT : IEquatable<XrSceneMSFT>
+public partial struct XrSceneMSFT(ulong existingHandle) : IEquatable<XrSceneMSFT>
 {
-    public readonly ulong Handle;
-    public XrSceneMSFT(ulong existingHandle) { Handle = existingHandle; }
+    public readonly ulong Handle = existingHandle;
     public static XrSceneMSFT Null => new(0);
     public static implicit operator XrSceneMSFT(ulong handle) => new(handle);
     public static bool operator ==(XrSceneMSFT left, XrSceneMSFT right) => left.Handle == right.Handle;
@@ -392,10 +366,9 @@ public partial struct XrSceneMSFT : IEquatable<XrSceneMSFT>
     public readonly override int GetHashCode() => Handle.GetHashCode();
 }
 
-public partial struct XrSpatialAnchorStoreConnectionMSFT : IEquatable<XrSpatialAnchorStoreConnectionMSFT>
+public partial struct XrSpatialAnchorStoreConnectionMSFT(ulong existingHandle) : IEquatable<XrSpatialAnchorStoreConnectionMSFT>
 {
-    public readonly ulong Handle;
-    public XrSpatialAnchorStoreConnectionMSFT(ulong existingHandle) { Handle = existingHandle; }
+    public readonly ulong Handle = existingHandle;
     public static XrSpatialAnchorStoreConnectionMSFT Null => new(0);
     public static implicit operator XrSpatialAnchorStoreConnectionMSFT(ulong handle) => new(handle);
     public static bool operator ==(XrSpatialAnchorStoreConnectionMSFT left, XrSpatialAnchorStoreConnectionMSFT right) => left.Handle == right.Handle;

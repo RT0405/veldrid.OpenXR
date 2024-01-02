@@ -201,8 +201,8 @@ public unsafe partial struct XrGraphicsBindingOpenGLWin32KHR
 {
     public XrStructureType type;
     public void* next;
-    public void* hDC;
-    public void* hGLRC;
+    public nint hDC;
+    public nint hGLRC;
     /// <returns>a new <see cref="XrGraphicsBindingOpenGLWin32KHR"> with it's type member set to <see cref="XrStructureType.XR_TYPE_GRAPHICS_BINDING_OPENGL_WIN32_KHR"/></returns>
     public static XrGraphicsBindingOpenGLWin32KHR New() =>
         new() { type = XrStructureType.XR_TYPE_GRAPHICS_BINDING_OPENGL_WIN32_KHR };
@@ -212,11 +212,11 @@ public unsafe partial struct XrGraphicsBindingOpenGLXlibKHR
 {
     public XrStructureType type;
     public void* next;
-    public void* xDisplay;
+    public nint* xDisplay;
     public uint visualid;
-    public void* glxFBConfig;
-    public void* glxDrawable;
-    public void* glxContext;
+    public nint glxFBConfig;
+    public nint glxDrawable;
+    public nint glxContext;
     /// <returns>a new <see cref="XrGraphicsBindingOpenGLXlibKHR"> with it's type member set to <see cref="XrStructureType.XR_TYPE_GRAPHICS_BINDING_OPENGL_XLIB_KHR"/></returns>
     public static XrGraphicsBindingOpenGLXlibKHR New() =>
         new() { type = XrStructureType.XR_TYPE_GRAPHICS_BINDING_OPENGL_XLIB_KHR };
@@ -226,12 +226,12 @@ public unsafe partial struct XrGraphicsBindingOpenGLXcbKHR
 {
     public XrStructureType type;
     public void* next;
-    public void* connection;
+    public nint* connection;
     public uint screenNumber;
-    public void* fbconfigid;
-    public void* visualid;
-    public void* glxDrawable;
-    public void* glxContext;
+    public nint fbconfigid;
+    public nint visualid;
+    public nint glxDrawable;
+    public nint glxContext;
     /// <returns>a new <see cref="XrGraphicsBindingOpenGLXcbKHR"> with it's type member set to <see cref="XrStructureType.XR_TYPE_GRAPHICS_BINDING_OPENGL_XCB_KHR"/></returns>
     public static XrGraphicsBindingOpenGLXcbKHR New() =>
         new() { type = XrStructureType.XR_TYPE_GRAPHICS_BINDING_OPENGL_XCB_KHR };
@@ -241,7 +241,7 @@ public unsafe partial struct XrGraphicsBindingOpenGLWaylandKHR
 {
     public XrStructureType type;
     public void* next;
-    public void* display;
+    public nint* display;
     /// <returns>a new <see cref="XrGraphicsBindingOpenGLWaylandKHR"> with it's type member set to <see cref="XrStructureType.XR_TYPE_GRAPHICS_BINDING_OPENGL_WAYLAND_KHR"/></returns>
     public static XrGraphicsBindingOpenGLWaylandKHR New() =>
         new() { type = XrStructureType.XR_TYPE_GRAPHICS_BINDING_OPENGL_WAYLAND_KHR };
@@ -251,7 +251,7 @@ public unsafe partial struct XrGraphicsBindingD3D11KHR
 {
     public XrStructureType type;
     public void* next;
-    public void* device;
+    public nint* device;
     /// <returns>a new <see cref="XrGraphicsBindingD3D11KHR"> with it's type member set to <see cref="XrStructureType.XR_TYPE_GRAPHICS_BINDING_D3D11_KHR"/></returns>
     public static XrGraphicsBindingD3D11KHR New() =>
         new() { type = XrStructureType.XR_TYPE_GRAPHICS_BINDING_D3D11_KHR };
@@ -261,8 +261,8 @@ public unsafe partial struct XrGraphicsBindingD3D12KHR
 {
     public XrStructureType type;
     public void* next;
-    public void* device;
-    public void* queue;
+    public nint* device;
+    public nint* queue;
     /// <returns>a new <see cref="XrGraphicsBindingD3D12KHR"> with it's type member set to <see cref="XrStructureType.XR_TYPE_GRAPHICS_BINDING_D3D12_KHR"/></returns>
     public static XrGraphicsBindingD3D12KHR New() =>
         new() { type = XrStructureType.XR_TYPE_GRAPHICS_BINDING_D3D12_KHR };
@@ -272,9 +272,9 @@ public unsafe partial struct XrGraphicsBindingOpenGLESAndroidKHR
 {
     public XrStructureType type;
     public void* next;
-    public void* display;
-    public void* config;
-    public void* context;
+    public nint display;
+    public nint config;
+    public nint context;
     /// <returns>a new <see cref="XrGraphicsBindingOpenGLESAndroidKHR"> with it's type member set to <see cref="XrStructureType.XR_TYPE_GRAPHICS_BINDING_OPENGL_ES_ANDROID_KHR"/></returns>
     public static XrGraphicsBindingOpenGLESAndroidKHR New() =>
         new() { type = XrStructureType.XR_TYPE_GRAPHICS_BINDING_OPENGL_ES_ANDROID_KHR };
@@ -284,9 +284,9 @@ public unsafe partial struct XrGraphicsBindingVulkanKHR
 {
     public XrStructureType type;
     public void* next;
-    public void* instance;
-    public void* physicalDevice;
-    public void* device;
+    public nint instance;
+    public nint physicalDevice;
+    public nint device;
     public uint queueFamilyIndex;
     public uint queueIndex;
     /// <returns>a new <see cref="XrGraphicsBindingVulkanKHR"> with it's type member set to <see cref="XrStructureType.XR_TYPE_GRAPHICS_BINDING_VULKAN_KHR"/></returns>
@@ -363,7 +363,7 @@ public unsafe partial struct XrSwapchainImageVulkanKHR
 {
     public XrStructureType type;
     public void* next;
-    public void* image;
+    public nint image;
     /// <returns>a new <see cref="XrSwapchainImageVulkanKHR"> with it's type member set to <see cref="XrStructureType.XR_TYPE_SWAPCHAIN_IMAGE_VULKAN_KHR"/></returns>
     public static XrSwapchainImageVulkanKHR New() =>
         new() { type = XrStructureType.XR_TYPE_SWAPCHAIN_IMAGE_VULKAN_KHR };
@@ -373,7 +373,7 @@ public unsafe partial struct XrSwapchainImageD3D11KHR
 {
     public XrStructureType type;
     public void* next;
-    public void* texture;
+    public nint* texture;
     /// <returns>a new <see cref="XrSwapchainImageD3D11KHR"> with it's type member set to <see cref="XrStructureType.XR_TYPE_SWAPCHAIN_IMAGE_D3D11_KHR"/></returns>
     public static XrSwapchainImageD3D11KHR New() =>
         new() { type = XrStructureType.XR_TYPE_SWAPCHAIN_IMAGE_D3D11_KHR };
@@ -383,7 +383,7 @@ public unsafe partial struct XrSwapchainImageD3D12KHR
 {
     public XrStructureType type;
     public void* next;
-    public void* texture;
+    public nint* texture;
     /// <returns>a new <see cref="XrSwapchainImageD3D12KHR"> with it's type member set to <see cref="XrStructureType.XR_TYPE_SWAPCHAIN_IMAGE_D3D12_KHR"/></returns>
     public static XrSwapchainImageD3D12KHR New() =>
         new() { type = XrStructureType.XR_TYPE_SWAPCHAIN_IMAGE_D3D12_KHR };
@@ -4995,7 +4995,7 @@ public unsafe partial struct XrVulkanSwapchainFormatListCreateInfoKHR
     public XrStructureType type;
     public void* next;
     public uint viewFormatCount;
-    public void* viewFormats;
+    public nint* viewFormats;
     /// <returns>a new <see cref="XrVulkanSwapchainFormatListCreateInfoKHR"> with it's type member set to <see cref="XrStructureType.XR_TYPE_VULKAN_SWAPCHAIN_FORMAT_LIST_CREATE_INFO_KHR"/></returns>
     public static XrVulkanSwapchainFormatListCreateInfoKHR New() =>
         new() { type = XrStructureType.XR_TYPE_VULKAN_SWAPCHAIN_FORMAT_LIST_CREATE_INFO_KHR };
@@ -5045,7 +5045,7 @@ public unsafe partial struct XrDebugUtilsMessengerCreateInfoEXT
     public void* next;
     public ulong messageSeverities;
     public ulong messageTypes;
-    public void* userCallback;
+    public delegate* unmanaged [Stdcall]<XrDebugUtilsMessageSeverityFlagsEXT, XrDebugUtilsMessageTypeFlagsEXT, XrDebugUtilsMessengerCallbackDataEXT*, void*, XrBool32> userCallback;
     public void* userData;
     /// <returns>a new <see cref="XrDebugUtilsMessengerCreateInfoEXT"> with it's type member set to <see cref="XrStructureType.XR_TYPE_DEBUG_UTILS_MESSENGER_CREATE_INFO_EXT"/></returns>
     public static XrDebugUtilsMessengerCreateInfoEXT New() =>
@@ -5104,7 +5104,7 @@ public unsafe partial struct XrGraphicsRequirementsD3D11KHR
 {
     public XrStructureType type;
     public void* next;
-    public void* adapterLuid;
+    public nint adapterLuid;
     public uint minFeatureLevel;
     /// <returns>a new <see cref="XrGraphicsRequirementsD3D11KHR"> with it's type member set to <see cref="XrStructureType.XR_TYPE_GRAPHICS_REQUIREMENTS_D3D11_KHR"/></returns>
     public static XrGraphicsRequirementsD3D11KHR New() =>
@@ -5115,7 +5115,7 @@ public unsafe partial struct XrGraphicsRequirementsD3D12KHR
 {
     public XrStructureType type;
     public void* next;
-    public void* adapterLuid;
+    public nint adapterLuid;
     public uint minFeatureLevel;
     /// <returns>a new <see cref="XrGraphicsRequirementsD3D12KHR"> with it's type member set to <see cref="XrStructureType.XR_TYPE_GRAPHICS_REQUIREMENTS_D3D12_KHR"/></returns>
     public static XrGraphicsRequirementsD3D12KHR New() =>
@@ -5129,8 +5129,8 @@ public unsafe partial struct XrVulkanInstanceCreateInfoKHR
     public ulong systemId;
     public ulong createFlags;
     public void* pfnGetInstanceProcAddr;
-    public void* vulkanCreateInfo;
-    public void* vulkanAllocator;
+    public nint* vulkanCreateInfo;
+    public nint* vulkanAllocator;
     /// <returns>a new <see cref="XrVulkanInstanceCreateInfoKHR"> with it's type member set to <see cref="XrStructureType.XR_TYPE_VULKAN_INSTANCE_CREATE_INFO_KHR"/></returns>
     public static XrVulkanInstanceCreateInfoKHR New() =>
         new() { type = XrStructureType.XR_TYPE_VULKAN_INSTANCE_CREATE_INFO_KHR };
@@ -5143,9 +5143,9 @@ public unsafe partial struct XrVulkanDeviceCreateInfoKHR
     public ulong systemId;
     public ulong createFlags;
     public void* pfnGetInstanceProcAddr;
-    public void* vulkanPhysicalDevice;
-    public void* vulkanCreateInfo;
-    public void* vulkanAllocator;
+    public nint vulkanPhysicalDevice;
+    public nint* vulkanCreateInfo;
+    public nint* vulkanAllocator;
     /// <returns>a new <see cref="XrVulkanDeviceCreateInfoKHR"> with it's type member set to <see cref="XrStructureType.XR_TYPE_VULKAN_DEVICE_CREATE_INFO_KHR"/></returns>
     public static XrVulkanDeviceCreateInfoKHR New() =>
         new() { type = XrStructureType.XR_TYPE_VULKAN_DEVICE_CREATE_INFO_KHR };
@@ -5156,7 +5156,7 @@ public unsafe partial struct XrVulkanGraphicsDeviceGetInfoKHR
     public XrStructureType type;
     public void* next;
     public ulong systemId;
-    public void* vulkanInstance;
+    public nint vulkanInstance;
     /// <returns>a new <see cref="XrVulkanGraphicsDeviceGetInfoKHR"> with it's type member set to <see cref="XrStructureType.XR_TYPE_VULKAN_GRAPHICS_DEVICE_GET_INFO_KHR"/></returns>
     public static XrVulkanGraphicsDeviceGetInfoKHR New() =>
         new() { type = XrStructureType.XR_TYPE_VULKAN_GRAPHICS_DEVICE_GET_INFO_KHR };
@@ -5351,9 +5351,9 @@ public unsafe partial struct XrGraphicsBindingEGLMNDX
     public XrStructureType type;
     public void* next;
     public void* getProcAddress;
-    public void* display;
-    public void* config;
-    public void* context;
+    public nint display;
+    public nint config;
+    public nint context;
     /// <returns>a new <see cref="XrGraphicsBindingEGLMNDX"> with it's type member set to <see cref="XrStructureType.XR_TYPE_GRAPHICS_BINDING_EGL_MNDX"/></returns>
     public static XrGraphicsBindingEGLMNDX New() =>
         new() { type = XrStructureType.XR_TYPE_GRAPHICS_BINDING_EGL_MNDX };
@@ -5824,8 +5824,8 @@ public unsafe partial struct XrHolographicWindowAttachmentMSFT
 {
     public XrStructureType type;
     public void* next;
-    public void* holographicSpace;
-    public void* coreWindow;
+    public nint* holographicSpace;
+    public nint* coreWindow;
     /// <returns>a new <see cref="XrHolographicWindowAttachmentMSFT"> with it's type member set to <see cref="XrStructureType.XR_TYPE_HOLOGRAPHIC_WINDOW_ATTACHMENT_MSFT"/></returns>
     public static XrHolographicWindowAttachmentMSFT New() =>
         new() { type = XrStructureType.XR_TYPE_HOLOGRAPHIC_WINDOW_ATTACHMENT_MSFT };
@@ -5862,14 +5862,14 @@ public unsafe partial struct XrSwapchainStateSamplerOpenGLESFB
 {
     public XrStructureType type;
     public void* next;
-    public void* minFilter;
-    public void* magFilter;
-    public void* wrapModeS;
-    public void* wrapModeT;
-    public void* swizzleRed;
-    public void* swizzleGreen;
-    public void* swizzleBlue;
-    public void* swizzleAlpha;
+    public nint minFilter;
+    public nint magFilter;
+    public nint wrapModeS;
+    public nint wrapModeT;
+    public nint swizzleRed;
+    public nint swizzleGreen;
+    public nint swizzleBlue;
+    public nint swizzleAlpha;
     public float maxAnisotropy;
     public XrColor4f borderColor;
     /// <returns>a new <see cref="XrSwapchainStateSamplerOpenGLESFB"> with it's type member set to <see cref="XrStructureType.XR_TYPE_SWAPCHAIN_STATE_SAMPLER_OPENGL_ES_FB"/></returns>
@@ -5881,15 +5881,15 @@ public unsafe partial struct XrSwapchainStateSamplerVulkanFB
 {
     public XrStructureType type;
     public void* next;
-    public void* minFilter;
-    public void* magFilter;
-    public void* mipmapMode;
-    public void* wrapModeS;
-    public void* wrapModeT;
-    public void* swizzleRed;
-    public void* swizzleGreen;
-    public void* swizzleBlue;
-    public void* swizzleAlpha;
+    public nint minFilter;
+    public nint magFilter;
+    public nint mipmapMode;
+    public nint wrapModeS;
+    public nint wrapModeT;
+    public nint swizzleRed;
+    public nint swizzleGreen;
+    public nint swizzleBlue;
+    public nint swizzleAlpha;
     public float maxAnisotropy;
     public XrColor4f borderColor;
     /// <returns>a new <see cref="XrSwapchainStateSamplerVulkanFB"> with it's type member set to <see cref="XrStructureType.XR_TYPE_SWAPCHAIN_STATE_SAMPLER_VULKAN_FB"/></returns>
@@ -6443,7 +6443,7 @@ public unsafe partial struct XrSwapchainImageFoveationVulkanFB
 {
     public XrStructureType type;
     public void* next;
-    public void* image;
+    public nint image;
     public uint width;
     public uint height;
     /// <returns>a new <see cref="XrSwapchainImageFoveationVulkanFB"> with it's type member set to <see cref="XrStructureType.XR_TYPE_SWAPCHAIN_IMAGE_FOVEATION_VULKAN_FB"/></returns>
@@ -7915,7 +7915,7 @@ public unsafe partial struct XrCoordinateSpaceCreateInfoML
 {
     public XrStructureType type;
     public void* next;
-    public void* cfuid;
+    public nint cfuid;
     public XrPosef poseInCoordinateSpace;
     /// <returns>a new <see cref="XrCoordinateSpaceCreateInfoML"> with it's type member set to <see cref="XrStructureType.XR_TYPE_COORDINATE_SPACE_CREATE_INFO_ML"/></returns>
     public static XrCoordinateSpaceCreateInfoML New() =>

@@ -157,7 +157,7 @@ namespace Veldrid.OpenXR
         }
         public static PixelFormat NativeToVeldridFormat(VkFormat vkFormat)
         {
-            switch(vkFormat)
+            switch (vkFormat)
             {
                 case VkFormat.R8Unorm:
                     return PixelFormat.R8_UNorm;

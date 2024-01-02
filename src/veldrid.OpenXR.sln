@@ -22,7 +22,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "KhronosRegistry", "KhronosRegistry", "{CFD93C77-0632-4211-81D9-F9AC90358FAB}"
 	ProjectSection(SolutionItems) = preProject
 		veldrid.OpenXR.Native\openxr_loader.dll = veldrid.OpenXR.Native\openxr_loader.dll
-		SourceGen\KhronosRegistry\xr.xml = SourceGen\KhronosRegistry\xr.xml
+		KhronosRegistry\xr.xml = KhronosRegistry\xr.xml
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Example", "Example\Example.csproj", "{2D02C097-57EE-4103-8C26-7261BAE7553B}"

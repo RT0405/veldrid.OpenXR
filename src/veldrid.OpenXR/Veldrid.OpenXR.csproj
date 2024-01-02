@@ -35,6 +35,9 @@
         <HintPath>libs\Veldrid.dll</HintPath>
       </Reference>
     </ItemGroup>
+    <ItemGroup>
+      <Folder Include="Structs\" />
+    </ItemGroup>
 	<PropertyGroup>
 		<InternalsAssemblyUseEmptyMethodBodies>false</InternalsAssemblyUseEmptyMethodBodies>
 		<PublicizeAssembly>false</PublicizeAssembly>

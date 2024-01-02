@@ -18,7 +18,7 @@ public unsafe partial class OpenXRNativeInstance
     /// <br/> ⠀⠀<see cref="XrResult.XR_ERROR_OUT_OF_MEMORY"/>
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public XrResult xrGetInstanceProcAddr(XrInstance instance, byte* name, void* function)
+    public XrResult xrGetInstanceProcAddr(XrInstance instance, byte* name, void** function)
         => OpenXRNative.xrGetInstanceProcAddr(instance, name, function);
 
     /// <returns>
@@ -903,9 +903,6 @@ public unsafe partial class OpenXRNativeInstance
     public XrResult xrStopHapticFeedback(XrSession session, XrHapticActionInfo* hapticActionInfo)
         => OpenXRNative.xrStopHapticFeedback(session, hapticActionInfo);
 
-        [UnmanagedFunctionPointer(OpenXRNative.CallConv)]
-        private delegate XrResult xrSetAndroidApplicationThreadKHRDelegate(XrSession session, XrAndroidThreadTypeKHR threadType, uint threadId);
-        private xrSetAndroidApplicationThreadKHRDelegate xrSetAndroidApplicationThreadKHR_ptr;
     /// <summary> Requires XR extension "XR_KHR_android_thread_settings" </summary>
     /// <returns>
     ///       Success Codes:
@@ -923,11 +920,9 @@ public unsafe partial class OpenXRNativeInstance
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public XrResult xrSetAndroidApplicationThreadKHR(XrSession session, XrAndroidThreadTypeKHR threadType, uint threadId)
-        => xrSetAndroidApplicationThreadKHR_ptr(session, threadType, threadId);
+        => xrSetAndroidApplicationThreadKHR_funcPtr(session, threadType, threadId);
+    private delegate* unmanaged<XrSession, XrAndroidThreadTypeKHR, uint, XrResult> xrSetAndroidApplicationThreadKHR_funcPtr;
 
-        [UnmanagedFunctionPointer(OpenXRNative.CallConv)]
-        private delegate XrResult xrCreateSwapchainAndroidSurfaceKHRDelegate(XrSession session, XrSwapchainCreateInfo* info, XrSwapchain* swapchain, void* surface);
-        private xrCreateSwapchainAndroidSurfaceKHRDelegate xrCreateSwapchainAndroidSurfaceKHR_ptr;
     /// <summary> Requires XR extension "XR_KHR_android_surface_swapchain" </summary>
     /// <returns>
     ///       Success Codes:
@@ -944,12 +939,10 @@ public unsafe partial class OpenXRNativeInstance
     /// <br/> ⠀⠀<see cref="XrResult.XR_ERROR_LIMIT_REACHED"/>
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public XrResult xrCreateSwapchainAndroidSurfaceKHR(XrSession session, XrSwapchainCreateInfo* info, XrSwapchain* swapchain, void* surface)
-        => xrCreateSwapchainAndroidSurfaceKHR_ptr(session, info, swapchain, surface);
+    public XrResult xrCreateSwapchainAndroidSurfaceKHR(XrSession session, XrSwapchainCreateInfo* info, XrSwapchain* swapchain, nint* surface)
+        => xrCreateSwapchainAndroidSurfaceKHR_funcPtr(session, info, swapchain, surface);
+    private delegate* unmanaged<XrSession, XrSwapchainCreateInfo*, XrSwapchain*, nint*, XrResult> xrCreateSwapchainAndroidSurfaceKHR_funcPtr;
 
-        [UnmanagedFunctionPointer(OpenXRNative.CallConv)]
-        private delegate XrResult xrPerfSettingsSetPerformanceLevelEXTDelegate(XrSession session, XrPerfSettingsDomainEXT domain, XrPerfSettingsLevelEXT level);
-        private xrPerfSettingsSetPerformanceLevelEXTDelegate xrPerfSettingsSetPerformanceLevelEXT_ptr;
     /// <summary> Requires XR extension "XR_EXT_performance_settings" </summary>
     /// <returns>
     ///       Success Codes:
@@ -965,11 +958,9 @@ public unsafe partial class OpenXRNativeInstance
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public XrResult xrPerfSettingsSetPerformanceLevelEXT(XrSession session, XrPerfSettingsDomainEXT domain, XrPerfSettingsLevelEXT level)
-        => xrPerfSettingsSetPerformanceLevelEXT_ptr(session, domain, level);
+        => xrPerfSettingsSetPerformanceLevelEXT_funcPtr(session, domain, level);
+    private delegate* unmanaged<XrSession, XrPerfSettingsDomainEXT, XrPerfSettingsLevelEXT, XrResult> xrPerfSettingsSetPerformanceLevelEXT_funcPtr;
 
-        [UnmanagedFunctionPointer(OpenXRNative.CallConv)]
-        private delegate XrResult xrThermalGetTemperatureTrendEXTDelegate(XrSession session, XrPerfSettingsDomainEXT domain, XrPerfSettingsNotificationLevelEXT* notificationLevel, float* tempHeadroom, float* tempSlope);
-        private xrThermalGetTemperatureTrendEXTDelegate xrThermalGetTemperatureTrendEXT_ptr;
     /// <summary> Requires XR extension "XR_EXT_thermal_query" </summary>
     /// <returns>
     ///       Success Codes:
@@ -985,11 +976,9 @@ public unsafe partial class OpenXRNativeInstance
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public XrResult xrThermalGetTemperatureTrendEXT(XrSession session, XrPerfSettingsDomainEXT domain, XrPerfSettingsNotificationLevelEXT* notificationLevel, float* tempHeadroom, float* tempSlope)
-        => xrThermalGetTemperatureTrendEXT_ptr(session, domain, notificationLevel, tempHeadroom, tempSlope);
+        => xrThermalGetTemperatureTrendEXT_funcPtr(session, domain, notificationLevel, tempHeadroom, tempSlope);
+    private delegate* unmanaged<XrSession, XrPerfSettingsDomainEXT, XrPerfSettingsNotificationLevelEXT*, float*, float*, XrResult> xrThermalGetTemperatureTrendEXT_funcPtr;
 
-        [UnmanagedFunctionPointer(OpenXRNative.CallConv)]
-        private delegate XrResult xrSetDebugUtilsObjectNameEXTDelegate(XrInstance instance, XrDebugUtilsObjectNameInfoEXT* nameInfo);
-        private xrSetDebugUtilsObjectNameEXTDelegate xrSetDebugUtilsObjectNameEXT_ptr;
     /// <summary> Requires XR extension "XR_EXT_debug_utils" </summary>
     /// <returns>
     ///       Success Codes:
@@ -1004,11 +993,9 @@ public unsafe partial class OpenXRNativeInstance
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public XrResult xrSetDebugUtilsObjectNameEXT(XrInstance instance, XrDebugUtilsObjectNameInfoEXT* nameInfo)
-        => xrSetDebugUtilsObjectNameEXT_ptr(instance, nameInfo);
+        => xrSetDebugUtilsObjectNameEXT_funcPtr(instance, nameInfo);
+    private delegate* unmanaged<XrInstance, XrDebugUtilsObjectNameInfoEXT*, XrResult> xrSetDebugUtilsObjectNameEXT_funcPtr;
 
-        [UnmanagedFunctionPointer(OpenXRNative.CallConv)]
-        private delegate XrResult xrCreateDebugUtilsMessengerEXTDelegate(XrInstance instance, XrDebugUtilsMessengerCreateInfoEXT* createInfo, XrDebugUtilsMessengerEXT* messenger);
-        private xrCreateDebugUtilsMessengerEXTDelegate xrCreateDebugUtilsMessengerEXT_ptr;
     /// <summary> Requires XR extension "XR_EXT_debug_utils" </summary>
     /// <returns>
     ///       Success Codes:
@@ -1024,11 +1011,9 @@ public unsafe partial class OpenXRNativeInstance
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public XrResult xrCreateDebugUtilsMessengerEXT(XrInstance instance, XrDebugUtilsMessengerCreateInfoEXT* createInfo, XrDebugUtilsMessengerEXT* messenger)
-        => xrCreateDebugUtilsMessengerEXT_ptr(instance, createInfo, messenger);
+        => xrCreateDebugUtilsMessengerEXT_funcPtr(instance, createInfo, messenger);
+    private delegate* unmanaged<XrInstance, XrDebugUtilsMessengerCreateInfoEXT*, XrDebugUtilsMessengerEXT*, XrResult> xrCreateDebugUtilsMessengerEXT_funcPtr;
 
-        [UnmanagedFunctionPointer(OpenXRNative.CallConv)]
-        private delegate XrResult xrDestroyDebugUtilsMessengerEXTDelegate(XrDebugUtilsMessengerEXT messenger);
-        private xrDestroyDebugUtilsMessengerEXTDelegate xrDestroyDebugUtilsMessengerEXT_ptr;
     /// <summary> Requires XR extension "XR_EXT_debug_utils" </summary>
     /// <returns>
     ///       Success Codes:
@@ -1039,11 +1024,9 @@ public unsafe partial class OpenXRNativeInstance
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public XrResult xrDestroyDebugUtilsMessengerEXT(XrDebugUtilsMessengerEXT messenger)
-        => xrDestroyDebugUtilsMessengerEXT_ptr(messenger);
+        => xrDestroyDebugUtilsMessengerEXT_funcPtr(messenger);
+    private delegate* unmanaged<XrDebugUtilsMessengerEXT, XrResult> xrDestroyDebugUtilsMessengerEXT_funcPtr;
 
-        [UnmanagedFunctionPointer(OpenXRNative.CallConv)]
-        private delegate XrResult xrSubmitDebugUtilsMessageEXTDelegate(XrInstance instance, ulong messageSeverity, ulong messageTypes, XrDebugUtilsMessengerCallbackDataEXT* callbackData);
-        private xrSubmitDebugUtilsMessageEXTDelegate xrSubmitDebugUtilsMessageEXT_ptr;
     /// <summary> Requires XR extension "XR_EXT_debug_utils" </summary>
     /// <returns>
     ///       Success Codes:
@@ -1057,11 +1040,9 @@ public unsafe partial class OpenXRNativeInstance
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public XrResult xrSubmitDebugUtilsMessageEXT(XrInstance instance, ulong messageSeverity, ulong messageTypes, XrDebugUtilsMessengerCallbackDataEXT* callbackData)
-        => xrSubmitDebugUtilsMessageEXT_ptr(instance, messageSeverity, messageTypes, callbackData);
+        => xrSubmitDebugUtilsMessageEXT_funcPtr(instance, messageSeverity, messageTypes, callbackData);
+    private delegate* unmanaged<XrInstance, ulong, ulong, XrDebugUtilsMessengerCallbackDataEXT*, XrResult> xrSubmitDebugUtilsMessageEXT_funcPtr;
 
-        [UnmanagedFunctionPointer(OpenXRNative.CallConv)]
-        private delegate XrResult xrSessionBeginDebugUtilsLabelRegionEXTDelegate(XrSession session, XrDebugUtilsLabelEXT* labelInfo);
-        private xrSessionBeginDebugUtilsLabelRegionEXTDelegate xrSessionBeginDebugUtilsLabelRegionEXT_ptr;
     /// <summary> Requires XR extension "XR_EXT_debug_utils" </summary>
     /// <returns>
     ///       Success Codes:
@@ -1077,11 +1058,9 @@ public unsafe partial class OpenXRNativeInstance
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public XrResult xrSessionBeginDebugUtilsLabelRegionEXT(XrSession session, XrDebugUtilsLabelEXT* labelInfo)
-        => xrSessionBeginDebugUtilsLabelRegionEXT_ptr(session, labelInfo);
+        => xrSessionBeginDebugUtilsLabelRegionEXT_funcPtr(session, labelInfo);
+    private delegate* unmanaged<XrSession, XrDebugUtilsLabelEXT*, XrResult> xrSessionBeginDebugUtilsLabelRegionEXT_funcPtr;
 
-        [UnmanagedFunctionPointer(OpenXRNative.CallConv)]
-        private delegate XrResult xrSessionEndDebugUtilsLabelRegionEXTDelegate(XrSession session);
-        private xrSessionEndDebugUtilsLabelRegionEXTDelegate xrSessionEndDebugUtilsLabelRegionEXT_ptr;
     /// <summary> Requires XR extension "XR_EXT_debug_utils" </summary>
     /// <returns>
     ///       Success Codes:
@@ -1097,11 +1076,9 @@ public unsafe partial class OpenXRNativeInstance
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public XrResult xrSessionEndDebugUtilsLabelRegionEXT(XrSession session)
-        => xrSessionEndDebugUtilsLabelRegionEXT_ptr(session);
+        => xrSessionEndDebugUtilsLabelRegionEXT_funcPtr(session);
+    private delegate* unmanaged<XrSession, XrResult> xrSessionEndDebugUtilsLabelRegionEXT_funcPtr;
 
-        [UnmanagedFunctionPointer(OpenXRNative.CallConv)]
-        private delegate XrResult xrSessionInsertDebugUtilsLabelEXTDelegate(XrSession session, XrDebugUtilsLabelEXT* labelInfo);
-        private xrSessionInsertDebugUtilsLabelEXTDelegate xrSessionInsertDebugUtilsLabelEXT_ptr;
     /// <summary> Requires XR extension "XR_EXT_debug_utils" </summary>
     /// <returns>
     ///       Success Codes:
@@ -1117,11 +1094,9 @@ public unsafe partial class OpenXRNativeInstance
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public XrResult xrSessionInsertDebugUtilsLabelEXT(XrSession session, XrDebugUtilsLabelEXT* labelInfo)
-        => xrSessionInsertDebugUtilsLabelEXT_ptr(session, labelInfo);
+        => xrSessionInsertDebugUtilsLabelEXT_funcPtr(session, labelInfo);
+    private delegate* unmanaged<XrSession, XrDebugUtilsLabelEXT*, XrResult> xrSessionInsertDebugUtilsLabelEXT_funcPtr;
 
-        [UnmanagedFunctionPointer(OpenXRNative.CallConv)]
-        private delegate XrResult xrGetOpenGLGraphicsRequirementsKHRDelegate(XrInstance instance, ulong systemId, XrGraphicsRequirementsOpenGLKHR* graphicsRequirements);
-        private xrGetOpenGLGraphicsRequirementsKHRDelegate xrGetOpenGLGraphicsRequirementsKHR_ptr;
     /// <summary> Requires XR extension "XR_KHR_opengl_enable" </summary>
     /// <returns>
     ///       Success Codes:
@@ -1136,11 +1111,9 @@ public unsafe partial class OpenXRNativeInstance
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public XrResult xrGetOpenGLGraphicsRequirementsKHR(XrInstance instance, ulong systemId, XrGraphicsRequirementsOpenGLKHR* graphicsRequirements)
-        => xrGetOpenGLGraphicsRequirementsKHR_ptr(instance, systemId, graphicsRequirements);
+        => xrGetOpenGLGraphicsRequirementsKHR_funcPtr(instance, systemId, graphicsRequirements);
+    private delegate* unmanaged<XrInstance, ulong, XrGraphicsRequirementsOpenGLKHR*, XrResult> xrGetOpenGLGraphicsRequirementsKHR_funcPtr;
 
-        [UnmanagedFunctionPointer(OpenXRNative.CallConv)]
-        private delegate XrResult xrGetOpenGLESGraphicsRequirementsKHRDelegate(XrInstance instance, ulong systemId, XrGraphicsRequirementsOpenGLESKHR* graphicsRequirements);
-        private xrGetOpenGLESGraphicsRequirementsKHRDelegate xrGetOpenGLESGraphicsRequirementsKHR_ptr;
     /// <summary> Requires XR extension "XR_KHR_opengl_es_enable" </summary>
     /// <returns>
     ///       Success Codes:
@@ -1155,11 +1128,9 @@ public unsafe partial class OpenXRNativeInstance
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public XrResult xrGetOpenGLESGraphicsRequirementsKHR(XrInstance instance, ulong systemId, XrGraphicsRequirementsOpenGLESKHR* graphicsRequirements)
-        => xrGetOpenGLESGraphicsRequirementsKHR_ptr(instance, systemId, graphicsRequirements);
+        => xrGetOpenGLESGraphicsRequirementsKHR_funcPtr(instance, systemId, graphicsRequirements);
+    private delegate* unmanaged<XrInstance, ulong, XrGraphicsRequirementsOpenGLESKHR*, XrResult> xrGetOpenGLESGraphicsRequirementsKHR_funcPtr;
 
-        [UnmanagedFunctionPointer(OpenXRNative.CallConv)]
-        private delegate XrResult xrGetVulkanInstanceExtensionsKHRDelegate(XrInstance instance, ulong systemId, uint bufferCapacityInput, uint* bufferCountOutput, byte* buffer);
-        private xrGetVulkanInstanceExtensionsKHRDelegate xrGetVulkanInstanceExtensionsKHR_ptr;
     /// <summary> Requires XR extension "XR_KHR_vulkan_enable" </summary>
     /// <returns>
     ///       Success Codes:
@@ -1175,11 +1146,9 @@ public unsafe partial class OpenXRNativeInstance
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public XrResult xrGetVulkanInstanceExtensionsKHR(XrInstance instance, ulong systemId, uint bufferCapacityInput, uint* bufferCountOutput, byte* buffer)
-        => xrGetVulkanInstanceExtensionsKHR_ptr(instance, systemId, bufferCapacityInput, bufferCountOutput, buffer);
+        => xrGetVulkanInstanceExtensionsKHR_funcPtr(instance, systemId, bufferCapacityInput, bufferCountOutput, buffer);
+    private delegate* unmanaged<XrInstance, ulong, uint, uint*, byte*, XrResult> xrGetVulkanInstanceExtensionsKHR_funcPtr;
 
-        [UnmanagedFunctionPointer(OpenXRNative.CallConv)]
-        private delegate XrResult xrGetVulkanDeviceExtensionsKHRDelegate(XrInstance instance, ulong systemId, uint bufferCapacityInput, uint* bufferCountOutput, byte* buffer);
-        private xrGetVulkanDeviceExtensionsKHRDelegate xrGetVulkanDeviceExtensionsKHR_ptr;
     /// <summary> Requires XR extension "XR_KHR_vulkan_enable" </summary>
     /// <returns>
     ///       Success Codes:
@@ -1195,11 +1164,9 @@ public unsafe partial class OpenXRNativeInstance
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public XrResult xrGetVulkanDeviceExtensionsKHR(XrInstance instance, ulong systemId, uint bufferCapacityInput, uint* bufferCountOutput, byte* buffer)
-        => xrGetVulkanDeviceExtensionsKHR_ptr(instance, systemId, bufferCapacityInput, bufferCountOutput, buffer);
+        => xrGetVulkanDeviceExtensionsKHR_funcPtr(instance, systemId, bufferCapacityInput, bufferCountOutput, buffer);
+    private delegate* unmanaged<XrInstance, ulong, uint, uint*, byte*, XrResult> xrGetVulkanDeviceExtensionsKHR_funcPtr;
 
-        [UnmanagedFunctionPointer(OpenXRNative.CallConv)]
-        private delegate XrResult xrGetVulkanGraphicsDeviceKHRDelegate(XrInstance instance, ulong systemId, void* vkInstance, void* vkPhysicalDevice);
-        private xrGetVulkanGraphicsDeviceKHRDelegate xrGetVulkanGraphicsDeviceKHR_ptr;
     /// <summary> Requires XR extension "XR_KHR_vulkan_enable" </summary>
     /// <returns>
     ///       Success Codes:
@@ -1213,12 +1180,10 @@ public unsafe partial class OpenXRNativeInstance
     /// <br/> ⠀⠀<see cref="XrResult.XR_ERROR_SYSTEM_INVALID"/>
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public XrResult xrGetVulkanGraphicsDeviceKHR(XrInstance instance, ulong systemId, void* vkInstance, void* vkPhysicalDevice)
-        => xrGetVulkanGraphicsDeviceKHR_ptr(instance, systemId, vkInstance, vkPhysicalDevice);
+    public XrResult xrGetVulkanGraphicsDeviceKHR(XrInstance instance, ulong systemId, nint vkInstance, nint* vkPhysicalDevice)
+        => xrGetVulkanGraphicsDeviceKHR_funcPtr(instance, systemId, vkInstance, vkPhysicalDevice);
+    private delegate* unmanaged<XrInstance, ulong, nint, nint*, XrResult> xrGetVulkanGraphicsDeviceKHR_funcPtr;
 
-        [UnmanagedFunctionPointer(OpenXRNative.CallConv)]
-        private delegate XrResult xrGetVulkanGraphicsRequirementsKHRDelegate(XrInstance instance, ulong systemId, XrGraphicsRequirementsVulkanKHR* graphicsRequirements);
-        private xrGetVulkanGraphicsRequirementsKHRDelegate xrGetVulkanGraphicsRequirementsKHR_ptr;
     /// <summary> Requires XR extension "XR_KHR_vulkan_enable" </summary>
     /// <returns>
     ///       Success Codes:
@@ -1233,11 +1198,9 @@ public unsafe partial class OpenXRNativeInstance
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public XrResult xrGetVulkanGraphicsRequirementsKHR(XrInstance instance, ulong systemId, XrGraphicsRequirementsVulkanKHR* graphicsRequirements)
-        => xrGetVulkanGraphicsRequirementsKHR_ptr(instance, systemId, graphicsRequirements);
+        => xrGetVulkanGraphicsRequirementsKHR_funcPtr(instance, systemId, graphicsRequirements);
+    private delegate* unmanaged<XrInstance, ulong, XrGraphicsRequirementsVulkanKHR*, XrResult> xrGetVulkanGraphicsRequirementsKHR_funcPtr;
 
-        [UnmanagedFunctionPointer(OpenXRNative.CallConv)]
-        private delegate XrResult xrGetD3D11GraphicsRequirementsKHRDelegate(XrInstance instance, ulong systemId, XrGraphicsRequirementsD3D11KHR* graphicsRequirements);
-        private xrGetD3D11GraphicsRequirementsKHRDelegate xrGetD3D11GraphicsRequirementsKHR_ptr;
     /// <summary> Requires XR extension "XR_KHR_D3D11_enable" </summary>
     /// <returns>
     ///       Success Codes:
@@ -1252,11 +1215,9 @@ public unsafe partial class OpenXRNativeInstance
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public XrResult xrGetD3D11GraphicsRequirementsKHR(XrInstance instance, ulong systemId, XrGraphicsRequirementsD3D11KHR* graphicsRequirements)
-        => xrGetD3D11GraphicsRequirementsKHR_ptr(instance, systemId, graphicsRequirements);
+        => xrGetD3D11GraphicsRequirementsKHR_funcPtr(instance, systemId, graphicsRequirements);
+    private delegate* unmanaged<XrInstance, ulong, XrGraphicsRequirementsD3D11KHR*, XrResult> xrGetD3D11GraphicsRequirementsKHR_funcPtr;
 
-        [UnmanagedFunctionPointer(OpenXRNative.CallConv)]
-        private delegate XrResult xrGetD3D12GraphicsRequirementsKHRDelegate(XrInstance instance, ulong systemId, XrGraphicsRequirementsD3D12KHR* graphicsRequirements);
-        private xrGetD3D12GraphicsRequirementsKHRDelegate xrGetD3D12GraphicsRequirementsKHR_ptr;
     /// <summary> Requires XR extension "XR_KHR_D3D12_enable" </summary>
     /// <returns>
     ///       Success Codes:
@@ -1271,11 +1232,9 @@ public unsafe partial class OpenXRNativeInstance
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public XrResult xrGetD3D12GraphicsRequirementsKHR(XrInstance instance, ulong systemId, XrGraphicsRequirementsD3D12KHR* graphicsRequirements)
-        => xrGetD3D12GraphicsRequirementsKHR_ptr(instance, systemId, graphicsRequirements);
+        => xrGetD3D12GraphicsRequirementsKHR_funcPtr(instance, systemId, graphicsRequirements);
+    private delegate* unmanaged<XrInstance, ulong, XrGraphicsRequirementsD3D12KHR*, XrResult> xrGetD3D12GraphicsRequirementsKHR_funcPtr;
 
-        [UnmanagedFunctionPointer(OpenXRNative.CallConv)]
-        private delegate XrResult xrGetVisibilityMaskKHRDelegate(XrSession session, XrViewConfigurationType viewConfigurationType, uint viewIndex, XrVisibilityMaskTypeKHR visibilityMaskType, XrVisibilityMaskKHR* visibilityMask);
-        private xrGetVisibilityMaskKHRDelegate xrGetVisibilityMaskKHR_ptr;
     /// <summary> Requires XR extension "XR_KHR_visibility_mask" </summary>
     /// <returns>
     ///       Success Codes:
@@ -1293,11 +1252,9 @@ public unsafe partial class OpenXRNativeInstance
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public XrResult xrGetVisibilityMaskKHR(XrSession session, XrViewConfigurationType viewConfigurationType, uint viewIndex, XrVisibilityMaskTypeKHR visibilityMaskType, XrVisibilityMaskKHR* visibilityMask)
-        => xrGetVisibilityMaskKHR_ptr(session, viewConfigurationType, viewIndex, visibilityMaskType, visibilityMask);
+        => xrGetVisibilityMaskKHR_funcPtr(session, viewConfigurationType, viewIndex, visibilityMaskType, visibilityMask);
+    private delegate* unmanaged<XrSession, XrViewConfigurationType, uint, XrVisibilityMaskTypeKHR, XrVisibilityMaskKHR*, XrResult> xrGetVisibilityMaskKHR_funcPtr;
 
-        [UnmanagedFunctionPointer(OpenXRNative.CallConv)]
-        private delegate XrResult xrConvertWin32PerformanceCounterToTimeKHRDelegate(XrInstance instance, void* performanceCounter, long* time);
-        private xrConvertWin32PerformanceCounterToTimeKHRDelegate xrConvertWin32PerformanceCounterToTimeKHR_ptr;
     /// <summary> Requires XR extension "XR_KHR_win32_convert_performance_counter_time" </summary>
     /// <returns>
     ///       Success Codes:
@@ -1311,12 +1268,10 @@ public unsafe partial class OpenXRNativeInstance
     /// <br/> ⠀⠀<see cref="XrResult.XR_ERROR_TIME_INVALID"/>
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public XrResult xrConvertWin32PerformanceCounterToTimeKHR(XrInstance instance, void* performanceCounter, long* time)
-        => xrConvertWin32PerformanceCounterToTimeKHR_ptr(instance, performanceCounter, time);
+    public XrResult xrConvertWin32PerformanceCounterToTimeKHR(XrInstance instance, nint* performanceCounter, long* time)
+        => xrConvertWin32PerformanceCounterToTimeKHR_funcPtr(instance, performanceCounter, time);
+    private delegate* unmanaged<XrInstance, nint*, long*, XrResult> xrConvertWin32PerformanceCounterToTimeKHR_funcPtr;
 
-        [UnmanagedFunctionPointer(OpenXRNative.CallConv)]
-        private delegate XrResult xrConvertTimeToWin32PerformanceCounterKHRDelegate(XrInstance instance, long time, void* performanceCounter);
-        private xrConvertTimeToWin32PerformanceCounterKHRDelegate xrConvertTimeToWin32PerformanceCounterKHR_ptr;
     /// <summary> Requires XR extension "XR_KHR_win32_convert_performance_counter_time" </summary>
     /// <returns>
     ///       Success Codes:
@@ -1330,12 +1285,10 @@ public unsafe partial class OpenXRNativeInstance
     /// <br/> ⠀⠀<see cref="XrResult.XR_ERROR_TIME_INVALID"/>
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public XrResult xrConvertTimeToWin32PerformanceCounterKHR(XrInstance instance, long time, void* performanceCounter)
-        => xrConvertTimeToWin32PerformanceCounterKHR_ptr(instance, time, performanceCounter);
+    public XrResult xrConvertTimeToWin32PerformanceCounterKHR(XrInstance instance, long time, nint* performanceCounter)
+        => xrConvertTimeToWin32PerformanceCounterKHR_funcPtr(instance, time, performanceCounter);
+    private delegate* unmanaged<XrInstance, long, nint*, XrResult> xrConvertTimeToWin32PerformanceCounterKHR_funcPtr;
 
-        [UnmanagedFunctionPointer(OpenXRNative.CallConv)]
-        private delegate XrResult xrConvertTimespecTimeToTimeKHRDelegate(XrInstance instance, void* timespecTime, long* time);
-        private xrConvertTimespecTimeToTimeKHRDelegate xrConvertTimespecTimeToTimeKHR_ptr;
     /// <summary> Requires XR extension "XR_KHR_convert_timespec_time" </summary>
     /// <returns>
     ///       Success Codes:
@@ -1349,12 +1302,10 @@ public unsafe partial class OpenXRNativeInstance
     /// <br/> ⠀⠀<see cref="XrResult.XR_ERROR_TIME_INVALID"/>
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public XrResult xrConvertTimespecTimeToTimeKHR(XrInstance instance, void* timespecTime, long* time)
-        => xrConvertTimespecTimeToTimeKHR_ptr(instance, timespecTime, time);
+    public XrResult xrConvertTimespecTimeToTimeKHR(XrInstance instance, nint* timespecTime, long* time)
+        => xrConvertTimespecTimeToTimeKHR_funcPtr(instance, timespecTime, time);
+    private delegate* unmanaged<XrInstance, nint*, long*, XrResult> xrConvertTimespecTimeToTimeKHR_funcPtr;
 
-        [UnmanagedFunctionPointer(OpenXRNative.CallConv)]
-        private delegate XrResult xrConvertTimeToTimespecTimeKHRDelegate(XrInstance instance, long time, void* timespecTime);
-        private xrConvertTimeToTimespecTimeKHRDelegate xrConvertTimeToTimespecTimeKHR_ptr;
     /// <summary> Requires XR extension "XR_KHR_convert_timespec_time" </summary>
     /// <returns>
     ///       Success Codes:
@@ -1368,12 +1319,10 @@ public unsafe partial class OpenXRNativeInstance
     /// <br/> ⠀⠀<see cref="XrResult.XR_ERROR_TIME_INVALID"/>
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public XrResult xrConvertTimeToTimespecTimeKHR(XrInstance instance, long time, void* timespecTime)
-        => xrConvertTimeToTimespecTimeKHR_ptr(instance, time, timespecTime);
+    public XrResult xrConvertTimeToTimespecTimeKHR(XrInstance instance, long time, nint* timespecTime)
+        => xrConvertTimeToTimespecTimeKHR_funcPtr(instance, time, timespecTime);
+    private delegate* unmanaged<XrInstance, long, nint*, XrResult> xrConvertTimeToTimespecTimeKHR_funcPtr;
 
-        [UnmanagedFunctionPointer(OpenXRNative.CallConv)]
-        private delegate XrResult xrCreateSpatialAnchorMSFTDelegate(XrSession session, XrSpatialAnchorCreateInfoMSFT* createInfo, XrSpatialAnchorMSFT* anchor);
-        private xrCreateSpatialAnchorMSFTDelegate xrCreateSpatialAnchorMSFT_ptr;
     /// <summary> Requires XR extension "XR_MSFT_spatial_anchor" </summary>
     /// <returns>
     ///       Success Codes:
@@ -1393,11 +1342,9 @@ public unsafe partial class OpenXRNativeInstance
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public XrResult xrCreateSpatialAnchorMSFT(XrSession session, XrSpatialAnchorCreateInfoMSFT* createInfo, XrSpatialAnchorMSFT* anchor)
-        => xrCreateSpatialAnchorMSFT_ptr(session, createInfo, anchor);
+        => xrCreateSpatialAnchorMSFT_funcPtr(session, createInfo, anchor);
+    private delegate* unmanaged<XrSession, XrSpatialAnchorCreateInfoMSFT*, XrSpatialAnchorMSFT*, XrResult> xrCreateSpatialAnchorMSFT_funcPtr;
 
-        [UnmanagedFunctionPointer(OpenXRNative.CallConv)]
-        private delegate XrResult xrCreateSpatialAnchorSpaceMSFTDelegate(XrSession session, XrSpatialAnchorSpaceCreateInfoMSFT* createInfo, XrSpace* space);
-        private xrCreateSpatialAnchorSpaceMSFTDelegate xrCreateSpatialAnchorSpaceMSFT_ptr;
     /// <summary> Requires XR extension "XR_MSFT_spatial_anchor" </summary>
     /// <returns>
     ///       Success Codes:
@@ -1415,11 +1362,9 @@ public unsafe partial class OpenXRNativeInstance
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public XrResult xrCreateSpatialAnchorSpaceMSFT(XrSession session, XrSpatialAnchorSpaceCreateInfoMSFT* createInfo, XrSpace* space)
-        => xrCreateSpatialAnchorSpaceMSFT_ptr(session, createInfo, space);
+        => xrCreateSpatialAnchorSpaceMSFT_funcPtr(session, createInfo, space);
+    private delegate* unmanaged<XrSession, XrSpatialAnchorSpaceCreateInfoMSFT*, XrSpace*, XrResult> xrCreateSpatialAnchorSpaceMSFT_funcPtr;
 
-        [UnmanagedFunctionPointer(OpenXRNative.CallConv)]
-        private delegate XrResult xrDestroySpatialAnchorMSFTDelegate(XrSpatialAnchorMSFT anchor);
-        private xrDestroySpatialAnchorMSFTDelegate xrDestroySpatialAnchorMSFT_ptr;
     /// <summary> Requires XR extension "XR_MSFT_spatial_anchor" </summary>
     /// <returns>
     ///       Success Codes:
@@ -1430,11 +1375,9 @@ public unsafe partial class OpenXRNativeInstance
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public XrResult xrDestroySpatialAnchorMSFT(XrSpatialAnchorMSFT anchor)
-        => xrDestroySpatialAnchorMSFT_ptr(anchor);
+        => xrDestroySpatialAnchorMSFT_funcPtr(anchor);
+    private delegate* unmanaged<XrSpatialAnchorMSFT, XrResult> xrDestroySpatialAnchorMSFT_funcPtr;
 
-        [UnmanagedFunctionPointer(OpenXRNative.CallConv)]
-        private delegate XrResult xrSetInputDeviceActiveEXTDelegate(XrSession session, ulong interactionProfile, ulong topLevelPath, XrBool32 isActive);
-        private xrSetInputDeviceActiveEXTDelegate xrSetInputDeviceActiveEXT_ptr;
     /// <summary> Requires XR extension "XR_EXT_conformance_automation" </summary>
     /// <returns>
     ///       Success Codes:
@@ -1451,11 +1394,9 @@ public unsafe partial class OpenXRNativeInstance
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public XrResult xrSetInputDeviceActiveEXT(XrSession session, ulong interactionProfile, ulong topLevelPath, XrBool32 isActive)
-        => xrSetInputDeviceActiveEXT_ptr(session, interactionProfile, topLevelPath, isActive);
+        => xrSetInputDeviceActiveEXT_funcPtr(session, interactionProfile, topLevelPath, isActive);
+    private delegate* unmanaged<XrSession, ulong, ulong, XrBool32, XrResult> xrSetInputDeviceActiveEXT_funcPtr;
 
-        [UnmanagedFunctionPointer(OpenXRNative.CallConv)]
-        private delegate XrResult xrSetInputDeviceStateBoolEXTDelegate(XrSession session, ulong topLevelPath, ulong inputSourcePath, XrBool32 state);
-        private xrSetInputDeviceStateBoolEXTDelegate xrSetInputDeviceStateBoolEXT_ptr;
     /// <summary> Requires XR extension "XR_EXT_conformance_automation" </summary>
     /// <returns>
     ///       Success Codes:
@@ -1472,11 +1413,9 @@ public unsafe partial class OpenXRNativeInstance
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public XrResult xrSetInputDeviceStateBoolEXT(XrSession session, ulong topLevelPath, ulong inputSourcePath, XrBool32 state)
-        => xrSetInputDeviceStateBoolEXT_ptr(session, topLevelPath, inputSourcePath, state);
+        => xrSetInputDeviceStateBoolEXT_funcPtr(session, topLevelPath, inputSourcePath, state);
+    private delegate* unmanaged<XrSession, ulong, ulong, XrBool32, XrResult> xrSetInputDeviceStateBoolEXT_funcPtr;
 
-        [UnmanagedFunctionPointer(OpenXRNative.CallConv)]
-        private delegate XrResult xrSetInputDeviceStateFloatEXTDelegate(XrSession session, ulong topLevelPath, ulong inputSourcePath, float state);
-        private xrSetInputDeviceStateFloatEXTDelegate xrSetInputDeviceStateFloatEXT_ptr;
     /// <summary> Requires XR extension "XR_EXT_conformance_automation" </summary>
     /// <returns>
     ///       Success Codes:
@@ -1493,11 +1432,9 @@ public unsafe partial class OpenXRNativeInstance
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public XrResult xrSetInputDeviceStateFloatEXT(XrSession session, ulong topLevelPath, ulong inputSourcePath, float state)
-        => xrSetInputDeviceStateFloatEXT_ptr(session, topLevelPath, inputSourcePath, state);
+        => xrSetInputDeviceStateFloatEXT_funcPtr(session, topLevelPath, inputSourcePath, state);
+    private delegate* unmanaged<XrSession, ulong, ulong, float, XrResult> xrSetInputDeviceStateFloatEXT_funcPtr;
 
-        [UnmanagedFunctionPointer(OpenXRNative.CallConv)]
-        private delegate XrResult xrSetInputDeviceStateVector2fEXTDelegate(XrSession session, ulong topLevelPath, ulong inputSourcePath, XrVector2f state);
-        private xrSetInputDeviceStateVector2fEXTDelegate xrSetInputDeviceStateVector2fEXT_ptr;
     /// <summary> Requires XR extension "XR_EXT_conformance_automation" </summary>
     /// <returns>
     ///       Success Codes:
@@ -1514,11 +1451,9 @@ public unsafe partial class OpenXRNativeInstance
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public XrResult xrSetInputDeviceStateVector2fEXT(XrSession session, ulong topLevelPath, ulong inputSourcePath, XrVector2f state)
-        => xrSetInputDeviceStateVector2fEXT_ptr(session, topLevelPath, inputSourcePath, state);
+        => xrSetInputDeviceStateVector2fEXT_funcPtr(session, topLevelPath, inputSourcePath, state);
+    private delegate* unmanaged<XrSession, ulong, ulong, XrVector2f, XrResult> xrSetInputDeviceStateVector2fEXT_funcPtr;
 
-        [UnmanagedFunctionPointer(OpenXRNative.CallConv)]
-        private delegate XrResult xrSetInputDeviceLocationEXTDelegate(XrSession session, ulong topLevelPath, ulong inputSourcePath, XrSpace space, XrPosef pose);
-        private xrSetInputDeviceLocationEXTDelegate xrSetInputDeviceLocationEXT_ptr;
     /// <summary> Requires XR extension "XR_EXT_conformance_automation" </summary>
     /// <returns>
     ///       Success Codes:
@@ -1536,11 +1471,9 @@ public unsafe partial class OpenXRNativeInstance
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public XrResult xrSetInputDeviceLocationEXT(XrSession session, ulong topLevelPath, ulong inputSourcePath, XrSpace space, XrPosef pose)
-        => xrSetInputDeviceLocationEXT_ptr(session, topLevelPath, inputSourcePath, space, pose);
+        => xrSetInputDeviceLocationEXT_funcPtr(session, topLevelPath, inputSourcePath, space, pose);
+    private delegate* unmanaged<XrSession, ulong, ulong, XrSpace, XrPosef, XrResult> xrSetInputDeviceLocationEXT_funcPtr;
 
-        [UnmanagedFunctionPointer(OpenXRNative.CallConv)]
-        private delegate XrResult xrCreateSpatialGraphNodeSpaceMSFTDelegate(XrSession session, XrSpatialGraphNodeSpaceCreateInfoMSFT* createInfo, XrSpace* space);
-        private xrCreateSpatialGraphNodeSpaceMSFTDelegate xrCreateSpatialGraphNodeSpaceMSFT_ptr;
     /// <summary> Requires XR extension "XR_MSFT_spatial_graph_bridge" </summary>
     /// <returns>
     ///       Success Codes:
@@ -1558,11 +1491,9 @@ public unsafe partial class OpenXRNativeInstance
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public XrResult xrCreateSpatialGraphNodeSpaceMSFT(XrSession session, XrSpatialGraphNodeSpaceCreateInfoMSFT* createInfo, XrSpace* space)
-        => xrCreateSpatialGraphNodeSpaceMSFT_ptr(session, createInfo, space);
+        => xrCreateSpatialGraphNodeSpaceMSFT_funcPtr(session, createInfo, space);
+    private delegate* unmanaged<XrSession, XrSpatialGraphNodeSpaceCreateInfoMSFT*, XrSpace*, XrResult> xrCreateSpatialGraphNodeSpaceMSFT_funcPtr;
 
-        [UnmanagedFunctionPointer(OpenXRNative.CallConv)]
-        private delegate XrResult xrTryCreateSpatialGraphStaticNodeBindingMSFTDelegate(XrSession session, XrSpatialGraphStaticNodeBindingCreateInfoMSFT* createInfo, XrSpatialGraphNodeBindingMSFT* nodeBinding);
-        private xrTryCreateSpatialGraphStaticNodeBindingMSFTDelegate xrTryCreateSpatialGraphStaticNodeBindingMSFT_ptr;
     /// <summary> Requires XR extension "XR_MSFT_spatial_graph_bridge" </summary>
     /// <returns>
     ///       Success Codes:
@@ -1582,11 +1513,9 @@ public unsafe partial class OpenXRNativeInstance
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public XrResult xrTryCreateSpatialGraphStaticNodeBindingMSFT(XrSession session, XrSpatialGraphStaticNodeBindingCreateInfoMSFT* createInfo, XrSpatialGraphNodeBindingMSFT* nodeBinding)
-        => xrTryCreateSpatialGraphStaticNodeBindingMSFT_ptr(session, createInfo, nodeBinding);
+        => xrTryCreateSpatialGraphStaticNodeBindingMSFT_funcPtr(session, createInfo, nodeBinding);
+    private delegate* unmanaged<XrSession, XrSpatialGraphStaticNodeBindingCreateInfoMSFT*, XrSpatialGraphNodeBindingMSFT*, XrResult> xrTryCreateSpatialGraphStaticNodeBindingMSFT_funcPtr;
 
-        [UnmanagedFunctionPointer(OpenXRNative.CallConv)]
-        private delegate XrResult xrDestroySpatialGraphNodeBindingMSFTDelegate(XrSpatialGraphNodeBindingMSFT nodeBinding);
-        private xrDestroySpatialGraphNodeBindingMSFTDelegate xrDestroySpatialGraphNodeBindingMSFT_ptr;
     /// <summary> Requires XR extension "XR_MSFT_spatial_graph_bridge" </summary>
     /// <returns>
     ///       Success Codes:
@@ -1597,11 +1526,9 @@ public unsafe partial class OpenXRNativeInstance
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public XrResult xrDestroySpatialGraphNodeBindingMSFT(XrSpatialGraphNodeBindingMSFT nodeBinding)
-        => xrDestroySpatialGraphNodeBindingMSFT_ptr(nodeBinding);
+        => xrDestroySpatialGraphNodeBindingMSFT_funcPtr(nodeBinding);
+    private delegate* unmanaged<XrSpatialGraphNodeBindingMSFT, XrResult> xrDestroySpatialGraphNodeBindingMSFT_funcPtr;
 
-        [UnmanagedFunctionPointer(OpenXRNative.CallConv)]
-        private delegate XrResult xrGetSpatialGraphNodeBindingPropertiesMSFTDelegate(XrSpatialGraphNodeBindingMSFT nodeBinding, XrSpatialGraphNodeBindingPropertiesGetInfoMSFT* getInfo, XrSpatialGraphNodeBindingPropertiesMSFT* properties);
-        private xrGetSpatialGraphNodeBindingPropertiesMSFTDelegate xrGetSpatialGraphNodeBindingPropertiesMSFT_ptr;
     /// <summary> Requires XR extension "XR_MSFT_spatial_graph_bridge" </summary>
     /// <returns>
     ///       Success Codes:
@@ -1618,11 +1545,9 @@ public unsafe partial class OpenXRNativeInstance
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public XrResult xrGetSpatialGraphNodeBindingPropertiesMSFT(XrSpatialGraphNodeBindingMSFT nodeBinding, XrSpatialGraphNodeBindingPropertiesGetInfoMSFT* getInfo, XrSpatialGraphNodeBindingPropertiesMSFT* properties)
-        => xrGetSpatialGraphNodeBindingPropertiesMSFT_ptr(nodeBinding, getInfo, properties);
+        => xrGetSpatialGraphNodeBindingPropertiesMSFT_funcPtr(nodeBinding, getInfo, properties);
+    private delegate* unmanaged<XrSpatialGraphNodeBindingMSFT, XrSpatialGraphNodeBindingPropertiesGetInfoMSFT*, XrSpatialGraphNodeBindingPropertiesMSFT*, XrResult> xrGetSpatialGraphNodeBindingPropertiesMSFT_funcPtr;
 
-        [UnmanagedFunctionPointer(OpenXRNative.CallConv)]
-        private delegate XrResult xrCreateHandTrackerEXTDelegate(XrSession session, XrHandTrackerCreateInfoEXT* createInfo, XrHandTrackerEXT* handTracker);
-        private xrCreateHandTrackerEXTDelegate xrCreateHandTrackerEXT_ptr;
     /// <summary> Requires XR extension "XR_EXT_hand_tracking" </summary>
     /// <returns>
     ///       Success Codes:
@@ -1641,11 +1566,9 @@ public unsafe partial class OpenXRNativeInstance
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public XrResult xrCreateHandTrackerEXT(XrSession session, XrHandTrackerCreateInfoEXT* createInfo, XrHandTrackerEXT* handTracker)
-        => xrCreateHandTrackerEXT_ptr(session, createInfo, handTracker);
+        => xrCreateHandTrackerEXT_funcPtr(session, createInfo, handTracker);
+    private delegate* unmanaged<XrSession, XrHandTrackerCreateInfoEXT*, XrHandTrackerEXT*, XrResult> xrCreateHandTrackerEXT_funcPtr;
 
-        [UnmanagedFunctionPointer(OpenXRNative.CallConv)]
-        private delegate XrResult xrDestroyHandTrackerEXTDelegate(XrHandTrackerEXT handTracker);
-        private xrDestroyHandTrackerEXTDelegate xrDestroyHandTrackerEXT_ptr;
     /// <summary> Requires XR extension "XR_EXT_hand_tracking" </summary>
     /// <returns>
     ///       Success Codes:
@@ -1656,11 +1579,9 @@ public unsafe partial class OpenXRNativeInstance
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public XrResult xrDestroyHandTrackerEXT(XrHandTrackerEXT handTracker)
-        => xrDestroyHandTrackerEXT_ptr(handTracker);
+        => xrDestroyHandTrackerEXT_funcPtr(handTracker);
+    private delegate* unmanaged<XrHandTrackerEXT, XrResult> xrDestroyHandTrackerEXT_funcPtr;
 
-        [UnmanagedFunctionPointer(OpenXRNative.CallConv)]
-        private delegate XrResult xrLocateHandJointsEXTDelegate(XrHandTrackerEXT handTracker, XrHandJointsLocateInfoEXT* locateInfo, XrHandJointLocationsEXT* locations);
-        private xrLocateHandJointsEXTDelegate xrLocateHandJointsEXT_ptr;
     /// <summary> Requires XR extension "XR_EXT_hand_tracking" </summary>
     /// <returns>
     ///       Success Codes:
@@ -1677,11 +1598,9 @@ public unsafe partial class OpenXRNativeInstance
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public XrResult xrLocateHandJointsEXT(XrHandTrackerEXT handTracker, XrHandJointsLocateInfoEXT* locateInfo, XrHandJointLocationsEXT* locations)
-        => xrLocateHandJointsEXT_ptr(handTracker, locateInfo, locations);
+        => xrLocateHandJointsEXT_funcPtr(handTracker, locateInfo, locations);
+    private delegate* unmanaged<XrHandTrackerEXT, XrHandJointsLocateInfoEXT*, XrHandJointLocationsEXT*, XrResult> xrLocateHandJointsEXT_funcPtr;
 
-        [UnmanagedFunctionPointer(OpenXRNative.CallConv)]
-        private delegate XrResult xrCreateHandMeshSpaceMSFTDelegate(XrHandTrackerEXT handTracker, XrHandMeshSpaceCreateInfoMSFT* createInfo, XrSpace* space);
-        private xrCreateHandMeshSpaceMSFTDelegate xrCreateHandMeshSpaceMSFT_ptr;
     /// <summary> Requires XR extension "XR_MSFT_hand_tracking_mesh" </summary>
     /// <returns>
     ///       Success Codes:
@@ -1701,11 +1620,9 @@ public unsafe partial class OpenXRNativeInstance
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public XrResult xrCreateHandMeshSpaceMSFT(XrHandTrackerEXT handTracker, XrHandMeshSpaceCreateInfoMSFT* createInfo, XrSpace* space)
-        => xrCreateHandMeshSpaceMSFT_ptr(handTracker, createInfo, space);
+        => xrCreateHandMeshSpaceMSFT_funcPtr(handTracker, createInfo, space);
+    private delegate* unmanaged<XrHandTrackerEXT, XrHandMeshSpaceCreateInfoMSFT*, XrSpace*, XrResult> xrCreateHandMeshSpaceMSFT_funcPtr;
 
-        [UnmanagedFunctionPointer(OpenXRNative.CallConv)]
-        private delegate XrResult xrUpdateHandMeshMSFTDelegate(XrHandTrackerEXT handTracker, XrHandMeshUpdateInfoMSFT* updateInfo, XrHandMeshMSFT* handMesh);
-        private xrUpdateHandMeshMSFTDelegate xrUpdateHandMeshMSFT_ptr;
     /// <summary> Requires XR extension "XR_MSFT_hand_tracking_mesh" </summary>
     /// <returns>
     ///       Success Codes:
@@ -1724,11 +1641,9 @@ public unsafe partial class OpenXRNativeInstance
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public XrResult xrUpdateHandMeshMSFT(XrHandTrackerEXT handTracker, XrHandMeshUpdateInfoMSFT* updateInfo, XrHandMeshMSFT* handMesh)
-        => xrUpdateHandMeshMSFT_ptr(handTracker, updateInfo, handMesh);
+        => xrUpdateHandMeshMSFT_funcPtr(handTracker, updateInfo, handMesh);
+    private delegate* unmanaged<XrHandTrackerEXT, XrHandMeshUpdateInfoMSFT*, XrHandMeshMSFT*, XrResult> xrUpdateHandMeshMSFT_funcPtr;
 
-        [UnmanagedFunctionPointer(OpenXRNative.CallConv)]
-        private delegate XrResult xrGetControllerModelKeyMSFTDelegate(XrSession session, ulong topLevelUserPath, XrControllerModelKeyStateMSFT* controllerModelKeyState);
-        private xrGetControllerModelKeyMSFTDelegate xrGetControllerModelKeyMSFT_ptr;
     /// <summary> Requires XR extension "XR_MSFT_controller_model" </summary>
     /// <returns>
     ///       Success Codes:
@@ -1747,11 +1662,9 @@ public unsafe partial class OpenXRNativeInstance
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public XrResult xrGetControllerModelKeyMSFT(XrSession session, ulong topLevelUserPath, XrControllerModelKeyStateMSFT* controllerModelKeyState)
-        => xrGetControllerModelKeyMSFT_ptr(session, topLevelUserPath, controllerModelKeyState);
+        => xrGetControllerModelKeyMSFT_funcPtr(session, topLevelUserPath, controllerModelKeyState);
+    private delegate* unmanaged<XrSession, ulong, XrControllerModelKeyStateMSFT*, XrResult> xrGetControllerModelKeyMSFT_funcPtr;
 
-        [UnmanagedFunctionPointer(OpenXRNative.CallConv)]
-        private delegate XrResult xrLoadControllerModelMSFTDelegate(XrSession session, ulong modelKey, uint bufferCapacityInput, uint* bufferCountOutput, byte* buffer);
-        private xrLoadControllerModelMSFTDelegate xrLoadControllerModelMSFT_ptr;
     /// <summary> Requires XR extension "XR_MSFT_controller_model" </summary>
     /// <returns>
     ///       Success Codes:
@@ -1769,11 +1682,9 @@ public unsafe partial class OpenXRNativeInstance
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public XrResult xrLoadControllerModelMSFT(XrSession session, ulong modelKey, uint bufferCapacityInput, uint* bufferCountOutput, byte* buffer)
-        => xrLoadControllerModelMSFT_ptr(session, modelKey, bufferCapacityInput, bufferCountOutput, buffer);
+        => xrLoadControllerModelMSFT_funcPtr(session, modelKey, bufferCapacityInput, bufferCountOutput, buffer);
+    private delegate* unmanaged<XrSession, ulong, uint, uint*, byte*, XrResult> xrLoadControllerModelMSFT_funcPtr;
 
-        [UnmanagedFunctionPointer(OpenXRNative.CallConv)]
-        private delegate XrResult xrGetControllerModelPropertiesMSFTDelegate(XrSession session, ulong modelKey, XrControllerModelPropertiesMSFT* properties);
-        private xrGetControllerModelPropertiesMSFTDelegate xrGetControllerModelPropertiesMSFT_ptr;
     /// <summary> Requires XR extension "XR_MSFT_controller_model" </summary>
     /// <returns>
     ///       Success Codes:
@@ -1791,11 +1702,9 @@ public unsafe partial class OpenXRNativeInstance
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public XrResult xrGetControllerModelPropertiesMSFT(XrSession session, ulong modelKey, XrControllerModelPropertiesMSFT* properties)
-        => xrGetControllerModelPropertiesMSFT_ptr(session, modelKey, properties);
+        => xrGetControllerModelPropertiesMSFT_funcPtr(session, modelKey, properties);
+    private delegate* unmanaged<XrSession, ulong, XrControllerModelPropertiesMSFT*, XrResult> xrGetControllerModelPropertiesMSFT_funcPtr;
 
-        [UnmanagedFunctionPointer(OpenXRNative.CallConv)]
-        private delegate XrResult xrGetControllerModelStateMSFTDelegate(XrSession session, ulong modelKey, XrControllerModelStateMSFT* state);
-        private xrGetControllerModelStateMSFTDelegate xrGetControllerModelStateMSFT_ptr;
     /// <summary> Requires XR extension "XR_MSFT_controller_model" </summary>
     /// <returns>
     ///       Success Codes:
@@ -1812,11 +1721,9 @@ public unsafe partial class OpenXRNativeInstance
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public XrResult xrGetControllerModelStateMSFT(XrSession session, ulong modelKey, XrControllerModelStateMSFT* state)
-        => xrGetControllerModelStateMSFT_ptr(session, modelKey, state);
+        => xrGetControllerModelStateMSFT_funcPtr(session, modelKey, state);
+    private delegate* unmanaged<XrSession, ulong, XrControllerModelStateMSFT*, XrResult> xrGetControllerModelStateMSFT_funcPtr;
 
-        [UnmanagedFunctionPointer(OpenXRNative.CallConv)]
-        private delegate XrResult xrCreateSpatialAnchorFromPerceptionAnchorMSFTDelegate(XrSession session, void* perceptionAnchor, XrSpatialAnchorMSFT* anchor);
-        private xrCreateSpatialAnchorFromPerceptionAnchorMSFTDelegate xrCreateSpatialAnchorFromPerceptionAnchorMSFT_ptr;
     /// <summary> Requires XR extension "XR_MSFT_perception_anchor_interop" </summary>
     /// <returns>
     ///       Success Codes:
@@ -1832,12 +1739,10 @@ public unsafe partial class OpenXRNativeInstance
     /// <br/> ⠀⠀<see cref="XrResult.XR_ERROR_LIMIT_REACHED"/>
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public XrResult xrCreateSpatialAnchorFromPerceptionAnchorMSFT(XrSession session, void* perceptionAnchor, XrSpatialAnchorMSFT* anchor)
-        => xrCreateSpatialAnchorFromPerceptionAnchorMSFT_ptr(session, perceptionAnchor, anchor);
+    public XrResult xrCreateSpatialAnchorFromPerceptionAnchorMSFT(XrSession session, nint* perceptionAnchor, XrSpatialAnchorMSFT* anchor)
+        => xrCreateSpatialAnchorFromPerceptionAnchorMSFT_funcPtr(session, perceptionAnchor, anchor);
+    private delegate* unmanaged<XrSession, nint*, XrSpatialAnchorMSFT*, XrResult> xrCreateSpatialAnchorFromPerceptionAnchorMSFT_funcPtr;
 
-        [UnmanagedFunctionPointer(OpenXRNative.CallConv)]
-        private delegate XrResult xrTryGetPerceptionAnchorFromSpatialAnchorMSFTDelegate(XrSession session, XrSpatialAnchorMSFT anchor, void* perceptionAnchor);
-        private xrTryGetPerceptionAnchorFromSpatialAnchorMSFTDelegate xrTryGetPerceptionAnchorFromSpatialAnchorMSFT_ptr;
     /// <summary> Requires XR extension "XR_MSFT_perception_anchor_interop" </summary>
     /// <returns>
     ///       Success Codes:
@@ -1852,12 +1757,10 @@ public unsafe partial class OpenXRNativeInstance
     /// <br/> ⠀⠀<see cref="XrResult.XR_ERROR_OUT_OF_MEMORY"/>
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public XrResult xrTryGetPerceptionAnchorFromSpatialAnchorMSFT(XrSession session, XrSpatialAnchorMSFT anchor, void* perceptionAnchor)
-        => xrTryGetPerceptionAnchorFromSpatialAnchorMSFT_ptr(session, anchor, perceptionAnchor);
+    public XrResult xrTryGetPerceptionAnchorFromSpatialAnchorMSFT(XrSession session, XrSpatialAnchorMSFT anchor, nint** perceptionAnchor)
+        => xrTryGetPerceptionAnchorFromSpatialAnchorMSFT_funcPtr(session, anchor, perceptionAnchor);
+    private delegate* unmanaged<XrSession, XrSpatialAnchorMSFT, nint**, XrResult> xrTryGetPerceptionAnchorFromSpatialAnchorMSFT_funcPtr;
 
-        [UnmanagedFunctionPointer(OpenXRNative.CallConv)]
-        private delegate XrResult xrEnumerateReprojectionModesMSFTDelegate(XrInstance instance, ulong systemId, XrViewConfigurationType viewConfigurationType, uint modeCapacityInput, uint* modeCountOutput, XrReprojectionModeMSFT* modes);
-        private xrEnumerateReprojectionModesMSFTDelegate xrEnumerateReprojectionModesMSFT_ptr;
     /// <summary> Requires XR extension "XR_MSFT_composition_layer_reprojection" </summary>
     /// <returns>
     ///       Success Codes:
@@ -1874,11 +1777,9 @@ public unsafe partial class OpenXRNativeInstance
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public XrResult xrEnumerateReprojectionModesMSFT(XrInstance instance, ulong systemId, XrViewConfigurationType viewConfigurationType, uint modeCapacityInput, uint* modeCountOutput, XrReprojectionModeMSFT* modes)
-        => xrEnumerateReprojectionModesMSFT_ptr(instance, systemId, viewConfigurationType, modeCapacityInput, modeCountOutput, modes);
+        => xrEnumerateReprojectionModesMSFT_funcPtr(instance, systemId, viewConfigurationType, modeCapacityInput, modeCountOutput, modes);
+    private delegate* unmanaged<XrInstance, ulong, XrViewConfigurationType, uint, uint*, XrReprojectionModeMSFT*, XrResult> xrEnumerateReprojectionModesMSFT_funcPtr;
 
-        [UnmanagedFunctionPointer(OpenXRNative.CallConv)]
-        private delegate XrResult xrUpdateSwapchainFBDelegate(XrSwapchain swapchain, XrSwapchainStateBaseHeaderFB* state);
-        private xrUpdateSwapchainFBDelegate xrUpdateSwapchainFB_ptr;
     /// <summary> Requires XR extension "XR_FB_swapchain_update_state" </summary>
     /// <returns>
     ///       Success Codes:
@@ -1894,11 +1795,9 @@ public unsafe partial class OpenXRNativeInstance
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public XrResult xrUpdateSwapchainFB(XrSwapchain swapchain, XrSwapchainStateBaseHeaderFB* state)
-        => xrUpdateSwapchainFB_ptr(swapchain, state);
+        => xrUpdateSwapchainFB_funcPtr(swapchain, state);
+    private delegate* unmanaged<XrSwapchain, XrSwapchainStateBaseHeaderFB*, XrResult> xrUpdateSwapchainFB_funcPtr;
 
-        [UnmanagedFunctionPointer(OpenXRNative.CallConv)]
-        private delegate XrResult xrGetSwapchainStateFBDelegate(XrSwapchain swapchain, XrSwapchainStateBaseHeaderFB* state);
-        private xrGetSwapchainStateFBDelegate xrGetSwapchainStateFB_ptr;
     /// <summary> Requires XR extension "XR_FB_swapchain_update_state" </summary>
     /// <returns>
     ///       Success Codes:
@@ -1914,11 +1813,9 @@ public unsafe partial class OpenXRNativeInstance
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public XrResult xrGetSwapchainStateFB(XrSwapchain swapchain, XrSwapchainStateBaseHeaderFB* state)
-        => xrGetSwapchainStateFB_ptr(swapchain, state);
+        => xrGetSwapchainStateFB_funcPtr(swapchain, state);
+    private delegate* unmanaged<XrSwapchain, XrSwapchainStateBaseHeaderFB*, XrResult> xrGetSwapchainStateFB_funcPtr;
 
-        [UnmanagedFunctionPointer(OpenXRNative.CallConv)]
-        private delegate XrResult xrCreateBodyTrackerFBDelegate(XrSession session, XrBodyTrackerCreateInfoFB* createInfo, XrBodyTrackerFB* bodyTracker);
-        private xrCreateBodyTrackerFBDelegate xrCreateBodyTrackerFB_ptr;
     /// <summary> Requires XR extension "XR_FB_body_tracking" </summary>
     /// <returns>
     ///       Success Codes:
@@ -1937,11 +1834,9 @@ public unsafe partial class OpenXRNativeInstance
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public XrResult xrCreateBodyTrackerFB(XrSession session, XrBodyTrackerCreateInfoFB* createInfo, XrBodyTrackerFB* bodyTracker)
-        => xrCreateBodyTrackerFB_ptr(session, createInfo, bodyTracker);
+        => xrCreateBodyTrackerFB_funcPtr(session, createInfo, bodyTracker);
+    private delegate* unmanaged<XrSession, XrBodyTrackerCreateInfoFB*, XrBodyTrackerFB*, XrResult> xrCreateBodyTrackerFB_funcPtr;
 
-        [UnmanagedFunctionPointer(OpenXRNative.CallConv)]
-        private delegate XrResult xrDestroyBodyTrackerFBDelegate(XrBodyTrackerFB bodyTracker);
-        private xrDestroyBodyTrackerFBDelegate xrDestroyBodyTrackerFB_ptr;
     /// <summary> Requires XR extension "XR_FB_body_tracking" </summary>
     /// <returns>
     ///       Success Codes:
@@ -1952,11 +1847,9 @@ public unsafe partial class OpenXRNativeInstance
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public XrResult xrDestroyBodyTrackerFB(XrBodyTrackerFB bodyTracker)
-        => xrDestroyBodyTrackerFB_ptr(bodyTracker);
+        => xrDestroyBodyTrackerFB_funcPtr(bodyTracker);
+    private delegate* unmanaged<XrBodyTrackerFB, XrResult> xrDestroyBodyTrackerFB_funcPtr;
 
-        [UnmanagedFunctionPointer(OpenXRNative.CallConv)]
-        private delegate XrResult xrLocateBodyJointsFBDelegate(XrBodyTrackerFB bodyTracker, XrBodyJointsLocateInfoFB* locateInfo, XrBodyJointLocationsFB* locations);
-        private xrLocateBodyJointsFBDelegate xrLocateBodyJointsFB_ptr;
     /// <summary> Requires XR extension "XR_FB_body_tracking" </summary>
     /// <returns>
     ///       Success Codes:
@@ -1973,11 +1866,9 @@ public unsafe partial class OpenXRNativeInstance
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public XrResult xrLocateBodyJointsFB(XrBodyTrackerFB bodyTracker, XrBodyJointsLocateInfoFB* locateInfo, XrBodyJointLocationsFB* locations)
-        => xrLocateBodyJointsFB_ptr(bodyTracker, locateInfo, locations);
+        => xrLocateBodyJointsFB_funcPtr(bodyTracker, locateInfo, locations);
+    private delegate* unmanaged<XrBodyTrackerFB, XrBodyJointsLocateInfoFB*, XrBodyJointLocationsFB*, XrResult> xrLocateBodyJointsFB_funcPtr;
 
-        [UnmanagedFunctionPointer(OpenXRNative.CallConv)]
-        private delegate XrResult xrGetBodySkeletonFBDelegate(XrBodyTrackerFB bodyTracker, XrBodySkeletonFB* skeleton);
-        private xrGetBodySkeletonFBDelegate xrGetBodySkeletonFB_ptr;
     /// <summary> Requires XR extension "XR_FB_body_tracking" </summary>
     /// <returns>
     ///       Success Codes:
@@ -1993,11 +1884,9 @@ public unsafe partial class OpenXRNativeInstance
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public XrResult xrGetBodySkeletonFB(XrBodyTrackerFB bodyTracker, XrBodySkeletonFB* skeleton)
-        => xrGetBodySkeletonFB_ptr(bodyTracker, skeleton);
+        => xrGetBodySkeletonFB_funcPtr(bodyTracker, skeleton);
+    private delegate* unmanaged<XrBodyTrackerFB, XrBodySkeletonFB*, XrResult> xrGetBodySkeletonFB_funcPtr;
 
-        [UnmanagedFunctionPointer(OpenXRNative.CallConv)]
-        private delegate XrResult xrInitializeLoaderKHRDelegate(XrLoaderInitInfoBaseHeaderKHR* loaderInitInfo);
-        private xrInitializeLoaderKHRDelegate xrInitializeLoaderKHR_ptr;
     /// <summary> Requires XR extension "XR_KHR_loader_init" </summary>
     /// <returns>
     ///       Success Codes:
@@ -2008,11 +1897,9 @@ public unsafe partial class OpenXRNativeInstance
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public XrResult xrInitializeLoaderKHR(XrLoaderInitInfoBaseHeaderKHR* loaderInitInfo)
-        => xrInitializeLoaderKHR_ptr(loaderInitInfo);
+        => xrInitializeLoaderKHR_funcPtr(loaderInitInfo);
+    private delegate* unmanaged<XrLoaderInitInfoBaseHeaderKHR*, XrResult> xrInitializeLoaderKHR_funcPtr;
 
-        [UnmanagedFunctionPointer(OpenXRNative.CallConv)]
-        private delegate XrResult xrCreateVulkanInstanceKHRDelegate(XrInstance instance, XrVulkanInstanceCreateInfoKHR* createInfo, void* vulkanInstance, void* vulkanResult);
-        private xrCreateVulkanInstanceKHRDelegate xrCreateVulkanInstanceKHR_ptr;
     /// <summary> Requires XR extension "XR_KHR_vulkan_enable2" </summary>
     /// <returns>
     ///       Success Codes:
@@ -2028,12 +1915,10 @@ public unsafe partial class OpenXRNativeInstance
     /// <br/> ⠀⠀<see cref="XrResult.XR_ERROR_SYSTEM_INVALID"/>
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public XrResult xrCreateVulkanInstanceKHR(XrInstance instance, XrVulkanInstanceCreateInfoKHR* createInfo, void* vulkanInstance, void* vulkanResult)
-        => xrCreateVulkanInstanceKHR_ptr(instance, createInfo, vulkanInstance, vulkanResult);
+    public XrResult xrCreateVulkanInstanceKHR(XrInstance instance, XrVulkanInstanceCreateInfoKHR* createInfo, nint* vulkanInstance, nint* vulkanResult)
+        => xrCreateVulkanInstanceKHR_funcPtr(instance, createInfo, vulkanInstance, vulkanResult);
+    private delegate* unmanaged<XrInstance, XrVulkanInstanceCreateInfoKHR*, nint*, nint*, XrResult> xrCreateVulkanInstanceKHR_funcPtr;
 
-        [UnmanagedFunctionPointer(OpenXRNative.CallConv)]
-        private delegate XrResult xrCreateVulkanDeviceKHRDelegate(XrInstance instance, XrVulkanDeviceCreateInfoKHR* createInfo, void* vulkanDevice, void* vulkanResult);
-        private xrCreateVulkanDeviceKHRDelegate xrCreateVulkanDeviceKHR_ptr;
     /// <summary> Requires XR extension "XR_KHR_vulkan_enable2" </summary>
     /// <returns>
     ///       Success Codes:
@@ -2049,12 +1934,10 @@ public unsafe partial class OpenXRNativeInstance
     /// <br/> ⠀⠀<see cref="XrResult.XR_ERROR_SYSTEM_INVALID"/>
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public XrResult xrCreateVulkanDeviceKHR(XrInstance instance, XrVulkanDeviceCreateInfoKHR* createInfo, void* vulkanDevice, void* vulkanResult)
-        => xrCreateVulkanDeviceKHR_ptr(instance, createInfo, vulkanDevice, vulkanResult);
+    public XrResult xrCreateVulkanDeviceKHR(XrInstance instance, XrVulkanDeviceCreateInfoKHR* createInfo, nint* vulkanDevice, nint* vulkanResult)
+        => xrCreateVulkanDeviceKHR_funcPtr(instance, createInfo, vulkanDevice, vulkanResult);
+    private delegate* unmanaged<XrInstance, XrVulkanDeviceCreateInfoKHR*, nint*, nint*, XrResult> xrCreateVulkanDeviceKHR_funcPtr;
 
-        [UnmanagedFunctionPointer(OpenXRNative.CallConv)]
-        private delegate XrResult xrGetVulkanGraphicsDevice2KHRDelegate(XrInstance instance, XrVulkanGraphicsDeviceGetInfoKHR* getInfo, void* vulkanPhysicalDevice);
-        private xrGetVulkanGraphicsDevice2KHRDelegate xrGetVulkanGraphicsDevice2KHR_ptr;
     /// <summary> Requires XR extension "XR_KHR_vulkan_enable2" </summary>
     /// <returns>
     ///       Success Codes:
@@ -2068,12 +1951,10 @@ public unsafe partial class OpenXRNativeInstance
     /// <br/> ⠀⠀<see cref="XrResult.XR_ERROR_SYSTEM_INVALID"/>
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public XrResult xrGetVulkanGraphicsDevice2KHR(XrInstance instance, XrVulkanGraphicsDeviceGetInfoKHR* getInfo, void* vulkanPhysicalDevice)
-        => xrGetVulkanGraphicsDevice2KHR_ptr(instance, getInfo, vulkanPhysicalDevice);
+    public XrResult xrGetVulkanGraphicsDevice2KHR(XrInstance instance, XrVulkanGraphicsDeviceGetInfoKHR* getInfo, nint* vulkanPhysicalDevice)
+        => xrGetVulkanGraphicsDevice2KHR_funcPtr(instance, getInfo, vulkanPhysicalDevice);
+    private delegate* unmanaged<XrInstance, XrVulkanGraphicsDeviceGetInfoKHR*, nint*, XrResult> xrGetVulkanGraphicsDevice2KHR_funcPtr;
 
-        [UnmanagedFunctionPointer(OpenXRNative.CallConv)]
-        private delegate XrResult xrEnumerateSceneComputeFeaturesMSFTDelegate(XrInstance instance, ulong systemId, uint featureCapacityInput, uint* featureCountOutput, XrSceneComputeFeatureMSFT* features);
-        private xrEnumerateSceneComputeFeaturesMSFTDelegate xrEnumerateSceneComputeFeaturesMSFT_ptr;
     /// <summary> Requires XR extension "XR_MSFT_scene_understanding" </summary>
     /// <returns>
     ///       Success Codes:
@@ -2090,11 +1971,9 @@ public unsafe partial class OpenXRNativeInstance
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public XrResult xrEnumerateSceneComputeFeaturesMSFT(XrInstance instance, ulong systemId, uint featureCapacityInput, uint* featureCountOutput, XrSceneComputeFeatureMSFT* features)
-        => xrEnumerateSceneComputeFeaturesMSFT_ptr(instance, systemId, featureCapacityInput, featureCountOutput, features);
+        => xrEnumerateSceneComputeFeaturesMSFT_funcPtr(instance, systemId, featureCapacityInput, featureCountOutput, features);
+    private delegate* unmanaged<XrInstance, ulong, uint, uint*, XrSceneComputeFeatureMSFT*, XrResult> xrEnumerateSceneComputeFeaturesMSFT_funcPtr;
 
-        [UnmanagedFunctionPointer(OpenXRNative.CallConv)]
-        private delegate XrResult xrCreateSceneObserverMSFTDelegate(XrSession session, XrSceneObserverCreateInfoMSFT* createInfo, XrSceneObserverMSFT* sceneObserver);
-        private xrCreateSceneObserverMSFTDelegate xrCreateSceneObserverMSFT_ptr;
     /// <summary> Requires XR extension "XR_MSFT_scene_understanding" </summary>
     /// <returns>
     ///       Success Codes:
@@ -2112,11 +1991,9 @@ public unsafe partial class OpenXRNativeInstance
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public XrResult xrCreateSceneObserverMSFT(XrSession session, XrSceneObserverCreateInfoMSFT* createInfo, XrSceneObserverMSFT* sceneObserver)
-        => xrCreateSceneObserverMSFT_ptr(session, createInfo, sceneObserver);
+        => xrCreateSceneObserverMSFT_funcPtr(session, createInfo, sceneObserver);
+    private delegate* unmanaged<XrSession, XrSceneObserverCreateInfoMSFT*, XrSceneObserverMSFT*, XrResult> xrCreateSceneObserverMSFT_funcPtr;
 
-        [UnmanagedFunctionPointer(OpenXRNative.CallConv)]
-        private delegate XrResult xrDestroySceneObserverMSFTDelegate(XrSceneObserverMSFT sceneObserver);
-        private xrDestroySceneObserverMSFTDelegate xrDestroySceneObserverMSFT_ptr;
     /// <summary> Requires XR extension "XR_MSFT_scene_understanding" </summary>
     /// <returns>
     ///       Success Codes:
@@ -2127,11 +2004,9 @@ public unsafe partial class OpenXRNativeInstance
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public XrResult xrDestroySceneObserverMSFT(XrSceneObserverMSFT sceneObserver)
-        => xrDestroySceneObserverMSFT_ptr(sceneObserver);
+        => xrDestroySceneObserverMSFT_funcPtr(sceneObserver);
+    private delegate* unmanaged<XrSceneObserverMSFT, XrResult> xrDestroySceneObserverMSFT_funcPtr;
 
-        [UnmanagedFunctionPointer(OpenXRNative.CallConv)]
-        private delegate XrResult xrCreateSceneMSFTDelegate(XrSceneObserverMSFT sceneObserver, XrSceneCreateInfoMSFT* createInfo, XrSceneMSFT* scene);
-        private xrCreateSceneMSFTDelegate xrCreateSceneMSFT_ptr;
     /// <summary> Requires XR extension "XR_MSFT_scene_understanding" </summary>
     /// <returns>
     ///       Success Codes:
@@ -2150,11 +2025,9 @@ public unsafe partial class OpenXRNativeInstance
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public XrResult xrCreateSceneMSFT(XrSceneObserverMSFT sceneObserver, XrSceneCreateInfoMSFT* createInfo, XrSceneMSFT* scene)
-        => xrCreateSceneMSFT_ptr(sceneObserver, createInfo, scene);
+        => xrCreateSceneMSFT_funcPtr(sceneObserver, createInfo, scene);
+    private delegate* unmanaged<XrSceneObserverMSFT, XrSceneCreateInfoMSFT*, XrSceneMSFT*, XrResult> xrCreateSceneMSFT_funcPtr;
 
-        [UnmanagedFunctionPointer(OpenXRNative.CallConv)]
-        private delegate XrResult xrDestroySceneMSFTDelegate(XrSceneMSFT scene);
-        private xrDestroySceneMSFTDelegate xrDestroySceneMSFT_ptr;
     /// <summary> Requires XR extension "XR_MSFT_scene_understanding" </summary>
     /// <returns>
     ///       Success Codes:
@@ -2165,11 +2038,9 @@ public unsafe partial class OpenXRNativeInstance
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public XrResult xrDestroySceneMSFT(XrSceneMSFT scene)
-        => xrDestroySceneMSFT_ptr(scene);
+        => xrDestroySceneMSFT_funcPtr(scene);
+    private delegate* unmanaged<XrSceneMSFT, XrResult> xrDestroySceneMSFT_funcPtr;
 
-        [UnmanagedFunctionPointer(OpenXRNative.CallConv)]
-        private delegate XrResult xrComputeNewSceneMSFTDelegate(XrSceneObserverMSFT sceneObserver, XrNewSceneComputeInfoMSFT* computeInfo);
-        private xrComputeNewSceneMSFTDelegate xrComputeNewSceneMSFT_ptr;
     /// <summary> Requires XR extension "XR_MSFT_scene_understanding" </summary>
     /// <returns>
     ///       Success Codes:
@@ -2191,11 +2062,9 @@ public unsafe partial class OpenXRNativeInstance
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public XrResult xrComputeNewSceneMSFT(XrSceneObserverMSFT sceneObserver, XrNewSceneComputeInfoMSFT* computeInfo)
-        => xrComputeNewSceneMSFT_ptr(sceneObserver, computeInfo);
+        => xrComputeNewSceneMSFT_funcPtr(sceneObserver, computeInfo);
+    private delegate* unmanaged<XrSceneObserverMSFT, XrNewSceneComputeInfoMSFT*, XrResult> xrComputeNewSceneMSFT_funcPtr;
 
-        [UnmanagedFunctionPointer(OpenXRNative.CallConv)]
-        private delegate XrResult xrGetSceneComputeStateMSFTDelegate(XrSceneObserverMSFT sceneObserver, XrSceneComputeStateMSFT* state);
-        private xrGetSceneComputeStateMSFTDelegate xrGetSceneComputeStateMSFT_ptr;
     /// <summary> Requires XR extension "XR_MSFT_scene_understanding" </summary>
     /// <returns>
     ///       Success Codes:
@@ -2212,11 +2081,9 @@ public unsafe partial class OpenXRNativeInstance
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public XrResult xrGetSceneComputeStateMSFT(XrSceneObserverMSFT sceneObserver, XrSceneComputeStateMSFT* state)
-        => xrGetSceneComputeStateMSFT_ptr(sceneObserver, state);
+        => xrGetSceneComputeStateMSFT_funcPtr(sceneObserver, state);
+    private delegate* unmanaged<XrSceneObserverMSFT, XrSceneComputeStateMSFT*, XrResult> xrGetSceneComputeStateMSFT_funcPtr;
 
-        [UnmanagedFunctionPointer(OpenXRNative.CallConv)]
-        private delegate XrResult xrGetSceneComponentsMSFTDelegate(XrSceneMSFT scene, XrSceneComponentsGetInfoMSFT* getInfo, XrSceneComponentsMSFT* components);
-        private xrGetSceneComponentsMSFTDelegate xrGetSceneComponentsMSFT_ptr;
     /// <summary> Requires XR extension "XR_MSFT_scene_understanding" </summary>
     /// <returns>
     ///       Success Codes:
@@ -2235,11 +2102,9 @@ public unsafe partial class OpenXRNativeInstance
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public XrResult xrGetSceneComponentsMSFT(XrSceneMSFT scene, XrSceneComponentsGetInfoMSFT* getInfo, XrSceneComponentsMSFT* components)
-        => xrGetSceneComponentsMSFT_ptr(scene, getInfo, components);
+        => xrGetSceneComponentsMSFT_funcPtr(scene, getInfo, components);
+    private delegate* unmanaged<XrSceneMSFT, XrSceneComponentsGetInfoMSFT*, XrSceneComponentsMSFT*, XrResult> xrGetSceneComponentsMSFT_funcPtr;
 
-        [UnmanagedFunctionPointer(OpenXRNative.CallConv)]
-        private delegate XrResult xrLocateSceneComponentsMSFTDelegate(XrSceneMSFT scene, XrSceneComponentsLocateInfoMSFT* locateInfo, XrSceneComponentLocationsMSFT* locations);
-        private xrLocateSceneComponentsMSFTDelegate xrLocateSceneComponentsMSFT_ptr;
     /// <summary> Requires XR extension "XR_MSFT_scene_understanding" </summary>
     /// <returns>
     ///       Success Codes:
@@ -2258,11 +2123,9 @@ public unsafe partial class OpenXRNativeInstance
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public XrResult xrLocateSceneComponentsMSFT(XrSceneMSFT scene, XrSceneComponentsLocateInfoMSFT* locateInfo, XrSceneComponentLocationsMSFT* locations)
-        => xrLocateSceneComponentsMSFT_ptr(scene, locateInfo, locations);
+        => xrLocateSceneComponentsMSFT_funcPtr(scene, locateInfo, locations);
+    private delegate* unmanaged<XrSceneMSFT, XrSceneComponentsLocateInfoMSFT*, XrSceneComponentLocationsMSFT*, XrResult> xrLocateSceneComponentsMSFT_funcPtr;
 
-        [UnmanagedFunctionPointer(OpenXRNative.CallConv)]
-        private delegate XrResult xrGetSceneMeshBuffersMSFTDelegate(XrSceneMSFT scene, XrSceneMeshBuffersGetInfoMSFT* getInfo, XrSceneMeshBuffersMSFT* buffers);
-        private xrGetSceneMeshBuffersMSFTDelegate xrGetSceneMeshBuffersMSFT_ptr;
     /// <summary> Requires XR extension "XR_MSFT_scene_understanding" </summary>
     /// <returns>
     ///       Success Codes:
@@ -2281,11 +2144,9 @@ public unsafe partial class OpenXRNativeInstance
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public XrResult xrGetSceneMeshBuffersMSFT(XrSceneMSFT scene, XrSceneMeshBuffersGetInfoMSFT* getInfo, XrSceneMeshBuffersMSFT* buffers)
-        => xrGetSceneMeshBuffersMSFT_ptr(scene, getInfo, buffers);
+        => xrGetSceneMeshBuffersMSFT_funcPtr(scene, getInfo, buffers);
+    private delegate* unmanaged<XrSceneMSFT, XrSceneMeshBuffersGetInfoMSFT*, XrSceneMeshBuffersMSFT*, XrResult> xrGetSceneMeshBuffersMSFT_funcPtr;
 
-        [UnmanagedFunctionPointer(OpenXRNative.CallConv)]
-        private delegate XrResult xrDeserializeSceneMSFTDelegate(XrSceneObserverMSFT sceneObserver, XrSceneDeserializeInfoMSFT* deserializeInfo);
-        private xrDeserializeSceneMSFTDelegate xrDeserializeSceneMSFT_ptr;
     /// <summary> Requires XR extension "XR_MSFT_scene_understanding_serialization" </summary>
     /// <returns>
     ///       Success Codes:
@@ -2303,11 +2164,9 @@ public unsafe partial class OpenXRNativeInstance
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public XrResult xrDeserializeSceneMSFT(XrSceneObserverMSFT sceneObserver, XrSceneDeserializeInfoMSFT* deserializeInfo)
-        => xrDeserializeSceneMSFT_ptr(sceneObserver, deserializeInfo);
+        => xrDeserializeSceneMSFT_funcPtr(sceneObserver, deserializeInfo);
+    private delegate* unmanaged<XrSceneObserverMSFT, XrSceneDeserializeInfoMSFT*, XrResult> xrDeserializeSceneMSFT_funcPtr;
 
-        [UnmanagedFunctionPointer(OpenXRNative.CallConv)]
-        private delegate XrResult xrGetSerializedSceneFragmentDataMSFTDelegate(XrSceneMSFT scene, XrSerializedSceneFragmentDataGetInfoMSFT* getInfo, uint countInput, uint* readOutput, byte* buffer);
-        private xrGetSerializedSceneFragmentDataMSFTDelegate xrGetSerializedSceneFragmentDataMSFT_ptr;
     /// <summary> Requires XR extension "XR_MSFT_scene_understanding_serialization" </summary>
     /// <returns>
     ///       Success Codes:
@@ -2326,11 +2185,9 @@ public unsafe partial class OpenXRNativeInstance
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public XrResult xrGetSerializedSceneFragmentDataMSFT(XrSceneMSFT scene, XrSerializedSceneFragmentDataGetInfoMSFT* getInfo, uint countInput, uint* readOutput, byte* buffer)
-        => xrGetSerializedSceneFragmentDataMSFT_ptr(scene, getInfo, countInput, readOutput, buffer);
+        => xrGetSerializedSceneFragmentDataMSFT_funcPtr(scene, getInfo, countInput, readOutput, buffer);
+    private delegate* unmanaged<XrSceneMSFT, XrSerializedSceneFragmentDataGetInfoMSFT*, uint, uint*, byte*, XrResult> xrGetSerializedSceneFragmentDataMSFT_funcPtr;
 
-        [UnmanagedFunctionPointer(OpenXRNative.CallConv)]
-        private delegate XrResult xrEnumerateDisplayRefreshRatesFBDelegate(XrSession session, uint displayRefreshRateCapacityInput, uint* displayRefreshRateCountOutput, float* displayRefreshRates);
-        private xrEnumerateDisplayRefreshRatesFBDelegate xrEnumerateDisplayRefreshRatesFB_ptr;
     /// <summary> Requires XR extension "XR_FB_display_refresh_rate" </summary>
     /// <returns>
     ///       Success Codes:
@@ -2347,11 +2204,9 @@ public unsafe partial class OpenXRNativeInstance
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public XrResult xrEnumerateDisplayRefreshRatesFB(XrSession session, uint displayRefreshRateCapacityInput, uint* displayRefreshRateCountOutput, float* displayRefreshRates)
-        => xrEnumerateDisplayRefreshRatesFB_ptr(session, displayRefreshRateCapacityInput, displayRefreshRateCountOutput, displayRefreshRates);
+        => xrEnumerateDisplayRefreshRatesFB_funcPtr(session, displayRefreshRateCapacityInput, displayRefreshRateCountOutput, displayRefreshRates);
+    private delegate* unmanaged<XrSession, uint, uint*, float*, XrResult> xrEnumerateDisplayRefreshRatesFB_funcPtr;
 
-        [UnmanagedFunctionPointer(OpenXRNative.CallConv)]
-        private delegate XrResult xrGetDisplayRefreshRateFBDelegate(XrSession session, float* displayRefreshRate);
-        private xrGetDisplayRefreshRateFBDelegate xrGetDisplayRefreshRateFB_ptr;
     /// <summary> Requires XR extension "XR_FB_display_refresh_rate" </summary>
     /// <returns>
     ///       Success Codes:
@@ -2367,11 +2222,9 @@ public unsafe partial class OpenXRNativeInstance
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public XrResult xrGetDisplayRefreshRateFB(XrSession session, float* displayRefreshRate)
-        => xrGetDisplayRefreshRateFB_ptr(session, displayRefreshRate);
+        => xrGetDisplayRefreshRateFB_funcPtr(session, displayRefreshRate);
+    private delegate* unmanaged<XrSession, float*, XrResult> xrGetDisplayRefreshRateFB_funcPtr;
 
-        [UnmanagedFunctionPointer(OpenXRNative.CallConv)]
-        private delegate XrResult xrRequestDisplayRefreshRateFBDelegate(XrSession session, float displayRefreshRate);
-        private xrRequestDisplayRefreshRateFBDelegate xrRequestDisplayRefreshRateFB_ptr;
     /// <summary> Requires XR extension "XR_FB_display_refresh_rate" </summary>
     /// <returns>
     ///       Success Codes:
@@ -2389,11 +2242,9 @@ public unsafe partial class OpenXRNativeInstance
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public XrResult xrRequestDisplayRefreshRateFB(XrSession session, float displayRefreshRate)
-        => xrRequestDisplayRefreshRateFB_ptr(session, displayRefreshRate);
+        => xrRequestDisplayRefreshRateFB_funcPtr(session, displayRefreshRate);
+    private delegate* unmanaged<XrSession, float, XrResult> xrRequestDisplayRefreshRateFB_funcPtr;
 
-        [UnmanagedFunctionPointer(OpenXRNative.CallConv)]
-        private delegate XrResult xrEnumerateViveTrackerPathsHTCXDelegate(XrInstance instance, uint pathCapacityInput, uint* pathCountOutput, XrViveTrackerPathsHTCX* paths);
-        private xrEnumerateViveTrackerPathsHTCXDelegate xrEnumerateViveTrackerPathsHTCX_ptr;
     /// <summary> Requires XR extension "XR_HTCX_vive_tracker_interaction" </summary>
     /// <returns>
     ///       Success Codes:
@@ -2408,11 +2259,9 @@ public unsafe partial class OpenXRNativeInstance
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public XrResult xrEnumerateViveTrackerPathsHTCX(XrInstance instance, uint pathCapacityInput, uint* pathCountOutput, XrViveTrackerPathsHTCX* paths)
-        => xrEnumerateViveTrackerPathsHTCX_ptr(instance, pathCapacityInput, pathCountOutput, paths);
+        => xrEnumerateViveTrackerPathsHTCX_funcPtr(instance, pathCapacityInput, pathCountOutput, paths);
+    private delegate* unmanaged<XrInstance, uint, uint*, XrViveTrackerPathsHTCX*, XrResult> xrEnumerateViveTrackerPathsHTCX_funcPtr;
 
-        [UnmanagedFunctionPointer(OpenXRNative.CallConv)]
-        private delegate XrResult xrCreateFacialTrackerHTCDelegate(XrSession session, XrFacialTrackerCreateInfoHTC* createInfo, XrFacialTrackerHTC* facialTracker);
-        private xrCreateFacialTrackerHTCDelegate xrCreateFacialTrackerHTC_ptr;
     /// <summary> Requires XR extension "XR_HTC_facial_tracking" </summary>
     /// <returns>
     ///       Success Codes:
@@ -2431,11 +2280,9 @@ public unsafe partial class OpenXRNativeInstance
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public XrResult xrCreateFacialTrackerHTC(XrSession session, XrFacialTrackerCreateInfoHTC* createInfo, XrFacialTrackerHTC* facialTracker)
-        => xrCreateFacialTrackerHTC_ptr(session, createInfo, facialTracker);
+        => xrCreateFacialTrackerHTC_funcPtr(session, createInfo, facialTracker);
+    private delegate* unmanaged<XrSession, XrFacialTrackerCreateInfoHTC*, XrFacialTrackerHTC*, XrResult> xrCreateFacialTrackerHTC_funcPtr;
 
-        [UnmanagedFunctionPointer(OpenXRNative.CallConv)]
-        private delegate XrResult xrDestroyFacialTrackerHTCDelegate(XrFacialTrackerHTC facialTracker);
-        private xrDestroyFacialTrackerHTCDelegate xrDestroyFacialTrackerHTC_ptr;
     /// <summary> Requires XR extension "XR_HTC_facial_tracking" </summary>
     /// <returns>
     ///       Success Codes:
@@ -2446,11 +2293,9 @@ public unsafe partial class OpenXRNativeInstance
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public XrResult xrDestroyFacialTrackerHTC(XrFacialTrackerHTC facialTracker)
-        => xrDestroyFacialTrackerHTC_ptr(facialTracker);
+        => xrDestroyFacialTrackerHTC_funcPtr(facialTracker);
+    private delegate* unmanaged<XrFacialTrackerHTC, XrResult> xrDestroyFacialTrackerHTC_funcPtr;
 
-        [UnmanagedFunctionPointer(OpenXRNative.CallConv)]
-        private delegate XrResult xrGetFacialExpressionsHTCDelegate(XrFacialTrackerHTC facialTracker, XrFacialExpressionsHTC* facialExpressions);
-        private xrGetFacialExpressionsHTCDelegate xrGetFacialExpressionsHTC_ptr;
     /// <summary> Requires XR extension "XR_HTC_facial_tracking" </summary>
     /// <returns>
     ///       Success Codes:
@@ -2465,11 +2310,9 @@ public unsafe partial class OpenXRNativeInstance
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public XrResult xrGetFacialExpressionsHTC(XrFacialTrackerHTC facialTracker, XrFacialExpressionsHTC* facialExpressions)
-        => xrGetFacialExpressionsHTC_ptr(facialTracker, facialExpressions);
+        => xrGetFacialExpressionsHTC_funcPtr(facialTracker, facialExpressions);
+    private delegate* unmanaged<XrFacialTrackerHTC, XrFacialExpressionsHTC*, XrResult> xrGetFacialExpressionsHTC_funcPtr;
 
-        [UnmanagedFunctionPointer(OpenXRNative.CallConv)]
-        private delegate XrResult xrEnumerateColorSpacesFBDelegate(XrSession session, uint colorSpaceCapacityInput, uint* colorSpaceCountOutput, XrColorSpaceFB* colorSpaces);
-        private xrEnumerateColorSpacesFBDelegate xrEnumerateColorSpacesFB_ptr;
     /// <summary> Requires XR extension "XR_FB_color_space" </summary>
     /// <returns>
     ///       Success Codes:
@@ -2486,11 +2329,9 @@ public unsafe partial class OpenXRNativeInstance
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public XrResult xrEnumerateColorSpacesFB(XrSession session, uint colorSpaceCapacityInput, uint* colorSpaceCountOutput, XrColorSpaceFB* colorSpaces)
-        => xrEnumerateColorSpacesFB_ptr(session, colorSpaceCapacityInput, colorSpaceCountOutput, colorSpaces);
+        => xrEnumerateColorSpacesFB_funcPtr(session, colorSpaceCapacityInput, colorSpaceCountOutput, colorSpaces);
+    private delegate* unmanaged<XrSession, uint, uint*, XrColorSpaceFB*, XrResult> xrEnumerateColorSpacesFB_funcPtr;
 
-        [UnmanagedFunctionPointer(OpenXRNative.CallConv)]
-        private delegate XrResult xrSetColorSpaceFBDelegate(XrSession session, XrColorSpaceFB colorSpace);
-        private xrSetColorSpaceFBDelegate xrSetColorSpaceFB_ptr;
     /// <summary> Requires XR extension "XR_FB_color_space" </summary>
     /// <returns>
     ///       Success Codes:
@@ -2508,11 +2349,9 @@ public unsafe partial class OpenXRNativeInstance
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public XrResult xrSetColorSpaceFB(XrSession session, XrColorSpaceFB colorSpace)
-        => xrSetColorSpaceFB_ptr(session, colorSpace);
+        => xrSetColorSpaceFB_funcPtr(session, colorSpace);
+    private delegate* unmanaged<XrSession, XrColorSpaceFB, XrResult> xrSetColorSpaceFB_funcPtr;
 
-        [UnmanagedFunctionPointer(OpenXRNative.CallConv)]
-        private delegate XrResult xrGetHandMeshFBDelegate(XrHandTrackerEXT handTracker, XrHandTrackingMeshFB* mesh);
-        private xrGetHandMeshFBDelegate xrGetHandMeshFB_ptr;
     /// <summary> Requires XR extension "XR_FB_hand_tracking_mesh" </summary>
     /// <returns>
     ///       Success Codes:
@@ -2530,11 +2369,9 @@ public unsafe partial class OpenXRNativeInstance
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public XrResult xrGetHandMeshFB(XrHandTrackerEXT handTracker, XrHandTrackingMeshFB* mesh)
-        => xrGetHandMeshFB_ptr(handTracker, mesh);
+        => xrGetHandMeshFB_funcPtr(handTracker, mesh);
+    private delegate* unmanaged<XrHandTrackerEXT, XrHandTrackingMeshFB*, XrResult> xrGetHandMeshFB_funcPtr;
 
-        [UnmanagedFunctionPointer(OpenXRNative.CallConv)]
-        private delegate XrResult xrCreateSpatialAnchorFBDelegate(XrSession session, XrSpatialAnchorCreateInfoFB* info, ulong* requestId);
-        private xrCreateSpatialAnchorFBDelegate xrCreateSpatialAnchorFB_ptr;
     /// <summary> Requires XR extension "XR_FB_spatial_entity" </summary>
     /// <returns>
     ///       Success Codes:
@@ -2555,11 +2392,9 @@ public unsafe partial class OpenXRNativeInstance
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public XrResult xrCreateSpatialAnchorFB(XrSession session, XrSpatialAnchorCreateInfoFB* info, ulong* requestId)
-        => xrCreateSpatialAnchorFB_ptr(session, info, requestId);
+        => xrCreateSpatialAnchorFB_funcPtr(session, info, requestId);
+    private delegate* unmanaged<XrSession, XrSpatialAnchorCreateInfoFB*, ulong*, XrResult> xrCreateSpatialAnchorFB_funcPtr;
 
-        [UnmanagedFunctionPointer(OpenXRNative.CallConv)]
-        private delegate XrResult xrGetSpaceUuidFBDelegate(XrSpace space, XrUuidEXT* uuid);
-        private xrGetSpaceUuidFBDelegate xrGetSpaceUuidFB_ptr;
     /// <summary> Requires XR extension "XR_FB_spatial_entity" </summary>
     /// <returns>
     ///       Success Codes:
@@ -2576,11 +2411,9 @@ public unsafe partial class OpenXRNativeInstance
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public XrResult xrGetSpaceUuidFB(XrSpace space, XrUuidEXT* uuid)
-        => xrGetSpaceUuidFB_ptr(space, uuid);
+        => xrGetSpaceUuidFB_funcPtr(space, uuid);
+    private delegate* unmanaged<XrSpace, XrUuidEXT*, XrResult> xrGetSpaceUuidFB_funcPtr;
 
-        [UnmanagedFunctionPointer(OpenXRNative.CallConv)]
-        private delegate XrResult xrEnumerateSpaceSupportedComponentsFBDelegate(XrSpace space, uint componentTypeCapacityInput, uint* componentTypeCountOutput, XrSpaceComponentTypeFB* componentTypes);
-        private xrEnumerateSpaceSupportedComponentsFBDelegate xrEnumerateSpaceSupportedComponentsFB_ptr;
     /// <summary> Requires XR extension "XR_FB_spatial_entity" </summary>
     /// <returns>
     ///       Success Codes:
@@ -2598,11 +2431,9 @@ public unsafe partial class OpenXRNativeInstance
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public XrResult xrEnumerateSpaceSupportedComponentsFB(XrSpace space, uint componentTypeCapacityInput, uint* componentTypeCountOutput, XrSpaceComponentTypeFB* componentTypes)
-        => xrEnumerateSpaceSupportedComponentsFB_ptr(space, componentTypeCapacityInput, componentTypeCountOutput, componentTypes);
+        => xrEnumerateSpaceSupportedComponentsFB_funcPtr(space, componentTypeCapacityInput, componentTypeCountOutput, componentTypes);
+    private delegate* unmanaged<XrSpace, uint, uint*, XrSpaceComponentTypeFB*, XrResult> xrEnumerateSpaceSupportedComponentsFB_funcPtr;
 
-        [UnmanagedFunctionPointer(OpenXRNative.CallConv)]
-        private delegate XrResult xrSetSpaceComponentStatusFBDelegate(XrSpace space, XrSpaceComponentStatusSetInfoFB* info, ulong* requestId);
-        private xrSetSpaceComponentStatusFBDelegate xrSetSpaceComponentStatusFB_ptr;
     /// <summary> Requires XR extension "XR_FB_spatial_entity" </summary>
     /// <returns>
     ///       Success Codes:
@@ -2622,11 +2453,9 @@ public unsafe partial class OpenXRNativeInstance
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public XrResult xrSetSpaceComponentStatusFB(XrSpace space, XrSpaceComponentStatusSetInfoFB* info, ulong* requestId)
-        => xrSetSpaceComponentStatusFB_ptr(space, info, requestId);
+        => xrSetSpaceComponentStatusFB_funcPtr(space, info, requestId);
+    private delegate* unmanaged<XrSpace, XrSpaceComponentStatusSetInfoFB*, ulong*, XrResult> xrSetSpaceComponentStatusFB_funcPtr;
 
-        [UnmanagedFunctionPointer(OpenXRNative.CallConv)]
-        private delegate XrResult xrGetSpaceComponentStatusFBDelegate(XrSpace space, XrSpaceComponentTypeFB componentType, XrSpaceComponentStatusFB* status);
-        private xrGetSpaceComponentStatusFBDelegate xrGetSpaceComponentStatusFB_ptr;
     /// <summary> Requires XR extension "XR_FB_spatial_entity" </summary>
     /// <returns>
     ///       Success Codes:
@@ -2644,11 +2473,9 @@ public unsafe partial class OpenXRNativeInstance
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public XrResult xrGetSpaceComponentStatusFB(XrSpace space, XrSpaceComponentTypeFB componentType, XrSpaceComponentStatusFB* status)
-        => xrGetSpaceComponentStatusFB_ptr(space, componentType, status);
+        => xrGetSpaceComponentStatusFB_funcPtr(space, componentType, status);
+    private delegate* unmanaged<XrSpace, XrSpaceComponentTypeFB, XrSpaceComponentStatusFB*, XrResult> xrGetSpaceComponentStatusFB_funcPtr;
 
-        [UnmanagedFunctionPointer(OpenXRNative.CallConv)]
-        private delegate XrResult xrCreateFoveationProfileFBDelegate(XrSession session, XrFoveationProfileCreateInfoFB* createInfo, XrFoveationProfileFB* profile);
-        private xrCreateFoveationProfileFBDelegate xrCreateFoveationProfileFB_ptr;
     /// <summary> Requires XR extension "XR_FB_foveation" </summary>
     /// <returns>
     ///       Success Codes:
@@ -2666,11 +2493,9 @@ public unsafe partial class OpenXRNativeInstance
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public XrResult xrCreateFoveationProfileFB(XrSession session, XrFoveationProfileCreateInfoFB* createInfo, XrFoveationProfileFB* profile)
-        => xrCreateFoveationProfileFB_ptr(session, createInfo, profile);
+        => xrCreateFoveationProfileFB_funcPtr(session, createInfo, profile);
+    private delegate* unmanaged<XrSession, XrFoveationProfileCreateInfoFB*, XrFoveationProfileFB*, XrResult> xrCreateFoveationProfileFB_funcPtr;
 
-        [UnmanagedFunctionPointer(OpenXRNative.CallConv)]
-        private delegate XrResult xrDestroyFoveationProfileFBDelegate(XrFoveationProfileFB profile);
-        private xrDestroyFoveationProfileFBDelegate xrDestroyFoveationProfileFB_ptr;
     /// <summary> Requires XR extension "XR_FB_foveation" </summary>
     /// <returns>
     ///       Success Codes:
@@ -2682,11 +2507,9 @@ public unsafe partial class OpenXRNativeInstance
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public XrResult xrDestroyFoveationProfileFB(XrFoveationProfileFB profile)
-        => xrDestroyFoveationProfileFB_ptr(profile);
+        => xrDestroyFoveationProfileFB_funcPtr(profile);
+    private delegate* unmanaged<XrFoveationProfileFB, XrResult> xrDestroyFoveationProfileFB_funcPtr;
 
-        [UnmanagedFunctionPointer(OpenXRNative.CallConv)]
-        private delegate XrResult xrQuerySystemTrackedKeyboardFBDelegate(XrSession session, XrKeyboardTrackingQueryFB* queryInfo, XrKeyboardTrackingDescriptionFB* keyboard);
-        private xrQuerySystemTrackedKeyboardFBDelegate xrQuerySystemTrackedKeyboardFB_ptr;
     /// <summary> Requires XR extension "XR_FB_keyboard_tracking" </summary>
     /// <returns>
     ///       Success Codes:
@@ -2703,11 +2526,9 @@ public unsafe partial class OpenXRNativeInstance
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public XrResult xrQuerySystemTrackedKeyboardFB(XrSession session, XrKeyboardTrackingQueryFB* queryInfo, XrKeyboardTrackingDescriptionFB* keyboard)
-        => xrQuerySystemTrackedKeyboardFB_ptr(session, queryInfo, keyboard);
+        => xrQuerySystemTrackedKeyboardFB_funcPtr(session, queryInfo, keyboard);
+    private delegate* unmanaged<XrSession, XrKeyboardTrackingQueryFB*, XrKeyboardTrackingDescriptionFB*, XrResult> xrQuerySystemTrackedKeyboardFB_funcPtr;
 
-        [UnmanagedFunctionPointer(OpenXRNative.CallConv)]
-        private delegate XrResult xrCreateKeyboardSpaceFBDelegate(XrSession session, XrKeyboardSpaceCreateInfoFB* createInfo, XrSpace* keyboardSpace);
-        private xrCreateKeyboardSpaceFBDelegate xrCreateKeyboardSpaceFB_ptr;
     /// <summary> Requires XR extension "XR_FB_keyboard_tracking" </summary>
     /// <returns>
     ///       Success Codes:
@@ -2726,11 +2547,9 @@ public unsafe partial class OpenXRNativeInstance
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public XrResult xrCreateKeyboardSpaceFB(XrSession session, XrKeyboardSpaceCreateInfoFB* createInfo, XrSpace* keyboardSpace)
-        => xrCreateKeyboardSpaceFB_ptr(session, createInfo, keyboardSpace);
+        => xrCreateKeyboardSpaceFB_funcPtr(session, createInfo, keyboardSpace);
+    private delegate* unmanaged<XrSession, XrKeyboardSpaceCreateInfoFB*, XrSpace*, XrResult> xrCreateKeyboardSpaceFB_funcPtr;
 
-        [UnmanagedFunctionPointer(OpenXRNative.CallConv)]
-        private delegate XrResult xrCreateTriangleMeshFBDelegate(XrSession session, XrTriangleMeshCreateInfoFB* createInfo, XrTriangleMeshFB* outTriangleMesh);
-        private xrCreateTriangleMeshFBDelegate xrCreateTriangleMeshFB_ptr;
     /// <summary> Requires XR extension "XR_FB_triangle_mesh" </summary>
     /// <returns>
     ///       Success Codes:
@@ -2750,11 +2569,9 @@ public unsafe partial class OpenXRNativeInstance
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public XrResult xrCreateTriangleMeshFB(XrSession session, XrTriangleMeshCreateInfoFB* createInfo, XrTriangleMeshFB* outTriangleMesh)
-        => xrCreateTriangleMeshFB_ptr(session, createInfo, outTriangleMesh);
+        => xrCreateTriangleMeshFB_funcPtr(session, createInfo, outTriangleMesh);
+    private delegate* unmanaged<XrSession, XrTriangleMeshCreateInfoFB*, XrTriangleMeshFB*, XrResult> xrCreateTriangleMeshFB_funcPtr;
 
-        [UnmanagedFunctionPointer(OpenXRNative.CallConv)]
-        private delegate XrResult xrDestroyTriangleMeshFBDelegate(XrTriangleMeshFB mesh);
-        private xrDestroyTriangleMeshFBDelegate xrDestroyTriangleMeshFB_ptr;
     /// <summary> Requires XR extension "XR_FB_triangle_mesh" </summary>
     /// <returns>
     ///       Success Codes:
@@ -2767,11 +2584,9 @@ public unsafe partial class OpenXRNativeInstance
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public XrResult xrDestroyTriangleMeshFB(XrTriangleMeshFB mesh)
-        => xrDestroyTriangleMeshFB_ptr(mesh);
+        => xrDestroyTriangleMeshFB_funcPtr(mesh);
+    private delegate* unmanaged<XrTriangleMeshFB, XrResult> xrDestroyTriangleMeshFB_funcPtr;
 
-        [UnmanagedFunctionPointer(OpenXRNative.CallConv)]
-        private delegate XrResult xrTriangleMeshGetVertexBufferFBDelegate(XrTriangleMeshFB mesh, XrVector3f** outVertexBuffer);
-        private xrTriangleMeshGetVertexBufferFBDelegate xrTriangleMeshGetVertexBufferFB_ptr;
     /// <summary> Requires XR extension "XR_FB_triangle_mesh" </summary>
     /// <returns>
     ///       Success Codes:
@@ -2788,11 +2603,9 @@ public unsafe partial class OpenXRNativeInstance
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public XrResult xrTriangleMeshGetVertexBufferFB(XrTriangleMeshFB mesh, XrVector3f** outVertexBuffer)
-        => xrTriangleMeshGetVertexBufferFB_ptr(mesh, outVertexBuffer);
+        => xrTriangleMeshGetVertexBufferFB_funcPtr(mesh, outVertexBuffer);
+    private delegate* unmanaged<XrTriangleMeshFB, XrVector3f**, XrResult> xrTriangleMeshGetVertexBufferFB_funcPtr;
 
-        [UnmanagedFunctionPointer(OpenXRNative.CallConv)]
-        private delegate XrResult xrTriangleMeshGetIndexBufferFBDelegate(XrTriangleMeshFB mesh, uint** outIndexBuffer);
-        private xrTriangleMeshGetIndexBufferFBDelegate xrTriangleMeshGetIndexBufferFB_ptr;
     /// <summary> Requires XR extension "XR_FB_triangle_mesh" </summary>
     /// <returns>
     ///       Success Codes:
@@ -2809,11 +2622,9 @@ public unsafe partial class OpenXRNativeInstance
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public XrResult xrTriangleMeshGetIndexBufferFB(XrTriangleMeshFB mesh, uint** outIndexBuffer)
-        => xrTriangleMeshGetIndexBufferFB_ptr(mesh, outIndexBuffer);
+        => xrTriangleMeshGetIndexBufferFB_funcPtr(mesh, outIndexBuffer);
+    private delegate* unmanaged<XrTriangleMeshFB, uint**, XrResult> xrTriangleMeshGetIndexBufferFB_funcPtr;
 
-        [UnmanagedFunctionPointer(OpenXRNative.CallConv)]
-        private delegate XrResult xrTriangleMeshBeginUpdateFBDelegate(XrTriangleMeshFB mesh);
-        private xrTriangleMeshBeginUpdateFBDelegate xrTriangleMeshBeginUpdateFB_ptr;
     /// <summary> Requires XR extension "XR_FB_triangle_mesh" </summary>
     /// <returns>
     ///       Success Codes:
@@ -2831,11 +2642,9 @@ public unsafe partial class OpenXRNativeInstance
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public XrResult xrTriangleMeshBeginUpdateFB(XrTriangleMeshFB mesh)
-        => xrTriangleMeshBeginUpdateFB_ptr(mesh);
+        => xrTriangleMeshBeginUpdateFB_funcPtr(mesh);
+    private delegate* unmanaged<XrTriangleMeshFB, XrResult> xrTriangleMeshBeginUpdateFB_funcPtr;
 
-        [UnmanagedFunctionPointer(OpenXRNative.CallConv)]
-        private delegate XrResult xrTriangleMeshEndUpdateFBDelegate(XrTriangleMeshFB mesh, uint vertexCount, uint triangleCount);
-        private xrTriangleMeshEndUpdateFBDelegate xrTriangleMeshEndUpdateFB_ptr;
     /// <summary> Requires XR extension "XR_FB_triangle_mesh" </summary>
     /// <returns>
     ///       Success Codes:
@@ -2853,11 +2662,9 @@ public unsafe partial class OpenXRNativeInstance
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public XrResult xrTriangleMeshEndUpdateFB(XrTriangleMeshFB mesh, uint vertexCount, uint triangleCount)
-        => xrTriangleMeshEndUpdateFB_ptr(mesh, vertexCount, triangleCount);
+        => xrTriangleMeshEndUpdateFB_funcPtr(mesh, vertexCount, triangleCount);
+    private delegate* unmanaged<XrTriangleMeshFB, uint, uint, XrResult> xrTriangleMeshEndUpdateFB_funcPtr;
 
-        [UnmanagedFunctionPointer(OpenXRNative.CallConv)]
-        private delegate XrResult xrTriangleMeshBeginVertexBufferUpdateFBDelegate(XrTriangleMeshFB mesh, uint* outVertexCount);
-        private xrTriangleMeshBeginVertexBufferUpdateFBDelegate xrTriangleMeshBeginVertexBufferUpdateFB_ptr;
     /// <summary> Requires XR extension "XR_FB_triangle_mesh" </summary>
     /// <returns>
     ///       Success Codes:
@@ -2875,11 +2682,9 @@ public unsafe partial class OpenXRNativeInstance
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public XrResult xrTriangleMeshBeginVertexBufferUpdateFB(XrTriangleMeshFB mesh, uint* outVertexCount)
-        => xrTriangleMeshBeginVertexBufferUpdateFB_ptr(mesh, outVertexCount);
+        => xrTriangleMeshBeginVertexBufferUpdateFB_funcPtr(mesh, outVertexCount);
+    private delegate* unmanaged<XrTriangleMeshFB, uint*, XrResult> xrTriangleMeshBeginVertexBufferUpdateFB_funcPtr;
 
-        [UnmanagedFunctionPointer(OpenXRNative.CallConv)]
-        private delegate XrResult xrTriangleMeshEndVertexBufferUpdateFBDelegate(XrTriangleMeshFB mesh);
-        private xrTriangleMeshEndVertexBufferUpdateFBDelegate xrTriangleMeshEndVertexBufferUpdateFB_ptr;
     /// <summary> Requires XR extension "XR_FB_triangle_mesh" </summary>
     /// <returns>
     ///       Success Codes:
@@ -2897,11 +2702,9 @@ public unsafe partial class OpenXRNativeInstance
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public XrResult xrTriangleMeshEndVertexBufferUpdateFB(XrTriangleMeshFB mesh)
-        => xrTriangleMeshEndVertexBufferUpdateFB_ptr(mesh);
+        => xrTriangleMeshEndVertexBufferUpdateFB_funcPtr(mesh);
+    private delegate* unmanaged<XrTriangleMeshFB, XrResult> xrTriangleMeshEndVertexBufferUpdateFB_funcPtr;
 
-        [UnmanagedFunctionPointer(OpenXRNative.CallConv)]
-        private delegate XrResult xrCreatePassthroughFBDelegate(XrSession session, XrPassthroughCreateInfoFB* createInfo, XrPassthroughFB* outPassthrough);
-        private xrCreatePassthroughFBDelegate xrCreatePassthroughFB_ptr;
     /// <summary> Requires XR extension "XR_FB_passthrough" </summary>
     /// <returns>
     ///       Success Codes:
@@ -2923,11 +2726,9 @@ public unsafe partial class OpenXRNativeInstance
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public XrResult xrCreatePassthroughFB(XrSession session, XrPassthroughCreateInfoFB* createInfo, XrPassthroughFB* outPassthrough)
-        => xrCreatePassthroughFB_ptr(session, createInfo, outPassthrough);
+        => xrCreatePassthroughFB_funcPtr(session, createInfo, outPassthrough);
+    private delegate* unmanaged<XrSession, XrPassthroughCreateInfoFB*, XrPassthroughFB*, XrResult> xrCreatePassthroughFB_funcPtr;
 
-        [UnmanagedFunctionPointer(OpenXRNative.CallConv)]
-        private delegate XrResult xrDestroyPassthroughFBDelegate(XrPassthroughFB passthrough);
-        private xrDestroyPassthroughFBDelegate xrDestroyPassthroughFB_ptr;
     /// <summary> Requires XR extension "XR_FB_passthrough" </summary>
     /// <returns>
     ///       Success Codes:
@@ -2940,11 +2741,9 @@ public unsafe partial class OpenXRNativeInstance
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public XrResult xrDestroyPassthroughFB(XrPassthroughFB passthrough)
-        => xrDestroyPassthroughFB_ptr(passthrough);
+        => xrDestroyPassthroughFB_funcPtr(passthrough);
+    private delegate* unmanaged<XrPassthroughFB, XrResult> xrDestroyPassthroughFB_funcPtr;
 
-        [UnmanagedFunctionPointer(OpenXRNative.CallConv)]
-        private delegate XrResult xrPassthroughStartFBDelegate(XrPassthroughFB passthrough);
-        private xrPassthroughStartFBDelegate xrPassthroughStartFB_ptr;
     /// <summary> Requires XR extension "XR_FB_passthrough" </summary>
     /// <returns>
     ///       Success Codes:
@@ -2962,11 +2761,9 @@ public unsafe partial class OpenXRNativeInstance
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public XrResult xrPassthroughStartFB(XrPassthroughFB passthrough)
-        => xrPassthroughStartFB_ptr(passthrough);
+        => xrPassthroughStartFB_funcPtr(passthrough);
+    private delegate* unmanaged<XrPassthroughFB, XrResult> xrPassthroughStartFB_funcPtr;
 
-        [UnmanagedFunctionPointer(OpenXRNative.CallConv)]
-        private delegate XrResult xrPassthroughPauseFBDelegate(XrPassthroughFB passthrough);
-        private xrPassthroughPauseFBDelegate xrPassthroughPauseFB_ptr;
     /// <summary> Requires XR extension "XR_FB_passthrough" </summary>
     /// <returns>
     ///       Success Codes:
@@ -2984,11 +2781,9 @@ public unsafe partial class OpenXRNativeInstance
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public XrResult xrPassthroughPauseFB(XrPassthroughFB passthrough)
-        => xrPassthroughPauseFB_ptr(passthrough);
+        => xrPassthroughPauseFB_funcPtr(passthrough);
+    private delegate* unmanaged<XrPassthroughFB, XrResult> xrPassthroughPauseFB_funcPtr;
 
-        [UnmanagedFunctionPointer(OpenXRNative.CallConv)]
-        private delegate XrResult xrCreatePassthroughLayerFBDelegate(XrSession session, XrPassthroughLayerCreateInfoFB* createInfo, XrPassthroughLayerFB* outLayer);
-        private xrCreatePassthroughLayerFBDelegate xrCreatePassthroughLayerFB_ptr;
     /// <summary> Requires XR extension "XR_FB_passthrough" </summary>
     /// <returns>
     ///       Success Codes:
@@ -3010,11 +2805,9 @@ public unsafe partial class OpenXRNativeInstance
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public XrResult xrCreatePassthroughLayerFB(XrSession session, XrPassthroughLayerCreateInfoFB* createInfo, XrPassthroughLayerFB* outLayer)
-        => xrCreatePassthroughLayerFB_ptr(session, createInfo, outLayer);
+        => xrCreatePassthroughLayerFB_funcPtr(session, createInfo, outLayer);
+    private delegate* unmanaged<XrSession, XrPassthroughLayerCreateInfoFB*, XrPassthroughLayerFB*, XrResult> xrCreatePassthroughLayerFB_funcPtr;
 
-        [UnmanagedFunctionPointer(OpenXRNative.CallConv)]
-        private delegate XrResult xrDestroyPassthroughLayerFBDelegate(XrPassthroughLayerFB layer);
-        private xrDestroyPassthroughLayerFBDelegate xrDestroyPassthroughLayerFB_ptr;
     /// <summary> Requires XR extension "XR_FB_passthrough" </summary>
     /// <returns>
     ///       Success Codes:
@@ -3027,11 +2820,9 @@ public unsafe partial class OpenXRNativeInstance
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public XrResult xrDestroyPassthroughLayerFB(XrPassthroughLayerFB layer)
-        => xrDestroyPassthroughLayerFB_ptr(layer);
+        => xrDestroyPassthroughLayerFB_funcPtr(layer);
+    private delegate* unmanaged<XrPassthroughLayerFB, XrResult> xrDestroyPassthroughLayerFB_funcPtr;
 
-        [UnmanagedFunctionPointer(OpenXRNative.CallConv)]
-        private delegate XrResult xrPassthroughLayerPauseFBDelegate(XrPassthroughLayerFB layer);
-        private xrPassthroughLayerPauseFBDelegate xrPassthroughLayerPauseFB_ptr;
     /// <summary> Requires XR extension "XR_FB_passthrough" </summary>
     /// <returns>
     ///       Success Codes:
@@ -3049,11 +2840,9 @@ public unsafe partial class OpenXRNativeInstance
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public XrResult xrPassthroughLayerPauseFB(XrPassthroughLayerFB layer)
-        => xrPassthroughLayerPauseFB_ptr(layer);
+        => xrPassthroughLayerPauseFB_funcPtr(layer);
+    private delegate* unmanaged<XrPassthroughLayerFB, XrResult> xrPassthroughLayerPauseFB_funcPtr;
 
-        [UnmanagedFunctionPointer(OpenXRNative.CallConv)]
-        private delegate XrResult xrPassthroughLayerResumeFBDelegate(XrPassthroughLayerFB layer);
-        private xrPassthroughLayerResumeFBDelegate xrPassthroughLayerResumeFB_ptr;
     /// <summary> Requires XR extension "XR_FB_passthrough" </summary>
     /// <returns>
     ///       Success Codes:
@@ -3071,11 +2860,9 @@ public unsafe partial class OpenXRNativeInstance
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public XrResult xrPassthroughLayerResumeFB(XrPassthroughLayerFB layer)
-        => xrPassthroughLayerResumeFB_ptr(layer);
+        => xrPassthroughLayerResumeFB_funcPtr(layer);
+    private delegate* unmanaged<XrPassthroughLayerFB, XrResult> xrPassthroughLayerResumeFB_funcPtr;
 
-        [UnmanagedFunctionPointer(OpenXRNative.CallConv)]
-        private delegate XrResult xrPassthroughLayerSetStyleFBDelegate(XrPassthroughLayerFB layer, XrPassthroughStyleFB* style);
-        private xrPassthroughLayerSetStyleFBDelegate xrPassthroughLayerSetStyleFB_ptr;
     /// <summary> Requires XR extension "XR_FB_passthrough" </summary>
     /// <returns>
     ///       Success Codes:
@@ -3092,11 +2879,9 @@ public unsafe partial class OpenXRNativeInstance
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public XrResult xrPassthroughLayerSetStyleFB(XrPassthroughLayerFB layer, XrPassthroughStyleFB* style)
-        => xrPassthroughLayerSetStyleFB_ptr(layer, style);
+        => xrPassthroughLayerSetStyleFB_funcPtr(layer, style);
+    private delegate* unmanaged<XrPassthroughLayerFB, XrPassthroughStyleFB*, XrResult> xrPassthroughLayerSetStyleFB_funcPtr;
 
-        [UnmanagedFunctionPointer(OpenXRNative.CallConv)]
-        private delegate XrResult xrCreateGeometryInstanceFBDelegate(XrSession session, XrGeometryInstanceCreateInfoFB* createInfo, XrGeometryInstanceFB* outGeometryInstance);
-        private xrCreateGeometryInstanceFBDelegate xrCreateGeometryInstanceFB_ptr;
     /// <summary> Requires XR extension "XR_FB_passthrough" </summary>
     /// <returns>
     ///       Success Codes:
@@ -3117,11 +2902,9 @@ public unsafe partial class OpenXRNativeInstance
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public XrResult xrCreateGeometryInstanceFB(XrSession session, XrGeometryInstanceCreateInfoFB* createInfo, XrGeometryInstanceFB* outGeometryInstance)
-        => xrCreateGeometryInstanceFB_ptr(session, createInfo, outGeometryInstance);
+        => xrCreateGeometryInstanceFB_funcPtr(session, createInfo, outGeometryInstance);
+    private delegate* unmanaged<XrSession, XrGeometryInstanceCreateInfoFB*, XrGeometryInstanceFB*, XrResult> xrCreateGeometryInstanceFB_funcPtr;
 
-        [UnmanagedFunctionPointer(OpenXRNative.CallConv)]
-        private delegate XrResult xrDestroyGeometryInstanceFBDelegate(XrGeometryInstanceFB instance);
-        private xrDestroyGeometryInstanceFBDelegate xrDestroyGeometryInstanceFB_ptr;
     /// <summary> Requires XR extension "XR_FB_passthrough" </summary>
     /// <returns>
     ///       Success Codes:
@@ -3134,11 +2917,9 @@ public unsafe partial class OpenXRNativeInstance
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public XrResult xrDestroyGeometryInstanceFB(XrGeometryInstanceFB instance)
-        => xrDestroyGeometryInstanceFB_ptr(instance);
+        => xrDestroyGeometryInstanceFB_funcPtr(instance);
+    private delegate* unmanaged<XrGeometryInstanceFB, XrResult> xrDestroyGeometryInstanceFB_funcPtr;
 
-        [UnmanagedFunctionPointer(OpenXRNative.CallConv)]
-        private delegate XrResult xrGeometryInstanceSetTransformFBDelegate(XrGeometryInstanceFB instance, XrGeometryInstanceTransformFB* transformation);
-        private xrGeometryInstanceSetTransformFBDelegate xrGeometryInstanceSetTransformFB_ptr;
     /// <summary> Requires XR extension "XR_FB_passthrough" </summary>
     /// <returns>
     ///       Success Codes:
@@ -3157,11 +2938,9 @@ public unsafe partial class OpenXRNativeInstance
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public XrResult xrGeometryInstanceSetTransformFB(XrGeometryInstanceFB instance, XrGeometryInstanceTransformFB* transformation)
-        => xrGeometryInstanceSetTransformFB_ptr(instance, transformation);
+        => xrGeometryInstanceSetTransformFB_funcPtr(instance, transformation);
+    private delegate* unmanaged<XrGeometryInstanceFB, XrGeometryInstanceTransformFB*, XrResult> xrGeometryInstanceSetTransformFB_funcPtr;
 
-        [UnmanagedFunctionPointer(OpenXRNative.CallConv)]
-        private delegate XrResult xrEnumerateRenderModelPathsFBDelegate(XrSession session, uint pathCapacityInput, uint* pathCountOutput, XrRenderModelPathInfoFB* paths);
-        private xrEnumerateRenderModelPathsFBDelegate xrEnumerateRenderModelPathsFB_ptr;
     /// <summary> Requires XR extension "XR_FB_render_model" </summary>
     /// <returns>
     ///       Success Codes:
@@ -3177,11 +2956,9 @@ public unsafe partial class OpenXRNativeInstance
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public XrResult xrEnumerateRenderModelPathsFB(XrSession session, uint pathCapacityInput, uint* pathCountOutput, XrRenderModelPathInfoFB* paths)
-        => xrEnumerateRenderModelPathsFB_ptr(session, pathCapacityInput, pathCountOutput, paths);
+        => xrEnumerateRenderModelPathsFB_funcPtr(session, pathCapacityInput, pathCountOutput, paths);
+    private delegate* unmanaged<XrSession, uint, uint*, XrRenderModelPathInfoFB*, XrResult> xrEnumerateRenderModelPathsFB_funcPtr;
 
-        [UnmanagedFunctionPointer(OpenXRNative.CallConv)]
-        private delegate XrResult xrGetRenderModelPropertiesFBDelegate(XrSession session, ulong path, XrRenderModelPropertiesFB* properties);
-        private xrGetRenderModelPropertiesFBDelegate xrGetRenderModelPropertiesFB_ptr;
     /// <summary> Requires XR extension "XR_FB_render_model" </summary>
     /// <returns>
     ///       Success Codes:
@@ -3201,11 +2978,9 @@ public unsafe partial class OpenXRNativeInstance
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public XrResult xrGetRenderModelPropertiesFB(XrSession session, ulong path, XrRenderModelPropertiesFB* properties)
-        => xrGetRenderModelPropertiesFB_ptr(session, path, properties);
+        => xrGetRenderModelPropertiesFB_funcPtr(session, path, properties);
+    private delegate* unmanaged<XrSession, ulong, XrRenderModelPropertiesFB*, XrResult> xrGetRenderModelPropertiesFB_funcPtr;
 
-        [UnmanagedFunctionPointer(OpenXRNative.CallConv)]
-        private delegate XrResult xrLoadRenderModelFBDelegate(XrSession session, XrRenderModelLoadInfoFB* info, XrRenderModelBufferFB* buffer);
-        private xrLoadRenderModelFBDelegate xrLoadRenderModelFB_ptr;
     /// <summary> Requires XR extension "XR_FB_render_model" </summary>
     /// <returns>
     ///       Success Codes:
@@ -3223,11 +2998,9 @@ public unsafe partial class OpenXRNativeInstance
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public XrResult xrLoadRenderModelFB(XrSession session, XrRenderModelLoadInfoFB* info, XrRenderModelBufferFB* buffer)
-        => xrLoadRenderModelFB_ptr(session, info, buffer);
+        => xrLoadRenderModelFB_funcPtr(session, info, buffer);
+    private delegate* unmanaged<XrSession, XrRenderModelLoadInfoFB*, XrRenderModelBufferFB*, XrResult> xrLoadRenderModelFB_funcPtr;
 
-        [UnmanagedFunctionPointer(OpenXRNative.CallConv)]
-        private delegate XrResult xrSetEnvironmentDepthEstimationVARJODelegate(XrSession session, XrBool32 enabled);
-        private xrSetEnvironmentDepthEstimationVARJODelegate xrSetEnvironmentDepthEstimationVARJO_ptr;
     /// <summary> Requires XR extension "XR_VARJO_environment_depth_estimation" </summary>
     /// <returns>
     ///       Success Codes:
@@ -3243,11 +3016,9 @@ public unsafe partial class OpenXRNativeInstance
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public XrResult xrSetEnvironmentDepthEstimationVARJO(XrSession session, XrBool32 enabled)
-        => xrSetEnvironmentDepthEstimationVARJO_ptr(session, enabled);
+        => xrSetEnvironmentDepthEstimationVARJO_funcPtr(session, enabled);
+    private delegate* unmanaged<XrSession, XrBool32, XrResult> xrSetEnvironmentDepthEstimationVARJO_funcPtr;
 
-        [UnmanagedFunctionPointer(OpenXRNative.CallConv)]
-        private delegate XrResult xrSetMarkerTrackingVARJODelegate(XrSession session, XrBool32 enabled);
-        private xrSetMarkerTrackingVARJODelegate xrSetMarkerTrackingVARJO_ptr;
     /// <summary> Requires XR extension "XR_VARJO_marker_tracking" </summary>
     /// <returns>
     ///       Success Codes:
@@ -3263,11 +3034,9 @@ public unsafe partial class OpenXRNativeInstance
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public XrResult xrSetMarkerTrackingVARJO(XrSession session, XrBool32 enabled)
-        => xrSetMarkerTrackingVARJO_ptr(session, enabled);
+        => xrSetMarkerTrackingVARJO_funcPtr(session, enabled);
+    private delegate* unmanaged<XrSession, XrBool32, XrResult> xrSetMarkerTrackingVARJO_funcPtr;
 
-        [UnmanagedFunctionPointer(OpenXRNative.CallConv)]
-        private delegate XrResult xrSetMarkerTrackingTimeoutVARJODelegate(XrSession session, ulong markerId, long timeout);
-        private xrSetMarkerTrackingTimeoutVARJODelegate xrSetMarkerTrackingTimeoutVARJO_ptr;
     /// <summary> Requires XR extension "XR_VARJO_marker_tracking" </summary>
     /// <returns>
     ///       Success Codes:
@@ -3284,11 +3053,9 @@ public unsafe partial class OpenXRNativeInstance
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public XrResult xrSetMarkerTrackingTimeoutVARJO(XrSession session, ulong markerId, long timeout)
-        => xrSetMarkerTrackingTimeoutVARJO_ptr(session, markerId, timeout);
+        => xrSetMarkerTrackingTimeoutVARJO_funcPtr(session, markerId, timeout);
+    private delegate* unmanaged<XrSession, ulong, long, XrResult> xrSetMarkerTrackingTimeoutVARJO_funcPtr;
 
-        [UnmanagedFunctionPointer(OpenXRNative.CallConv)]
-        private delegate XrResult xrSetMarkerTrackingPredictionVARJODelegate(XrSession session, ulong markerId, XrBool32 enable);
-        private xrSetMarkerTrackingPredictionVARJODelegate xrSetMarkerTrackingPredictionVARJO_ptr;
     /// <summary> Requires XR extension "XR_VARJO_marker_tracking" </summary>
     /// <returns>
     ///       Success Codes:
@@ -3305,11 +3072,9 @@ public unsafe partial class OpenXRNativeInstance
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public XrResult xrSetMarkerTrackingPredictionVARJO(XrSession session, ulong markerId, XrBool32 enable)
-        => xrSetMarkerTrackingPredictionVARJO_ptr(session, markerId, enable);
+        => xrSetMarkerTrackingPredictionVARJO_funcPtr(session, markerId, enable);
+    private delegate* unmanaged<XrSession, ulong, XrBool32, XrResult> xrSetMarkerTrackingPredictionVARJO_funcPtr;
 
-        [UnmanagedFunctionPointer(OpenXRNative.CallConv)]
-        private delegate XrResult xrGetMarkerSizeVARJODelegate(XrSession session, ulong markerId, XrExtent2Df* size);
-        private xrGetMarkerSizeVARJODelegate xrGetMarkerSizeVARJO_ptr;
     /// <summary> Requires XR extension "XR_VARJO_marker_tracking" </summary>
     /// <returns>
     ///       Success Codes:
@@ -3327,11 +3092,9 @@ public unsafe partial class OpenXRNativeInstance
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public XrResult xrGetMarkerSizeVARJO(XrSession session, ulong markerId, XrExtent2Df* size)
-        => xrGetMarkerSizeVARJO_ptr(session, markerId, size);
+        => xrGetMarkerSizeVARJO_funcPtr(session, markerId, size);
+    private delegate* unmanaged<XrSession, ulong, XrExtent2Df*, XrResult> xrGetMarkerSizeVARJO_funcPtr;
 
-        [UnmanagedFunctionPointer(OpenXRNative.CallConv)]
-        private delegate XrResult xrCreateMarkerSpaceVARJODelegate(XrSession session, XrMarkerSpaceCreateInfoVARJO* createInfo, XrSpace* space);
-        private xrCreateMarkerSpaceVARJODelegate xrCreateMarkerSpaceVARJO_ptr;
     /// <summary> Requires XR extension "XR_VARJO_marker_tracking" </summary>
     /// <returns>
     ///       Success Codes:
@@ -3351,11 +3114,9 @@ public unsafe partial class OpenXRNativeInstance
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public XrResult xrCreateMarkerSpaceVARJO(XrSession session, XrMarkerSpaceCreateInfoVARJO* createInfo, XrSpace* space)
-        => xrCreateMarkerSpaceVARJO_ptr(session, createInfo, space);
+        => xrCreateMarkerSpaceVARJO_funcPtr(session, createInfo, space);
+    private delegate* unmanaged<XrSession, XrMarkerSpaceCreateInfoVARJO*, XrSpace*, XrResult> xrCreateMarkerSpaceVARJO_funcPtr;
 
-        [UnmanagedFunctionPointer(OpenXRNative.CallConv)]
-        private delegate XrResult xrSetViewOffsetVARJODelegate(XrSession session, float offset);
-        private xrSetViewOffsetVARJODelegate xrSetViewOffsetVARJO_ptr;
     /// <summary> Requires XR extension "XR_VARJO_view_offset" </summary>
     /// <returns>
     ///       Success Codes:
@@ -3372,11 +3133,9 @@ public unsafe partial class OpenXRNativeInstance
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public XrResult xrSetViewOffsetVARJO(XrSession session, float offset)
-        => xrSetViewOffsetVARJO_ptr(session, offset);
+        => xrSetViewOffsetVARJO_funcPtr(session, offset);
+    private delegate* unmanaged<XrSession, float, XrResult> xrSetViewOffsetVARJO_funcPtr;
 
-        [UnmanagedFunctionPointer(OpenXRNative.CallConv)]
-        private delegate XrResult xrCreateSpaceFromCoordinateFrameUIDMLDelegate(XrSession session, XrCoordinateSpaceCreateInfoML createInfo, XrSpace* space);
-        private xrCreateSpaceFromCoordinateFrameUIDMLDelegate xrCreateSpaceFromCoordinateFrameUIDML_ptr;
     /// <summary> Requires XR extension "XR_ML_compat" </summary>
     /// <returns>
     ///       Success Codes:
@@ -3395,11 +3154,9 @@ public unsafe partial class OpenXRNativeInstance
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public XrResult xrCreateSpaceFromCoordinateFrameUIDML(XrSession session, XrCoordinateSpaceCreateInfoML createInfo, XrSpace* space)
-        => xrCreateSpaceFromCoordinateFrameUIDML_ptr(session, createInfo, space);
+        => xrCreateSpaceFromCoordinateFrameUIDML_funcPtr(session, createInfo, space);
+    private delegate* unmanaged<XrSession, XrCoordinateSpaceCreateInfoML, XrSpace*, XrResult> xrCreateSpaceFromCoordinateFrameUIDML_funcPtr;
 
-        [UnmanagedFunctionPointer(OpenXRNative.CallConv)]
-        private delegate XrResult xrCreateSpatialAnchorStoreConnectionMSFTDelegate(XrSession session, XrSpatialAnchorStoreConnectionMSFT* spatialAnchorStore);
-        private xrCreateSpatialAnchorStoreConnectionMSFTDelegate xrCreateSpatialAnchorStoreConnectionMSFT_ptr;
     /// <summary> Requires XR extension "XR_MSFT_spatial_anchor_persistence" </summary>
     /// <returns>
     ///       Success Codes:
@@ -3416,11 +3173,9 @@ public unsafe partial class OpenXRNativeInstance
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public XrResult xrCreateSpatialAnchorStoreConnectionMSFT(XrSession session, XrSpatialAnchorStoreConnectionMSFT* spatialAnchorStore)
-        => xrCreateSpatialAnchorStoreConnectionMSFT_ptr(session, spatialAnchorStore);
+        => xrCreateSpatialAnchorStoreConnectionMSFT_funcPtr(session, spatialAnchorStore);
+    private delegate* unmanaged<XrSession, XrSpatialAnchorStoreConnectionMSFT*, XrResult> xrCreateSpatialAnchorStoreConnectionMSFT_funcPtr;
 
-        [UnmanagedFunctionPointer(OpenXRNative.CallConv)]
-        private delegate XrResult xrDestroySpatialAnchorStoreConnectionMSFTDelegate(XrSpatialAnchorStoreConnectionMSFT spatialAnchorStore);
-        private xrDestroySpatialAnchorStoreConnectionMSFTDelegate xrDestroySpatialAnchorStoreConnectionMSFT_ptr;
     /// <summary> Requires XR extension "XR_MSFT_spatial_anchor_persistence" </summary>
     /// <returns>
     ///       Success Codes:
@@ -3432,11 +3187,9 @@ public unsafe partial class OpenXRNativeInstance
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public XrResult xrDestroySpatialAnchorStoreConnectionMSFT(XrSpatialAnchorStoreConnectionMSFT spatialAnchorStore)
-        => xrDestroySpatialAnchorStoreConnectionMSFT_ptr(spatialAnchorStore);
+        => xrDestroySpatialAnchorStoreConnectionMSFT_funcPtr(spatialAnchorStore);
+    private delegate* unmanaged<XrSpatialAnchorStoreConnectionMSFT, XrResult> xrDestroySpatialAnchorStoreConnectionMSFT_funcPtr;
 
-        [UnmanagedFunctionPointer(OpenXRNative.CallConv)]
-        private delegate XrResult xrPersistSpatialAnchorMSFTDelegate(XrSpatialAnchorStoreConnectionMSFT spatialAnchorStore, XrSpatialAnchorPersistenceInfoMSFT* spatialAnchorPersistenceInfo);
-        private xrPersistSpatialAnchorMSFTDelegate xrPersistSpatialAnchorMSFT_ptr;
     /// <summary> Requires XR extension "XR_MSFT_spatial_anchor_persistence" </summary>
     /// <returns>
     ///       Success Codes:
@@ -3453,11 +3206,9 @@ public unsafe partial class OpenXRNativeInstance
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public XrResult xrPersistSpatialAnchorMSFT(XrSpatialAnchorStoreConnectionMSFT spatialAnchorStore, XrSpatialAnchorPersistenceInfoMSFT* spatialAnchorPersistenceInfo)
-        => xrPersistSpatialAnchorMSFT_ptr(spatialAnchorStore, spatialAnchorPersistenceInfo);
+        => xrPersistSpatialAnchorMSFT_funcPtr(spatialAnchorStore, spatialAnchorPersistenceInfo);
+    private delegate* unmanaged<XrSpatialAnchorStoreConnectionMSFT, XrSpatialAnchorPersistenceInfoMSFT*, XrResult> xrPersistSpatialAnchorMSFT_funcPtr;
 
-        [UnmanagedFunctionPointer(OpenXRNative.CallConv)]
-        private delegate XrResult xrEnumeratePersistedSpatialAnchorNamesMSFTDelegate(XrSpatialAnchorStoreConnectionMSFT spatialAnchorStore, uint spatialAnchorNamesCapacityInput, uint* spatialAnchorNamesCountOutput, XrSpatialAnchorPersistenceNameMSFT* persistedAnchorNames);
-        private xrEnumeratePersistedSpatialAnchorNamesMSFTDelegate xrEnumeratePersistedSpatialAnchorNamesMSFT_ptr;
     /// <summary> Requires XR extension "XR_MSFT_spatial_anchor_persistence" </summary>
     /// <returns>
     ///       Success Codes:
@@ -3474,11 +3225,9 @@ public unsafe partial class OpenXRNativeInstance
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public XrResult xrEnumeratePersistedSpatialAnchorNamesMSFT(XrSpatialAnchorStoreConnectionMSFT spatialAnchorStore, uint spatialAnchorNamesCapacityInput, uint* spatialAnchorNamesCountOutput, XrSpatialAnchorPersistenceNameMSFT* persistedAnchorNames)
-        => xrEnumeratePersistedSpatialAnchorNamesMSFT_ptr(spatialAnchorStore, spatialAnchorNamesCapacityInput, spatialAnchorNamesCountOutput, persistedAnchorNames);
+        => xrEnumeratePersistedSpatialAnchorNamesMSFT_funcPtr(spatialAnchorStore, spatialAnchorNamesCapacityInput, spatialAnchorNamesCountOutput, persistedAnchorNames);
+    private delegate* unmanaged<XrSpatialAnchorStoreConnectionMSFT, uint, uint*, XrSpatialAnchorPersistenceNameMSFT*, XrResult> xrEnumeratePersistedSpatialAnchorNamesMSFT_funcPtr;
 
-        [UnmanagedFunctionPointer(OpenXRNative.CallConv)]
-        private delegate XrResult xrCreateSpatialAnchorFromPersistedNameMSFTDelegate(XrSession session, XrSpatialAnchorFromPersistedAnchorCreateInfoMSFT* spatialAnchorCreateInfo, XrSpatialAnchorMSFT* spatialAnchor);
-        private xrCreateSpatialAnchorFromPersistedNameMSFTDelegate xrCreateSpatialAnchorFromPersistedNameMSFT_ptr;
     /// <summary> Requires XR extension "XR_MSFT_spatial_anchor_persistence" </summary>
     /// <returns>
     ///       Success Codes:
@@ -3497,11 +3246,9 @@ public unsafe partial class OpenXRNativeInstance
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public XrResult xrCreateSpatialAnchorFromPersistedNameMSFT(XrSession session, XrSpatialAnchorFromPersistedAnchorCreateInfoMSFT* spatialAnchorCreateInfo, XrSpatialAnchorMSFT* spatialAnchor)
-        => xrCreateSpatialAnchorFromPersistedNameMSFT_ptr(session, spatialAnchorCreateInfo, spatialAnchor);
+        => xrCreateSpatialAnchorFromPersistedNameMSFT_funcPtr(session, spatialAnchorCreateInfo, spatialAnchor);
+    private delegate* unmanaged<XrSession, XrSpatialAnchorFromPersistedAnchorCreateInfoMSFT*, XrSpatialAnchorMSFT*, XrResult> xrCreateSpatialAnchorFromPersistedNameMSFT_funcPtr;
 
-        [UnmanagedFunctionPointer(OpenXRNative.CallConv)]
-        private delegate XrResult xrUnpersistSpatialAnchorMSFTDelegate(XrSpatialAnchorStoreConnectionMSFT spatialAnchorStore, XrSpatialAnchorPersistenceNameMSFT* spatialAnchorPersistenceName);
-        private xrUnpersistSpatialAnchorMSFTDelegate xrUnpersistSpatialAnchorMSFT_ptr;
     /// <summary> Requires XR extension "XR_MSFT_spatial_anchor_persistence" </summary>
     /// <returns>
     ///       Success Codes:
@@ -3519,11 +3266,9 @@ public unsafe partial class OpenXRNativeInstance
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public XrResult xrUnpersistSpatialAnchorMSFT(XrSpatialAnchorStoreConnectionMSFT spatialAnchorStore, XrSpatialAnchorPersistenceNameMSFT* spatialAnchorPersistenceName)
-        => xrUnpersistSpatialAnchorMSFT_ptr(spatialAnchorStore, spatialAnchorPersistenceName);
+        => xrUnpersistSpatialAnchorMSFT_funcPtr(spatialAnchorStore, spatialAnchorPersistenceName);
+    private delegate* unmanaged<XrSpatialAnchorStoreConnectionMSFT, XrSpatialAnchorPersistenceNameMSFT*, XrResult> xrUnpersistSpatialAnchorMSFT_funcPtr;
 
-        [UnmanagedFunctionPointer(OpenXRNative.CallConv)]
-        private delegate XrResult xrClearSpatialAnchorStoreMSFTDelegate(XrSpatialAnchorStoreConnectionMSFT spatialAnchorStore);
-        private xrClearSpatialAnchorStoreMSFTDelegate xrClearSpatialAnchorStoreMSFT_ptr;
     /// <summary> Requires XR extension "XR_MSFT_spatial_anchor_persistence" </summary>
     /// <returns>
     ///       Success Codes:
@@ -3539,11 +3284,9 @@ public unsafe partial class OpenXRNativeInstance
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public XrResult xrClearSpatialAnchorStoreMSFT(XrSpatialAnchorStoreConnectionMSFT spatialAnchorStore)
-        => xrClearSpatialAnchorStoreMSFT_ptr(spatialAnchorStore);
+        => xrClearSpatialAnchorStoreMSFT_funcPtr(spatialAnchorStore);
+    private delegate* unmanaged<XrSpatialAnchorStoreConnectionMSFT, XrResult> xrClearSpatialAnchorStoreMSFT_funcPtr;
 
-        [UnmanagedFunctionPointer(OpenXRNative.CallConv)]
-        private delegate XrResult xrQuerySpacesFBDelegate(XrSession session, XrSpaceQueryInfoBaseHeaderFB* info, ulong* requestId);
-        private xrQuerySpacesFBDelegate xrQuerySpacesFB_ptr;
     /// <summary> Requires XR extension "XR_FB_spatial_entity_query" </summary>
     /// <returns>
     ///       Success Codes:
@@ -3560,11 +3303,9 @@ public unsafe partial class OpenXRNativeInstance
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public XrResult xrQuerySpacesFB(XrSession session, XrSpaceQueryInfoBaseHeaderFB* info, ulong* requestId)
-        => xrQuerySpacesFB_ptr(session, info, requestId);
+        => xrQuerySpacesFB_funcPtr(session, info, requestId);
+    private delegate* unmanaged<XrSession, XrSpaceQueryInfoBaseHeaderFB*, ulong*, XrResult> xrQuerySpacesFB_funcPtr;
 
-        [UnmanagedFunctionPointer(OpenXRNative.CallConv)]
-        private delegate XrResult xrRetrieveSpaceQueryResultsFBDelegate(XrSession session, ulong requestId, XrSpaceQueryResultsFB* results);
-        private xrRetrieveSpaceQueryResultsFBDelegate xrRetrieveSpaceQueryResultsFB_ptr;
     /// <summary> Requires XR extension "XR_FB_spatial_entity_query" </summary>
     /// <returns>
     ///       Success Codes:
@@ -3582,11 +3323,9 @@ public unsafe partial class OpenXRNativeInstance
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public XrResult xrRetrieveSpaceQueryResultsFB(XrSession session, ulong requestId, XrSpaceQueryResultsFB* results)
-        => xrRetrieveSpaceQueryResultsFB_ptr(session, requestId, results);
+        => xrRetrieveSpaceQueryResultsFB_funcPtr(session, requestId, results);
+    private delegate* unmanaged<XrSession, ulong, XrSpaceQueryResultsFB*, XrResult> xrRetrieveSpaceQueryResultsFB_funcPtr;
 
-        [UnmanagedFunctionPointer(OpenXRNative.CallConv)]
-        private delegate XrResult xrSaveSpaceFBDelegate(XrSession session, XrSpaceSaveInfoFB* info, ulong* requestId);
-        private xrSaveSpaceFBDelegate xrSaveSpaceFB_ptr;
     /// <summary> Requires XR extension "XR_FB_spatial_entity_storage" </summary>
     /// <returns>
     ///       Success Codes:
@@ -3604,11 +3343,9 @@ public unsafe partial class OpenXRNativeInstance
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public XrResult xrSaveSpaceFB(XrSession session, XrSpaceSaveInfoFB* info, ulong* requestId)
-        => xrSaveSpaceFB_ptr(session, info, requestId);
+        => xrSaveSpaceFB_funcPtr(session, info, requestId);
+    private delegate* unmanaged<XrSession, XrSpaceSaveInfoFB*, ulong*, XrResult> xrSaveSpaceFB_funcPtr;
 
-        [UnmanagedFunctionPointer(OpenXRNative.CallConv)]
-        private delegate XrResult xrEraseSpaceFBDelegate(XrSession session, XrSpaceEraseInfoFB* info, ulong* requestId);
-        private xrEraseSpaceFBDelegate xrEraseSpaceFB_ptr;
     /// <summary> Requires XR extension "XR_FB_spatial_entity_storage" </summary>
     /// <returns>
     ///       Success Codes:
@@ -3626,11 +3363,9 @@ public unsafe partial class OpenXRNativeInstance
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public XrResult xrEraseSpaceFB(XrSession session, XrSpaceEraseInfoFB* info, ulong* requestId)
-        => xrEraseSpaceFB_ptr(session, info, requestId);
+        => xrEraseSpaceFB_funcPtr(session, info, requestId);
+    private delegate* unmanaged<XrSession, XrSpaceEraseInfoFB*, ulong*, XrResult> xrEraseSpaceFB_funcPtr;
 
-        [UnmanagedFunctionPointer(OpenXRNative.CallConv)]
-        private delegate XrResult xrGetAudioOutputDeviceGuidOculusDelegate(XrInstance instance, string buffer);
-        private xrGetAudioOutputDeviceGuidOculusDelegate xrGetAudioOutputDeviceGuidOculus_ptr;
     /// <summary> Requires XR extension "XR_OCULUS_audio_device_guid" </summary>
     /// <returns>
     ///       Success Codes:
@@ -3645,11 +3380,9 @@ public unsafe partial class OpenXRNativeInstance
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public XrResult xrGetAudioOutputDeviceGuidOculus(XrInstance instance, string buffer)
-        => xrGetAudioOutputDeviceGuidOculus_ptr(instance, buffer);
+        => xrGetAudioOutputDeviceGuidOculus_funcPtr(instance, buffer);
+    private delegate* unmanaged<XrInstance, string, XrResult> xrGetAudioOutputDeviceGuidOculus_funcPtr;
 
-        [UnmanagedFunctionPointer(OpenXRNative.CallConv)]
-        private delegate XrResult xrGetAudioInputDeviceGuidOculusDelegate(XrInstance instance, string buffer);
-        private xrGetAudioInputDeviceGuidOculusDelegate xrGetAudioInputDeviceGuidOculus_ptr;
     /// <summary> Requires XR extension "XR_OCULUS_audio_device_guid" </summary>
     /// <returns>
     ///       Success Codes:
@@ -3664,11 +3397,9 @@ public unsafe partial class OpenXRNativeInstance
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public XrResult xrGetAudioInputDeviceGuidOculus(XrInstance instance, string buffer)
-        => xrGetAudioInputDeviceGuidOculus_ptr(instance, buffer);
+        => xrGetAudioInputDeviceGuidOculus_funcPtr(instance, buffer);
+    private delegate* unmanaged<XrInstance, string, XrResult> xrGetAudioInputDeviceGuidOculus_funcPtr;
 
-        [UnmanagedFunctionPointer(OpenXRNative.CallConv)]
-        private delegate XrResult xrShareSpacesFBDelegate(XrSession session, XrSpaceShareInfoFB* info, ulong* requestId);
-        private xrShareSpacesFBDelegate xrShareSpacesFB_ptr;
     /// <summary> Requires XR extension "XR_FB_spatial_entity_sharing" </summary>
     /// <returns>
     ///       Success Codes:
@@ -3691,11 +3422,9 @@ public unsafe partial class OpenXRNativeInstance
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public XrResult xrShareSpacesFB(XrSession session, XrSpaceShareInfoFB* info, ulong* requestId)
-        => xrShareSpacesFB_ptr(session, info, requestId);
+        => xrShareSpacesFB_funcPtr(session, info, requestId);
+    private delegate* unmanaged<XrSession, XrSpaceShareInfoFB*, ulong*, XrResult> xrShareSpacesFB_funcPtr;
 
-        [UnmanagedFunctionPointer(OpenXRNative.CallConv)]
-        private delegate XrResult xrGetSpaceBoundingBox2DFBDelegate(XrSession session, XrSpace space, XrRect2Df* boundingBox2DOutput);
-        private xrGetSpaceBoundingBox2DFBDelegate xrGetSpaceBoundingBox2DFB_ptr;
     /// <summary> Requires XR extension "XR_FB_scene" </summary>
     /// <returns>
     ///       Success Codes:
@@ -3713,11 +3442,9 @@ public unsafe partial class OpenXRNativeInstance
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public XrResult xrGetSpaceBoundingBox2DFB(XrSession session, XrSpace space, XrRect2Df* boundingBox2DOutput)
-        => xrGetSpaceBoundingBox2DFB_ptr(session, space, boundingBox2DOutput);
+        => xrGetSpaceBoundingBox2DFB_funcPtr(session, space, boundingBox2DOutput);
+    private delegate* unmanaged<XrSession, XrSpace, XrRect2Df*, XrResult> xrGetSpaceBoundingBox2DFB_funcPtr;
 
-        [UnmanagedFunctionPointer(OpenXRNative.CallConv)]
-        private delegate XrResult xrGetSpaceBoundingBox3DFBDelegate(XrSession session, XrSpace space, XrRect3DfFB* boundingBox3DOutput);
-        private xrGetSpaceBoundingBox3DFBDelegate xrGetSpaceBoundingBox3DFB_ptr;
     /// <summary> Requires XR extension "XR_FB_scene" </summary>
     /// <returns>
     ///       Success Codes:
@@ -3735,11 +3462,9 @@ public unsafe partial class OpenXRNativeInstance
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public XrResult xrGetSpaceBoundingBox3DFB(XrSession session, XrSpace space, XrRect3DfFB* boundingBox3DOutput)
-        => xrGetSpaceBoundingBox3DFB_ptr(session, space, boundingBox3DOutput);
+        => xrGetSpaceBoundingBox3DFB_funcPtr(session, space, boundingBox3DOutput);
+    private delegate* unmanaged<XrSession, XrSpace, XrRect3DfFB*, XrResult> xrGetSpaceBoundingBox3DFB_funcPtr;
 
-        [UnmanagedFunctionPointer(OpenXRNative.CallConv)]
-        private delegate XrResult xrGetSpaceSemanticLabelsFBDelegate(XrSession session, XrSpace space, XrSemanticLabelsFB* semanticLabelsOutput);
-        private xrGetSpaceSemanticLabelsFBDelegate xrGetSpaceSemanticLabelsFB_ptr;
     /// <summary> Requires XR extension "XR_FB_scene" </summary>
     /// <returns>
     ///       Success Codes:
@@ -3758,11 +3483,9 @@ public unsafe partial class OpenXRNativeInstance
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public XrResult xrGetSpaceSemanticLabelsFB(XrSession session, XrSpace space, XrSemanticLabelsFB* semanticLabelsOutput)
-        => xrGetSpaceSemanticLabelsFB_ptr(session, space, semanticLabelsOutput);
+        => xrGetSpaceSemanticLabelsFB_funcPtr(session, space, semanticLabelsOutput);
+    private delegate* unmanaged<XrSession, XrSpace, XrSemanticLabelsFB*, XrResult> xrGetSpaceSemanticLabelsFB_funcPtr;
 
-        [UnmanagedFunctionPointer(OpenXRNative.CallConv)]
-        private delegate XrResult xrGetSpaceBoundary2DFBDelegate(XrSession session, XrSpace space, XrBoundary2DFB* boundary2DOutput);
-        private xrGetSpaceBoundary2DFBDelegate xrGetSpaceBoundary2DFB_ptr;
     /// <summary> Requires XR extension "XR_FB_scene" </summary>
     /// <returns>
     ///       Success Codes:
@@ -3781,11 +3504,9 @@ public unsafe partial class OpenXRNativeInstance
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public XrResult xrGetSpaceBoundary2DFB(XrSession session, XrSpace space, XrBoundary2DFB* boundary2DOutput)
-        => xrGetSpaceBoundary2DFB_ptr(session, space, boundary2DOutput);
+        => xrGetSpaceBoundary2DFB_funcPtr(session, space, boundary2DOutput);
+    private delegate* unmanaged<XrSession, XrSpace, XrBoundary2DFB*, XrResult> xrGetSpaceBoundary2DFB_funcPtr;
 
-        [UnmanagedFunctionPointer(OpenXRNative.CallConv)]
-        private delegate XrResult xrGetSpaceRoomLayoutFBDelegate(XrSession session, XrSpace space, XrRoomLayoutFB* roomLayoutOutput);
-        private xrGetSpaceRoomLayoutFBDelegate xrGetSpaceRoomLayoutFB_ptr;
     /// <summary> Requires XR extension "XR_FB_scene" </summary>
     /// <returns>
     ///       Success Codes:
@@ -3804,11 +3525,9 @@ public unsafe partial class OpenXRNativeInstance
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public XrResult xrGetSpaceRoomLayoutFB(XrSession session, XrSpace space, XrRoomLayoutFB* roomLayoutOutput)
-        => xrGetSpaceRoomLayoutFB_ptr(session, space, roomLayoutOutput);
+        => xrGetSpaceRoomLayoutFB_funcPtr(session, space, roomLayoutOutput);
+    private delegate* unmanaged<XrSession, XrSpace, XrRoomLayoutFB*, XrResult> xrGetSpaceRoomLayoutFB_funcPtr;
 
-        [UnmanagedFunctionPointer(OpenXRNative.CallConv)]
-        private delegate XrResult xrSetDigitalLensControlALMALENCEDelegate(XrSession session, XrDigitalLensControlALMALENCE* digitalLensControl);
-        private xrSetDigitalLensControlALMALENCEDelegate xrSetDigitalLensControlALMALENCE_ptr;
     /// <summary> Requires XR extension "XR_ALMALENCE_digital_lens_control" </summary>
     /// <returns>
     ///       Success Codes:
@@ -3822,11 +3541,9 @@ public unsafe partial class OpenXRNativeInstance
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public XrResult xrSetDigitalLensControlALMALENCE(XrSession session, XrDigitalLensControlALMALENCE* digitalLensControl)
-        => xrSetDigitalLensControlALMALENCE_ptr(session, digitalLensControl);
+        => xrSetDigitalLensControlALMALENCE_funcPtr(session, digitalLensControl);
+    private delegate* unmanaged<XrSession, XrDigitalLensControlALMALENCE*, XrResult> xrSetDigitalLensControlALMALENCE_funcPtr;
 
-        [UnmanagedFunctionPointer(OpenXRNative.CallConv)]
-        private delegate XrResult xrRequestSceneCaptureFBDelegate(XrSession session, XrSceneCaptureRequestInfoFB* info, ulong* requestId);
-        private xrRequestSceneCaptureFBDelegate xrRequestSceneCaptureFB_ptr;
     /// <summary> Requires XR extension "XR_FB_scene_capture" </summary>
     /// <returns>
     ///       Success Codes:
@@ -3843,11 +3560,9 @@ public unsafe partial class OpenXRNativeInstance
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public XrResult xrRequestSceneCaptureFB(XrSession session, XrSceneCaptureRequestInfoFB* info, ulong* requestId)
-        => xrRequestSceneCaptureFB_ptr(session, info, requestId);
+        => xrRequestSceneCaptureFB_funcPtr(session, info, requestId);
+    private delegate* unmanaged<XrSession, XrSceneCaptureRequestInfoFB*, ulong*, XrResult> xrRequestSceneCaptureFB_funcPtr;
 
-        [UnmanagedFunctionPointer(OpenXRNative.CallConv)]
-        private delegate XrResult xrGetSpaceContainerFBDelegate(XrSession session, XrSpace space, XrSpaceContainerFB* spaceContainerOutput);
-        private xrGetSpaceContainerFBDelegate xrGetSpaceContainerFB_ptr;
     /// <summary> Requires XR extension "XR_FB_spatial_entity_container" </summary>
     /// <returns>
     ///       Success Codes:
@@ -3866,11 +3581,9 @@ public unsafe partial class OpenXRNativeInstance
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public XrResult xrGetSpaceContainerFB(XrSession session, XrSpace space, XrSpaceContainerFB* spaceContainerOutput)
-        => xrGetSpaceContainerFB_ptr(session, space, spaceContainerOutput);
+        => xrGetSpaceContainerFB_funcPtr(session, space, spaceContainerOutput);
+    private delegate* unmanaged<XrSession, XrSpace, XrSpaceContainerFB*, XrResult> xrGetSpaceContainerFB_funcPtr;
 
-        [UnmanagedFunctionPointer(OpenXRNative.CallConv)]
-        private delegate XrResult xrGetFoveationEyeTrackedStateMETADelegate(XrSession session, XrFoveationEyeTrackedStateMETA* foveationState);
-        private xrGetFoveationEyeTrackedStateMETADelegate xrGetFoveationEyeTrackedStateMETA_ptr;
     /// <summary> Requires XR extension "XR_META_foveation_eye_tracked" </summary>
     /// <returns>
     ///       Success Codes:
@@ -3887,11 +3600,9 @@ public unsafe partial class OpenXRNativeInstance
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public XrResult xrGetFoveationEyeTrackedStateMETA(XrSession session, XrFoveationEyeTrackedStateMETA* foveationState)
-        => xrGetFoveationEyeTrackedStateMETA_ptr(session, foveationState);
+        => xrGetFoveationEyeTrackedStateMETA_funcPtr(session, foveationState);
+    private delegate* unmanaged<XrSession, XrFoveationEyeTrackedStateMETA*, XrResult> xrGetFoveationEyeTrackedStateMETA_funcPtr;
 
-        [UnmanagedFunctionPointer(OpenXRNative.CallConv)]
-        private delegate XrResult xrCreateFaceTrackerFBDelegate(XrSession session, XrFaceTrackerCreateInfoFB* createInfo, XrFaceTrackerFB* faceTracker);
-        private xrCreateFaceTrackerFBDelegate xrCreateFaceTrackerFB_ptr;
     /// <summary> Requires XR extension "XR_FB_face_tracking" </summary>
     /// <returns>
     ///       Success Codes:
@@ -3910,11 +3621,9 @@ public unsafe partial class OpenXRNativeInstance
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public XrResult xrCreateFaceTrackerFB(XrSession session, XrFaceTrackerCreateInfoFB* createInfo, XrFaceTrackerFB* faceTracker)
-        => xrCreateFaceTrackerFB_ptr(session, createInfo, faceTracker);
+        => xrCreateFaceTrackerFB_funcPtr(session, createInfo, faceTracker);
+    private delegate* unmanaged<XrSession, XrFaceTrackerCreateInfoFB*, XrFaceTrackerFB*, XrResult> xrCreateFaceTrackerFB_funcPtr;
 
-        [UnmanagedFunctionPointer(OpenXRNative.CallConv)]
-        private delegate XrResult xrDestroyFaceTrackerFBDelegate(XrFaceTrackerFB faceTracker);
-        private xrDestroyFaceTrackerFBDelegate xrDestroyFaceTrackerFB_ptr;
     /// <summary> Requires XR extension "XR_FB_face_tracking" </summary>
     /// <returns>
     ///       Success Codes:
@@ -3925,11 +3634,9 @@ public unsafe partial class OpenXRNativeInstance
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public XrResult xrDestroyFaceTrackerFB(XrFaceTrackerFB faceTracker)
-        => xrDestroyFaceTrackerFB_ptr(faceTracker);
+        => xrDestroyFaceTrackerFB_funcPtr(faceTracker);
+    private delegate* unmanaged<XrFaceTrackerFB, XrResult> xrDestroyFaceTrackerFB_funcPtr;
 
-        [UnmanagedFunctionPointer(OpenXRNative.CallConv)]
-        private delegate XrResult xrGetFaceExpressionWeightsFBDelegate(XrFaceTrackerFB faceTracker, XrFaceExpressionInfoFB* expressionInfo, XrFaceExpressionWeightsFB* expressionWeights);
-        private xrGetFaceExpressionWeightsFBDelegate xrGetFaceExpressionWeightsFB_ptr;
     /// <summary> Requires XR extension "XR_FB_face_tracking" </summary>
     /// <returns>
     ///       Success Codes:
@@ -3946,11 +3653,9 @@ public unsafe partial class OpenXRNativeInstance
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public XrResult xrGetFaceExpressionWeightsFB(XrFaceTrackerFB faceTracker, XrFaceExpressionInfoFB* expressionInfo, XrFaceExpressionWeightsFB* expressionWeights)
-        => xrGetFaceExpressionWeightsFB_ptr(faceTracker, expressionInfo, expressionWeights);
+        => xrGetFaceExpressionWeightsFB_funcPtr(faceTracker, expressionInfo, expressionWeights);
+    private delegate* unmanaged<XrFaceTrackerFB, XrFaceExpressionInfoFB*, XrFaceExpressionWeightsFB*, XrResult> xrGetFaceExpressionWeightsFB_funcPtr;
 
-        [UnmanagedFunctionPointer(OpenXRNative.CallConv)]
-        private delegate XrResult xrCreateEyeTrackerFBDelegate(XrSession session, XrEyeTrackerCreateInfoFB* createInfo, XrEyeTrackerFB* eyeTracker);
-        private xrCreateEyeTrackerFBDelegate xrCreateEyeTrackerFB_ptr;
     /// <summary> Requires XR extension "XR_FB_eye_tracking_social" </summary>
     /// <returns>
     ///       Success Codes:
@@ -3969,11 +3674,9 @@ public unsafe partial class OpenXRNativeInstance
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public XrResult xrCreateEyeTrackerFB(XrSession session, XrEyeTrackerCreateInfoFB* createInfo, XrEyeTrackerFB* eyeTracker)
-        => xrCreateEyeTrackerFB_ptr(session, createInfo, eyeTracker);
+        => xrCreateEyeTrackerFB_funcPtr(session, createInfo, eyeTracker);
+    private delegate* unmanaged<XrSession, XrEyeTrackerCreateInfoFB*, XrEyeTrackerFB*, XrResult> xrCreateEyeTrackerFB_funcPtr;
 
-        [UnmanagedFunctionPointer(OpenXRNative.CallConv)]
-        private delegate XrResult xrDestroyEyeTrackerFBDelegate(XrEyeTrackerFB eyeTracker);
-        private xrDestroyEyeTrackerFBDelegate xrDestroyEyeTrackerFB_ptr;
     /// <summary> Requires XR extension "XR_FB_eye_tracking_social" </summary>
     /// <returns>
     ///       Success Codes:
@@ -3984,11 +3687,9 @@ public unsafe partial class OpenXRNativeInstance
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public XrResult xrDestroyEyeTrackerFB(XrEyeTrackerFB eyeTracker)
-        => xrDestroyEyeTrackerFB_ptr(eyeTracker);
+        => xrDestroyEyeTrackerFB_funcPtr(eyeTracker);
+    private delegate* unmanaged<XrEyeTrackerFB, XrResult> xrDestroyEyeTrackerFB_funcPtr;
 
-        [UnmanagedFunctionPointer(OpenXRNative.CallConv)]
-        private delegate XrResult xrGetEyeGazesFBDelegate(XrEyeTrackerFB eyeTracker, XrEyeGazesInfoFB* gazeInfo, XrEyeGazesFB* eyeGazes);
-        private xrGetEyeGazesFBDelegate xrGetEyeGazesFB_ptr;
     /// <summary> Requires XR extension "XR_FB_eye_tracking_social" </summary>
     /// <returns>
     ///       Success Codes:
@@ -4005,11 +3706,9 @@ public unsafe partial class OpenXRNativeInstance
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public XrResult xrGetEyeGazesFB(XrEyeTrackerFB eyeTracker, XrEyeGazesInfoFB* gazeInfo, XrEyeGazesFB* eyeGazes)
-        => xrGetEyeGazesFB_ptr(eyeTracker, gazeInfo, eyeGazes);
+        => xrGetEyeGazesFB_funcPtr(eyeTracker, gazeInfo, eyeGazes);
+    private delegate* unmanaged<XrEyeTrackerFB, XrEyeGazesInfoFB*, XrEyeGazesFB*, XrResult> xrGetEyeGazesFB_funcPtr;
 
-        [UnmanagedFunctionPointer(OpenXRNative.CallConv)]
-        private delegate XrResult xrPassthroughLayerSetKeyboardHandsIntensityFBDelegate(XrPassthroughLayerFB layer, XrPassthroughKeyboardHandsIntensityFB* intensity);
-        private xrPassthroughLayerSetKeyboardHandsIntensityFBDelegate xrPassthroughLayerSetKeyboardHandsIntensityFB_ptr;
     /// <summary> Requires XR extension "XR_FB_passthrough_keyboard_hands" </summary>
     /// <returns>
     ///       Success Codes:
@@ -4026,11 +3725,9 @@ public unsafe partial class OpenXRNativeInstance
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public XrResult xrPassthroughLayerSetKeyboardHandsIntensityFB(XrPassthroughLayerFB layer, XrPassthroughKeyboardHandsIntensityFB* intensity)
-        => xrPassthroughLayerSetKeyboardHandsIntensityFB_ptr(layer, intensity);
+        => xrPassthroughLayerSetKeyboardHandsIntensityFB_funcPtr(layer, intensity);
+    private delegate* unmanaged<XrPassthroughLayerFB, XrPassthroughKeyboardHandsIntensityFB*, XrResult> xrPassthroughLayerSetKeyboardHandsIntensityFB_funcPtr;
 
-        [UnmanagedFunctionPointer(OpenXRNative.CallConv)]
-        private delegate XrResult xrGetDeviceSampleRateFBDelegate(XrSession session, XrHapticActionInfo* hapticActionInfo, XrDevicePcmSampleRateStateFB* deviceSampleRate);
-        private xrGetDeviceSampleRateFBDelegate xrGetDeviceSampleRateFB_ptr;
     /// <summary> Requires XR extension "XR_FB_haptic_pcm" </summary>
     /// <returns>
     ///       Success Codes:
@@ -4049,11 +3746,9 @@ public unsafe partial class OpenXRNativeInstance
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public XrResult xrGetDeviceSampleRateFB(XrSession session, XrHapticActionInfo* hapticActionInfo, XrDevicePcmSampleRateStateFB* deviceSampleRate)
-        => xrGetDeviceSampleRateFB_ptr(session, hapticActionInfo, deviceSampleRate);
+        => xrGetDeviceSampleRateFB_funcPtr(session, hapticActionInfo, deviceSampleRate);
+    private delegate* unmanaged<XrSession, XrHapticActionInfo*, XrDevicePcmSampleRateStateFB*, XrResult> xrGetDeviceSampleRateFB_funcPtr;
 
-        [UnmanagedFunctionPointer(OpenXRNative.CallConv)]
-        private delegate XrResult xrGetPassthroughPreferencesMETADelegate(XrSession session, XrPassthroughPreferencesMETA* preferences);
-        private xrGetPassthroughPreferencesMETADelegate xrGetPassthroughPreferencesMETA_ptr;
     /// <summary> Requires XR extension "XR_META_passthrough_preferences" </summary>
     /// <returns>
     ///       Success Codes:
@@ -4069,11 +3764,9 @@ public unsafe partial class OpenXRNativeInstance
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public XrResult xrGetPassthroughPreferencesMETA(XrSession session, XrPassthroughPreferencesMETA* preferences)
-        => xrGetPassthroughPreferencesMETA_ptr(session, preferences);
+        => xrGetPassthroughPreferencesMETA_funcPtr(session, preferences);
+    private delegate* unmanaged<XrSession, XrPassthroughPreferencesMETA*, XrResult> xrGetPassthroughPreferencesMETA_funcPtr;
 
-        [UnmanagedFunctionPointer(OpenXRNative.CallConv)]
-        private delegate XrResult xrCreateVirtualKeyboardMETADelegate(XrSession session, XrVirtualKeyboardCreateInfoMETA* createInfo, XrVirtualKeyboardMETA* keyboard);
-        private xrCreateVirtualKeyboardMETADelegate xrCreateVirtualKeyboardMETA_ptr;
     /// <summary> Requires XR extension "XR_META_virtual_keyboard" </summary>
     /// <returns>
     ///       Success Codes:
@@ -4092,11 +3785,9 @@ public unsafe partial class OpenXRNativeInstance
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public XrResult xrCreateVirtualKeyboardMETA(XrSession session, XrVirtualKeyboardCreateInfoMETA* createInfo, XrVirtualKeyboardMETA* keyboard)
-        => xrCreateVirtualKeyboardMETA_ptr(session, createInfo, keyboard);
+        => xrCreateVirtualKeyboardMETA_funcPtr(session, createInfo, keyboard);
+    private delegate* unmanaged<XrSession, XrVirtualKeyboardCreateInfoMETA*, XrVirtualKeyboardMETA*, XrResult> xrCreateVirtualKeyboardMETA_funcPtr;
 
-        [UnmanagedFunctionPointer(OpenXRNative.CallConv)]
-        private delegate XrResult xrDestroyVirtualKeyboardMETADelegate(XrVirtualKeyboardMETA keyboard);
-        private xrDestroyVirtualKeyboardMETADelegate xrDestroyVirtualKeyboardMETA_ptr;
     /// <summary> Requires XR extension "XR_META_virtual_keyboard" </summary>
     /// <returns>
     ///       Success Codes:
@@ -4109,11 +3800,9 @@ public unsafe partial class OpenXRNativeInstance
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public XrResult xrDestroyVirtualKeyboardMETA(XrVirtualKeyboardMETA keyboard)
-        => xrDestroyVirtualKeyboardMETA_ptr(keyboard);
+        => xrDestroyVirtualKeyboardMETA_funcPtr(keyboard);
+    private delegate* unmanaged<XrVirtualKeyboardMETA, XrResult> xrDestroyVirtualKeyboardMETA_funcPtr;
 
-        [UnmanagedFunctionPointer(OpenXRNative.CallConv)]
-        private delegate XrResult xrCreateVirtualKeyboardSpaceMETADelegate(XrSession session, XrVirtualKeyboardMETA keyboard, XrVirtualKeyboardSpaceCreateInfoMETA* createInfo, XrSpace* keyboardSpace);
-        private xrCreateVirtualKeyboardSpaceMETADelegate xrCreateVirtualKeyboardSpaceMETA_ptr;
     /// <summary> Requires XR extension "XR_META_virtual_keyboard" </summary>
     /// <returns>
     ///       Success Codes:
@@ -4133,11 +3822,9 @@ public unsafe partial class OpenXRNativeInstance
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public XrResult xrCreateVirtualKeyboardSpaceMETA(XrSession session, XrVirtualKeyboardMETA keyboard, XrVirtualKeyboardSpaceCreateInfoMETA* createInfo, XrSpace* keyboardSpace)
-        => xrCreateVirtualKeyboardSpaceMETA_ptr(session, keyboard, createInfo, keyboardSpace);
+        => xrCreateVirtualKeyboardSpaceMETA_funcPtr(session, keyboard, createInfo, keyboardSpace);
+    private delegate* unmanaged<XrSession, XrVirtualKeyboardMETA, XrVirtualKeyboardSpaceCreateInfoMETA*, XrSpace*, XrResult> xrCreateVirtualKeyboardSpaceMETA_funcPtr;
 
-        [UnmanagedFunctionPointer(OpenXRNative.CallConv)]
-        private delegate XrResult xrSuggestVirtualKeyboardLocationMETADelegate(XrVirtualKeyboardMETA keyboard, XrVirtualKeyboardLocationInfoMETA* locationInfo);
-        private xrSuggestVirtualKeyboardLocationMETADelegate xrSuggestVirtualKeyboardLocationMETA_ptr;
     /// <summary> Requires XR extension "XR_META_virtual_keyboard" </summary>
     /// <returns>
     ///       Success Codes:
@@ -4155,11 +3842,9 @@ public unsafe partial class OpenXRNativeInstance
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public XrResult xrSuggestVirtualKeyboardLocationMETA(XrVirtualKeyboardMETA keyboard, XrVirtualKeyboardLocationInfoMETA* locationInfo)
-        => xrSuggestVirtualKeyboardLocationMETA_ptr(keyboard, locationInfo);
+        => xrSuggestVirtualKeyboardLocationMETA_funcPtr(keyboard, locationInfo);
+    private delegate* unmanaged<XrVirtualKeyboardMETA, XrVirtualKeyboardLocationInfoMETA*, XrResult> xrSuggestVirtualKeyboardLocationMETA_funcPtr;
 
-        [UnmanagedFunctionPointer(OpenXRNative.CallConv)]
-        private delegate XrResult xrGetVirtualKeyboardScaleMETADelegate(XrVirtualKeyboardMETA keyboard, float* scale);
-        private xrGetVirtualKeyboardScaleMETADelegate xrGetVirtualKeyboardScaleMETA_ptr;
     /// <summary> Requires XR extension "XR_META_virtual_keyboard" </summary>
     /// <returns>
     ///       Success Codes:
@@ -4176,11 +3861,9 @@ public unsafe partial class OpenXRNativeInstance
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public XrResult xrGetVirtualKeyboardScaleMETA(XrVirtualKeyboardMETA keyboard, float* scale)
-        => xrGetVirtualKeyboardScaleMETA_ptr(keyboard, scale);
+        => xrGetVirtualKeyboardScaleMETA_funcPtr(keyboard, scale);
+    private delegate* unmanaged<XrVirtualKeyboardMETA, float*, XrResult> xrGetVirtualKeyboardScaleMETA_funcPtr;
 
-        [UnmanagedFunctionPointer(OpenXRNative.CallConv)]
-        private delegate XrResult xrSetVirtualKeyboardModelVisibilityMETADelegate(XrVirtualKeyboardMETA keyboard, XrVirtualKeyboardModelVisibilitySetInfoMETA* modelVisibility);
-        private xrSetVirtualKeyboardModelVisibilityMETADelegate xrSetVirtualKeyboardModelVisibilityMETA_ptr;
     /// <summary> Requires XR extension "XR_META_virtual_keyboard" </summary>
     /// <returns>
     ///       Success Codes:
@@ -4197,11 +3880,9 @@ public unsafe partial class OpenXRNativeInstance
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public XrResult xrSetVirtualKeyboardModelVisibilityMETA(XrVirtualKeyboardMETA keyboard, XrVirtualKeyboardModelVisibilitySetInfoMETA* modelVisibility)
-        => xrSetVirtualKeyboardModelVisibilityMETA_ptr(keyboard, modelVisibility);
+        => xrSetVirtualKeyboardModelVisibilityMETA_funcPtr(keyboard, modelVisibility);
+    private delegate* unmanaged<XrVirtualKeyboardMETA, XrVirtualKeyboardModelVisibilitySetInfoMETA*, XrResult> xrSetVirtualKeyboardModelVisibilityMETA_funcPtr;
 
-        [UnmanagedFunctionPointer(OpenXRNative.CallConv)]
-        private delegate XrResult xrGetVirtualKeyboardModelAnimationStatesMETADelegate(XrVirtualKeyboardMETA keyboard, XrVirtualKeyboardModelAnimationStatesMETA* animationStates);
-        private xrGetVirtualKeyboardModelAnimationStatesMETADelegate xrGetVirtualKeyboardModelAnimationStatesMETA_ptr;
     /// <summary> Requires XR extension "XR_META_virtual_keyboard" </summary>
     /// <returns>
     ///       Success Codes:
@@ -4219,11 +3900,9 @@ public unsafe partial class OpenXRNativeInstance
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public XrResult xrGetVirtualKeyboardModelAnimationStatesMETA(XrVirtualKeyboardMETA keyboard, XrVirtualKeyboardModelAnimationStatesMETA* animationStates)
-        => xrGetVirtualKeyboardModelAnimationStatesMETA_ptr(keyboard, animationStates);
+        => xrGetVirtualKeyboardModelAnimationStatesMETA_funcPtr(keyboard, animationStates);
+    private delegate* unmanaged<XrVirtualKeyboardMETA, XrVirtualKeyboardModelAnimationStatesMETA*, XrResult> xrGetVirtualKeyboardModelAnimationStatesMETA_funcPtr;
 
-        [UnmanagedFunctionPointer(OpenXRNative.CallConv)]
-        private delegate XrResult xrGetVirtualKeyboardDirtyTexturesMETADelegate(XrVirtualKeyboardMETA keyboard, uint textureIdCapacityInput, uint* textureIdCountOutput, ulong* textureIds);
-        private xrGetVirtualKeyboardDirtyTexturesMETADelegate xrGetVirtualKeyboardDirtyTexturesMETA_ptr;
     /// <summary> Requires XR extension "XR_META_virtual_keyboard" </summary>
     /// <returns>
     ///       Success Codes:
@@ -4241,11 +3920,9 @@ public unsafe partial class OpenXRNativeInstance
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public XrResult xrGetVirtualKeyboardDirtyTexturesMETA(XrVirtualKeyboardMETA keyboard, uint textureIdCapacityInput, uint* textureIdCountOutput, ulong* textureIds)
-        => xrGetVirtualKeyboardDirtyTexturesMETA_ptr(keyboard, textureIdCapacityInput, textureIdCountOutput, textureIds);
+        => xrGetVirtualKeyboardDirtyTexturesMETA_funcPtr(keyboard, textureIdCapacityInput, textureIdCountOutput, textureIds);
+    private delegate* unmanaged<XrVirtualKeyboardMETA, uint, uint*, ulong*, XrResult> xrGetVirtualKeyboardDirtyTexturesMETA_funcPtr;
 
-        [UnmanagedFunctionPointer(OpenXRNative.CallConv)]
-        private delegate XrResult xrGetVirtualKeyboardTextureDataMETADelegate(XrVirtualKeyboardMETA keyboard, ulong textureId, XrVirtualKeyboardTextureDataMETA* textureData);
-        private xrGetVirtualKeyboardTextureDataMETADelegate xrGetVirtualKeyboardTextureDataMETA_ptr;
     /// <summary> Requires XR extension "XR_META_virtual_keyboard" </summary>
     /// <returns>
     ///       Success Codes:
@@ -4263,11 +3940,9 @@ public unsafe partial class OpenXRNativeInstance
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public XrResult xrGetVirtualKeyboardTextureDataMETA(XrVirtualKeyboardMETA keyboard, ulong textureId, XrVirtualKeyboardTextureDataMETA* textureData)
-        => xrGetVirtualKeyboardTextureDataMETA_ptr(keyboard, textureId, textureData);
+        => xrGetVirtualKeyboardTextureDataMETA_funcPtr(keyboard, textureId, textureData);
+    private delegate* unmanaged<XrVirtualKeyboardMETA, ulong, XrVirtualKeyboardTextureDataMETA*, XrResult> xrGetVirtualKeyboardTextureDataMETA_funcPtr;
 
-        [UnmanagedFunctionPointer(OpenXRNative.CallConv)]
-        private delegate XrResult xrSendVirtualKeyboardInputMETADelegate(XrVirtualKeyboardMETA keyboard, XrVirtualKeyboardInputInfoMETA* info, XrPosef* interactorRootPose);
-        private xrSendVirtualKeyboardInputMETADelegate xrSendVirtualKeyboardInputMETA_ptr;
     /// <summary> Requires XR extension "XR_META_virtual_keyboard" </summary>
     /// <returns>
     ///       Success Codes:
@@ -4285,11 +3960,9 @@ public unsafe partial class OpenXRNativeInstance
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public XrResult xrSendVirtualKeyboardInputMETA(XrVirtualKeyboardMETA keyboard, XrVirtualKeyboardInputInfoMETA* info, XrPosef* interactorRootPose)
-        => xrSendVirtualKeyboardInputMETA_ptr(keyboard, info, interactorRootPose);
+        => xrSendVirtualKeyboardInputMETA_funcPtr(keyboard, info, interactorRootPose);
+    private delegate* unmanaged<XrVirtualKeyboardMETA, XrVirtualKeyboardInputInfoMETA*, XrPosef*, XrResult> xrSendVirtualKeyboardInputMETA_funcPtr;
 
-        [UnmanagedFunctionPointer(OpenXRNative.CallConv)]
-        private delegate XrResult xrChangeVirtualKeyboardTextContextMETADelegate(XrVirtualKeyboardMETA keyboard, XrVirtualKeyboardTextContextChangeInfoMETA* changeInfo);
-        private xrChangeVirtualKeyboardTextContextMETADelegate xrChangeVirtualKeyboardTextContextMETA_ptr;
     /// <summary> Requires XR extension "XR_META_virtual_keyboard" </summary>
     /// <returns>
     ///       Success Codes:
@@ -4306,11 +3979,9 @@ public unsafe partial class OpenXRNativeInstance
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public XrResult xrChangeVirtualKeyboardTextContextMETA(XrVirtualKeyboardMETA keyboard, XrVirtualKeyboardTextContextChangeInfoMETA* changeInfo)
-        => xrChangeVirtualKeyboardTextContextMETA_ptr(keyboard, changeInfo);
+        => xrChangeVirtualKeyboardTextContextMETA_funcPtr(keyboard, changeInfo);
+    private delegate* unmanaged<XrVirtualKeyboardMETA, XrVirtualKeyboardTextContextChangeInfoMETA*, XrResult> xrChangeVirtualKeyboardTextContextMETA_funcPtr;
 
-        [UnmanagedFunctionPointer(OpenXRNative.CallConv)]
-        private delegate XrResult xrEnumerateExternalCamerasOCULUSDelegate(XrSession session, uint cameraCapacityInput, uint* cameraCountOutput, XrExternalCameraOCULUS* cameras);
-        private xrEnumerateExternalCamerasOCULUSDelegate xrEnumerateExternalCamerasOCULUS_ptr;
     /// <summary> Requires XR extension "XR_OCULUS_external_camera" </summary>
     /// <returns>
     ///       Success Codes:
@@ -4328,11 +3999,9 @@ public unsafe partial class OpenXRNativeInstance
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public XrResult xrEnumerateExternalCamerasOCULUS(XrSession session, uint cameraCapacityInput, uint* cameraCountOutput, XrExternalCameraOCULUS* cameras)
-        => xrEnumerateExternalCamerasOCULUS_ptr(session, cameraCapacityInput, cameraCountOutput, cameras);
+        => xrEnumerateExternalCamerasOCULUS_funcPtr(session, cameraCapacityInput, cameraCountOutput, cameras);
+    private delegate* unmanaged<XrSession, uint, uint*, XrExternalCameraOCULUS*, XrResult> xrEnumerateExternalCamerasOCULUS_funcPtr;
 
-        [UnmanagedFunctionPointer(OpenXRNative.CallConv)]
-        private delegate XrResult xrEnumeratePerformanceMetricsCounterPathsMETADelegate(XrInstance instance, uint counterPathCapacityInput, uint* counterPathCountOutput, ulong* counterPaths);
-        private xrEnumeratePerformanceMetricsCounterPathsMETADelegate xrEnumeratePerformanceMetricsCounterPathsMETA_ptr;
     /// <summary> Requires XR extension "XR_META_performance_metrics" </summary>
     /// <returns>
     ///       Success Codes:
@@ -4347,11 +4016,9 @@ public unsafe partial class OpenXRNativeInstance
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public XrResult xrEnumeratePerformanceMetricsCounterPathsMETA(XrInstance instance, uint counterPathCapacityInput, uint* counterPathCountOutput, ulong* counterPaths)
-        => xrEnumeratePerformanceMetricsCounterPathsMETA_ptr(instance, counterPathCapacityInput, counterPathCountOutput, counterPaths);
+        => xrEnumeratePerformanceMetricsCounterPathsMETA_funcPtr(instance, counterPathCapacityInput, counterPathCountOutput, counterPaths);
+    private delegate* unmanaged<XrInstance, uint, uint*, ulong*, XrResult> xrEnumeratePerformanceMetricsCounterPathsMETA_funcPtr;
 
-        [UnmanagedFunctionPointer(OpenXRNative.CallConv)]
-        private delegate XrResult xrSetPerformanceMetricsStateMETADelegate(XrSession session, XrPerformanceMetricsStateMETA* state);
-        private xrSetPerformanceMetricsStateMETADelegate xrSetPerformanceMetricsStateMETA_ptr;
     /// <summary> Requires XR extension "XR_META_performance_metrics" </summary>
     /// <returns>
     ///       Success Codes:
@@ -4367,11 +4034,9 @@ public unsafe partial class OpenXRNativeInstance
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public XrResult xrSetPerformanceMetricsStateMETA(XrSession session, XrPerformanceMetricsStateMETA* state)
-        => xrSetPerformanceMetricsStateMETA_ptr(session, state);
+        => xrSetPerformanceMetricsStateMETA_funcPtr(session, state);
+    private delegate* unmanaged<XrSession, XrPerformanceMetricsStateMETA*, XrResult> xrSetPerformanceMetricsStateMETA_funcPtr;
 
-        [UnmanagedFunctionPointer(OpenXRNative.CallConv)]
-        private delegate XrResult xrGetPerformanceMetricsStateMETADelegate(XrSession session, XrPerformanceMetricsStateMETA* state);
-        private xrGetPerformanceMetricsStateMETADelegate xrGetPerformanceMetricsStateMETA_ptr;
     /// <summary> Requires XR extension "XR_META_performance_metrics" </summary>
     /// <returns>
     ///       Success Codes:
@@ -4386,11 +4051,9 @@ public unsafe partial class OpenXRNativeInstance
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public XrResult xrGetPerformanceMetricsStateMETA(XrSession session, XrPerformanceMetricsStateMETA* state)
-        => xrGetPerformanceMetricsStateMETA_ptr(session, state);
+        => xrGetPerformanceMetricsStateMETA_funcPtr(session, state);
+    private delegate* unmanaged<XrSession, XrPerformanceMetricsStateMETA*, XrResult> xrGetPerformanceMetricsStateMETA_funcPtr;
 
-        [UnmanagedFunctionPointer(OpenXRNative.CallConv)]
-        private delegate XrResult xrQueryPerformanceMetricsCounterMETADelegate(XrSession session, ulong counterPath, XrPerformanceMetricsCounterMETA* counter);
-        private xrQueryPerformanceMetricsCounterMETADelegate xrQueryPerformanceMetricsCounterMETA_ptr;
     /// <summary> Requires XR extension "XR_META_performance_metrics" </summary>
     /// <returns>
     ///       Success Codes:
@@ -4408,11 +4071,9 @@ public unsafe partial class OpenXRNativeInstance
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public XrResult xrQueryPerformanceMetricsCounterMETA(XrSession session, ulong counterPath, XrPerformanceMetricsCounterMETA* counter)
-        => xrQueryPerformanceMetricsCounterMETA_ptr(session, counterPath, counter);
+        => xrQueryPerformanceMetricsCounterMETA_funcPtr(session, counterPath, counter);
+    private delegate* unmanaged<XrSession, ulong, XrPerformanceMetricsCounterMETA*, XrResult> xrQueryPerformanceMetricsCounterMETA_funcPtr;
 
-        [UnmanagedFunctionPointer(OpenXRNative.CallConv)]
-        private delegate XrResult xrSaveSpaceListFBDelegate(XrSession session, XrSpaceListSaveInfoFB* info, ulong* requestId);
-        private xrSaveSpaceListFBDelegate xrSaveSpaceListFB_ptr;
     /// <summary> Requires XR extension "XR_FB_spatial_entity_storage_batch" </summary>
     /// <returns>
     ///       Success Codes:
@@ -4435,11 +4096,9 @@ public unsafe partial class OpenXRNativeInstance
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public XrResult xrSaveSpaceListFB(XrSession session, XrSpaceListSaveInfoFB* info, ulong* requestId)
-        => xrSaveSpaceListFB_ptr(session, info, requestId);
+        => xrSaveSpaceListFB_funcPtr(session, info, requestId);
+    private delegate* unmanaged<XrSession, XrSpaceListSaveInfoFB*, ulong*, XrResult> xrSaveSpaceListFB_funcPtr;
 
-        [UnmanagedFunctionPointer(OpenXRNative.CallConv)]
-        private delegate XrResult xrCreateSpaceUserFBDelegate(XrSession session, XrSpaceUserCreateInfoFB* info, XrSpaceUserFB* user);
-        private xrCreateSpaceUserFBDelegate xrCreateSpaceUserFB_ptr;
     /// <summary> Requires XR extension "XR_FB_spatial_entity_user" </summary>
     /// <returns>
     ///       Success Codes:
@@ -4457,11 +4116,9 @@ public unsafe partial class OpenXRNativeInstance
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public XrResult xrCreateSpaceUserFB(XrSession session, XrSpaceUserCreateInfoFB* info, XrSpaceUserFB* user)
-        => xrCreateSpaceUserFB_ptr(session, info, user);
+        => xrCreateSpaceUserFB_funcPtr(session, info, user);
+    private delegate* unmanaged<XrSession, XrSpaceUserCreateInfoFB*, XrSpaceUserFB*, XrResult> xrCreateSpaceUserFB_funcPtr;
 
-        [UnmanagedFunctionPointer(OpenXRNative.CallConv)]
-        private delegate XrResult xrGetSpaceUserIdFBDelegate(XrSpaceUserFB user, ulong* userId);
-        private xrGetSpaceUserIdFBDelegate xrGetSpaceUserIdFB_ptr;
     /// <summary> Requires XR extension "XR_FB_spatial_entity_user" </summary>
     /// <returns>
     ///       Success Codes:
@@ -4477,11 +4134,9 @@ public unsafe partial class OpenXRNativeInstance
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public XrResult xrGetSpaceUserIdFB(XrSpaceUserFB user, ulong* userId)
-        => xrGetSpaceUserIdFB_ptr(user, userId);
+        => xrGetSpaceUserIdFB_funcPtr(user, userId);
+    private delegate* unmanaged<XrSpaceUserFB, ulong*, XrResult> xrGetSpaceUserIdFB_funcPtr;
 
-        [UnmanagedFunctionPointer(OpenXRNative.CallConv)]
-        private delegate XrResult xrDestroySpaceUserFBDelegate(XrSpaceUserFB user);
-        private xrDestroySpaceUserFBDelegate xrDestroySpaceUserFB_ptr;
     /// <summary> Requires XR extension "XR_FB_spatial_entity_user" </summary>
     /// <returns>
     ///       Success Codes:
@@ -4493,11 +4148,9 @@ public unsafe partial class OpenXRNativeInstance
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public XrResult xrDestroySpaceUserFB(XrSpaceUserFB user)
-        => xrDestroySpaceUserFB_ptr(user);
+        => xrDestroySpaceUserFB_funcPtr(user);
+    private delegate* unmanaged<XrSpaceUserFB, XrResult> xrDestroySpaceUserFB_funcPtr;
 
-        [UnmanagedFunctionPointer(OpenXRNative.CallConv)]
-        private delegate XrResult xrCreatePassthroughColorLutMETADelegate(XrPassthroughFB passthrough, XrPassthroughColorLutCreateInfoMETA* createInfo, XrPassthroughColorLutMETA* colorLut);
-        private xrCreatePassthroughColorLutMETADelegate xrCreatePassthroughColorLutMETA_ptr;
     /// <summary> Requires XR extension "XR_META_passthrough_color_lut" </summary>
     /// <returns>
     ///       Success Codes:
@@ -4517,11 +4170,9 @@ public unsafe partial class OpenXRNativeInstance
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public XrResult xrCreatePassthroughColorLutMETA(XrPassthroughFB passthrough, XrPassthroughColorLutCreateInfoMETA* createInfo, XrPassthroughColorLutMETA* colorLut)
-        => xrCreatePassthroughColorLutMETA_ptr(passthrough, createInfo, colorLut);
+        => xrCreatePassthroughColorLutMETA_funcPtr(passthrough, createInfo, colorLut);
+    private delegate* unmanaged<XrPassthroughFB, XrPassthroughColorLutCreateInfoMETA*, XrPassthroughColorLutMETA*, XrResult> xrCreatePassthroughColorLutMETA_funcPtr;
 
-        [UnmanagedFunctionPointer(OpenXRNative.CallConv)]
-        private delegate XrResult xrDestroyPassthroughColorLutMETADelegate(XrPassthroughColorLutMETA colorLut);
-        private xrDestroyPassthroughColorLutMETADelegate xrDestroyPassthroughColorLutMETA_ptr;
     /// <summary> Requires XR extension "XR_META_passthrough_color_lut" </summary>
     /// <returns>
     ///       Success Codes:
@@ -4534,11 +4185,9 @@ public unsafe partial class OpenXRNativeInstance
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public XrResult xrDestroyPassthroughColorLutMETA(XrPassthroughColorLutMETA colorLut)
-        => xrDestroyPassthroughColorLutMETA_ptr(colorLut);
+        => xrDestroyPassthroughColorLutMETA_funcPtr(colorLut);
+    private delegate* unmanaged<XrPassthroughColorLutMETA, XrResult> xrDestroyPassthroughColorLutMETA_funcPtr;
 
-        [UnmanagedFunctionPointer(OpenXRNative.CallConv)]
-        private delegate XrResult xrUpdatePassthroughColorLutMETADelegate(XrPassthroughColorLutMETA colorLut, XrPassthroughColorLutUpdateInfoMETA* updateInfo);
-        private xrUpdatePassthroughColorLutMETADelegate xrUpdatePassthroughColorLutMETA_ptr;
     /// <summary> Requires XR extension "XR_META_passthrough_color_lut" </summary>
     /// <returns>
     ///       Success Codes:
@@ -4556,11 +4205,9 @@ public unsafe partial class OpenXRNativeInstance
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public XrResult xrUpdatePassthroughColorLutMETA(XrPassthroughColorLutMETA colorLut, XrPassthroughColorLutUpdateInfoMETA* updateInfo)
-        => xrUpdatePassthroughColorLutMETA_ptr(colorLut, updateInfo);
+        => xrUpdatePassthroughColorLutMETA_funcPtr(colorLut, updateInfo);
+    private delegate* unmanaged<XrPassthroughColorLutMETA, XrPassthroughColorLutUpdateInfoMETA*, XrResult> xrUpdatePassthroughColorLutMETA_funcPtr;
 
-        [UnmanagedFunctionPointer(OpenXRNative.CallConv)]
-        private delegate XrResult xrSetTrackingOptimizationSettingsHintQCOMDelegate(XrSession session, XrTrackingOptimizationSettingsDomainQCOM domain, XrTrackingOptimizationSettingsHintQCOM hint);
-        private xrSetTrackingOptimizationSettingsHintQCOMDelegate xrSetTrackingOptimizationSettingsHintQCOM_ptr;
     /// <summary> Requires XR extension "XR_QCOM_tracking_optimization_settings" </summary>
     /// <returns>
     ///       Success Codes:
@@ -4577,11 +4224,9 @@ public unsafe partial class OpenXRNativeInstance
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public XrResult xrSetTrackingOptimizationSettingsHintQCOM(XrSession session, XrTrackingOptimizationSettingsDomainQCOM domain, XrTrackingOptimizationSettingsHintQCOM hint)
-        => xrSetTrackingOptimizationSettingsHintQCOM_ptr(session, domain, hint);
+        => xrSetTrackingOptimizationSettingsHintQCOM_funcPtr(session, domain, hint);
+    private delegate* unmanaged<XrSession, XrTrackingOptimizationSettingsDomainQCOM, XrTrackingOptimizationSettingsHintQCOM, XrResult> xrSetTrackingOptimizationSettingsHintQCOM_funcPtr;
 
-        [UnmanagedFunctionPointer(OpenXRNative.CallConv)]
-        private delegate XrResult xrCreatePassthroughHTCDelegate(XrSession session, XrPassthroughCreateInfoHTC* createInfo, XrPassthroughHTC* passthrough);
-        private xrCreatePassthroughHTCDelegate xrCreatePassthroughHTC_ptr;
     /// <summary> Requires XR extension "XR_HTC_passthrough" </summary>
     /// <returns>
     ///       Success Codes:
@@ -4600,11 +4245,9 @@ public unsafe partial class OpenXRNativeInstance
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public XrResult xrCreatePassthroughHTC(XrSession session, XrPassthroughCreateInfoHTC* createInfo, XrPassthroughHTC* passthrough)
-        => xrCreatePassthroughHTC_ptr(session, createInfo, passthrough);
+        => xrCreatePassthroughHTC_funcPtr(session, createInfo, passthrough);
+    private delegate* unmanaged<XrSession, XrPassthroughCreateInfoHTC*, XrPassthroughHTC*, XrResult> xrCreatePassthroughHTC_funcPtr;
 
-        [UnmanagedFunctionPointer(OpenXRNative.CallConv)]
-        private delegate XrResult xrDestroyPassthroughHTCDelegate(XrPassthroughHTC passthrough);
-        private xrDestroyPassthroughHTCDelegate xrDestroyPassthroughHTC_ptr;
     /// <summary> Requires XR extension "XR_HTC_passthrough" </summary>
     /// <returns>
     ///       Success Codes:
@@ -4616,11 +4259,9 @@ public unsafe partial class OpenXRNativeInstance
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public XrResult xrDestroyPassthroughHTC(XrPassthroughHTC passthrough)
-        => xrDestroyPassthroughHTC_ptr(passthrough);
+        => xrDestroyPassthroughHTC_funcPtr(passthrough);
+    private delegate* unmanaged<XrPassthroughHTC, XrResult> xrDestroyPassthroughHTC_funcPtr;
 
-        [UnmanagedFunctionPointer(OpenXRNative.CallConv)]
-        private delegate XrResult xrApplyFoveationHTCDelegate(XrSession session, XrFoveationApplyInfoHTC* applyInfo);
-        private xrApplyFoveationHTCDelegate xrApplyFoveationHTC_ptr;
     /// <summary> Requires XR extension "XR_HTC_foveation" </summary>
     /// <returns>
     ///       Success Codes:
@@ -4637,11 +4278,9 @@ public unsafe partial class OpenXRNativeInstance
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public XrResult xrApplyFoveationHTC(XrSession session, XrFoveationApplyInfoHTC* applyInfo)
-        => xrApplyFoveationHTC_ptr(session, applyInfo);
+        => xrApplyFoveationHTC_funcPtr(session, applyInfo);
+    private delegate* unmanaged<XrSession, XrFoveationApplyInfoHTC*, XrResult> xrApplyFoveationHTC_funcPtr;
 
-        [UnmanagedFunctionPointer(OpenXRNative.CallConv)]
-        private delegate XrResult xrApplyForceFeedbackCurlMNDXDelegate(XrHandTrackerEXT handTracker, XrForceFeedbackCurlApplyLocationsMNDX* locations);
-        private xrApplyForceFeedbackCurlMNDXDelegate xrApplyForceFeedbackCurlMNDX_ptr;
     /// <summary> Requires XR extension "XR_MNDX_force_feedback_curl" </summary>
     /// <returns>
     ///       Success Codes:
@@ -4658,11 +4297,9 @@ public unsafe partial class OpenXRNativeInstance
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public XrResult xrApplyForceFeedbackCurlMNDX(XrHandTrackerEXT handTracker, XrForceFeedbackCurlApplyLocationsMNDX* locations)
-        => xrApplyForceFeedbackCurlMNDX_ptr(handTracker, locations);
+        => xrApplyForceFeedbackCurlMNDX_funcPtr(handTracker, locations);
+    private delegate* unmanaged<XrHandTrackerEXT, XrForceFeedbackCurlApplyLocationsMNDX*, XrResult> xrApplyForceFeedbackCurlMNDX_funcPtr;
 
-        [UnmanagedFunctionPointer(OpenXRNative.CallConv)]
-        private delegate XrResult xrCreatePlaneDetectorEXTDelegate(XrSession session, XrPlaneDetectorCreateInfoEXT* createInfo, XrPlaneDetectorEXT* planeDetector);
-        private xrCreatePlaneDetectorEXTDelegate xrCreatePlaneDetectorEXT_ptr;
     /// <summary> Requires XR extension "XR_EXT_plane_detection" </summary>
     /// <returns>
     ///       Success Codes:
@@ -4682,11 +4319,9 @@ public unsafe partial class OpenXRNativeInstance
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public XrResult xrCreatePlaneDetectorEXT(XrSession session, XrPlaneDetectorCreateInfoEXT* createInfo, XrPlaneDetectorEXT* planeDetector)
-        => xrCreatePlaneDetectorEXT_ptr(session, createInfo, planeDetector);
+        => xrCreatePlaneDetectorEXT_funcPtr(session, createInfo, planeDetector);
+    private delegate* unmanaged<XrSession, XrPlaneDetectorCreateInfoEXT*, XrPlaneDetectorEXT*, XrResult> xrCreatePlaneDetectorEXT_funcPtr;
 
-        [UnmanagedFunctionPointer(OpenXRNative.CallConv)]
-        private delegate XrResult xrDestroyPlaneDetectorEXTDelegate(XrPlaneDetectorEXT planeDetector);
-        private xrDestroyPlaneDetectorEXTDelegate xrDestroyPlaneDetectorEXT_ptr;
     /// <summary> Requires XR extension "XR_EXT_plane_detection" </summary>
     /// <returns>
     ///       Success Codes:
@@ -4698,11 +4333,9 @@ public unsafe partial class OpenXRNativeInstance
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public XrResult xrDestroyPlaneDetectorEXT(XrPlaneDetectorEXT planeDetector)
-        => xrDestroyPlaneDetectorEXT_ptr(planeDetector);
+        => xrDestroyPlaneDetectorEXT_funcPtr(planeDetector);
+    private delegate* unmanaged<XrPlaneDetectorEXT, XrResult> xrDestroyPlaneDetectorEXT_funcPtr;
 
-        [UnmanagedFunctionPointer(OpenXRNative.CallConv)]
-        private delegate XrResult xrBeginPlaneDetectionEXTDelegate(XrPlaneDetectorEXT planeDetector, XrPlaneDetectorBeginInfoEXT* beginInfo);
-        private xrBeginPlaneDetectionEXTDelegate xrBeginPlaneDetectionEXT_ptr;
     /// <summary> Requires XR extension "XR_EXT_plane_detection" </summary>
     /// <returns>
     ///       Success Codes:
@@ -4721,11 +4354,9 @@ public unsafe partial class OpenXRNativeInstance
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public XrResult xrBeginPlaneDetectionEXT(XrPlaneDetectorEXT planeDetector, XrPlaneDetectorBeginInfoEXT* beginInfo)
-        => xrBeginPlaneDetectionEXT_ptr(planeDetector, beginInfo);
+        => xrBeginPlaneDetectionEXT_funcPtr(planeDetector, beginInfo);
+    private delegate* unmanaged<XrPlaneDetectorEXT, XrPlaneDetectorBeginInfoEXT*, XrResult> xrBeginPlaneDetectionEXT_funcPtr;
 
-        [UnmanagedFunctionPointer(OpenXRNative.CallConv)]
-        private delegate XrResult xrGetPlaneDetectionStateEXTDelegate(XrPlaneDetectorEXT planeDetector, XrPlaneDetectionStateEXT* state);
-        private xrGetPlaneDetectionStateEXTDelegate xrGetPlaneDetectionStateEXT_ptr;
     /// <summary> Requires XR extension "XR_EXT_plane_detection" </summary>
     /// <returns>
     ///       Success Codes:
@@ -4741,11 +4372,9 @@ public unsafe partial class OpenXRNativeInstance
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public XrResult xrGetPlaneDetectionStateEXT(XrPlaneDetectorEXT planeDetector, XrPlaneDetectionStateEXT* state)
-        => xrGetPlaneDetectionStateEXT_ptr(planeDetector, state);
+        => xrGetPlaneDetectionStateEXT_funcPtr(planeDetector, state);
+    private delegate* unmanaged<XrPlaneDetectorEXT, XrPlaneDetectionStateEXT*, XrResult> xrGetPlaneDetectionStateEXT_funcPtr;
 
-        [UnmanagedFunctionPointer(OpenXRNative.CallConv)]
-        private delegate XrResult xrGetPlaneDetectionsEXTDelegate(XrPlaneDetectorEXT planeDetector, XrPlaneDetectorGetInfoEXT* info, XrPlaneDetectorLocationsEXT* locations);
-        private xrGetPlaneDetectionsEXTDelegate xrGetPlaneDetectionsEXT_ptr;
     /// <summary> Requires XR extension "XR_EXT_plane_detection" </summary>
     /// <returns>
     ///       Success Codes:
@@ -4764,11 +4393,9 @@ public unsafe partial class OpenXRNativeInstance
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public XrResult xrGetPlaneDetectionsEXT(XrPlaneDetectorEXT planeDetector, XrPlaneDetectorGetInfoEXT* info, XrPlaneDetectorLocationsEXT* locations)
-        => xrGetPlaneDetectionsEXT_ptr(planeDetector, info, locations);
+        => xrGetPlaneDetectionsEXT_funcPtr(planeDetector, info, locations);
+    private delegate* unmanaged<XrPlaneDetectorEXT, XrPlaneDetectorGetInfoEXT*, XrPlaneDetectorLocationsEXT*, XrResult> xrGetPlaneDetectionsEXT_funcPtr;
 
-        [UnmanagedFunctionPointer(OpenXRNative.CallConv)]
-        private delegate XrResult xrGetPlanePolygonBufferEXTDelegate(XrPlaneDetectorEXT planeDetector, ulong planeId, uint polygonBufferIndex, XrPlaneDetectorPolygonBufferEXT* polygonBuffer);
-        private xrGetPlanePolygonBufferEXTDelegate xrGetPlanePolygonBufferEXT_ptr;
     /// <summary> Requires XR extension "XR_EXT_plane_detection" </summary>
     /// <returns>
     ///       Success Codes:
@@ -4784,199 +4411,401 @@ public unsafe partial class OpenXRNativeInstance
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
     public XrResult xrGetPlanePolygonBufferEXT(XrPlaneDetectorEXT planeDetector, ulong planeId, uint polygonBufferIndex, XrPlaneDetectorPolygonBufferEXT* polygonBuffer)
-        => xrGetPlanePolygonBufferEXT_ptr(planeDetector, planeId, polygonBufferIndex, polygonBuffer);
+        => xrGetPlanePolygonBufferEXT_funcPtr(planeDetector, planeId, polygonBufferIndex, polygonBuffer);
+    private delegate* unmanaged<XrPlaneDetectorEXT, ulong, uint, XrPlaneDetectorPolygonBufferEXT*, XrResult> xrGetPlanePolygonBufferEXT_funcPtr;
 
-    public void LoadFunctionPointers(XrInstance instance = default)
+    public void LoadFunctionPointers()
     {
-        if (instance != default)
-            nativeLib.instance = instance;
-
-        nativeLib.LoadFunction("xrSetAndroidApplicationThreadKHR",  out xrSetAndroidApplicationThreadKHR_ptr);
-        nativeLib.LoadFunction("xrCreateSwapchainAndroidSurfaceKHR",  out xrCreateSwapchainAndroidSurfaceKHR_ptr);
-        nativeLib.LoadFunction("xrPerfSettingsSetPerformanceLevelEXT",  out xrPerfSettingsSetPerformanceLevelEXT_ptr);
-        nativeLib.LoadFunction("xrThermalGetTemperatureTrendEXT",  out xrThermalGetTemperatureTrendEXT_ptr);
-        nativeLib.LoadFunction("xrSetDebugUtilsObjectNameEXT",  out xrSetDebugUtilsObjectNameEXT_ptr);
-        nativeLib.LoadFunction("xrCreateDebugUtilsMessengerEXT",  out xrCreateDebugUtilsMessengerEXT_ptr);
-        nativeLib.LoadFunction("xrDestroyDebugUtilsMessengerEXT",  out xrDestroyDebugUtilsMessengerEXT_ptr);
-        nativeLib.LoadFunction("xrSubmitDebugUtilsMessageEXT",  out xrSubmitDebugUtilsMessageEXT_ptr);
-        nativeLib.LoadFunction("xrSessionBeginDebugUtilsLabelRegionEXT",  out xrSessionBeginDebugUtilsLabelRegionEXT_ptr);
-        nativeLib.LoadFunction("xrSessionEndDebugUtilsLabelRegionEXT",  out xrSessionEndDebugUtilsLabelRegionEXT_ptr);
-        nativeLib.LoadFunction("xrSessionInsertDebugUtilsLabelEXT",  out xrSessionInsertDebugUtilsLabelEXT_ptr);
-        nativeLib.LoadFunction("xrGetOpenGLGraphicsRequirementsKHR",  out xrGetOpenGLGraphicsRequirementsKHR_ptr);
-        nativeLib.LoadFunction("xrGetOpenGLESGraphicsRequirementsKHR",  out xrGetOpenGLESGraphicsRequirementsKHR_ptr);
-        nativeLib.LoadFunction("xrGetVulkanInstanceExtensionsKHR",  out xrGetVulkanInstanceExtensionsKHR_ptr);
-        nativeLib.LoadFunction("xrGetVulkanDeviceExtensionsKHR",  out xrGetVulkanDeviceExtensionsKHR_ptr);
-        nativeLib.LoadFunction("xrGetVulkanGraphicsDeviceKHR",  out xrGetVulkanGraphicsDeviceKHR_ptr);
-        nativeLib.LoadFunction("xrGetVulkanGraphicsRequirementsKHR",  out xrGetVulkanGraphicsRequirementsKHR_ptr);
-        nativeLib.LoadFunction("xrGetD3D11GraphicsRequirementsKHR",  out xrGetD3D11GraphicsRequirementsKHR_ptr);
-        nativeLib.LoadFunction("xrGetD3D12GraphicsRequirementsKHR",  out xrGetD3D12GraphicsRequirementsKHR_ptr);
-        nativeLib.LoadFunction("xrGetVisibilityMaskKHR",  out xrGetVisibilityMaskKHR_ptr);
-        nativeLib.LoadFunction("xrConvertWin32PerformanceCounterToTimeKHR",  out xrConvertWin32PerformanceCounterToTimeKHR_ptr);
-        nativeLib.LoadFunction("xrConvertTimeToWin32PerformanceCounterKHR",  out xrConvertTimeToWin32PerformanceCounterKHR_ptr);
-        nativeLib.LoadFunction("xrConvertTimespecTimeToTimeKHR",  out xrConvertTimespecTimeToTimeKHR_ptr);
-        nativeLib.LoadFunction("xrConvertTimeToTimespecTimeKHR",  out xrConvertTimeToTimespecTimeKHR_ptr);
-        nativeLib.LoadFunction("xrCreateSpatialAnchorMSFT",  out xrCreateSpatialAnchorMSFT_ptr);
-        nativeLib.LoadFunction("xrCreateSpatialAnchorSpaceMSFT",  out xrCreateSpatialAnchorSpaceMSFT_ptr);
-        nativeLib.LoadFunction("xrDestroySpatialAnchorMSFT",  out xrDestroySpatialAnchorMSFT_ptr);
-        nativeLib.LoadFunction("xrSetInputDeviceActiveEXT",  out xrSetInputDeviceActiveEXT_ptr);
-        nativeLib.LoadFunction("xrSetInputDeviceStateBoolEXT",  out xrSetInputDeviceStateBoolEXT_ptr);
-        nativeLib.LoadFunction("xrSetInputDeviceStateFloatEXT",  out xrSetInputDeviceStateFloatEXT_ptr);
-        nativeLib.LoadFunction("xrSetInputDeviceStateVector2fEXT",  out xrSetInputDeviceStateVector2fEXT_ptr);
-        nativeLib.LoadFunction("xrSetInputDeviceLocationEXT",  out xrSetInputDeviceLocationEXT_ptr);
-        nativeLib.LoadFunction("xrCreateSpatialGraphNodeSpaceMSFT",  out xrCreateSpatialGraphNodeSpaceMSFT_ptr);
-        nativeLib.LoadFunction("xrTryCreateSpatialGraphStaticNodeBindingMSFT",  out xrTryCreateSpatialGraphStaticNodeBindingMSFT_ptr);
-        nativeLib.LoadFunction("xrDestroySpatialGraphNodeBindingMSFT",  out xrDestroySpatialGraphNodeBindingMSFT_ptr);
-        nativeLib.LoadFunction("xrGetSpatialGraphNodeBindingPropertiesMSFT",  out xrGetSpatialGraphNodeBindingPropertiesMSFT_ptr);
-        nativeLib.LoadFunction("xrCreateHandTrackerEXT",  out xrCreateHandTrackerEXT_ptr);
-        nativeLib.LoadFunction("xrDestroyHandTrackerEXT",  out xrDestroyHandTrackerEXT_ptr);
-        nativeLib.LoadFunction("xrLocateHandJointsEXT",  out xrLocateHandJointsEXT_ptr);
-        nativeLib.LoadFunction("xrCreateHandMeshSpaceMSFT",  out xrCreateHandMeshSpaceMSFT_ptr);
-        nativeLib.LoadFunction("xrUpdateHandMeshMSFT",  out xrUpdateHandMeshMSFT_ptr);
-        nativeLib.LoadFunction("xrGetControllerModelKeyMSFT",  out xrGetControllerModelKeyMSFT_ptr);
-        nativeLib.LoadFunction("xrLoadControllerModelMSFT",  out xrLoadControllerModelMSFT_ptr);
-        nativeLib.LoadFunction("xrGetControllerModelPropertiesMSFT",  out xrGetControllerModelPropertiesMSFT_ptr);
-        nativeLib.LoadFunction("xrGetControllerModelStateMSFT",  out xrGetControllerModelStateMSFT_ptr);
-        nativeLib.LoadFunction("xrCreateSpatialAnchorFromPerceptionAnchorMSFT",  out xrCreateSpatialAnchorFromPerceptionAnchorMSFT_ptr);
-        nativeLib.LoadFunction("xrTryGetPerceptionAnchorFromSpatialAnchorMSFT",  out xrTryGetPerceptionAnchorFromSpatialAnchorMSFT_ptr);
-        nativeLib.LoadFunction("xrEnumerateReprojectionModesMSFT",  out xrEnumerateReprojectionModesMSFT_ptr);
-        nativeLib.LoadFunction("xrUpdateSwapchainFB",  out xrUpdateSwapchainFB_ptr);
-        nativeLib.LoadFunction("xrGetSwapchainStateFB",  out xrGetSwapchainStateFB_ptr);
-        nativeLib.LoadFunction("xrCreateBodyTrackerFB",  out xrCreateBodyTrackerFB_ptr);
-        nativeLib.LoadFunction("xrDestroyBodyTrackerFB",  out xrDestroyBodyTrackerFB_ptr);
-        nativeLib.LoadFunction("xrLocateBodyJointsFB",  out xrLocateBodyJointsFB_ptr);
-        nativeLib.LoadFunction("xrGetBodySkeletonFB",  out xrGetBodySkeletonFB_ptr);
-        nativeLib.LoadFunction("xrInitializeLoaderKHR",  out xrInitializeLoaderKHR_ptr);
-        nativeLib.LoadFunction("xrCreateVulkanInstanceKHR",  out xrCreateVulkanInstanceKHR_ptr);
-        nativeLib.LoadFunction("xrCreateVulkanDeviceKHR",  out xrCreateVulkanDeviceKHR_ptr);
-        nativeLib.LoadFunction("xrGetVulkanGraphicsDevice2KHR",  out xrGetVulkanGraphicsDevice2KHR_ptr);
-        nativeLib.LoadFunction("xrEnumerateSceneComputeFeaturesMSFT",  out xrEnumerateSceneComputeFeaturesMSFT_ptr);
-        nativeLib.LoadFunction("xrCreateSceneObserverMSFT",  out xrCreateSceneObserverMSFT_ptr);
-        nativeLib.LoadFunction("xrDestroySceneObserverMSFT",  out xrDestroySceneObserverMSFT_ptr);
-        nativeLib.LoadFunction("xrCreateSceneMSFT",  out xrCreateSceneMSFT_ptr);
-        nativeLib.LoadFunction("xrDestroySceneMSFT",  out xrDestroySceneMSFT_ptr);
-        nativeLib.LoadFunction("xrComputeNewSceneMSFT",  out xrComputeNewSceneMSFT_ptr);
-        nativeLib.LoadFunction("xrGetSceneComputeStateMSFT",  out xrGetSceneComputeStateMSFT_ptr);
-        nativeLib.LoadFunction("xrGetSceneComponentsMSFT",  out xrGetSceneComponentsMSFT_ptr);
-        nativeLib.LoadFunction("xrLocateSceneComponentsMSFT",  out xrLocateSceneComponentsMSFT_ptr);
-        nativeLib.LoadFunction("xrGetSceneMeshBuffersMSFT",  out xrGetSceneMeshBuffersMSFT_ptr);
-        nativeLib.LoadFunction("xrDeserializeSceneMSFT",  out xrDeserializeSceneMSFT_ptr);
-        nativeLib.LoadFunction("xrGetSerializedSceneFragmentDataMSFT",  out xrGetSerializedSceneFragmentDataMSFT_ptr);
-        nativeLib.LoadFunction("xrEnumerateDisplayRefreshRatesFB",  out xrEnumerateDisplayRefreshRatesFB_ptr);
-        nativeLib.LoadFunction("xrGetDisplayRefreshRateFB",  out xrGetDisplayRefreshRateFB_ptr);
-        nativeLib.LoadFunction("xrRequestDisplayRefreshRateFB",  out xrRequestDisplayRefreshRateFB_ptr);
-        nativeLib.LoadFunction("xrEnumerateViveTrackerPathsHTCX",  out xrEnumerateViveTrackerPathsHTCX_ptr);
-        nativeLib.LoadFunction("xrCreateFacialTrackerHTC",  out xrCreateFacialTrackerHTC_ptr);
-        nativeLib.LoadFunction("xrDestroyFacialTrackerHTC",  out xrDestroyFacialTrackerHTC_ptr);
-        nativeLib.LoadFunction("xrGetFacialExpressionsHTC",  out xrGetFacialExpressionsHTC_ptr);
-        nativeLib.LoadFunction("xrEnumerateColorSpacesFB",  out xrEnumerateColorSpacesFB_ptr);
-        nativeLib.LoadFunction("xrSetColorSpaceFB",  out xrSetColorSpaceFB_ptr);
-        nativeLib.LoadFunction("xrGetHandMeshFB",  out xrGetHandMeshFB_ptr);
-        nativeLib.LoadFunction("xrCreateSpatialAnchorFB",  out xrCreateSpatialAnchorFB_ptr);
-        nativeLib.LoadFunction("xrGetSpaceUuidFB",  out xrGetSpaceUuidFB_ptr);
-        nativeLib.LoadFunction("xrEnumerateSpaceSupportedComponentsFB",  out xrEnumerateSpaceSupportedComponentsFB_ptr);
-        nativeLib.LoadFunction("xrSetSpaceComponentStatusFB",  out xrSetSpaceComponentStatusFB_ptr);
-        nativeLib.LoadFunction("xrGetSpaceComponentStatusFB",  out xrGetSpaceComponentStatusFB_ptr);
-        nativeLib.LoadFunction("xrCreateFoveationProfileFB",  out xrCreateFoveationProfileFB_ptr);
-        nativeLib.LoadFunction("xrDestroyFoveationProfileFB",  out xrDestroyFoveationProfileFB_ptr);
-        nativeLib.LoadFunction("xrQuerySystemTrackedKeyboardFB",  out xrQuerySystemTrackedKeyboardFB_ptr);
-        nativeLib.LoadFunction("xrCreateKeyboardSpaceFB",  out xrCreateKeyboardSpaceFB_ptr);
-        nativeLib.LoadFunction("xrCreateTriangleMeshFB",  out xrCreateTriangleMeshFB_ptr);
-        nativeLib.LoadFunction("xrDestroyTriangleMeshFB",  out xrDestroyTriangleMeshFB_ptr);
-        nativeLib.LoadFunction("xrTriangleMeshGetVertexBufferFB",  out xrTriangleMeshGetVertexBufferFB_ptr);
-        nativeLib.LoadFunction("xrTriangleMeshGetIndexBufferFB",  out xrTriangleMeshGetIndexBufferFB_ptr);
-        nativeLib.LoadFunction("xrTriangleMeshBeginUpdateFB",  out xrTriangleMeshBeginUpdateFB_ptr);
-        nativeLib.LoadFunction("xrTriangleMeshEndUpdateFB",  out xrTriangleMeshEndUpdateFB_ptr);
-        nativeLib.LoadFunction("xrTriangleMeshBeginVertexBufferUpdateFB",  out xrTriangleMeshBeginVertexBufferUpdateFB_ptr);
-        nativeLib.LoadFunction("xrTriangleMeshEndVertexBufferUpdateFB",  out xrTriangleMeshEndVertexBufferUpdateFB_ptr);
-        nativeLib.LoadFunction("xrCreatePassthroughFB",  out xrCreatePassthroughFB_ptr);
-        nativeLib.LoadFunction("xrDestroyPassthroughFB",  out xrDestroyPassthroughFB_ptr);
-        nativeLib.LoadFunction("xrPassthroughStartFB",  out xrPassthroughStartFB_ptr);
-        nativeLib.LoadFunction("xrPassthroughPauseFB",  out xrPassthroughPauseFB_ptr);
-        nativeLib.LoadFunction("xrCreatePassthroughLayerFB",  out xrCreatePassthroughLayerFB_ptr);
-        nativeLib.LoadFunction("xrDestroyPassthroughLayerFB",  out xrDestroyPassthroughLayerFB_ptr);
-        nativeLib.LoadFunction("xrPassthroughLayerPauseFB",  out xrPassthroughLayerPauseFB_ptr);
-        nativeLib.LoadFunction("xrPassthroughLayerResumeFB",  out xrPassthroughLayerResumeFB_ptr);
-        nativeLib.LoadFunction("xrPassthroughLayerSetStyleFB",  out xrPassthroughLayerSetStyleFB_ptr);
-        nativeLib.LoadFunction("xrCreateGeometryInstanceFB",  out xrCreateGeometryInstanceFB_ptr);
-        nativeLib.LoadFunction("xrDestroyGeometryInstanceFB",  out xrDestroyGeometryInstanceFB_ptr);
-        nativeLib.LoadFunction("xrGeometryInstanceSetTransformFB",  out xrGeometryInstanceSetTransformFB_ptr);
-        nativeLib.LoadFunction("xrEnumerateRenderModelPathsFB",  out xrEnumerateRenderModelPathsFB_ptr);
-        nativeLib.LoadFunction("xrGetRenderModelPropertiesFB",  out xrGetRenderModelPropertiesFB_ptr);
-        nativeLib.LoadFunction("xrLoadRenderModelFB",  out xrLoadRenderModelFB_ptr);
-        nativeLib.LoadFunction("xrSetEnvironmentDepthEstimationVARJO",  out xrSetEnvironmentDepthEstimationVARJO_ptr);
-        nativeLib.LoadFunction("xrSetMarkerTrackingVARJO",  out xrSetMarkerTrackingVARJO_ptr);
-        nativeLib.LoadFunction("xrSetMarkerTrackingTimeoutVARJO",  out xrSetMarkerTrackingTimeoutVARJO_ptr);
-        nativeLib.LoadFunction("xrSetMarkerTrackingPredictionVARJO",  out xrSetMarkerTrackingPredictionVARJO_ptr);
-        nativeLib.LoadFunction("xrGetMarkerSizeVARJO",  out xrGetMarkerSizeVARJO_ptr);
-        nativeLib.LoadFunction("xrCreateMarkerSpaceVARJO",  out xrCreateMarkerSpaceVARJO_ptr);
-        nativeLib.LoadFunction("xrSetViewOffsetVARJO",  out xrSetViewOffsetVARJO_ptr);
-        nativeLib.LoadFunction("xrCreateSpaceFromCoordinateFrameUIDML",  out xrCreateSpaceFromCoordinateFrameUIDML_ptr);
-        nativeLib.LoadFunction("xrCreateSpatialAnchorStoreConnectionMSFT",  out xrCreateSpatialAnchorStoreConnectionMSFT_ptr);
-        nativeLib.LoadFunction("xrDestroySpatialAnchorStoreConnectionMSFT",  out xrDestroySpatialAnchorStoreConnectionMSFT_ptr);
-        nativeLib.LoadFunction("xrPersistSpatialAnchorMSFT",  out xrPersistSpatialAnchorMSFT_ptr);
-        nativeLib.LoadFunction("xrEnumeratePersistedSpatialAnchorNamesMSFT",  out xrEnumeratePersistedSpatialAnchorNamesMSFT_ptr);
-        nativeLib.LoadFunction("xrCreateSpatialAnchorFromPersistedNameMSFT",  out xrCreateSpatialAnchorFromPersistedNameMSFT_ptr);
-        nativeLib.LoadFunction("xrUnpersistSpatialAnchorMSFT",  out xrUnpersistSpatialAnchorMSFT_ptr);
-        nativeLib.LoadFunction("xrClearSpatialAnchorStoreMSFT",  out xrClearSpatialAnchorStoreMSFT_ptr);
-        nativeLib.LoadFunction("xrQuerySpacesFB",  out xrQuerySpacesFB_ptr);
-        nativeLib.LoadFunction("xrRetrieveSpaceQueryResultsFB",  out xrRetrieveSpaceQueryResultsFB_ptr);
-        nativeLib.LoadFunction("xrSaveSpaceFB",  out xrSaveSpaceFB_ptr);
-        nativeLib.LoadFunction("xrEraseSpaceFB",  out xrEraseSpaceFB_ptr);
-        nativeLib.LoadFunction("xrGetAudioOutputDeviceGuidOculus",  out xrGetAudioOutputDeviceGuidOculus_ptr);
-        nativeLib.LoadFunction("xrGetAudioInputDeviceGuidOculus",  out xrGetAudioInputDeviceGuidOculus_ptr);
-        nativeLib.LoadFunction("xrShareSpacesFB",  out xrShareSpacesFB_ptr);
-        nativeLib.LoadFunction("xrGetSpaceBoundingBox2DFB",  out xrGetSpaceBoundingBox2DFB_ptr);
-        nativeLib.LoadFunction("xrGetSpaceBoundingBox3DFB",  out xrGetSpaceBoundingBox3DFB_ptr);
-        nativeLib.LoadFunction("xrGetSpaceSemanticLabelsFB",  out xrGetSpaceSemanticLabelsFB_ptr);
-        nativeLib.LoadFunction("xrGetSpaceBoundary2DFB",  out xrGetSpaceBoundary2DFB_ptr);
-        nativeLib.LoadFunction("xrGetSpaceRoomLayoutFB",  out xrGetSpaceRoomLayoutFB_ptr);
-        nativeLib.LoadFunction("xrSetDigitalLensControlALMALENCE",  out xrSetDigitalLensControlALMALENCE_ptr);
-        nativeLib.LoadFunction("xrRequestSceneCaptureFB",  out xrRequestSceneCaptureFB_ptr);
-        nativeLib.LoadFunction("xrGetSpaceContainerFB",  out xrGetSpaceContainerFB_ptr);
-        nativeLib.LoadFunction("xrGetFoveationEyeTrackedStateMETA",  out xrGetFoveationEyeTrackedStateMETA_ptr);
-        nativeLib.LoadFunction("xrCreateFaceTrackerFB",  out xrCreateFaceTrackerFB_ptr);
-        nativeLib.LoadFunction("xrDestroyFaceTrackerFB",  out xrDestroyFaceTrackerFB_ptr);
-        nativeLib.LoadFunction("xrGetFaceExpressionWeightsFB",  out xrGetFaceExpressionWeightsFB_ptr);
-        nativeLib.LoadFunction("xrCreateEyeTrackerFB",  out xrCreateEyeTrackerFB_ptr);
-        nativeLib.LoadFunction("xrDestroyEyeTrackerFB",  out xrDestroyEyeTrackerFB_ptr);
-        nativeLib.LoadFunction("xrGetEyeGazesFB",  out xrGetEyeGazesFB_ptr);
-        nativeLib.LoadFunction("xrPassthroughLayerSetKeyboardHandsIntensityFB",  out xrPassthroughLayerSetKeyboardHandsIntensityFB_ptr);
-        nativeLib.LoadFunction("xrGetDeviceSampleRateFB",  out xrGetDeviceSampleRateFB_ptr);
-        nativeLib.LoadFunction("xrGetPassthroughPreferencesMETA",  out xrGetPassthroughPreferencesMETA_ptr);
-        nativeLib.LoadFunction("xrCreateVirtualKeyboardMETA",  out xrCreateVirtualKeyboardMETA_ptr);
-        nativeLib.LoadFunction("xrDestroyVirtualKeyboardMETA",  out xrDestroyVirtualKeyboardMETA_ptr);
-        nativeLib.LoadFunction("xrCreateVirtualKeyboardSpaceMETA",  out xrCreateVirtualKeyboardSpaceMETA_ptr);
-        nativeLib.LoadFunction("xrSuggestVirtualKeyboardLocationMETA",  out xrSuggestVirtualKeyboardLocationMETA_ptr);
-        nativeLib.LoadFunction("xrGetVirtualKeyboardScaleMETA",  out xrGetVirtualKeyboardScaleMETA_ptr);
-        nativeLib.LoadFunction("xrSetVirtualKeyboardModelVisibilityMETA",  out xrSetVirtualKeyboardModelVisibilityMETA_ptr);
-        nativeLib.LoadFunction("xrGetVirtualKeyboardModelAnimationStatesMETA",  out xrGetVirtualKeyboardModelAnimationStatesMETA_ptr);
-        nativeLib.LoadFunction("xrGetVirtualKeyboardDirtyTexturesMETA",  out xrGetVirtualKeyboardDirtyTexturesMETA_ptr);
-        nativeLib.LoadFunction("xrGetVirtualKeyboardTextureDataMETA",  out xrGetVirtualKeyboardTextureDataMETA_ptr);
-        nativeLib.LoadFunction("xrSendVirtualKeyboardInputMETA",  out xrSendVirtualKeyboardInputMETA_ptr);
-        nativeLib.LoadFunction("xrChangeVirtualKeyboardTextContextMETA",  out xrChangeVirtualKeyboardTextContextMETA_ptr);
-        nativeLib.LoadFunction("xrEnumerateExternalCamerasOCULUS",  out xrEnumerateExternalCamerasOCULUS_ptr);
-        nativeLib.LoadFunction("xrEnumeratePerformanceMetricsCounterPathsMETA",  out xrEnumeratePerformanceMetricsCounterPathsMETA_ptr);
-        nativeLib.LoadFunction("xrSetPerformanceMetricsStateMETA",  out xrSetPerformanceMetricsStateMETA_ptr);
-        nativeLib.LoadFunction("xrGetPerformanceMetricsStateMETA",  out xrGetPerformanceMetricsStateMETA_ptr);
-        nativeLib.LoadFunction("xrQueryPerformanceMetricsCounterMETA",  out xrQueryPerformanceMetricsCounterMETA_ptr);
-        nativeLib.LoadFunction("xrSaveSpaceListFB",  out xrSaveSpaceListFB_ptr);
-        nativeLib.LoadFunction("xrCreateSpaceUserFB",  out xrCreateSpaceUserFB_ptr);
-        nativeLib.LoadFunction("xrGetSpaceUserIdFB",  out xrGetSpaceUserIdFB_ptr);
-        nativeLib.LoadFunction("xrDestroySpaceUserFB",  out xrDestroySpaceUserFB_ptr);
-        nativeLib.LoadFunction("xrCreatePassthroughColorLutMETA",  out xrCreatePassthroughColorLutMETA_ptr);
-        nativeLib.LoadFunction("xrDestroyPassthroughColorLutMETA",  out xrDestroyPassthroughColorLutMETA_ptr);
-        nativeLib.LoadFunction("xrUpdatePassthroughColorLutMETA",  out xrUpdatePassthroughColorLutMETA_ptr);
-        nativeLib.LoadFunction("xrSetTrackingOptimizationSettingsHintQCOM",  out xrSetTrackingOptimizationSettingsHintQCOM_ptr);
-        nativeLib.LoadFunction("xrCreatePassthroughHTC",  out xrCreatePassthroughHTC_ptr);
-        nativeLib.LoadFunction("xrDestroyPassthroughHTC",  out xrDestroyPassthroughHTC_ptr);
-        nativeLib.LoadFunction("xrApplyFoveationHTC",  out xrApplyFoveationHTC_ptr);
-        nativeLib.LoadFunction("xrApplyForceFeedbackCurlMNDX",  out xrApplyForceFeedbackCurlMNDX_ptr);
-        nativeLib.LoadFunction("xrCreatePlaneDetectorEXT",  out xrCreatePlaneDetectorEXT_ptr);
-        nativeLib.LoadFunction("xrDestroyPlaneDetectorEXT",  out xrDestroyPlaneDetectorEXT_ptr);
-        nativeLib.LoadFunction("xrBeginPlaneDetectionEXT",  out xrBeginPlaneDetectionEXT_ptr);
-        nativeLib.LoadFunction("xrGetPlaneDetectionStateEXT",  out xrGetPlaneDetectionStateEXT_ptr);
-        nativeLib.LoadFunction("xrGetPlaneDetectionsEXT",  out xrGetPlaneDetectionsEXT_ptr);
-        nativeLib.LoadFunction("xrGetPlanePolygonBufferEXT",  out xrGetPlanePolygonBufferEXT_ptr);
+        if (HasExtensionEnabled("XR_KHR_android_thread_settings"u8))
+        {
+            xrSetAndroidApplicationThreadKHR_funcPtr = (delegate* unmanaged<XrSession, XrAndroidThreadTypeKHR, uint, XrResult>)GetFunctionPointer("xrSetAndroidApplicationThreadKHR"u8);
+        }
+        if (HasExtensionEnabled("XR_KHR_android_surface_swapchain"u8))
+        {
+            xrCreateSwapchainAndroidSurfaceKHR_funcPtr = (delegate* unmanaged<XrSession, XrSwapchainCreateInfo*, XrSwapchain*, nint*, XrResult>)GetFunctionPointer("xrCreateSwapchainAndroidSurfaceKHR"u8);
+        }
+        if (HasExtensionEnabled("XR_EXT_performance_settings"u8))
+        {
+            xrPerfSettingsSetPerformanceLevelEXT_funcPtr = (delegate* unmanaged<XrSession, XrPerfSettingsDomainEXT, XrPerfSettingsLevelEXT, XrResult>)GetFunctionPointer("xrPerfSettingsSetPerformanceLevelEXT"u8);
+        }
+        if (HasExtensionEnabled("XR_EXT_thermal_query"u8))
+        {
+            xrThermalGetTemperatureTrendEXT_funcPtr = (delegate* unmanaged<XrSession, XrPerfSettingsDomainEXT, XrPerfSettingsNotificationLevelEXT*, float*, float*, XrResult>)GetFunctionPointer("xrThermalGetTemperatureTrendEXT"u8);
+        }
+        if (HasExtensionEnabled("XR_EXT_debug_utils"u8))
+        {
+            xrSetDebugUtilsObjectNameEXT_funcPtr = (delegate* unmanaged<XrInstance, XrDebugUtilsObjectNameInfoEXT*, XrResult>)GetFunctionPointer("xrSetDebugUtilsObjectNameEXT"u8);
+            xrCreateDebugUtilsMessengerEXT_funcPtr = (delegate* unmanaged<XrInstance, XrDebugUtilsMessengerCreateInfoEXT*, XrDebugUtilsMessengerEXT*, XrResult>)GetFunctionPointer("xrCreateDebugUtilsMessengerEXT"u8);
+            xrDestroyDebugUtilsMessengerEXT_funcPtr = (delegate* unmanaged<XrDebugUtilsMessengerEXT, XrResult>)GetFunctionPointer("xrDestroyDebugUtilsMessengerEXT"u8);
+            xrSubmitDebugUtilsMessageEXT_funcPtr = (delegate* unmanaged<XrInstance, ulong, ulong, XrDebugUtilsMessengerCallbackDataEXT*, XrResult>)GetFunctionPointer("xrSubmitDebugUtilsMessageEXT"u8);
+            xrSessionBeginDebugUtilsLabelRegionEXT_funcPtr = (delegate* unmanaged<XrSession, XrDebugUtilsLabelEXT*, XrResult>)GetFunctionPointer("xrSessionBeginDebugUtilsLabelRegionEXT"u8);
+            xrSessionEndDebugUtilsLabelRegionEXT_funcPtr = (delegate* unmanaged<XrSession, XrResult>)GetFunctionPointer("xrSessionEndDebugUtilsLabelRegionEXT"u8);
+            xrSessionInsertDebugUtilsLabelEXT_funcPtr = (delegate* unmanaged<XrSession, XrDebugUtilsLabelEXT*, XrResult>)GetFunctionPointer("xrSessionInsertDebugUtilsLabelEXT"u8);
+        }
+        if (HasExtensionEnabled("XR_KHR_opengl_enable"u8))
+        {
+            xrGetOpenGLGraphicsRequirementsKHR_funcPtr = (delegate* unmanaged<XrInstance, ulong, XrGraphicsRequirementsOpenGLKHR*, XrResult>)GetFunctionPointer("xrGetOpenGLGraphicsRequirementsKHR"u8);
+        }
+        if (HasExtensionEnabled("XR_KHR_opengl_es_enable"u8))
+        {
+            xrGetOpenGLESGraphicsRequirementsKHR_funcPtr = (delegate* unmanaged<XrInstance, ulong, XrGraphicsRequirementsOpenGLESKHR*, XrResult>)GetFunctionPointer("xrGetOpenGLESGraphicsRequirementsKHR"u8);
+        }
+        if (HasExtensionEnabled("XR_KHR_vulkan_enable"u8))
+        {
+            xrGetVulkanInstanceExtensionsKHR_funcPtr = (delegate* unmanaged<XrInstance, ulong, uint, uint*, byte*, XrResult>)GetFunctionPointer("xrGetVulkanInstanceExtensionsKHR"u8);
+            xrGetVulkanDeviceExtensionsKHR_funcPtr = (delegate* unmanaged<XrInstance, ulong, uint, uint*, byte*, XrResult>)GetFunctionPointer("xrGetVulkanDeviceExtensionsKHR"u8);
+            xrGetVulkanGraphicsDeviceKHR_funcPtr = (delegate* unmanaged<XrInstance, ulong, nint, nint*, XrResult>)GetFunctionPointer("xrGetVulkanGraphicsDeviceKHR"u8);
+            xrGetVulkanGraphicsRequirementsKHR_funcPtr = (delegate* unmanaged<XrInstance, ulong, XrGraphicsRequirementsVulkanKHR*, XrResult>)GetFunctionPointer("xrGetVulkanGraphicsRequirementsKHR"u8);
+        }
+        if (HasExtensionEnabled("XR_KHR_D3D11_enable"u8))
+        {
+            xrGetD3D11GraphicsRequirementsKHR_funcPtr = (delegate* unmanaged<XrInstance, ulong, XrGraphicsRequirementsD3D11KHR*, XrResult>)GetFunctionPointer("xrGetD3D11GraphicsRequirementsKHR"u8);
+        }
+        if (HasExtensionEnabled("XR_KHR_D3D12_enable"u8))
+        {
+            xrGetD3D12GraphicsRequirementsKHR_funcPtr = (delegate* unmanaged<XrInstance, ulong, XrGraphicsRequirementsD3D12KHR*, XrResult>)GetFunctionPointer("xrGetD3D12GraphicsRequirementsKHR"u8);
+        }
+        if (HasExtensionEnabled("XR_KHR_visibility_mask"u8))
+        {
+            xrGetVisibilityMaskKHR_funcPtr = (delegate* unmanaged<XrSession, XrViewConfigurationType, uint, XrVisibilityMaskTypeKHR, XrVisibilityMaskKHR*, XrResult>)GetFunctionPointer("xrGetVisibilityMaskKHR"u8);
+        }
+        if (HasExtensionEnabled("XR_KHR_win32_convert_performance_counter_time"u8))
+        {
+            xrConvertWin32PerformanceCounterToTimeKHR_funcPtr = (delegate* unmanaged<XrInstance, nint*, long*, XrResult>)GetFunctionPointer("xrConvertWin32PerformanceCounterToTimeKHR"u8);
+            xrConvertTimeToWin32PerformanceCounterKHR_funcPtr = (delegate* unmanaged<XrInstance, long, nint*, XrResult>)GetFunctionPointer("xrConvertTimeToWin32PerformanceCounterKHR"u8);
+        }
+        if (HasExtensionEnabled("XR_KHR_convert_timespec_time"u8))
+        {
+            xrConvertTimespecTimeToTimeKHR_funcPtr = (delegate* unmanaged<XrInstance, nint*, long*, XrResult>)GetFunctionPointer("xrConvertTimespecTimeToTimeKHR"u8);
+            xrConvertTimeToTimespecTimeKHR_funcPtr = (delegate* unmanaged<XrInstance, long, nint*, XrResult>)GetFunctionPointer("xrConvertTimeToTimespecTimeKHR"u8);
+        }
+        if (HasExtensionEnabled("XR_MSFT_spatial_anchor"u8))
+        {
+            xrCreateSpatialAnchorMSFT_funcPtr = (delegate* unmanaged<XrSession, XrSpatialAnchorCreateInfoMSFT*, XrSpatialAnchorMSFT*, XrResult>)GetFunctionPointer("xrCreateSpatialAnchorMSFT"u8);
+            xrCreateSpatialAnchorSpaceMSFT_funcPtr = (delegate* unmanaged<XrSession, XrSpatialAnchorSpaceCreateInfoMSFT*, XrSpace*, XrResult>)GetFunctionPointer("xrCreateSpatialAnchorSpaceMSFT"u8);
+            xrDestroySpatialAnchorMSFT_funcPtr = (delegate* unmanaged<XrSpatialAnchorMSFT, XrResult>)GetFunctionPointer("xrDestroySpatialAnchorMSFT"u8);
+        }
+        if (HasExtensionEnabled("XR_EXT_conformance_automation"u8))
+        {
+            xrSetInputDeviceActiveEXT_funcPtr = (delegate* unmanaged<XrSession, ulong, ulong, XrBool32, XrResult>)GetFunctionPointer("xrSetInputDeviceActiveEXT"u8);
+            xrSetInputDeviceStateBoolEXT_funcPtr = (delegate* unmanaged<XrSession, ulong, ulong, XrBool32, XrResult>)GetFunctionPointer("xrSetInputDeviceStateBoolEXT"u8);
+            xrSetInputDeviceStateFloatEXT_funcPtr = (delegate* unmanaged<XrSession, ulong, ulong, float, XrResult>)GetFunctionPointer("xrSetInputDeviceStateFloatEXT"u8);
+            xrSetInputDeviceStateVector2fEXT_funcPtr = (delegate* unmanaged<XrSession, ulong, ulong, XrVector2f, XrResult>)GetFunctionPointer("xrSetInputDeviceStateVector2fEXT"u8);
+            xrSetInputDeviceLocationEXT_funcPtr = (delegate* unmanaged<XrSession, ulong, ulong, XrSpace, XrPosef, XrResult>)GetFunctionPointer("xrSetInputDeviceLocationEXT"u8);
+        }
+        if (HasExtensionEnabled("XR_MSFT_spatial_graph_bridge"u8))
+        {
+            xrCreateSpatialGraphNodeSpaceMSFT_funcPtr = (delegate* unmanaged<XrSession, XrSpatialGraphNodeSpaceCreateInfoMSFT*, XrSpace*, XrResult>)GetFunctionPointer("xrCreateSpatialGraphNodeSpaceMSFT"u8);
+            xrTryCreateSpatialGraphStaticNodeBindingMSFT_funcPtr = (delegate* unmanaged<XrSession, XrSpatialGraphStaticNodeBindingCreateInfoMSFT*, XrSpatialGraphNodeBindingMSFT*, XrResult>)GetFunctionPointer("xrTryCreateSpatialGraphStaticNodeBindingMSFT"u8);
+            xrDestroySpatialGraphNodeBindingMSFT_funcPtr = (delegate* unmanaged<XrSpatialGraphNodeBindingMSFT, XrResult>)GetFunctionPointer("xrDestroySpatialGraphNodeBindingMSFT"u8);
+            xrGetSpatialGraphNodeBindingPropertiesMSFT_funcPtr = (delegate* unmanaged<XrSpatialGraphNodeBindingMSFT, XrSpatialGraphNodeBindingPropertiesGetInfoMSFT*, XrSpatialGraphNodeBindingPropertiesMSFT*, XrResult>)GetFunctionPointer("xrGetSpatialGraphNodeBindingPropertiesMSFT"u8);
+        }
+        if (HasExtensionEnabled("XR_EXT_hand_tracking"u8))
+        {
+            xrCreateHandTrackerEXT_funcPtr = (delegate* unmanaged<XrSession, XrHandTrackerCreateInfoEXT*, XrHandTrackerEXT*, XrResult>)GetFunctionPointer("xrCreateHandTrackerEXT"u8);
+            xrDestroyHandTrackerEXT_funcPtr = (delegate* unmanaged<XrHandTrackerEXT, XrResult>)GetFunctionPointer("xrDestroyHandTrackerEXT"u8);
+            xrLocateHandJointsEXT_funcPtr = (delegate* unmanaged<XrHandTrackerEXT, XrHandJointsLocateInfoEXT*, XrHandJointLocationsEXT*, XrResult>)GetFunctionPointer("xrLocateHandJointsEXT"u8);
+        }
+        if (HasExtensionEnabled("XR_MSFT_hand_tracking_mesh"u8))
+        {
+            xrCreateHandMeshSpaceMSFT_funcPtr = (delegate* unmanaged<XrHandTrackerEXT, XrHandMeshSpaceCreateInfoMSFT*, XrSpace*, XrResult>)GetFunctionPointer("xrCreateHandMeshSpaceMSFT"u8);
+            xrUpdateHandMeshMSFT_funcPtr = (delegate* unmanaged<XrHandTrackerEXT, XrHandMeshUpdateInfoMSFT*, XrHandMeshMSFT*, XrResult>)GetFunctionPointer("xrUpdateHandMeshMSFT"u8);
+        }
+        if (HasExtensionEnabled("XR_MSFT_controller_model"u8))
+        {
+            xrGetControllerModelKeyMSFT_funcPtr = (delegate* unmanaged<XrSession, ulong, XrControllerModelKeyStateMSFT*, XrResult>)GetFunctionPointer("xrGetControllerModelKeyMSFT"u8);
+            xrLoadControllerModelMSFT_funcPtr = (delegate* unmanaged<XrSession, ulong, uint, uint*, byte*, XrResult>)GetFunctionPointer("xrLoadControllerModelMSFT"u8);
+            xrGetControllerModelPropertiesMSFT_funcPtr = (delegate* unmanaged<XrSession, ulong, XrControllerModelPropertiesMSFT*, XrResult>)GetFunctionPointer("xrGetControllerModelPropertiesMSFT"u8);
+            xrGetControllerModelStateMSFT_funcPtr = (delegate* unmanaged<XrSession, ulong, XrControllerModelStateMSFT*, XrResult>)GetFunctionPointer("xrGetControllerModelStateMSFT"u8);
+        }
+        if (HasExtensionEnabled("XR_MSFT_perception_anchor_interop"u8))
+        {
+            xrCreateSpatialAnchorFromPerceptionAnchorMSFT_funcPtr = (delegate* unmanaged<XrSession, nint*, XrSpatialAnchorMSFT*, XrResult>)GetFunctionPointer("xrCreateSpatialAnchorFromPerceptionAnchorMSFT"u8);
+            xrTryGetPerceptionAnchorFromSpatialAnchorMSFT_funcPtr = (delegate* unmanaged<XrSession, XrSpatialAnchorMSFT, nint**, XrResult>)GetFunctionPointer("xrTryGetPerceptionAnchorFromSpatialAnchorMSFT"u8);
+        }
+        if (HasExtensionEnabled("XR_MSFT_composition_layer_reprojection"u8))
+        {
+            xrEnumerateReprojectionModesMSFT_funcPtr = (delegate* unmanaged<XrInstance, ulong, XrViewConfigurationType, uint, uint*, XrReprojectionModeMSFT*, XrResult>)GetFunctionPointer("xrEnumerateReprojectionModesMSFT"u8);
+        }
+        if (HasExtensionEnabled("XR_FB_swapchain_update_state"u8))
+        {
+            xrUpdateSwapchainFB_funcPtr = (delegate* unmanaged<XrSwapchain, XrSwapchainStateBaseHeaderFB*, XrResult>)GetFunctionPointer("xrUpdateSwapchainFB"u8);
+            xrGetSwapchainStateFB_funcPtr = (delegate* unmanaged<XrSwapchain, XrSwapchainStateBaseHeaderFB*, XrResult>)GetFunctionPointer("xrGetSwapchainStateFB"u8);
+        }
+        if (HasExtensionEnabled("XR_FB_body_tracking"u8))
+        {
+            xrCreateBodyTrackerFB_funcPtr = (delegate* unmanaged<XrSession, XrBodyTrackerCreateInfoFB*, XrBodyTrackerFB*, XrResult>)GetFunctionPointer("xrCreateBodyTrackerFB"u8);
+            xrDestroyBodyTrackerFB_funcPtr = (delegate* unmanaged<XrBodyTrackerFB, XrResult>)GetFunctionPointer("xrDestroyBodyTrackerFB"u8);
+            xrLocateBodyJointsFB_funcPtr = (delegate* unmanaged<XrBodyTrackerFB, XrBodyJointsLocateInfoFB*, XrBodyJointLocationsFB*, XrResult>)GetFunctionPointer("xrLocateBodyJointsFB"u8);
+            xrGetBodySkeletonFB_funcPtr = (delegate* unmanaged<XrBodyTrackerFB, XrBodySkeletonFB*, XrResult>)GetFunctionPointer("xrGetBodySkeletonFB"u8);
+        }
+        if (HasExtensionEnabled("XR_KHR_loader_init"u8))
+        {
+            xrInitializeLoaderKHR_funcPtr = (delegate* unmanaged<XrLoaderInitInfoBaseHeaderKHR*, XrResult>)GetFunctionPointer("xrInitializeLoaderKHR"u8);
+        }
+        if (HasExtensionEnabled("XR_KHR_vulkan_enable2"u8))
+        {
+            xrCreateVulkanInstanceKHR_funcPtr = (delegate* unmanaged<XrInstance, XrVulkanInstanceCreateInfoKHR*, nint*, nint*, XrResult>)GetFunctionPointer("xrCreateVulkanInstanceKHR"u8);
+            xrCreateVulkanDeviceKHR_funcPtr = (delegate* unmanaged<XrInstance, XrVulkanDeviceCreateInfoKHR*, nint*, nint*, XrResult>)GetFunctionPointer("xrCreateVulkanDeviceKHR"u8);
+            xrGetVulkanGraphicsDevice2KHR_funcPtr = (delegate* unmanaged<XrInstance, XrVulkanGraphicsDeviceGetInfoKHR*, nint*, XrResult>)GetFunctionPointer("xrGetVulkanGraphicsDevice2KHR"u8);
+        }
+        if (HasExtensionEnabled("XR_MSFT_scene_understanding"u8))
+        {
+            xrEnumerateSceneComputeFeaturesMSFT_funcPtr = (delegate* unmanaged<XrInstance, ulong, uint, uint*, XrSceneComputeFeatureMSFT*, XrResult>)GetFunctionPointer("xrEnumerateSceneComputeFeaturesMSFT"u8);
+            xrCreateSceneObserverMSFT_funcPtr = (delegate* unmanaged<XrSession, XrSceneObserverCreateInfoMSFT*, XrSceneObserverMSFT*, XrResult>)GetFunctionPointer("xrCreateSceneObserverMSFT"u8);
+            xrDestroySceneObserverMSFT_funcPtr = (delegate* unmanaged<XrSceneObserverMSFT, XrResult>)GetFunctionPointer("xrDestroySceneObserverMSFT"u8);
+            xrCreateSceneMSFT_funcPtr = (delegate* unmanaged<XrSceneObserverMSFT, XrSceneCreateInfoMSFT*, XrSceneMSFT*, XrResult>)GetFunctionPointer("xrCreateSceneMSFT"u8);
+            xrDestroySceneMSFT_funcPtr = (delegate* unmanaged<XrSceneMSFT, XrResult>)GetFunctionPointer("xrDestroySceneMSFT"u8);
+            xrComputeNewSceneMSFT_funcPtr = (delegate* unmanaged<XrSceneObserverMSFT, XrNewSceneComputeInfoMSFT*, XrResult>)GetFunctionPointer("xrComputeNewSceneMSFT"u8);
+            xrGetSceneComputeStateMSFT_funcPtr = (delegate* unmanaged<XrSceneObserverMSFT, XrSceneComputeStateMSFT*, XrResult>)GetFunctionPointer("xrGetSceneComputeStateMSFT"u8);
+            xrGetSceneComponentsMSFT_funcPtr = (delegate* unmanaged<XrSceneMSFT, XrSceneComponentsGetInfoMSFT*, XrSceneComponentsMSFT*, XrResult>)GetFunctionPointer("xrGetSceneComponentsMSFT"u8);
+            xrLocateSceneComponentsMSFT_funcPtr = (delegate* unmanaged<XrSceneMSFT, XrSceneComponentsLocateInfoMSFT*, XrSceneComponentLocationsMSFT*, XrResult>)GetFunctionPointer("xrLocateSceneComponentsMSFT"u8);
+            xrGetSceneMeshBuffersMSFT_funcPtr = (delegate* unmanaged<XrSceneMSFT, XrSceneMeshBuffersGetInfoMSFT*, XrSceneMeshBuffersMSFT*, XrResult>)GetFunctionPointer("xrGetSceneMeshBuffersMSFT"u8);
+        }
+        if (HasExtensionEnabled("XR_MSFT_scene_understanding_serialization"u8))
+        {
+            xrDeserializeSceneMSFT_funcPtr = (delegate* unmanaged<XrSceneObserverMSFT, XrSceneDeserializeInfoMSFT*, XrResult>)GetFunctionPointer("xrDeserializeSceneMSFT"u8);
+            xrGetSerializedSceneFragmentDataMSFT_funcPtr = (delegate* unmanaged<XrSceneMSFT, XrSerializedSceneFragmentDataGetInfoMSFT*, uint, uint*, byte*, XrResult>)GetFunctionPointer("xrGetSerializedSceneFragmentDataMSFT"u8);
+        }
+        if (HasExtensionEnabled("XR_FB_display_refresh_rate"u8))
+        {
+            xrEnumerateDisplayRefreshRatesFB_funcPtr = (delegate* unmanaged<XrSession, uint, uint*, float*, XrResult>)GetFunctionPointer("xrEnumerateDisplayRefreshRatesFB"u8);
+            xrGetDisplayRefreshRateFB_funcPtr = (delegate* unmanaged<XrSession, float*, XrResult>)GetFunctionPointer("xrGetDisplayRefreshRateFB"u8);
+            xrRequestDisplayRefreshRateFB_funcPtr = (delegate* unmanaged<XrSession, float, XrResult>)GetFunctionPointer("xrRequestDisplayRefreshRateFB"u8);
+        }
+        if (HasExtensionEnabled("XR_HTCX_vive_tracker_interaction"u8))
+        {
+            xrEnumerateViveTrackerPathsHTCX_funcPtr = (delegate* unmanaged<XrInstance, uint, uint*, XrViveTrackerPathsHTCX*, XrResult>)GetFunctionPointer("xrEnumerateViveTrackerPathsHTCX"u8);
+        }
+        if (HasExtensionEnabled("XR_HTC_facial_tracking"u8))
+        {
+            xrCreateFacialTrackerHTC_funcPtr = (delegate* unmanaged<XrSession, XrFacialTrackerCreateInfoHTC*, XrFacialTrackerHTC*, XrResult>)GetFunctionPointer("xrCreateFacialTrackerHTC"u8);
+            xrDestroyFacialTrackerHTC_funcPtr = (delegate* unmanaged<XrFacialTrackerHTC, XrResult>)GetFunctionPointer("xrDestroyFacialTrackerHTC"u8);
+            xrGetFacialExpressionsHTC_funcPtr = (delegate* unmanaged<XrFacialTrackerHTC, XrFacialExpressionsHTC*, XrResult>)GetFunctionPointer("xrGetFacialExpressionsHTC"u8);
+        }
+        if (HasExtensionEnabled("XR_FB_color_space"u8))
+        {
+            xrEnumerateColorSpacesFB_funcPtr = (delegate* unmanaged<XrSession, uint, uint*, XrColorSpaceFB*, XrResult>)GetFunctionPointer("xrEnumerateColorSpacesFB"u8);
+            xrSetColorSpaceFB_funcPtr = (delegate* unmanaged<XrSession, XrColorSpaceFB, XrResult>)GetFunctionPointer("xrSetColorSpaceFB"u8);
+        }
+        if (HasExtensionEnabled("XR_FB_hand_tracking_mesh"u8))
+        {
+            xrGetHandMeshFB_funcPtr = (delegate* unmanaged<XrHandTrackerEXT, XrHandTrackingMeshFB*, XrResult>)GetFunctionPointer("xrGetHandMeshFB"u8);
+        }
+        if (HasExtensionEnabled("XR_FB_spatial_entity"u8))
+        {
+            xrCreateSpatialAnchorFB_funcPtr = (delegate* unmanaged<XrSession, XrSpatialAnchorCreateInfoFB*, ulong*, XrResult>)GetFunctionPointer("xrCreateSpatialAnchorFB"u8);
+            xrGetSpaceUuidFB_funcPtr = (delegate* unmanaged<XrSpace, XrUuidEXT*, XrResult>)GetFunctionPointer("xrGetSpaceUuidFB"u8);
+            xrEnumerateSpaceSupportedComponentsFB_funcPtr = (delegate* unmanaged<XrSpace, uint, uint*, XrSpaceComponentTypeFB*, XrResult>)GetFunctionPointer("xrEnumerateSpaceSupportedComponentsFB"u8);
+            xrSetSpaceComponentStatusFB_funcPtr = (delegate* unmanaged<XrSpace, XrSpaceComponentStatusSetInfoFB*, ulong*, XrResult>)GetFunctionPointer("xrSetSpaceComponentStatusFB"u8);
+            xrGetSpaceComponentStatusFB_funcPtr = (delegate* unmanaged<XrSpace, XrSpaceComponentTypeFB, XrSpaceComponentStatusFB*, XrResult>)GetFunctionPointer("xrGetSpaceComponentStatusFB"u8);
+        }
+        if (HasExtensionEnabled("XR_FB_foveation"u8))
+        {
+            xrCreateFoveationProfileFB_funcPtr = (delegate* unmanaged<XrSession, XrFoveationProfileCreateInfoFB*, XrFoveationProfileFB*, XrResult>)GetFunctionPointer("xrCreateFoveationProfileFB"u8);
+            xrDestroyFoveationProfileFB_funcPtr = (delegate* unmanaged<XrFoveationProfileFB, XrResult>)GetFunctionPointer("xrDestroyFoveationProfileFB"u8);
+        }
+        if (HasExtensionEnabled("XR_FB_keyboard_tracking"u8))
+        {
+            xrQuerySystemTrackedKeyboardFB_funcPtr = (delegate* unmanaged<XrSession, XrKeyboardTrackingQueryFB*, XrKeyboardTrackingDescriptionFB*, XrResult>)GetFunctionPointer("xrQuerySystemTrackedKeyboardFB"u8);
+            xrCreateKeyboardSpaceFB_funcPtr = (delegate* unmanaged<XrSession, XrKeyboardSpaceCreateInfoFB*, XrSpace*, XrResult>)GetFunctionPointer("xrCreateKeyboardSpaceFB"u8);
+        }
+        if (HasExtensionEnabled("XR_FB_triangle_mesh"u8))
+        {
+            xrCreateTriangleMeshFB_funcPtr = (delegate* unmanaged<XrSession, XrTriangleMeshCreateInfoFB*, XrTriangleMeshFB*, XrResult>)GetFunctionPointer("xrCreateTriangleMeshFB"u8);
+            xrDestroyTriangleMeshFB_funcPtr = (delegate* unmanaged<XrTriangleMeshFB, XrResult>)GetFunctionPointer("xrDestroyTriangleMeshFB"u8);
+            xrTriangleMeshGetVertexBufferFB_funcPtr = (delegate* unmanaged<XrTriangleMeshFB, XrVector3f**, XrResult>)GetFunctionPointer("xrTriangleMeshGetVertexBufferFB"u8);
+            xrTriangleMeshGetIndexBufferFB_funcPtr = (delegate* unmanaged<XrTriangleMeshFB, uint**, XrResult>)GetFunctionPointer("xrTriangleMeshGetIndexBufferFB"u8);
+            xrTriangleMeshBeginUpdateFB_funcPtr = (delegate* unmanaged<XrTriangleMeshFB, XrResult>)GetFunctionPointer("xrTriangleMeshBeginUpdateFB"u8);
+            xrTriangleMeshEndUpdateFB_funcPtr = (delegate* unmanaged<XrTriangleMeshFB, uint, uint, XrResult>)GetFunctionPointer("xrTriangleMeshEndUpdateFB"u8);
+            xrTriangleMeshBeginVertexBufferUpdateFB_funcPtr = (delegate* unmanaged<XrTriangleMeshFB, uint*, XrResult>)GetFunctionPointer("xrTriangleMeshBeginVertexBufferUpdateFB"u8);
+            xrTriangleMeshEndVertexBufferUpdateFB_funcPtr = (delegate* unmanaged<XrTriangleMeshFB, XrResult>)GetFunctionPointer("xrTriangleMeshEndVertexBufferUpdateFB"u8);
+        }
+        if (HasExtensionEnabled("XR_FB_passthrough"u8))
+        {
+            xrCreatePassthroughFB_funcPtr = (delegate* unmanaged<XrSession, XrPassthroughCreateInfoFB*, XrPassthroughFB*, XrResult>)GetFunctionPointer("xrCreatePassthroughFB"u8);
+            xrDestroyPassthroughFB_funcPtr = (delegate* unmanaged<XrPassthroughFB, XrResult>)GetFunctionPointer("xrDestroyPassthroughFB"u8);
+            xrPassthroughStartFB_funcPtr = (delegate* unmanaged<XrPassthroughFB, XrResult>)GetFunctionPointer("xrPassthroughStartFB"u8);
+            xrPassthroughPauseFB_funcPtr = (delegate* unmanaged<XrPassthroughFB, XrResult>)GetFunctionPointer("xrPassthroughPauseFB"u8);
+            xrCreatePassthroughLayerFB_funcPtr = (delegate* unmanaged<XrSession, XrPassthroughLayerCreateInfoFB*, XrPassthroughLayerFB*, XrResult>)GetFunctionPointer("xrCreatePassthroughLayerFB"u8);
+            xrDestroyPassthroughLayerFB_funcPtr = (delegate* unmanaged<XrPassthroughLayerFB, XrResult>)GetFunctionPointer("xrDestroyPassthroughLayerFB"u8);
+            xrPassthroughLayerPauseFB_funcPtr = (delegate* unmanaged<XrPassthroughLayerFB, XrResult>)GetFunctionPointer("xrPassthroughLayerPauseFB"u8);
+            xrPassthroughLayerResumeFB_funcPtr = (delegate* unmanaged<XrPassthroughLayerFB, XrResult>)GetFunctionPointer("xrPassthroughLayerResumeFB"u8);
+            xrPassthroughLayerSetStyleFB_funcPtr = (delegate* unmanaged<XrPassthroughLayerFB, XrPassthroughStyleFB*, XrResult>)GetFunctionPointer("xrPassthroughLayerSetStyleFB"u8);
+            xrCreateGeometryInstanceFB_funcPtr = (delegate* unmanaged<XrSession, XrGeometryInstanceCreateInfoFB*, XrGeometryInstanceFB*, XrResult>)GetFunctionPointer("xrCreateGeometryInstanceFB"u8);
+            xrDestroyGeometryInstanceFB_funcPtr = (delegate* unmanaged<XrGeometryInstanceFB, XrResult>)GetFunctionPointer("xrDestroyGeometryInstanceFB"u8);
+            xrGeometryInstanceSetTransformFB_funcPtr = (delegate* unmanaged<XrGeometryInstanceFB, XrGeometryInstanceTransformFB*, XrResult>)GetFunctionPointer("xrGeometryInstanceSetTransformFB"u8);
+        }
+        if (HasExtensionEnabled("XR_FB_render_model"u8))
+        {
+            xrEnumerateRenderModelPathsFB_funcPtr = (delegate* unmanaged<XrSession, uint, uint*, XrRenderModelPathInfoFB*, XrResult>)GetFunctionPointer("xrEnumerateRenderModelPathsFB"u8);
+            xrGetRenderModelPropertiesFB_funcPtr = (delegate* unmanaged<XrSession, ulong, XrRenderModelPropertiesFB*, XrResult>)GetFunctionPointer("xrGetRenderModelPropertiesFB"u8);
+            xrLoadRenderModelFB_funcPtr = (delegate* unmanaged<XrSession, XrRenderModelLoadInfoFB*, XrRenderModelBufferFB*, XrResult>)GetFunctionPointer("xrLoadRenderModelFB"u8);
+        }
+        if (HasExtensionEnabled("XR_VARJO_environment_depth_estimation"u8))
+        {
+            xrSetEnvironmentDepthEstimationVARJO_funcPtr = (delegate* unmanaged<XrSession, XrBool32, XrResult>)GetFunctionPointer("xrSetEnvironmentDepthEstimationVARJO"u8);
+        }
+        if (HasExtensionEnabled("XR_VARJO_marker_tracking"u8))
+        {
+            xrSetMarkerTrackingVARJO_funcPtr = (delegate* unmanaged<XrSession, XrBool32, XrResult>)GetFunctionPointer("xrSetMarkerTrackingVARJO"u8);
+            xrSetMarkerTrackingTimeoutVARJO_funcPtr = (delegate* unmanaged<XrSession, ulong, long, XrResult>)GetFunctionPointer("xrSetMarkerTrackingTimeoutVARJO"u8);
+            xrSetMarkerTrackingPredictionVARJO_funcPtr = (delegate* unmanaged<XrSession, ulong, XrBool32, XrResult>)GetFunctionPointer("xrSetMarkerTrackingPredictionVARJO"u8);
+            xrGetMarkerSizeVARJO_funcPtr = (delegate* unmanaged<XrSession, ulong, XrExtent2Df*, XrResult>)GetFunctionPointer("xrGetMarkerSizeVARJO"u8);
+            xrCreateMarkerSpaceVARJO_funcPtr = (delegate* unmanaged<XrSession, XrMarkerSpaceCreateInfoVARJO*, XrSpace*, XrResult>)GetFunctionPointer("xrCreateMarkerSpaceVARJO"u8);
+        }
+        if (HasExtensionEnabled("XR_VARJO_view_offset"u8))
+        {
+            xrSetViewOffsetVARJO_funcPtr = (delegate* unmanaged<XrSession, float, XrResult>)GetFunctionPointer("xrSetViewOffsetVARJO"u8);
+        }
+        if (HasExtensionEnabled("XR_ML_compat"u8))
+        {
+            xrCreateSpaceFromCoordinateFrameUIDML_funcPtr = (delegate* unmanaged<XrSession, XrCoordinateSpaceCreateInfoML, XrSpace*, XrResult>)GetFunctionPointer("xrCreateSpaceFromCoordinateFrameUIDML"u8);
+        }
+        if (HasExtensionEnabled("XR_MSFT_spatial_anchor_persistence"u8))
+        {
+            xrCreateSpatialAnchorStoreConnectionMSFT_funcPtr = (delegate* unmanaged<XrSession, XrSpatialAnchorStoreConnectionMSFT*, XrResult>)GetFunctionPointer("xrCreateSpatialAnchorStoreConnectionMSFT"u8);
+            xrDestroySpatialAnchorStoreConnectionMSFT_funcPtr = (delegate* unmanaged<XrSpatialAnchorStoreConnectionMSFT, XrResult>)GetFunctionPointer("xrDestroySpatialAnchorStoreConnectionMSFT"u8);
+            xrPersistSpatialAnchorMSFT_funcPtr = (delegate* unmanaged<XrSpatialAnchorStoreConnectionMSFT, XrSpatialAnchorPersistenceInfoMSFT*, XrResult>)GetFunctionPointer("xrPersistSpatialAnchorMSFT"u8);
+            xrEnumeratePersistedSpatialAnchorNamesMSFT_funcPtr = (delegate* unmanaged<XrSpatialAnchorStoreConnectionMSFT, uint, uint*, XrSpatialAnchorPersistenceNameMSFT*, XrResult>)GetFunctionPointer("xrEnumeratePersistedSpatialAnchorNamesMSFT"u8);
+            xrCreateSpatialAnchorFromPersistedNameMSFT_funcPtr = (delegate* unmanaged<XrSession, XrSpatialAnchorFromPersistedAnchorCreateInfoMSFT*, XrSpatialAnchorMSFT*, XrResult>)GetFunctionPointer("xrCreateSpatialAnchorFromPersistedNameMSFT"u8);
+            xrUnpersistSpatialAnchorMSFT_funcPtr = (delegate* unmanaged<XrSpatialAnchorStoreConnectionMSFT, XrSpatialAnchorPersistenceNameMSFT*, XrResult>)GetFunctionPointer("xrUnpersistSpatialAnchorMSFT"u8);
+            xrClearSpatialAnchorStoreMSFT_funcPtr = (delegate* unmanaged<XrSpatialAnchorStoreConnectionMSFT, XrResult>)GetFunctionPointer("xrClearSpatialAnchorStoreMSFT"u8);
+        }
+        if (HasExtensionEnabled("XR_FB_spatial_entity_query"u8))
+        {
+            xrQuerySpacesFB_funcPtr = (delegate* unmanaged<XrSession, XrSpaceQueryInfoBaseHeaderFB*, ulong*, XrResult>)GetFunctionPointer("xrQuerySpacesFB"u8);
+            xrRetrieveSpaceQueryResultsFB_funcPtr = (delegate* unmanaged<XrSession, ulong, XrSpaceQueryResultsFB*, XrResult>)GetFunctionPointer("xrRetrieveSpaceQueryResultsFB"u8);
+        }
+        if (HasExtensionEnabled("XR_FB_spatial_entity_storage"u8))
+        {
+            xrSaveSpaceFB_funcPtr = (delegate* unmanaged<XrSession, XrSpaceSaveInfoFB*, ulong*, XrResult>)GetFunctionPointer("xrSaveSpaceFB"u8);
+            xrEraseSpaceFB_funcPtr = (delegate* unmanaged<XrSession, XrSpaceEraseInfoFB*, ulong*, XrResult>)GetFunctionPointer("xrEraseSpaceFB"u8);
+        }
+        if (HasExtensionEnabled("XR_OCULUS_audio_device_guid"u8))
+        {
+            xrGetAudioOutputDeviceGuidOculus_funcPtr = (delegate* unmanaged<XrInstance, string, XrResult>)GetFunctionPointer("xrGetAudioOutputDeviceGuidOculus"u8);
+            xrGetAudioInputDeviceGuidOculus_funcPtr = (delegate* unmanaged<XrInstance, string, XrResult>)GetFunctionPointer("xrGetAudioInputDeviceGuidOculus"u8);
+        }
+        if (HasExtensionEnabled("XR_FB_spatial_entity_sharing"u8))
+        {
+            xrShareSpacesFB_funcPtr = (delegate* unmanaged<XrSession, XrSpaceShareInfoFB*, ulong*, XrResult>)GetFunctionPointer("xrShareSpacesFB"u8);
+        }
+        if (HasExtensionEnabled("XR_FB_scene"u8))
+        {
+            xrGetSpaceBoundingBox2DFB_funcPtr = (delegate* unmanaged<XrSession, XrSpace, XrRect2Df*, XrResult>)GetFunctionPointer("xrGetSpaceBoundingBox2DFB"u8);
+            xrGetSpaceBoundingBox3DFB_funcPtr = (delegate* unmanaged<XrSession, XrSpace, XrRect3DfFB*, XrResult>)GetFunctionPointer("xrGetSpaceBoundingBox3DFB"u8);
+            xrGetSpaceSemanticLabelsFB_funcPtr = (delegate* unmanaged<XrSession, XrSpace, XrSemanticLabelsFB*, XrResult>)GetFunctionPointer("xrGetSpaceSemanticLabelsFB"u8);
+            xrGetSpaceBoundary2DFB_funcPtr = (delegate* unmanaged<XrSession, XrSpace, XrBoundary2DFB*, XrResult>)GetFunctionPointer("xrGetSpaceBoundary2DFB"u8);
+            xrGetSpaceRoomLayoutFB_funcPtr = (delegate* unmanaged<XrSession, XrSpace, XrRoomLayoutFB*, XrResult>)GetFunctionPointer("xrGetSpaceRoomLayoutFB"u8);
+        }
+        if (HasExtensionEnabled("XR_ALMALENCE_digital_lens_control"u8))
+        {
+            xrSetDigitalLensControlALMALENCE_funcPtr = (delegate* unmanaged<XrSession, XrDigitalLensControlALMALENCE*, XrResult>)GetFunctionPointer("xrSetDigitalLensControlALMALENCE"u8);
+        }
+        if (HasExtensionEnabled("XR_FB_scene_capture"u8))
+        {
+            xrRequestSceneCaptureFB_funcPtr = (delegate* unmanaged<XrSession, XrSceneCaptureRequestInfoFB*, ulong*, XrResult>)GetFunctionPointer("xrRequestSceneCaptureFB"u8);
+        }
+        if (HasExtensionEnabled("XR_FB_spatial_entity_container"u8))
+        {
+            xrGetSpaceContainerFB_funcPtr = (delegate* unmanaged<XrSession, XrSpace, XrSpaceContainerFB*, XrResult>)GetFunctionPointer("xrGetSpaceContainerFB"u8);
+        }
+        if (HasExtensionEnabled("XR_META_foveation_eye_tracked"u8))
+        {
+            xrGetFoveationEyeTrackedStateMETA_funcPtr = (delegate* unmanaged<XrSession, XrFoveationEyeTrackedStateMETA*, XrResult>)GetFunctionPointer("xrGetFoveationEyeTrackedStateMETA"u8);
+        }
+        if (HasExtensionEnabled("XR_FB_face_tracking"u8))
+        {
+            xrCreateFaceTrackerFB_funcPtr = (delegate* unmanaged<XrSession, XrFaceTrackerCreateInfoFB*, XrFaceTrackerFB*, XrResult>)GetFunctionPointer("xrCreateFaceTrackerFB"u8);
+            xrDestroyFaceTrackerFB_funcPtr = (delegate* unmanaged<XrFaceTrackerFB, XrResult>)GetFunctionPointer("xrDestroyFaceTrackerFB"u8);
+            xrGetFaceExpressionWeightsFB_funcPtr = (delegate* unmanaged<XrFaceTrackerFB, XrFaceExpressionInfoFB*, XrFaceExpressionWeightsFB*, XrResult>)GetFunctionPointer("xrGetFaceExpressionWeightsFB"u8);
+        }
+        if (HasExtensionEnabled("XR_FB_eye_tracking_social"u8))
+        {
+            xrCreateEyeTrackerFB_funcPtr = (delegate* unmanaged<XrSession, XrEyeTrackerCreateInfoFB*, XrEyeTrackerFB*, XrResult>)GetFunctionPointer("xrCreateEyeTrackerFB"u8);
+            xrDestroyEyeTrackerFB_funcPtr = (delegate* unmanaged<XrEyeTrackerFB, XrResult>)GetFunctionPointer("xrDestroyEyeTrackerFB"u8);
+            xrGetEyeGazesFB_funcPtr = (delegate* unmanaged<XrEyeTrackerFB, XrEyeGazesInfoFB*, XrEyeGazesFB*, XrResult>)GetFunctionPointer("xrGetEyeGazesFB"u8);
+        }
+        if (HasExtensionEnabled("XR_FB_passthrough_keyboard_hands"u8))
+        {
+            xrPassthroughLayerSetKeyboardHandsIntensityFB_funcPtr = (delegate* unmanaged<XrPassthroughLayerFB, XrPassthroughKeyboardHandsIntensityFB*, XrResult>)GetFunctionPointer("xrPassthroughLayerSetKeyboardHandsIntensityFB"u8);
+        }
+        if (HasExtensionEnabled("XR_FB_haptic_pcm"u8))
+        {
+            xrGetDeviceSampleRateFB_funcPtr = (delegate* unmanaged<XrSession, XrHapticActionInfo*, XrDevicePcmSampleRateStateFB*, XrResult>)GetFunctionPointer("xrGetDeviceSampleRateFB"u8);
+        }
+        if (HasExtensionEnabled("XR_META_passthrough_preferences"u8))
+        {
+            xrGetPassthroughPreferencesMETA_funcPtr = (delegate* unmanaged<XrSession, XrPassthroughPreferencesMETA*, XrResult>)GetFunctionPointer("xrGetPassthroughPreferencesMETA"u8);
+        }
+        if (HasExtensionEnabled("XR_META_virtual_keyboard"u8))
+        {
+            xrCreateVirtualKeyboardMETA_funcPtr = (delegate* unmanaged<XrSession, XrVirtualKeyboardCreateInfoMETA*, XrVirtualKeyboardMETA*, XrResult>)GetFunctionPointer("xrCreateVirtualKeyboardMETA"u8);
+            xrDestroyVirtualKeyboardMETA_funcPtr = (delegate* unmanaged<XrVirtualKeyboardMETA, XrResult>)GetFunctionPointer("xrDestroyVirtualKeyboardMETA"u8);
+            xrCreateVirtualKeyboardSpaceMETA_funcPtr = (delegate* unmanaged<XrSession, XrVirtualKeyboardMETA, XrVirtualKeyboardSpaceCreateInfoMETA*, XrSpace*, XrResult>)GetFunctionPointer("xrCreateVirtualKeyboardSpaceMETA"u8);
+            xrSuggestVirtualKeyboardLocationMETA_funcPtr = (delegate* unmanaged<XrVirtualKeyboardMETA, XrVirtualKeyboardLocationInfoMETA*, XrResult>)GetFunctionPointer("xrSuggestVirtualKeyboardLocationMETA"u8);
+            xrGetVirtualKeyboardScaleMETA_funcPtr = (delegate* unmanaged<XrVirtualKeyboardMETA, float*, XrResult>)GetFunctionPointer("xrGetVirtualKeyboardScaleMETA"u8);
+            xrSetVirtualKeyboardModelVisibilityMETA_funcPtr = (delegate* unmanaged<XrVirtualKeyboardMETA, XrVirtualKeyboardModelVisibilitySetInfoMETA*, XrResult>)GetFunctionPointer("xrSetVirtualKeyboardModelVisibilityMETA"u8);
+            xrGetVirtualKeyboardModelAnimationStatesMETA_funcPtr = (delegate* unmanaged<XrVirtualKeyboardMETA, XrVirtualKeyboardModelAnimationStatesMETA*, XrResult>)GetFunctionPointer("xrGetVirtualKeyboardModelAnimationStatesMETA"u8);
+            xrGetVirtualKeyboardDirtyTexturesMETA_funcPtr = (delegate* unmanaged<XrVirtualKeyboardMETA, uint, uint*, ulong*, XrResult>)GetFunctionPointer("xrGetVirtualKeyboardDirtyTexturesMETA"u8);
+            xrGetVirtualKeyboardTextureDataMETA_funcPtr = (delegate* unmanaged<XrVirtualKeyboardMETA, ulong, XrVirtualKeyboardTextureDataMETA*, XrResult>)GetFunctionPointer("xrGetVirtualKeyboardTextureDataMETA"u8);
+            xrSendVirtualKeyboardInputMETA_funcPtr = (delegate* unmanaged<XrVirtualKeyboardMETA, XrVirtualKeyboardInputInfoMETA*, XrPosef*, XrResult>)GetFunctionPointer("xrSendVirtualKeyboardInputMETA"u8);
+            xrChangeVirtualKeyboardTextContextMETA_funcPtr = (delegate* unmanaged<XrVirtualKeyboardMETA, XrVirtualKeyboardTextContextChangeInfoMETA*, XrResult>)GetFunctionPointer("xrChangeVirtualKeyboardTextContextMETA"u8);
+        }
+        if (HasExtensionEnabled("XR_OCULUS_external_camera"u8))
+        {
+            xrEnumerateExternalCamerasOCULUS_funcPtr = (delegate* unmanaged<XrSession, uint, uint*, XrExternalCameraOCULUS*, XrResult>)GetFunctionPointer("xrEnumerateExternalCamerasOCULUS"u8);
+        }
+        if (HasExtensionEnabled("XR_META_performance_metrics"u8))
+        {
+            xrEnumeratePerformanceMetricsCounterPathsMETA_funcPtr = (delegate* unmanaged<XrInstance, uint, uint*, ulong*, XrResult>)GetFunctionPointer("xrEnumeratePerformanceMetricsCounterPathsMETA"u8);
+            xrSetPerformanceMetricsStateMETA_funcPtr = (delegate* unmanaged<XrSession, XrPerformanceMetricsStateMETA*, XrResult>)GetFunctionPointer("xrSetPerformanceMetricsStateMETA"u8);
+            xrGetPerformanceMetricsStateMETA_funcPtr = (delegate* unmanaged<XrSession, XrPerformanceMetricsStateMETA*, XrResult>)GetFunctionPointer("xrGetPerformanceMetricsStateMETA"u8);
+            xrQueryPerformanceMetricsCounterMETA_funcPtr = (delegate* unmanaged<XrSession, ulong, XrPerformanceMetricsCounterMETA*, XrResult>)GetFunctionPointer("xrQueryPerformanceMetricsCounterMETA"u8);
+        }
+        if (HasExtensionEnabled("XR_FB_spatial_entity_storage_batch"u8))
+        {
+            xrSaveSpaceListFB_funcPtr = (delegate* unmanaged<XrSession, XrSpaceListSaveInfoFB*, ulong*, XrResult>)GetFunctionPointer("xrSaveSpaceListFB"u8);
+        }
+        if (HasExtensionEnabled("XR_FB_spatial_entity_user"u8))
+        {
+            xrCreateSpaceUserFB_funcPtr = (delegate* unmanaged<XrSession, XrSpaceUserCreateInfoFB*, XrSpaceUserFB*, XrResult>)GetFunctionPointer("xrCreateSpaceUserFB"u8);
+            xrGetSpaceUserIdFB_funcPtr = (delegate* unmanaged<XrSpaceUserFB, ulong*, XrResult>)GetFunctionPointer("xrGetSpaceUserIdFB"u8);
+            xrDestroySpaceUserFB_funcPtr = (delegate* unmanaged<XrSpaceUserFB, XrResult>)GetFunctionPointer("xrDestroySpaceUserFB"u8);
+        }
+        if (HasExtensionEnabled("XR_META_passthrough_color_lut"u8))
+        {
+            xrCreatePassthroughColorLutMETA_funcPtr = (delegate* unmanaged<XrPassthroughFB, XrPassthroughColorLutCreateInfoMETA*, XrPassthroughColorLutMETA*, XrResult>)GetFunctionPointer("xrCreatePassthroughColorLutMETA"u8);
+            xrDestroyPassthroughColorLutMETA_funcPtr = (delegate* unmanaged<XrPassthroughColorLutMETA, XrResult>)GetFunctionPointer("xrDestroyPassthroughColorLutMETA"u8);
+            xrUpdatePassthroughColorLutMETA_funcPtr = (delegate* unmanaged<XrPassthroughColorLutMETA, XrPassthroughColorLutUpdateInfoMETA*, XrResult>)GetFunctionPointer("xrUpdatePassthroughColorLutMETA"u8);
+        }
+        if (HasExtensionEnabled("XR_QCOM_tracking_optimization_settings"u8))
+        {
+            xrSetTrackingOptimizationSettingsHintQCOM_funcPtr = (delegate* unmanaged<XrSession, XrTrackingOptimizationSettingsDomainQCOM, XrTrackingOptimizationSettingsHintQCOM, XrResult>)GetFunctionPointer("xrSetTrackingOptimizationSettingsHintQCOM"u8);
+        }
+        if (HasExtensionEnabled("XR_HTC_passthrough"u8))
+        {
+            xrCreatePassthroughHTC_funcPtr = (delegate* unmanaged<XrSession, XrPassthroughCreateInfoHTC*, XrPassthroughHTC*, XrResult>)GetFunctionPointer("xrCreatePassthroughHTC"u8);
+            xrDestroyPassthroughHTC_funcPtr = (delegate* unmanaged<XrPassthroughHTC, XrResult>)GetFunctionPointer("xrDestroyPassthroughHTC"u8);
+        }
+        if (HasExtensionEnabled("XR_HTC_foveation"u8))
+        {
+            xrApplyFoveationHTC_funcPtr = (delegate* unmanaged<XrSession, XrFoveationApplyInfoHTC*, XrResult>)GetFunctionPointer("xrApplyFoveationHTC"u8);
+        }
+        if (HasExtensionEnabled("XR_MNDX_force_feedback_curl"u8))
+        {
+            xrApplyForceFeedbackCurlMNDX_funcPtr = (delegate* unmanaged<XrHandTrackerEXT, XrForceFeedbackCurlApplyLocationsMNDX*, XrResult>)GetFunctionPointer("xrApplyForceFeedbackCurlMNDX"u8);
+        }
+        if (HasExtensionEnabled("XR_EXT_plane_detection"u8))
+        {
+            xrCreatePlaneDetectorEXT_funcPtr = (delegate* unmanaged<XrSession, XrPlaneDetectorCreateInfoEXT*, XrPlaneDetectorEXT*, XrResult>)GetFunctionPointer("xrCreatePlaneDetectorEXT"u8);
+            xrDestroyPlaneDetectorEXT_funcPtr = (delegate* unmanaged<XrPlaneDetectorEXT, XrResult>)GetFunctionPointer("xrDestroyPlaneDetectorEXT"u8);
+            xrBeginPlaneDetectionEXT_funcPtr = (delegate* unmanaged<XrPlaneDetectorEXT, XrPlaneDetectorBeginInfoEXT*, XrResult>)GetFunctionPointer("xrBeginPlaneDetectionEXT"u8);
+            xrGetPlaneDetectionStateEXT_funcPtr = (delegate* unmanaged<XrPlaneDetectorEXT, XrPlaneDetectionStateEXT*, XrResult>)GetFunctionPointer("xrGetPlaneDetectionStateEXT"u8);
+            xrGetPlaneDetectionsEXT_funcPtr = (delegate* unmanaged<XrPlaneDetectorEXT, XrPlaneDetectorGetInfoEXT*, XrPlaneDetectorLocationsEXT*, XrResult>)GetFunctionPointer("xrGetPlaneDetectionsEXT"u8);
+            xrGetPlanePolygonBufferEXT_funcPtr = (delegate* unmanaged<XrPlaneDetectorEXT, ulong, uint, XrPlaneDetectorPolygonBufferEXT*, XrResult>)GetFunctionPointer("xrGetPlanePolygonBufferEXT"u8);
+        }
     }
 #pragma warning restore CA1822 // Mark members as static
 }

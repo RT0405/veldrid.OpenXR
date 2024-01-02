@@ -3,7 +3,7 @@ using System.Text;
 using Veldrid;
 using Veldrid.SPIRV;
 
-namespace TLE_A2;
+namespace Example;
 public static class MeshPrimitives
 {
     private static readonly Pipeline pipeline;
@@ -73,49 +73,49 @@ public static class MeshPrimitives
             ResourceLayouts = new ResourceLayout[] { Program.ProjectionMatrixResourceLayout },
             ShaderSet = new()
             {
-                VertexLayouts = new VertexLayoutDescription[] { vertexLayout },
+                VertexLayouts = [vertexLayout],
                 Shaders = shaders,
-                Specializations = Array.Empty<SpecializationConstant>(),
+                Specializations = null,
             },
             Outputs = Program.swapchainDesc,
         };
         pipeline = factory.CreateGraphicsPipeline(pipelineDescription);
         Program.disposables.Add(pipeline);
     }
-    public static readonly MeshPrimitive cube = new(new Vector3[]
-        {
+    public static readonly MeshPrimitive cube = new(
+        [
             new(0,0,0), new(0,0,1),
             new(0,1,0), new(0,1,1),
             new(1,0,0), new(1,0,1),
             new(1,1,0), new(1,1,1),
-        }, new ushort[]
-        {
+        ],
+        [
             0,2,1, 1,2,3,
             4,5,6, 5,7,6,
             0,1,4, 1,5,4,
             1,3,5, 7,5,3,
             0,4,2, 2,4,6,
             2,6,3, 3,6,7,
-        });
-    public static readonly MeshPrimitive quad = new(new Vector3[]
-        {
+        ]);
+    public static readonly MeshPrimitive quad = new(
+        [
             new(0,0,0), new(0,1,0),
             new(1,0,0), new(1,1,0),
-        }, new ushort[]
-        {
+        ],
+        [
             0, 1, 2, 1, 3, 2
-        });
-    public static readonly MeshPrimitive tetrahedron = new(new Vector3[]
-        {
+        ]);
+    public static readonly MeshPrimitive tetrahedron = new(
+        [
             new(0,0,0), new(0,0,1),
             new(0,1,0), new(0,1,1),
-        }, new ushort[]
-        {
-            0, 1, 2, 
+        ],
+        [
+            0, 1, 2,
             0, 2, 3,
             0, 3, 0,
             1, 2, 3,
-        });
+        ]);
     public class MeshPrimitive
     {
         private readonly DeviceBuffer vertexBuffer;

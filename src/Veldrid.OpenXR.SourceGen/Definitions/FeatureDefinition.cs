@@ -8,10 +8,10 @@ public class FeatureDefinition
     public string Number;
     public string Comment;
 
-    public List<EnumFeature> Enums = [];
-    public List<ConstantFeature> Constants = [];
-    public List<string> Types = [];
-    public List<string> Commands = [];
+    public List<EnumFeature> Enums = new();
+    public List<ConstantFeature> Constants = new();
+    public List<string> Types = new();
+    public List<string> Commands = new();
 
     public static FeatureDefinition FromXML(XElement elem)
     {

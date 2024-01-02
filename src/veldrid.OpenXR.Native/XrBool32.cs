@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Veldrid.OpenXR.Native
+﻿namespace Veldrid.OpenXR.Native
 {
     /// <summary>
     /// A boolean value stored in a 4-byte unsigned integer.

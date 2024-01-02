@@ -1,7 +1,7 @@
 ﻿using System.Xml.Linq;
 
-namespace SourceGen;
-public class ExtensionDefinition
+namespace Veldrid.OpenXR.SourceGen.Definitions;
+public struct ExtensionDefinition
 {
     public string Name;
     public int Number;
@@ -23,26 +23,24 @@ public class ExtensionDefinition
     public List<string> Types = [];
     public List<CommandDefinition> Commands = [];
 
-    public static ExtensionDefinition FromXML(XElement elem, List<CommandDefinition> specCommands)
+    public ExtensionDefinition(XElement element, List<CommandDefinition> specCommands)
     {
-        ExtensionDefinition extension = new()
-        {
-            Name = elem.Attribute("name").Value,
-            Number = int.Parse(elem.Attribute("number").Value),
-            Type = elem.Attribute("type")?.Value,
-            Requires = elem.Attribute("requires")?.Value.Split(','),
-            Author = elem.Attribute("author")?.Value,
-            Contact = elem.Attribute("contact")?.Value,
-            Platform = elem.Attribute("platform")?.Value,
-            Supported = elem.Attribute("supported")?.Value,
-            IsProvisional = elem.Attribute("provisional")?.Value == "true",
-            Comment = elem.Attribute("comment")?.Value
-        };
-        string sortString = elem.Attribute("sortorder")?.Value;
-        if (sortString != null)
-            extension.SortOrder = int.Parse(sortString);
+        Name = element.Attribute("name").Value;
+        Number = int.Parse(element.Attribute("number").Value);
+        Type = element.Attribute("type")?.Value;
+        Requires = element.Attribute("requires")?.Value.Split(',');
+        Author = element.Attribute("author")?.Value;
+        Contact = element.Attribute("contact")?.Value;
+        Platform = element.Attribute("platform")?.Value;
+        Supported = element.Attribute("supported")?.Value,;
+        IsProvisional = element.Attribute("provisional")?.Value == "true";
+        Comment = element.Attribute("comment")?.Value;
 
-        var requires = elem.Element("require");
+        string sortString = element.Attribute("sortorder")?.Value;
+        if (sortString != null)
+            SortOrder = int.Parse(sortString);
+
+        var requires = element.Element("require");
         if (requires != null)
         {
             var enums = requires.Elements("enum");
@@ -63,7 +61,7 @@ public class ExtensionDefinition
                             direction = -1;
 
                         string extstring = e.Attribute("extnumber")?.Value;
-                        int extNumber = extension.Number;
+                        int extNumber = Number;
                         if (extstring != null)
                             extNumber = int.Parse(extstring);
 
@@ -85,7 +83,7 @@ public class ExtensionDefinition
                         }
                     }
 
-                    extension.Enums.Add(new EnumExtension() { Extends = extends, Name = enumName, Value = valueString, Alias = alias });
+                    Enums.Add(new EnumExtension() { Extends = extends, Name = enumName, Value = valueString, Alias = alias });
                 }
                 else
                 {
@@ -98,21 +96,21 @@ public class ExtensionDefinition
                     if (rawValue != null)
                         constant.Value = FilterString(rawValue);
 
-                    extension.Constants.Add(constant);
+                    Constants.Add(constant);
                 }
 
                 string name = e.Attribute("name")?.Value;
                 if (name.EndsWith("_SPEC_VERSION"))
-                    extension.SpecVersionConstName = name;
+                    SpecVersionConstName = name;
                 else if (name.EndsWith("_EXTENSION_NAME"))
-                    extension.ExtensionNameConstName = name;
+                    ExtensionNameConstName = name;
             }
 
             var types = requires.Elements("type");
             foreach (var t in types)
             {
                 string name = t.Attribute("name").Value;
-                extension.Types.Add(name);
+                Types.Add(name);
             }
 
             var commands = requires.Elements("command");
@@ -120,12 +118,12 @@ public class ExtensionDefinition
             {
                 string name = command.Attribute("name").Value;
                 CommandDefinition cdef = null;
-                foreach (CommandDefinition c in specCommands)
+                foreach(CommandDefinition c in specCommands)
                 {
-                    if (c.Name == name)
+                    if(c.Name == name)
                     {
                         cdef = c;
-                        cdef.extension = extension;
+                        cdef.Extension = this;
                     }
                 }
                 if (cdef == null)

@@ -6,7 +6,7 @@ public class FuncpointerDefinition
 {
     public string Name;
     public string Type;
-    public List<Parameter> Parameters = [];
+    public List<Parameter> Parameters = new List<Parameter>();
 
     public static FuncpointerDefinition FromXML(XElement elem)
     {
@@ -17,7 +17,7 @@ public class FuncpointerDefinition
             Type = pointerType.Groups[1].Value
         };
 
-        foreach (Match match in Regex.Matches(elem.Value, @"((\w+[*]?)\s+(\w+),|(\w+[*]?)\s+(\w+)\);)").Cast<Match>())
+        foreach (Match match in Regex.Matches(elem.Value, @"((\w+[*]?)\s+(\w+),|(\w+[*]?)\s+(\w+)\);)"))
         {
             Parameter p = new();
 

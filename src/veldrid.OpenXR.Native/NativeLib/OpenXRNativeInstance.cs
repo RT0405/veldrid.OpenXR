@@ -1,65 +1,47 @@
-﻿namespace Veldrid.OpenXR.Native;
+﻿using System.Runtime.CompilerServices;
 
-using static Evergine.Bindings.OpenXR.OperatingSystemHelper;
-using NativeLib = Evergine.Bindings.OpenXR.NativeLibrary;
-public unsafe partial class OpenXRNativeInstance : IDisposable
+[assembly: DisableRuntimeMarshalling]
+
+namespace Veldrid.OpenXR.Native;
+public unsafe partial class OpenXRNativeInstance
 {
     public bool IsDisposed { get; private set; }
-    private readonly NativeLib nativeLib;
-    public readonly ReadOnlyMemory<XrExtensionName> EnabledExtensions;
-    public readonly ReadOnlyMemory<XrApiLayerName> EnabledApiLayers;
+    public readonly XrInstance XrInstance;
+    public ReadOnlyMemory<XrExtensionName> EnabledExtensions => enabledExtensions;
+    private readonly XrExtensionName[] enabledExtensions;
+    public ReadOnlyMemory<XrApiLayerName> EnabledApiLayers => enabledApiLayers;
+    private readonly XrApiLayerName[] enabledApiLayers;
 
-    ~OpenXRNativeInstance()
-    {
-        Dispose(false);
-    }
-    public void Dispose()
-    {
-        Dispose(true);
-        GC.SuppressFinalize(this);
-    }
-    private void Dispose(bool disposing)
-    {
-        if(disposing && !IsDisposed)
-            nativeLib.Dispose();
-        IsDisposed = true;
-    }
+    private readonly HashSet<XrExtensionName> enabledExtensionsHashSet;
     internal OpenXRNativeInstance(XrInstance instance, XrInstanceCreateInfo createInfo)
     {
-        nativeLib = LoadNativeLibrary();
-        LoadFunctionPointers(instance);
-        XrExtensionName[] enabledExtensions = new XrExtensionName[createInfo.enabledExtensionCount];
-        for(int i = 0; i < createInfo.enabledExtensionCount; i++)
+        XrInstance = instance;
+
+        enabledExtensions = new XrExtensionName[createInfo.enabledExtensionCount];
+        for (int i = 0; i < createInfo.enabledExtensionCount; i++)
             enabledExtensions[i] = createInfo.enabledExtensionNames[i];
-        EnabledExtensions = enabledExtensions;
-        XrApiLayerName[] enabledApiLayers = new XrApiLayerName[createInfo.enabledExtensionCount];
-        for(int i = 0; i < createInfo.enabledApiLayerCount; i++)
+        enabledApiLayers = new XrApiLayerName[createInfo.enabledApiLayerCount];
+        for (int i = 0; i < createInfo.enabledApiLayerCount; i++)
             enabledApiLayers[i] = createInfo.enabledApiLayerNames[i];
-        EnabledApiLayers = enabledApiLayers;
+
+        enabledExtensionsHashSet = new HashSet<XrExtensionName>(enabledExtensions);
+
+        LoadFunctionPointers();
     }
-    private static NativeLib LoadNativeLibrary()
+    [SkipLocalsInit]//to skip the extemely low overhead of setting all the bytes of the name buffer twice, which would only happen when the game loads anyways
+    private void* GetFunctionPointer(ReadOnlySpan<byte> name)
     {
-        return NativeLib.Load(GetOpenXRName());
+        byte* bytes = stackalloc byte[name.Length + 1];//stackalloc new buffer in order to get byte* as well as add null char
+        name.CopyTo(new Span<byte>(bytes, name.Length));//copy old bytes over
+        bytes[name.Length] = 0;//append null char
+
+        void* funcPtr;
+        if (xrGetInstanceProcAddr(XrInstance, bytes, &funcPtr).Failed())
+            return null;
+        return funcPtr;
     }
-    private static string GetOpenXRName()
+    public bool HasExtensionEnabled(ReadOnlySpan<byte> name)
     {
-        if (IsOSPlatform(PlatformType.Windows))
-        {
-            return "openxr_loader.dll";
-        }
-        else if (IsOSPlatform(PlatformType.Android))
-        {
-            // Android
-            return "libopenxr_loader.so";
-        }
-        else if (IsOSPlatform(PlatformType.Linux))
-        {
-            // Desktop Linux
-            return "libopenxr_loader.so.1";
-        }
-        else
-        {
-            throw new PlatformNotSupportedException();
-        }
+        return enabledExtensionsHashSet.Contains(name);
     }
 }

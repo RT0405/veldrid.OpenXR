@@ -6,7 +6,7 @@ public class TagDefinition
     public string Name;
     public string Author;
     public string Contact;
-    public static TagDefinition FromXML(XElement e) => new()
+    public static TagDefinition FromXML(XElement e) => new() 
     {
         Name = e.Attribute("name").Value,
         Author = e.Attribute("author").Value,

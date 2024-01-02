@@ -1,13 +1,13 @@
 ﻿namespace SourceGen;
 public class OpenXRVersion
 {
-    public List<ConstantDefinition> Constants = new();
-    public List<FuncpointerDefinition> FuncPointers = new();
-    public List<EnumDefinition> Enums = new();
-    public List<StructureDefinition> Structs = new();
-    public List<StructureDefinition> Unions = new();
-    public List<HandleDefinition> Handles = new();
-    public List<CommandDefinition> Commands = new();
+    public List<ConstantDefinition> Constants = [];
+    public List<FuncpointerDefinition> FuncPointers = [];
+    public List<EnumDefinition> Enums = [];
+    public List<StructureDefinition> Structs = [];
+    public List<StructureDefinition> Unions = [];
+    public List<HandleDefinition> Handles = [];
+    public List<CommandDefinition> Commands = [];
 
     public static OpenXRVersion FromSpec(OpenXRSpecification spec, string versionName, List<ExtensionDefinition> extensions)
     {
@@ -49,7 +49,7 @@ public class OpenXRVersion
                 if (spec.Alias.TryGetValue(name, out string alias))
                     name = alias;
 
-                var commandDefinition = spec.Commands.Find(c => c.Prototype.Name == name);
+                var commandDefinition = spec.Commands.Find(c => c.Name == name);
                 version.Commands.Add(commandDefinition);
             }
 
@@ -102,13 +102,13 @@ public class OpenXRVersion
             // Add commands
             foreach (var command in extension.Commands)
             {
-                string name = command.Prototype.Name;
+                string name = command.Name;
                 if (spec.Alias.TryGetValue(name, out string alias))
                     name = alias;
 
-                var commandDefinition = spec.Commands.Find(c => c.Prototype.Name == name);
+                var commandDefinition = spec.Commands.Find(c => c.Name == name);
 
-                if (!version.Commands.Exists(c => c.Prototype.Name == name))
+                if (!version.Commands.Exists(c => c.Name == name))
                     version.Commands.Add(commandDefinition);
             }
         }

@@ -50,7 +50,7 @@ public static class XRMath
     {
         static void ValidateFovAngle(float angle)
         {
-            if(angle >= float.Pi / 2 || angle <= -float.Pi / 2)
+            if (angle >= float.Pi / 2 || angle <= -float.Pi / 2)
                 throw new InvalidOperationException("Invalid projection specification");
         }
         ValidateFovAngle(fov.angleLeft);
@@ -58,7 +58,7 @@ public static class XRMath
         ValidateFovAngle(fov.angleUp);
         ValidateFovAngle(fov.angleDown);
 
-        if(float.Abs(fov.angleLeft - fov.angleRight) < float.Epsilon ||
+        if (float.Abs(fov.angleLeft - fov.angleRight) < float.Epsilon ||
             float.Abs(fov.angleUp - fov.angleDown) < float.Epsilon)
         {
             throw new InvalidOperationException("Invalid projection specification");
@@ -73,7 +73,7 @@ public static class XRMath
         float r = float.Tan(fov.angleRight);
         float b = float.Tan(fov.angleDown);
         float t = float.Tan(fov.angleUp);
-        if(!infNearPlane)
+        if (!infNearPlane)
         {
             l *= nearPlane;
             r *= nearPlane;
@@ -81,12 +81,12 @@ public static class XRMath
             t *= nearPlane;
         }
 
-        if(nearPlane < 0f || farPlane < 0f)
+        if (nearPlane < 0f || farPlane < 0f)
             throw new InvalidOperationException("Invalid projection specification");
 
-        if(infNearPlane || infFarPlane)
+        if (infNearPlane || infFarPlane)
         {
-            if(infNearPlane && infFarPlane)
+            if (infNearPlane && infFarPlane)
                 throw new InvalidOperationException("Invalid projection specification");
 
             float reciprocalWidth = 1.0f / (r - l);
@@ -95,7 +95,7 @@ public static class XRMath
             Unsafe.SkipInit(out Matrix4x4 projectionMatrix);
 
             float twoNearZ;
-            if(infNearPlane)
+            if (infNearPlane)
             {
                 twoNearZ = 2;
 

@@ -17,8 +17,9 @@ public static unsafe partial class OpenXRNative
     /// <br/> ⠀⠀<see cref="XrResult.XR_ERROR_OUT_OF_MEMORY"/>
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    [DllImport(LoaderName, CallingConvention = CallConv)]
-    public static extern XrResult xrGetInstanceProcAddr(XrInstance instance, byte* name, void* function);
+    [LibraryImport(LoaderName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvStdcall)])]
+    public static partial XrResult xrGetInstanceProcAddr(XrInstance instance, byte* name, void** function);
 
     /// <returns>
     ///       Success Codes:
@@ -30,8 +31,9 @@ public static unsafe partial class OpenXRNative
     /// <br/> ⠀⠀<see cref="XrResult.XR_ERROR_SIZE_INSUFFICIENT"/>
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    [DllImport(LoaderName, CallingConvention = CallConv)]
-    public static extern XrResult xrEnumerateApiLayerProperties(uint propertyCapacityInput, uint* propertyCountOutput, XrApiLayerProperties* properties);
+    [LibraryImport(LoaderName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvStdcall)])]
+    public static partial XrResult xrEnumerateApiLayerProperties(uint propertyCapacityInput, uint* propertyCountOutput, XrApiLayerProperties* properties);
 
     /// <returns>
     ///       Success Codes:
@@ -45,12 +47,14 @@ public static unsafe partial class OpenXRNative
     /// <br/> ⠀⠀<see cref="XrResult.XR_ERROR_API_LAYER_NOT_PRESENT"/>
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    [DllImport(LoaderName, CallingConvention = CallConv)]
-    public static extern XrResult xrEnumerateInstanceExtensionProperties(byte* layerName, uint propertyCapacityInput, uint* propertyCountOutput, XrExtensionProperties* properties);
+    [LibraryImport(LoaderName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvStdcall)])]
+    public static partial XrResult xrEnumerateInstanceExtensionProperties(byte* layerName, uint propertyCapacityInput, uint* propertyCountOutput, XrExtensionProperties* properties);
 
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    [DllImport(LoaderName, CallingConvention = CallConv, EntryPoint = "xrCreateInstance")]
-    private static extern XrResult xrCreateInstanceNative(XrInstanceCreateInfo* createInfo, XrInstance* instance);
+    [LibraryImport(LoaderName, EntryPoint = "xrCreateInstance")]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvStdcall)])]
+    private static partial XrResult xrCreateInstanceNative(XrInstanceCreateInfo* createInfo, XrInstance* instance);
     /// <returns>
     ///       Success Codes:
     /// <br/> ⠀⠀<see cref="XrResult.XR_SUCCESS"/>
@@ -73,16 +77,23 @@ public static unsafe partial class OpenXRNative
             Instance = new(*instance, *createInfo);
         return result;
     }
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    [LibraryImport(LoaderName, EntryPoint = "xrDestroyInstance")]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvStdcall)])]
+    private static partial XrResult xrDestroyInstanceNative(XrInstance instance);
     /// <returns>
     ///       Success Codes:
     /// <br/> ⠀⠀<see cref="XrResult.XR_SUCCESS"/>
     /// <br/> Error Codes:
     /// <br/> ⠀⠀<see cref="XrResult.XR_ERROR_HANDLE_INVALID"/>
     /// </returns>
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    [DllImport(LoaderName, CallingConvention = CallConv)]
-    public static extern XrResult xrDestroyInstance(XrInstance instance);
-
+    public static XrResult xrDestroyInstance(XrInstance instance)
+    {
+        XrResult result = xrDestroyInstanceNative(instance);
+        if(Instance?.XrInstance == instance)
+            Instance = null;
+        return result;
+    }
     /// <returns>
     ///       Success Codes:
     /// <br/> ⠀⠀<see cref="XrResult.XR_SUCCESS"/>
@@ -93,8 +104,9 @@ public static unsafe partial class OpenXRNative
     /// <br/> ⠀⠀<see cref="XrResult.XR_ERROR_INSTANCE_LOST"/>
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    [DllImport(LoaderName, CallingConvention = CallConv)]
-    public static extern XrResult xrGetInstanceProperties(XrInstance instance, XrInstanceProperties* instanceProperties);
+    [LibraryImport(LoaderName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvStdcall)])]
+    public static partial XrResult xrGetInstanceProperties(XrInstance instance, XrInstanceProperties* instanceProperties);
 
     /// <returns>
     ///       Success Codes:
@@ -107,8 +119,9 @@ public static unsafe partial class OpenXRNative
     /// <br/> ⠀⠀<see cref="XrResult.XR_ERROR_INSTANCE_LOST"/>
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    [DllImport(LoaderName, CallingConvention = CallConv)]
-    public static extern XrResult xrPollEvent(XrInstance instance, XrEventDataBuffer* eventData);
+    [LibraryImport(LoaderName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvStdcall)])]
+    public static partial XrResult xrPollEvent(XrInstance instance, XrEventDataBuffer* eventData);
 
     /// <returns>
     ///       Success Codes:
@@ -120,8 +133,9 @@ public static unsafe partial class OpenXRNative
     /// <br/> ⠀⠀<see cref="XrResult.XR_ERROR_INSTANCE_LOST"/>
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    [DllImport(LoaderName, CallingConvention = CallConv)]
-    public static extern XrResult xrResultToString(XrInstance instance, XrResult value, byte buffer);
+    [LibraryImport(LoaderName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvStdcall)])]
+    public static partial XrResult xrResultToString(XrInstance instance, XrResult value, byte buffer);
 
     /// <returns>
     ///       Success Codes:
@@ -133,8 +147,9 @@ public static unsafe partial class OpenXRNative
     /// <br/> ⠀⠀<see cref="XrResult.XR_ERROR_INSTANCE_LOST"/>
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    [DllImport(LoaderName, CallingConvention = CallConv)]
-    public static extern XrResult xrStructureTypeToString(XrInstance instance, XrStructureType value, byte buffer);
+    [LibraryImport(LoaderName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvStdcall)])]
+    public static partial XrResult xrStructureTypeToString(XrInstance instance, XrStructureType value, byte buffer);
 
     /// <returns>
     ///       Success Codes:
@@ -148,8 +163,9 @@ public static unsafe partial class OpenXRNative
     /// <br/> ⠀⠀<see cref="XrResult.XR_ERROR_FORM_FACTOR_UNAVAILABLE"/>
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    [DllImport(LoaderName, CallingConvention = CallConv)]
-    public static extern XrResult xrGetSystem(XrInstance instance, XrSystemGetInfo* getInfo, ulong* systemId);
+    [LibraryImport(LoaderName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvStdcall)])]
+    public static partial XrResult xrGetSystem(XrInstance instance, XrSystemGetInfo* getInfo, ulong* systemId);
 
     /// <returns>
     ///       Success Codes:
@@ -163,8 +179,9 @@ public static unsafe partial class OpenXRNative
     /// <br/> ⠀⠀<see cref="XrResult.XR_ERROR_SYSTEM_INVALID"/>
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    [DllImport(LoaderName, CallingConvention = CallConv)]
-    public static extern XrResult xrGetSystemProperties(XrInstance instance, ulong systemId, XrSystemProperties* properties);
+    [LibraryImport(LoaderName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvStdcall)])]
+    public static partial XrResult xrGetSystemProperties(XrInstance instance, ulong systemId, XrSystemProperties* properties);
 
     /// <returns>
     ///       Success Codes:
@@ -179,8 +196,9 @@ public static unsafe partial class OpenXRNative
     /// <br/> ⠀⠀<see cref="XrResult.XR_ERROR_SYSTEM_INVALID"/>
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    [DllImport(LoaderName, CallingConvention = CallConv)]
-    public static extern XrResult xrEnumerateEnvironmentBlendModes(XrInstance instance, ulong systemId, XrViewConfigurationType viewConfigurationType, uint environmentBlendModeCapacityInput, uint* environmentBlendModeCountOutput, XrEnvironmentBlendMode* environmentBlendModes);
+    [LibraryImport(LoaderName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvStdcall)])]
+    public static partial XrResult xrEnumerateEnvironmentBlendModes(XrInstance instance, ulong systemId, XrViewConfigurationType viewConfigurationType, uint environmentBlendModeCapacityInput, uint* environmentBlendModeCountOutput, XrEnvironmentBlendMode* environmentBlendModes);
 
     /// <returns>
     ///       Success Codes:
@@ -198,8 +216,9 @@ public static unsafe partial class OpenXRNative
     /// <br/> ⠀⠀<see cref="XrResult.XR_ERROR_GRAPHICS_DEVICE_INVALID"/>
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    [DllImport(LoaderName, CallingConvention = CallConv)]
-    public static extern XrResult xrCreateSession(XrInstance instance, XrSessionCreateInfo* createInfo, XrSession* session);
+    [LibraryImport(LoaderName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvStdcall)])]
+    public static partial XrResult xrCreateSession(XrInstance instance, XrSessionCreateInfo* createInfo, XrSession* session);
 
     /// <returns>
     ///       Success Codes:
@@ -208,8 +227,9 @@ public static unsafe partial class OpenXRNative
     /// <br/> ⠀⠀<see cref="XrResult.XR_ERROR_HANDLE_INVALID"/>
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    [DllImport(LoaderName, CallingConvention = CallConv)]
-    public static extern XrResult xrDestroySession(XrSession session);
+    [LibraryImport(LoaderName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvStdcall)])]
+    public static partial XrResult xrDestroySession(XrSession session);
 
     /// <returns>
     ///       Success Codes:
@@ -224,8 +244,9 @@ public static unsafe partial class OpenXRNative
     /// <br/> ⠀⠀<see cref="XrResult.XR_ERROR_SIZE_INSUFFICIENT"/>
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    [DllImport(LoaderName, CallingConvention = CallConv)]
-    public static extern XrResult xrEnumerateReferenceSpaces(XrSession session, uint spaceCapacityInput, uint* spaceCountOutput, XrReferenceSpaceType* spaces);
+    [LibraryImport(LoaderName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvStdcall)])]
+    public static partial XrResult xrEnumerateReferenceSpaces(XrSession session, uint spaceCapacityInput, uint* spaceCountOutput, XrReferenceSpaceType* spaces);
 
     /// <returns>
     ///       Success Codes:
@@ -243,8 +264,9 @@ public static unsafe partial class OpenXRNative
     /// <br/> ⠀⠀<see cref="XrResult.XR_ERROR_POSE_INVALID"/>
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    [DllImport(LoaderName, CallingConvention = CallConv)]
-    public static extern XrResult xrCreateReferenceSpace(XrSession session, XrReferenceSpaceCreateInfo* createInfo, XrSpace* space);
+    [LibraryImport(LoaderName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvStdcall)])]
+    public static partial XrResult xrCreateReferenceSpace(XrSession session, XrReferenceSpaceCreateInfo* createInfo, XrSpace* space);
 
     /// <returns>
     ///       Success Codes:
@@ -261,8 +283,9 @@ public static unsafe partial class OpenXRNative
     /// <br/> ⠀⠀<see cref="XrResult.XR_ERROR_REFERENCE_SPACE_UNSUPPORTED"/>
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    [DllImport(LoaderName, CallingConvention = CallConv)]
-    public static extern XrResult xrGetReferenceSpaceBoundsRect(XrSession session, XrReferenceSpaceType referenceSpaceType, XrExtent2Df* bounds);
+    [LibraryImport(LoaderName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvStdcall)])]
+    public static partial XrResult xrGetReferenceSpaceBoundsRect(XrSession session, XrReferenceSpaceType referenceSpaceType, XrExtent2Df* bounds);
 
     /// <returns>
     ///       Success Codes:
@@ -282,8 +305,9 @@ public static unsafe partial class OpenXRNative
     /// <br/> ⠀⠀<see cref="XrResult.XR_ERROR_ACTION_TYPE_MISMATCH"/>
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    [DllImport(LoaderName, CallingConvention = CallConv)]
-    public static extern XrResult xrCreateActionSpace(XrSession session, XrActionSpaceCreateInfo* createInfo, XrSpace* space);
+    [LibraryImport(LoaderName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvStdcall)])]
+    public static partial XrResult xrCreateActionSpace(XrSession session, XrActionSpaceCreateInfo* createInfo, XrSpace* space);
 
     /// <returns>
     ///       Success Codes:
@@ -298,8 +322,9 @@ public static unsafe partial class OpenXRNative
     /// <br/> ⠀⠀<see cref="XrResult.XR_ERROR_TIME_INVALID"/>
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    [DllImport(LoaderName, CallingConvention = CallConv)]
-    public static extern XrResult xrLocateSpace(XrSpace space, XrSpace baseSpace, long time, XrSpaceLocation* location);
+    [LibraryImport(LoaderName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvStdcall)])]
+    public static partial XrResult xrLocateSpace(XrSpace space, XrSpace baseSpace, long time, XrSpaceLocation* location);
 
     /// <returns>
     ///       Success Codes:
@@ -308,8 +333,9 @@ public static unsafe partial class OpenXRNative
     /// <br/> ⠀⠀<see cref="XrResult.XR_ERROR_HANDLE_INVALID"/>
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    [DllImport(LoaderName, CallingConvention = CallConv)]
-    public static extern XrResult xrDestroySpace(XrSpace space);
+    [LibraryImport(LoaderName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvStdcall)])]
+    public static partial XrResult xrDestroySpace(XrSpace space);
 
     /// <returns>
     ///       Success Codes:
@@ -323,8 +349,9 @@ public static unsafe partial class OpenXRNative
     /// <br/> ⠀⠀<see cref="XrResult.XR_ERROR_SYSTEM_INVALID"/>
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    [DllImport(LoaderName, CallingConvention = CallConv)]
-    public static extern XrResult xrEnumerateViewConfigurations(XrInstance instance, ulong systemId, uint viewConfigurationTypeCapacityInput, uint* viewConfigurationTypeCountOutput, XrViewConfigurationType* viewConfigurationTypes);
+    [LibraryImport(LoaderName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvStdcall)])]
+    public static partial XrResult xrEnumerateViewConfigurations(XrInstance instance, ulong systemId, uint viewConfigurationTypeCapacityInput, uint* viewConfigurationTypeCountOutput, XrViewConfigurationType* viewConfigurationTypes);
 
     /// <returns>
     ///       Success Codes:
@@ -338,8 +365,9 @@ public static unsafe partial class OpenXRNative
     /// <br/> ⠀⠀<see cref="XrResult.XR_ERROR_SYSTEM_INVALID"/>
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    [DllImport(LoaderName, CallingConvention = CallConv)]
-    public static extern XrResult xrGetViewConfigurationProperties(XrInstance instance, ulong systemId, XrViewConfigurationType viewConfigurationType, XrViewConfigurationProperties* configurationProperties);
+    [LibraryImport(LoaderName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvStdcall)])]
+    public static partial XrResult xrGetViewConfigurationProperties(XrInstance instance, ulong systemId, XrViewConfigurationType viewConfigurationType, XrViewConfigurationProperties* configurationProperties);
 
     /// <returns>
     ///       Success Codes:
@@ -354,8 +382,9 @@ public static unsafe partial class OpenXRNative
     /// <br/> ⠀⠀<see cref="XrResult.XR_ERROR_SYSTEM_INVALID"/>
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    [DllImport(LoaderName, CallingConvention = CallConv)]
-    public static extern XrResult xrEnumerateViewConfigurationViews(XrInstance instance, ulong systemId, XrViewConfigurationType viewConfigurationType, uint viewCapacityInput, uint* viewCountOutput, XrViewConfigurationView* views);
+    [LibraryImport(LoaderName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvStdcall)])]
+    public static partial XrResult xrEnumerateViewConfigurationViews(XrInstance instance, ulong systemId, XrViewConfigurationType viewConfigurationType, uint viewCapacityInput, uint* viewCountOutput, XrViewConfigurationView* views);
 
     /// <returns>
     ///       Success Codes:
@@ -370,8 +399,9 @@ public static unsafe partial class OpenXRNative
     /// <br/> ⠀⠀<see cref="XrResult.XR_ERROR_SIZE_INSUFFICIENT"/>
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    [DllImport(LoaderName, CallingConvention = CallConv)]
-    public static extern XrResult xrEnumerateSwapchainFormats(XrSession session, uint formatCapacityInput, uint* formatCountOutput, long* formats);
+    [LibraryImport(LoaderName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvStdcall)])]
+    public static partial XrResult xrEnumerateSwapchainFormats(XrSession session, uint formatCapacityInput, uint* formatCountOutput, long* formats);
 
     /// <returns>
     ///       Success Codes:
@@ -389,8 +419,9 @@ public static unsafe partial class OpenXRNative
     /// <br/> ⠀⠀<see cref="XrResult.XR_ERROR_FEATURE_UNSUPPORTED"/>
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    [DllImport(LoaderName, CallingConvention = CallConv)]
-    public static extern XrResult xrCreateSwapchain(XrSession session, XrSwapchainCreateInfo* createInfo, XrSwapchain* swapchain);
+    [LibraryImport(LoaderName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvStdcall)])]
+    public static partial XrResult xrCreateSwapchain(XrSession session, XrSwapchainCreateInfo* createInfo, XrSwapchain* swapchain);
 
     /// <returns>
     ///       Success Codes:
@@ -399,8 +430,9 @@ public static unsafe partial class OpenXRNative
     /// <br/> ⠀⠀<see cref="XrResult.XR_ERROR_HANDLE_INVALID"/>
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    [DllImport(LoaderName, CallingConvention = CallConv)]
-    public static extern XrResult xrDestroySwapchain(XrSwapchain swapchain);
+    [LibraryImport(LoaderName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvStdcall)])]
+    public static partial XrResult xrDestroySwapchain(XrSwapchain swapchain);
 
     /// <returns>
     ///       Success Codes:
@@ -415,8 +447,9 @@ public static unsafe partial class OpenXRNative
     /// <br/> ⠀⠀<see cref="XrResult.XR_ERROR_SIZE_INSUFFICIENT"/>
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    [DllImport(LoaderName, CallingConvention = CallConv)]
-    public static extern XrResult xrEnumerateSwapchainImages(XrSwapchain swapchain, uint imageCapacityInput, uint* imageCountOutput, XrSwapchainImageBaseHeader* images);
+    [LibraryImport(LoaderName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvStdcall)])]
+    public static partial XrResult xrEnumerateSwapchainImages(XrSwapchain swapchain, uint imageCapacityInput, uint* imageCountOutput, XrSwapchainImageBaseHeader* images);
 
     /// <returns>
     ///       Success Codes:
@@ -431,8 +464,9 @@ public static unsafe partial class OpenXRNative
     /// <br/> ⠀⠀<see cref="XrResult.XR_ERROR_CALL_ORDER_INVALID"/>
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    [DllImport(LoaderName, CallingConvention = CallConv)]
-    public static extern XrResult xrAcquireSwapchainImage(XrSwapchain swapchain, XrSwapchainImageAcquireInfo* acquireInfo, uint* index);
+    [LibraryImport(LoaderName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvStdcall)])]
+    public static partial XrResult xrAcquireSwapchainImage(XrSwapchain swapchain, XrSwapchainImageAcquireInfo* acquireInfo, uint* index);
 
     /// <returns>
     ///       Success Codes:
@@ -448,8 +482,9 @@ public static unsafe partial class OpenXRNative
     /// <br/> ⠀⠀<see cref="XrResult.XR_ERROR_CALL_ORDER_INVALID"/>
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    [DllImport(LoaderName, CallingConvention = CallConv)]
-    public static extern XrResult xrWaitSwapchainImage(XrSwapchain swapchain, XrSwapchainImageWaitInfo* waitInfo);
+    [LibraryImport(LoaderName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvStdcall)])]
+    public static partial XrResult xrWaitSwapchainImage(XrSwapchain swapchain, XrSwapchainImageWaitInfo* waitInfo);
 
     /// <returns>
     ///       Success Codes:
@@ -464,8 +499,9 @@ public static unsafe partial class OpenXRNative
     /// <br/> ⠀⠀<see cref="XrResult.XR_ERROR_CALL_ORDER_INVALID"/>
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    [DllImport(LoaderName, CallingConvention = CallConv)]
-    public static extern XrResult xrReleaseSwapchainImage(XrSwapchain swapchain, XrSwapchainImageReleaseInfo* releaseInfo);
+    [LibraryImport(LoaderName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvStdcall)])]
+    public static partial XrResult xrReleaseSwapchainImage(XrSwapchain swapchain, XrSwapchainImageReleaseInfo* releaseInfo);
 
     /// <returns>
     ///       Success Codes:
@@ -482,8 +518,9 @@ public static unsafe partial class OpenXRNative
     /// <br/> ⠀⠀<see cref="XrResult.XR_ERROR_SESSION_NOT_READY"/>
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    [DllImport(LoaderName, CallingConvention = CallConv)]
-    public static extern XrResult xrBeginSession(XrSession session, XrSessionBeginInfo* beginInfo);
+    [LibraryImport(LoaderName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvStdcall)])]
+    public static partial XrResult xrBeginSession(XrSession session, XrSessionBeginInfo* beginInfo);
 
     /// <returns>
     ///       Success Codes:
@@ -499,8 +536,9 @@ public static unsafe partial class OpenXRNative
     /// <br/> ⠀⠀<see cref="XrResult.XR_ERROR_SESSION_NOT_RUNNING"/>
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    [DllImport(LoaderName, CallingConvention = CallConv)]
-    public static extern XrResult xrEndSession(XrSession session);
+    [LibraryImport(LoaderName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvStdcall)])]
+    public static partial XrResult xrEndSession(XrSession session);
 
     /// <returns>
     ///       Success Codes:
@@ -515,8 +553,9 @@ public static unsafe partial class OpenXRNative
     /// <br/> ⠀⠀<see cref="XrResult.XR_ERROR_SESSION_NOT_RUNNING"/>
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    [DllImport(LoaderName, CallingConvention = CallConv)]
-    public static extern XrResult xrRequestExitSession(XrSession session);
+    [LibraryImport(LoaderName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvStdcall)])]
+    public static partial XrResult xrRequestExitSession(XrSession session);
 
     /// <returns>
     ///       Success Codes:
@@ -531,8 +570,9 @@ public static unsafe partial class OpenXRNative
     /// <br/> ⠀⠀<see cref="XrResult.XR_ERROR_SESSION_NOT_RUNNING"/>
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    [DllImport(LoaderName, CallingConvention = CallConv)]
-    public static extern XrResult xrWaitFrame(XrSession session, XrFrameWaitInfo* frameWaitInfo, XrFrameState* frameState);
+    [LibraryImport(LoaderName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvStdcall)])]
+    public static partial XrResult xrWaitFrame(XrSession session, XrFrameWaitInfo* frameWaitInfo, XrFrameState* frameState);
 
     /// <returns>
     ///       Success Codes:
@@ -549,8 +589,9 @@ public static unsafe partial class OpenXRNative
     /// <br/> ⠀⠀<see cref="XrResult.XR_ERROR_CALL_ORDER_INVALID"/>
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    [DllImport(LoaderName, CallingConvention = CallConv)]
-    public static extern XrResult xrBeginFrame(XrSession session, XrFrameBeginInfo* frameBeginInfo);
+    [LibraryImport(LoaderName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvStdcall)])]
+    public static partial XrResult xrBeginFrame(XrSession session, XrFrameBeginInfo* frameBeginInfo);
 
     /// <returns>
     ///       Success Codes:
@@ -572,8 +613,9 @@ public static unsafe partial class OpenXRNative
     /// <br/> ⠀⠀<see cref="XrResult.XR_ERROR_CALL_ORDER_INVALID"/>
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    [DllImport(LoaderName, CallingConvention = CallConv)]
-    public static extern XrResult xrEndFrame(XrSession session, XrFrameEndInfo* frameEndInfo);
+    [LibraryImport(LoaderName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvStdcall)])]
+    public static partial XrResult xrEndFrame(XrSession session, XrFrameEndInfo* frameEndInfo);
 
     /// <returns>
     ///       Success Codes:
@@ -590,8 +632,9 @@ public static unsafe partial class OpenXRNative
     /// <br/> ⠀⠀<see cref="XrResult.XR_ERROR_TIME_INVALID"/>
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    [DllImport(LoaderName, CallingConvention = CallConv)]
-    public static extern XrResult xrLocateViews(XrSession session, XrViewLocateInfo* viewLocateInfo, XrViewState* viewState, uint viewCapacityInput, uint* viewCountOutput, XrView* views);
+    [LibraryImport(LoaderName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvStdcall)])]
+    public static partial XrResult xrLocateViews(XrSession session, XrViewLocateInfo* viewLocateInfo, XrViewState* viewState, uint viewCapacityInput, uint* viewCountOutput, XrView* views);
 
     /// <returns>
     ///       Success Codes:
@@ -605,8 +648,9 @@ public static unsafe partial class OpenXRNative
     /// <br/> ⠀⠀<see cref="XrResult.XR_ERROR_PATH_COUNT_EXCEEDED"/>
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    [DllImport(LoaderName, CallingConvention = CallConv)]
-    public static extern XrResult xrStringToPath(XrInstance instance, byte* pathString, ulong* path);
+    [LibraryImport(LoaderName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvStdcall)])]
+    public static partial XrResult xrStringToPath(XrInstance instance, byte* pathString, ulong* path);
 
     /// <returns>
     ///       Success Codes:
@@ -620,8 +664,9 @@ public static unsafe partial class OpenXRNative
     /// <br/> ⠀⠀<see cref="XrResult.XR_ERROR_PATH_INVALID"/>
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    [DllImport(LoaderName, CallingConvention = CallConv)]
-    public static extern XrResult xrPathToString(XrInstance instance, ulong path, uint bufferCapacityInput, uint* bufferCountOutput, byte* buffer);
+    [LibraryImport(LoaderName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvStdcall)])]
+    public static partial XrResult xrPathToString(XrInstance instance, ulong path, uint bufferCapacityInput, uint* bufferCountOutput, byte* buffer);
 
     /// <returns>
     ///       Success Codes:
@@ -640,8 +685,9 @@ public static unsafe partial class OpenXRNative
     /// <br/> ⠀⠀<see cref="XrResult.XR_ERROR_LOCALIZED_NAME_DUPLICATED"/>
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    [DllImport(LoaderName, CallingConvention = CallConv)]
-    public static extern XrResult xrCreateActionSet(XrInstance instance, XrActionSetCreateInfo* createInfo, XrActionSet* actionSet);
+    [LibraryImport(LoaderName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvStdcall)])]
+    public static partial XrResult xrCreateActionSet(XrInstance instance, XrActionSetCreateInfo* createInfo, XrActionSet* actionSet);
 
     /// <returns>
     ///       Success Codes:
@@ -650,8 +696,9 @@ public static unsafe partial class OpenXRNative
     /// <br/> ⠀⠀<see cref="XrResult.XR_ERROR_HANDLE_INVALID"/>
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    [DllImport(LoaderName, CallingConvention = CallConv)]
-    public static extern XrResult xrDestroyActionSet(XrActionSet actionSet);
+    [LibraryImport(LoaderName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvStdcall)])]
+    public static partial XrResult xrDestroyActionSet(XrActionSet actionSet);
 
     /// <returns>
     ///       Success Codes:
@@ -673,8 +720,9 @@ public static unsafe partial class OpenXRNative
     /// <br/> ⠀⠀<see cref="XrResult.XR_ERROR_ACTIONSETS_ALREADY_ATTACHED"/>
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    [DllImport(LoaderName, CallingConvention = CallConv)]
-    public static extern XrResult xrCreateAction(XrActionSet actionSet, XrActionCreateInfo* createInfo, XrAction* action);
+    [LibraryImport(LoaderName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvStdcall)])]
+    public static partial XrResult xrCreateAction(XrActionSet actionSet, XrActionCreateInfo* createInfo, XrAction* action);
 
     /// <returns>
     ///       Success Codes:
@@ -683,8 +731,9 @@ public static unsafe partial class OpenXRNative
     /// <br/> ⠀⠀<see cref="XrResult.XR_ERROR_HANDLE_INVALID"/>
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    [DllImport(LoaderName, CallingConvention = CallConv)]
-    public static extern XrResult xrDestroyAction(XrAction action);
+    [LibraryImport(LoaderName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvStdcall)])]
+    public static partial XrResult xrDestroyAction(XrAction action);
 
     /// <returns>
     ///       Success Codes:
@@ -699,8 +748,9 @@ public static unsafe partial class OpenXRNative
     /// <br/> ⠀⠀<see cref="XrResult.XR_ERROR_ACTIONSETS_ALREADY_ATTACHED"/>
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    [DllImport(LoaderName, CallingConvention = CallConv)]
-    public static extern XrResult xrSuggestInteractionProfileBindings(XrInstance instance, XrInteractionProfileSuggestedBinding* suggestedBindings);
+    [LibraryImport(LoaderName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvStdcall)])]
+    public static partial XrResult xrSuggestInteractionProfileBindings(XrInstance instance, XrInteractionProfileSuggestedBinding* suggestedBindings);
 
     /// <returns>
     ///       Success Codes:
@@ -715,8 +765,9 @@ public static unsafe partial class OpenXRNative
     /// <br/> ⠀⠀<see cref="XrResult.XR_ERROR_ACTIONSETS_ALREADY_ATTACHED"/>
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    [DllImport(LoaderName, CallingConvention = CallConv)]
-    public static extern XrResult xrAttachSessionActionSets(XrSession session, XrSessionActionSetsAttachInfo* attachInfo);
+    [LibraryImport(LoaderName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvStdcall)])]
+    public static partial XrResult xrAttachSessionActionSets(XrSession session, XrSessionActionSetsAttachInfo* attachInfo);
 
     /// <returns>
     ///       Success Codes:
@@ -733,27 +784,9 @@ public static unsafe partial class OpenXRNative
     /// <br/> ⠀⠀<see cref="XrResult.XR_ERROR_ACTIONSET_NOT_ATTACHED"/>
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    [DllImport(LoaderName, CallingConvention = CallConv)]
-    public static extern XrResult xrGetCurrentInteractionProfile(XrSession session, ulong topLevelUserPath, XrInteractionProfileState* interactionProfile);
-
-    /// <returns>
-    ///       Success Codes:
-    /// <br/> ⠀⠀<see cref="XrResult.XR_SUCCESS"/>
-    /// <br/> ⠀⠀<see cref="XrResult.XR_SESSION_LOSS_PENDING"/>
-    /// <br/> Error Codes:
-    /// <br/> ⠀⠀<see cref="XrResult.XR_ERROR_VALIDATION_FAILURE"/>
-    /// <br/> ⠀⠀<see cref="XrResult.XR_ERROR_RUNTIME_FAILURE"/>
-    /// <br/> ⠀⠀<see cref="XrResult.XR_ERROR_HANDLE_INVALID"/>
-    /// <br/> ⠀⠀<see cref="XrResult.XR_ERROR_INSTANCE_LOST"/>
-    /// <br/> ⠀⠀<see cref="XrResult.XR_ERROR_SESSION_LOST"/>
-    /// <br/> ⠀⠀<see cref="XrResult.XR_ERROR_PATH_UNSUPPORTED"/>
-    /// <br/> ⠀⠀<see cref="XrResult.XR_ERROR_PATH_INVALID"/>
-    /// <br/> ⠀⠀<see cref="XrResult.XR_ERROR_ACTION_TYPE_MISMATCH"/>
-    /// <br/> ⠀⠀<see cref="XrResult.XR_ERROR_ACTIONSET_NOT_ATTACHED"/>
-    /// </returns>
-    [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    [DllImport(LoaderName, CallingConvention = CallConv)]
-    public static extern XrResult xrGetActionStateBoolean(XrSession session, XrActionStateGetInfo* getInfo, XrActionStateBoolean* state);
+    [LibraryImport(LoaderName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvStdcall)])]
+    public static partial XrResult xrGetCurrentInteractionProfile(XrSession session, ulong topLevelUserPath, XrInteractionProfileState* interactionProfile);
 
     /// <returns>
     ///       Success Codes:
@@ -771,8 +804,9 @@ public static unsafe partial class OpenXRNative
     /// <br/> ⠀⠀<see cref="XrResult.XR_ERROR_ACTIONSET_NOT_ATTACHED"/>
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    [DllImport(LoaderName, CallingConvention = CallConv)]
-    public static extern XrResult xrGetActionStateFloat(XrSession session, XrActionStateGetInfo* getInfo, XrActionStateFloat* state);
+    [LibraryImport(LoaderName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvStdcall)])]
+    public static partial XrResult xrGetActionStateBoolean(XrSession session, XrActionStateGetInfo* getInfo, XrActionStateBoolean* state);
 
     /// <returns>
     ///       Success Codes:
@@ -790,8 +824,9 @@ public static unsafe partial class OpenXRNative
     /// <br/> ⠀⠀<see cref="XrResult.XR_ERROR_ACTIONSET_NOT_ATTACHED"/>
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    [DllImport(LoaderName, CallingConvention = CallConv)]
-    public static extern XrResult xrGetActionStateVector2f(XrSession session, XrActionStateGetInfo* getInfo, XrActionStateVector2f* state);
+    [LibraryImport(LoaderName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvStdcall)])]
+    public static partial XrResult xrGetActionStateFloat(XrSession session, XrActionStateGetInfo* getInfo, XrActionStateFloat* state);
 
     /// <returns>
     ///       Success Codes:
@@ -809,8 +844,29 @@ public static unsafe partial class OpenXRNative
     /// <br/> ⠀⠀<see cref="XrResult.XR_ERROR_ACTIONSET_NOT_ATTACHED"/>
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    [DllImport(LoaderName, CallingConvention = CallConv)]
-    public static extern XrResult xrGetActionStatePose(XrSession session, XrActionStateGetInfo* getInfo, XrActionStatePose* state);
+    [LibraryImport(LoaderName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvStdcall)])]
+    public static partial XrResult xrGetActionStateVector2f(XrSession session, XrActionStateGetInfo* getInfo, XrActionStateVector2f* state);
+
+    /// <returns>
+    ///       Success Codes:
+    /// <br/> ⠀⠀<see cref="XrResult.XR_SUCCESS"/>
+    /// <br/> ⠀⠀<see cref="XrResult.XR_SESSION_LOSS_PENDING"/>
+    /// <br/> Error Codes:
+    /// <br/> ⠀⠀<see cref="XrResult.XR_ERROR_VALIDATION_FAILURE"/>
+    /// <br/> ⠀⠀<see cref="XrResult.XR_ERROR_RUNTIME_FAILURE"/>
+    /// <br/> ⠀⠀<see cref="XrResult.XR_ERROR_HANDLE_INVALID"/>
+    /// <br/> ⠀⠀<see cref="XrResult.XR_ERROR_INSTANCE_LOST"/>
+    /// <br/> ⠀⠀<see cref="XrResult.XR_ERROR_SESSION_LOST"/>
+    /// <br/> ⠀⠀<see cref="XrResult.XR_ERROR_PATH_UNSUPPORTED"/>
+    /// <br/> ⠀⠀<see cref="XrResult.XR_ERROR_PATH_INVALID"/>
+    /// <br/> ⠀⠀<see cref="XrResult.XR_ERROR_ACTION_TYPE_MISMATCH"/>
+    /// <br/> ⠀⠀<see cref="XrResult.XR_ERROR_ACTIONSET_NOT_ATTACHED"/>
+    /// </returns>
+    [MethodImpl(MethodImplOptions.AggressiveInlining)]
+    [LibraryImport(LoaderName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvStdcall)])]
+    public static partial XrResult xrGetActionStatePose(XrSession session, XrActionStateGetInfo* getInfo, XrActionStatePose* state);
 
     /// <returns>
     ///       Success Codes:
@@ -828,8 +884,9 @@ public static unsafe partial class OpenXRNative
     /// <br/> ⠀⠀<see cref="XrResult.XR_ERROR_ACTIONSET_NOT_ATTACHED"/>
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    [DllImport(LoaderName, CallingConvention = CallConv)]
-    public static extern XrResult xrSyncActions(XrSession session, XrActionsSyncInfo* syncInfo);
+    [LibraryImport(LoaderName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvStdcall)])]
+    public static partial XrResult xrSyncActions(XrSession session, XrActionsSyncInfo* syncInfo);
 
     /// <returns>
     ///       Success Codes:
@@ -846,8 +903,9 @@ public static unsafe partial class OpenXRNative
     /// <br/> ⠀⠀<see cref="XrResult.XR_ERROR_ACTIONSET_NOT_ATTACHED"/>
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    [DllImport(LoaderName, CallingConvention = CallConv)]
-    public static extern XrResult xrEnumerateBoundSourcesForAction(XrSession session, XrBoundSourcesForActionEnumerateInfo* enumerateInfo, uint sourceCapacityInput, uint* sourceCountOutput, ulong* sources);
+    [LibraryImport(LoaderName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvStdcall)])]
+    public static partial XrResult xrEnumerateBoundSourcesForAction(XrSession session, XrBoundSourcesForActionEnumerateInfo* enumerateInfo, uint sourceCapacityInput, uint* sourceCountOutput, ulong* sources);
 
     /// <returns>
     ///       Success Codes:
@@ -865,8 +923,9 @@ public static unsafe partial class OpenXRNative
     /// <br/> ⠀⠀<see cref="XrResult.XR_ERROR_ACTIONSET_NOT_ATTACHED"/>
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    [DllImport(LoaderName, CallingConvention = CallConv)]
-    public static extern XrResult xrGetInputSourceLocalizedName(XrSession session, XrInputSourceLocalizedNameGetInfo* getInfo, uint bufferCapacityInput, uint* bufferCountOutput, byte* buffer);
+    [LibraryImport(LoaderName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvStdcall)])]
+    public static partial XrResult xrGetInputSourceLocalizedName(XrSession session, XrInputSourceLocalizedNameGetInfo* getInfo, uint bufferCapacityInput, uint* bufferCountOutput, byte* buffer);
 
     /// <returns>
     ///       Success Codes:
@@ -885,8 +944,9 @@ public static unsafe partial class OpenXRNative
     /// <br/> ⠀⠀<see cref="XrResult.XR_ERROR_ACTIONSET_NOT_ATTACHED"/>
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    [DllImport(LoaderName, CallingConvention = CallConv)]
-    public static extern XrResult xrApplyHapticFeedback(XrSession session, XrHapticActionInfo* hapticActionInfo, XrHapticBaseHeader* hapticFeedback);
+    [LibraryImport(LoaderName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvStdcall)])]
+    public static partial XrResult xrApplyHapticFeedback(XrSession session, XrHapticActionInfo* hapticActionInfo, XrHapticBaseHeader* hapticFeedback);
 
     /// <returns>
     ///       Success Codes:
@@ -905,8 +965,9 @@ public static unsafe partial class OpenXRNative
     /// <br/> ⠀⠀<see cref="XrResult.XR_ERROR_ACTIONSET_NOT_ATTACHED"/>
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    [DllImport(LoaderName, CallingConvention = CallConv)]
-    public static extern XrResult xrStopHapticFeedback(XrSession session, XrHapticActionInfo* hapticActionInfo);
+    [LibraryImport(LoaderName)]
+    [UnmanagedCallConv(CallConvs = [typeof(CallConvStdcall)])]
+    public static partial XrResult xrStopHapticFeedback(XrSession session, XrHapticActionInfo* hapticActionInfo);
 
     /// <summary> Requires XR extension "XR_KHR_android_thread_settings" </summary>
     /// <returns>
@@ -943,7 +1004,7 @@ public static unsafe partial class OpenXRNative
     /// <br/> ⠀⠀<see cref="XrResult.XR_ERROR_LIMIT_REACHED"/>
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static XrResult xrCreateSwapchainAndroidSurfaceKHR(XrSession session, XrSwapchainCreateInfo* info, XrSwapchain* swapchain, void* surface)
+    public static XrResult xrCreateSwapchainAndroidSurfaceKHR(XrSession session, XrSwapchainCreateInfo* info, XrSwapchain* swapchain, nint* surface)
         => Instance.xrCreateSwapchainAndroidSurfaceKHR(session, info, swapchain, surface);
 
     /// <summary> Requires XR extension "XR_EXT_performance_settings" </summary>
@@ -1170,7 +1231,7 @@ public static unsafe partial class OpenXRNative
     /// <br/> ⠀⠀<see cref="XrResult.XR_ERROR_SYSTEM_INVALID"/>
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static XrResult xrGetVulkanGraphicsDeviceKHR(XrInstance instance, ulong systemId, void* vkInstance, void* vkPhysicalDevice)
+    public static XrResult xrGetVulkanGraphicsDeviceKHR(XrInstance instance, ulong systemId, nint vkInstance, nint* vkPhysicalDevice)
         => Instance.xrGetVulkanGraphicsDeviceKHR(instance, systemId, vkInstance, vkPhysicalDevice);
 
     /// <summary> Requires XR extension "XR_KHR_vulkan_enable" </summary>
@@ -1253,7 +1314,7 @@ public static unsafe partial class OpenXRNative
     /// <br/> ⠀⠀<see cref="XrResult.XR_ERROR_TIME_INVALID"/>
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static XrResult xrConvertWin32PerformanceCounterToTimeKHR(XrInstance instance, void* performanceCounter, long* time)
+    public static XrResult xrConvertWin32PerformanceCounterToTimeKHR(XrInstance instance, nint* performanceCounter, long* time)
         => Instance.xrConvertWin32PerformanceCounterToTimeKHR(instance, performanceCounter, time);
 
     /// <summary> Requires XR extension "XR_KHR_win32_convert_performance_counter_time" </summary>
@@ -1269,7 +1330,7 @@ public static unsafe partial class OpenXRNative
     /// <br/> ⠀⠀<see cref="XrResult.XR_ERROR_TIME_INVALID"/>
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static XrResult xrConvertTimeToWin32PerformanceCounterKHR(XrInstance instance, long time, void* performanceCounter)
+    public static XrResult xrConvertTimeToWin32PerformanceCounterKHR(XrInstance instance, long time, nint* performanceCounter)
         => Instance.xrConvertTimeToWin32PerformanceCounterKHR(instance, time, performanceCounter);
 
     /// <summary> Requires XR extension "XR_KHR_convert_timespec_time" </summary>
@@ -1285,7 +1346,7 @@ public static unsafe partial class OpenXRNative
     /// <br/> ⠀⠀<see cref="XrResult.XR_ERROR_TIME_INVALID"/>
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static XrResult xrConvertTimespecTimeToTimeKHR(XrInstance instance, void* timespecTime, long* time)
+    public static XrResult xrConvertTimespecTimeToTimeKHR(XrInstance instance, nint* timespecTime, long* time)
         => Instance.xrConvertTimespecTimeToTimeKHR(instance, timespecTime, time);
 
     /// <summary> Requires XR extension "XR_KHR_convert_timespec_time" </summary>
@@ -1301,7 +1362,7 @@ public static unsafe partial class OpenXRNative
     /// <br/> ⠀⠀<see cref="XrResult.XR_ERROR_TIME_INVALID"/>
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static XrResult xrConvertTimeToTimespecTimeKHR(XrInstance instance, long time, void* timespecTime)
+    public static XrResult xrConvertTimeToTimespecTimeKHR(XrInstance instance, long time, nint* timespecTime)
         => Instance.xrConvertTimeToTimespecTimeKHR(instance, time, timespecTime);
 
     /// <summary> Requires XR extension "XR_MSFT_spatial_anchor" </summary>
@@ -1699,7 +1760,7 @@ public static unsafe partial class OpenXRNative
     /// <br/> ⠀⠀<see cref="XrResult.XR_ERROR_LIMIT_REACHED"/>
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static XrResult xrCreateSpatialAnchorFromPerceptionAnchorMSFT(XrSession session, void* perceptionAnchor, XrSpatialAnchorMSFT* anchor)
+    public static XrResult xrCreateSpatialAnchorFromPerceptionAnchorMSFT(XrSession session, nint* perceptionAnchor, XrSpatialAnchorMSFT* anchor)
         => Instance.xrCreateSpatialAnchorFromPerceptionAnchorMSFT(session, perceptionAnchor, anchor);
 
     /// <summary> Requires XR extension "XR_MSFT_perception_anchor_interop" </summary>
@@ -1716,7 +1777,7 @@ public static unsafe partial class OpenXRNative
     /// <br/> ⠀⠀<see cref="XrResult.XR_ERROR_OUT_OF_MEMORY"/>
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static XrResult xrTryGetPerceptionAnchorFromSpatialAnchorMSFT(XrSession session, XrSpatialAnchorMSFT anchor, void* perceptionAnchor)
+    public static XrResult xrTryGetPerceptionAnchorFromSpatialAnchorMSFT(XrSession session, XrSpatialAnchorMSFT anchor, nint** perceptionAnchor)
         => Instance.xrTryGetPerceptionAnchorFromSpatialAnchorMSFT(session, anchor, perceptionAnchor);
 
     /// <summary> Requires XR extension "XR_MSFT_composition_layer_reprojection" </summary>
@@ -1865,7 +1926,7 @@ public static unsafe partial class OpenXRNative
     /// <br/> ⠀⠀<see cref="XrResult.XR_ERROR_SYSTEM_INVALID"/>
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static XrResult xrCreateVulkanInstanceKHR(XrInstance instance, XrVulkanInstanceCreateInfoKHR* createInfo, void* vulkanInstance, void* vulkanResult)
+    public static XrResult xrCreateVulkanInstanceKHR(XrInstance instance, XrVulkanInstanceCreateInfoKHR* createInfo, nint* vulkanInstance, nint* vulkanResult)
         => Instance.xrCreateVulkanInstanceKHR(instance, createInfo, vulkanInstance, vulkanResult);
 
     /// <summary> Requires XR extension "XR_KHR_vulkan_enable2" </summary>
@@ -1883,7 +1944,7 @@ public static unsafe partial class OpenXRNative
     /// <br/> ⠀⠀<see cref="XrResult.XR_ERROR_SYSTEM_INVALID"/>
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static XrResult xrCreateVulkanDeviceKHR(XrInstance instance, XrVulkanDeviceCreateInfoKHR* createInfo, void* vulkanDevice, void* vulkanResult)
+    public static XrResult xrCreateVulkanDeviceKHR(XrInstance instance, XrVulkanDeviceCreateInfoKHR* createInfo, nint* vulkanDevice, nint* vulkanResult)
         => Instance.xrCreateVulkanDeviceKHR(instance, createInfo, vulkanDevice, vulkanResult);
 
     /// <summary> Requires XR extension "XR_KHR_vulkan_enable2" </summary>
@@ -1899,7 +1960,7 @@ public static unsafe partial class OpenXRNative
     /// <br/> ⠀⠀<see cref="XrResult.XR_ERROR_SYSTEM_INVALID"/>
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static XrResult xrGetVulkanGraphicsDevice2KHR(XrInstance instance, XrVulkanGraphicsDeviceGetInfoKHR* getInfo, void* vulkanPhysicalDevice)
+    public static XrResult xrGetVulkanGraphicsDevice2KHR(XrInstance instance, XrVulkanGraphicsDeviceGetInfoKHR* getInfo, nint* vulkanPhysicalDevice)
         => Instance.xrGetVulkanGraphicsDevice2KHR(instance, getInfo, vulkanPhysicalDevice);
 
     /// <summary> Requires XR extension "XR_MSFT_scene_understanding" </summary>

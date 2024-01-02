@@ -6,7 +6,7 @@ public class StructureDefinition
 {
     public string Name;
     public bool IsReturnedOnly;
-    public List<Member> Members = [];
+    public List<Member> Members = new();
 
     public static StructureDefinition FromXML(XElement elem)
     {
@@ -66,7 +66,7 @@ public class Member
             Value = elem.Value
         };
 
-        Match layouts =  Regex.Match(m.Value, $@":(\d+)");
+        Match layouts = Regex.Match(m.Value, $@":(\d+)");
         if (layouts.Groups.Count > 1)
             m.ExplicityLayoutValue = int.Parse(layouts.Groups[1].Value);
 

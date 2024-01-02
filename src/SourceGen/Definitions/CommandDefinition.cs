@@ -4,47 +4,36 @@ using System.Xml.Linq;
 namespace SourceGen;
 public class CommandDefinition
 {
-    public Proto Prototype;
     public string Name;
     public string ReturnType;
-    public List<Param> Parameters = new();
-    public string[] Queues;
-    public string RenderPass;
-    public string[] CmdBufferLevel;
-    public string Pipeline;
+    public List<Param> Parameters = [];
     public string[] SuccessCodes;
     public string[] ErrorCodes;
     public string Comment;
     public ExtensionDefinition extension;
 
-    public static CommandDefinition FromXML(XElement elem)
+    public CommandDefinition(XElement element)
     {
-        CommandDefinition command = new()
-        {
-            SuccessCodes = elem.Attribute("successcodes")?.Value.Split(','),
-            ErrorCodes = elem.Attribute("errorcodes")?.Value.Split(','),
-            Queues = elem.Attribute("queues")?.Value.Split(','),
-            RenderPass = elem.Attribute("renderpass")?.Value,
-            Pipeline = elem.Attribute("pipeline")?.Value,
-            CmdBufferLevel = elem.Attribute("cmdbufferlevel")?.Value.Split(','),
-            Comment = elem.Attribute("comment")?.Value
-        };
+        SuccessCodes = element.Attribute("successcodes")?.Value.Split(',');
+        ErrorCodes = element.Attribute("errorcodes")?.Value.Split(',');
+        Comment = element.Attribute("comment")?.Value;
 
-        var proto = elem.Element("proto");
+        var proto = element.Element("proto");
 
         if (proto != null)
-        command.Prototype = new() { Name = proto.Element("name").Value, Type = proto.Element("type").Value };
-
-        var parameters = elem.Elements("param");
-        foreach (var param in parameters)
         {
-            command.Parameters.Add(Param.FromXML(param));
+            Name = proto.Element("name").Value;
+            ReturnType = proto.Element("type").Value;
         }
 
-        return command;
+        var parameters = element.Elements("param");
+        foreach (var param in parameters)
+        {
+            Parameters.Add(Param.FromXML(param));
+        }
     }
 
-    public string GetParametersSignature(OpenXRSpecification spec, bool useTypes = true)
+    public string GetParametersSignature(OpenXRSpecification spec, bool useTypes = true, bool useNames = true)
     {
         StringBuilder signature = new();
         foreach (var p in Parameters)
@@ -53,9 +42,12 @@ public class CommandDefinition
             string convertedName = Helpers.ValidatedName(p.Name);
 
             if (useTypes)
-                signature.Append($"{convertedType} ");
-
-            signature.Append($"{convertedName}, ");
+                signature.Append($"{convertedType}");
+            if (useTypes && useNames)
+                signature.Append(' ');
+            if (useNames)
+                signature.Append($"{convertedName}");
+            signature.Append(", ");
         }
 
         signature.Length -= 2;

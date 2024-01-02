@@ -1,6 +1,6 @@
 ﻿using System.Xml.Linq;
 
-namespace SourceGen;
+namespace Veldrid.OpenXR.SourceGen.Definitions;
 public enum ConstantType
 {
     None,
@@ -9,7 +9,7 @@ public enum ConstantType
     Float32,
     String
 }
-public class ConstantDefinition
+public struct ConstantDefinition
 {
     public string Name;
     public string Value;
@@ -28,22 +28,17 @@ public class ConstantDefinition
         else
             return ConstantType.UInt32;
     }
-    public static ConstantDefinition FromXML(XElement elem)
+    public ConstantDefinition(XElement elem)
     {
-        ConstantDefinition constant = new()
-        {
-            Name = elem.Attribute("name").Value,
-            Comment = elem.Attribute("comment")?.Value,
-            Alias = elem.Attribute("alias")?.Value
-        };
+        Name = elem.Attribute("name").Value;
+        Comment = elem.Attribute("comment")?.Value;
+        Alias = elem.Attribute("alias")?.Value;
 
-        if (constant.Alias == null)
+        if (Alias == null)
         {
-            constant.Value = elem.Attribute("value").Value;
-            constant.Type = ParseType(constant.Value);
+            Value = elem.Attribute("value").Value;
+            Type = ParseType(Value);
         }
-
-        return constant;
     }
     public static object NormalizeValue(string value)
     {
