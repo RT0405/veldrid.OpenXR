@@ -3,7 +3,11 @@
     /// <summary>
     /// A boolean value stored in a 4-byte unsigned integer.
     /// </summary>
-    public struct XrBool32 : IEquatable<XrBool32>
+    /// <remarks>
+    /// Constructs a new <see cref="XrBool32"/> with the given raw value. 
+    /// </remarks>
+    /// <param name="value"></param>
+    public struct XrBool32(uint value) : IEquatable<XrBool32>
     {
         /// <summary>
         /// Represents the boolean "true" value. Has a raw value of 1.
@@ -18,16 +22,7 @@
         /// <summary>
         /// The raw value of the <see cref="XrBool32"/>. A value of 0 represents "false", all other values represent "true".
         /// </summary>
-        public uint Value;
-
-        /// <summary>
-        /// Constructs a new <see cref="XrBool32"/> with the given raw value. 
-        /// </summary>
-        /// <param name="value"></param>
-        public XrBool32(uint value)
-        {
-            Value = value;
-        }
+        public uint Value = value;
 
         /// <summary>
         /// Returns whether another <see cref="XrBool32"/> value is considered equal to this one.
@@ -62,5 +57,7 @@
 
         public static bool operator ==(XrBool32 left, XrBool32 right) => left.Value == right.Value;
         public static bool operator !=(XrBool32 left, XrBool32 right) => left.Value != right.Value;
+        public static bool operator true(XrBool32 value) => value;
+        public static bool operator false(XrBool32 value) => !value;
     }
 }

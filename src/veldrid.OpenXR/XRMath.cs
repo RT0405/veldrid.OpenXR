@@ -23,6 +23,7 @@
  * SOFTWARE.                                                                       *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
+using SharpGen.Runtime;
 using System.Numerics;
 using System.Runtime.CompilerServices;
 using Veldrid.OpenXR.Native;
@@ -92,7 +93,7 @@ public static class XRMath
             float reciprocalWidth = 1.0f / (r - l);
             float reciprocalHeight = 1.0f / (t - b);
 
-            Unsafe.SkipInit(out Matrix4x4 projectionMatrix);
+            Matrix4x4 projectionMatrix;
 
             float twoNearZ;
             if (infNearPlane)
@@ -134,5 +135,11 @@ public static class XRMath
         {
             return Matrix4x4.CreatePerspectiveOffCenter(l, r, b, t, nearPlane, farPlane);
         }
+    }
+    public static XrPosef InvertXrPosef(XrPosef pose) 
+    {
+        pose.orientation = Quaternion.Inverse(pose.orientation);
+        pose.position = Vector3.Transform(-(Vector3)pose.position, pose.orientation);
+        return pose;
     }
 }

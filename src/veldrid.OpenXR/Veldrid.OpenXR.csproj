@@ -17,6 +17,12 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <Compile Remove="Structs\**" />
+      <EmbeddedResource Remove="Structs\**" />
+      <None Remove="Structs\**" />
+    </ItemGroup>
+
+    <ItemGroup>
         <PackageReference Include="Vk" Version="1.0.25" />
         <PackageReference Include="Vortice.D3DCompiler" Version="2.4.2" />
         <PackageReference Include="Vortice.Direct3D11" Version="2.4.2" />
@@ -34,9 +40,6 @@
       <Reference Include="Veldrid">
         <HintPath>libs\Veldrid.dll</HintPath>
       </Reference>
-    </ItemGroup>
-    <ItemGroup>
-      <Folder Include="Structs\" />
     </ItemGroup>
 	<PropertyGroup>
 		<InternalsAssemblyUseEmptyMethodBodies>false</InternalsAssemblyUseEmptyMethodBodies>

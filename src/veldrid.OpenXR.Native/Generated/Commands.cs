@@ -3314,7 +3314,7 @@ public static unsafe partial class OpenXRNative
     /// <br/> ⠀⠀<see cref="XrResult.XR_ERROR_FEATURE_UNSUPPORTED"/>
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static XrResult xrGetAudioOutputDeviceGuidOculus(XrInstance instance, string buffer)
+    public static XrResult xrGetAudioOutputDeviceGuidOculus(XrInstance instance, void* buffer)
         => Instance.xrGetAudioOutputDeviceGuidOculus(instance, buffer);
 
     /// <summary> Requires XR extension "XR_OCULUS_audio_device_guid" </summary>
@@ -3330,7 +3330,7 @@ public static unsafe partial class OpenXRNative
     /// <br/> ⠀⠀<see cref="XrResult.XR_ERROR_FEATURE_UNSUPPORTED"/>
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public static XrResult xrGetAudioInputDeviceGuidOculus(XrInstance instance, string buffer)
+    public static XrResult xrGetAudioInputDeviceGuidOculus(XrInstance instance, void* buffer)
         => Instance.xrGetAudioInputDeviceGuidOculus(instance, buffer);
 
     /// <summary> Requires XR extension "XR_FB_spatial_entity_sharing" </summary>

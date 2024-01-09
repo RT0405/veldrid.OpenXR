@@ -3379,9 +3379,9 @@ public unsafe partial class OpenXRNativeInstance
     /// <br/> ⠀⠀<see cref="XrResult.XR_ERROR_FEATURE_UNSUPPORTED"/>
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public XrResult xrGetAudioOutputDeviceGuidOculus(XrInstance instance, string buffer)
+    public XrResult xrGetAudioOutputDeviceGuidOculus(XrInstance instance, void* buffer)
         => xrGetAudioOutputDeviceGuidOculus_funcPtr(instance, buffer);
-    private delegate* unmanaged<XrInstance, string, XrResult> xrGetAudioOutputDeviceGuidOculus_funcPtr;
+    private delegate* unmanaged<XrInstance, void*, XrResult> xrGetAudioOutputDeviceGuidOculus_funcPtr;
 
     /// <summary> Requires XR extension "XR_OCULUS_audio_device_guid" </summary>
     /// <returns>
@@ -3396,9 +3396,9 @@ public unsafe partial class OpenXRNativeInstance
     /// <br/> ⠀⠀<see cref="XrResult.XR_ERROR_FEATURE_UNSUPPORTED"/>
     /// </returns>
     [MethodImpl(MethodImplOptions.AggressiveInlining)]
-    public XrResult xrGetAudioInputDeviceGuidOculus(XrInstance instance, string buffer)
+    public XrResult xrGetAudioInputDeviceGuidOculus(XrInstance instance, void* buffer)
         => xrGetAudioInputDeviceGuidOculus_funcPtr(instance, buffer);
-    private delegate* unmanaged<XrInstance, string, XrResult> xrGetAudioInputDeviceGuidOculus_funcPtr;
+    private delegate* unmanaged<XrInstance, void*, XrResult> xrGetAudioInputDeviceGuidOculus_funcPtr;
 
     /// <summary> Requires XR extension "XR_FB_spatial_entity_sharing" </summary>
     /// <returns>
@@ -4684,8 +4684,8 @@ public unsafe partial class OpenXRNativeInstance
         }
         if (HasExtensionEnabled("XR_OCULUS_audio_device_guid"u8))
         {
-            xrGetAudioOutputDeviceGuidOculus_funcPtr = (delegate* unmanaged<XrInstance, string, XrResult>)GetFunctionPointer("xrGetAudioOutputDeviceGuidOculus"u8);
-            xrGetAudioInputDeviceGuidOculus_funcPtr = (delegate* unmanaged<XrInstance, string, XrResult>)GetFunctionPointer("xrGetAudioInputDeviceGuidOculus"u8);
+            xrGetAudioOutputDeviceGuidOculus_funcPtr = (delegate* unmanaged<XrInstance, void*, XrResult>)GetFunctionPointer("xrGetAudioOutputDeviceGuidOculus"u8);
+            xrGetAudioInputDeviceGuidOculus_funcPtr = (delegate* unmanaged<XrInstance, void*, XrResult>)GetFunctionPointer("xrGetAudioInputDeviceGuidOculus"u8);
         }
         if (HasExtensionEnabled("XR_FB_spatial_entity_sharing"u8))
         {

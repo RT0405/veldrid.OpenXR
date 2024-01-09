@@ -119,7 +119,7 @@ public static class Helpers
             "int8_t" => "sbyte",
             "int8_t*" => "sbyte*",
             "uint8_t" or "char" => "byte",
-            "wchar_t" => "string",
+            "wchar_t" => "void*",
             "uint8_t*" or "char*" => "byte*",
             "uint16_t" => "ushort",
             "uint16_t*" => "ushort*",
@@ -133,7 +133,7 @@ public static class Helpers
             "int32_t*" => "int*",
             "int64_t" => "long",
             "int64_t*" => "long*",
-            "size_t" => "nuint",//was UIntPtr
+            "size_t" => "nuint",
             "float" => "float",
             "float*" => "float*",
             "double" => "double",

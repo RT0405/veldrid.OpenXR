@@ -62,7 +62,7 @@ public static partial class OpenXRUtils
         
         return new D3D11GraphicsDevice(options, new D3D11DeviceOptions()
         {
-            AdapterPtr = requirements.adapterLuid
+            AdapterPtr = *(nint*)requirements.adapterLuid
         }, null);
     }
 #endif

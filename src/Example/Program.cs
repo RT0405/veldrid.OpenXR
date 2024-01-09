@@ -157,9 +157,9 @@ public static partial class Program
         {
             eventData.type = XrStructureType.XR_TYPE_EVENT_DATA_BUFFER;
             frameDebugSpace.Clear();
-            progIndicator.Start("calling xrPollEvent", frameDebugSpace.top + frameDebugSpace.line++);
+            //progIndicator.Start("calling xrPollEvent", frameDebugSpace.top + frameDebugSpace.line++);
             XrResult result = xrPollEvent(xrInstance, &eventData);
-            progIndicator.Complete($"result: {result} eventData type: {eventData.type}");
+            //progIndicator.Complete($"result: {result} eventData type: {eventData.type}");
             if (result == XrResult.XR_EVENT_UNAVAILABLE)
             {
                 if (running)
@@ -168,12 +168,12 @@ public static partial class Program
 
                     XrFrameState frameState = XrFrameState.New();
 
-                    progIndicator.Start("calling xrWaitFrame", frameDebugSpace.top + frameDebugSpace.line++);
+                    //progIndicator.Start("calling xrWaitFrame", frameDebugSpace.top + frameDebugSpace.line++);
                     result = xrWaitFrame(xrSession, &frameWaitInfo, &frameState);
-                    progIndicator.Complete($"result: {result}");
-                    frameDebugSpace.WriteLine($"FrameState.shouldRender: {frameState.shouldRender}");
-                    frameDebugSpace.WriteLine($"FrameState.predictedDisplayTime: {frameState.predictedDisplayTime}");
-                    frameDebugSpace.WriteLine($"FrameState.predictedDisplayPeriod: {frameState.predictedDisplayPeriod}");
+                    //progIndicator.Complete($"result: {result}");
+                    //frameDebugSpace.WriteLine($"FrameState.shouldRender: {frameState.shouldRender}");
+                    //frameDebugSpace.WriteLine($"FrameState.predictedDisplayTime: {frameState.predictedDisplayTime}");
+                    //frameDebugSpace.WriteLine($"FrameState.predictedDisplayPeriod: {frameState.predictedDisplayPeriod}");
                     if (result != XrResult.XR_SUCCESS)
                     {
                         Console.WriteLine("Failed to wait for frame: " + result);
@@ -577,39 +577,35 @@ public static partial class Program
         return true;
         static bool renderEye(XrView view, XRSwapchain swapchain)
         {
-            const float farDistance = 250f;
+            const float farDistance = 100f;
             const float nearDistance = .1f;
             swapchain.AqquireAndWaitNextFramebuffer(out Framebuffer framebuffer);
 
             commandList.Begin();
             commandList.SetFramebuffer(framebuffer);
-            commandList.ClearColorTarget(0, RgbaFloat.Black);
+            //commandList.ClearColorTarget(0, new RgbaFloat(float.Sin(view.pose.position.x), float.Sin(view.pose.position.y), float.Sin(view.pose.position.z), 1));
+            commandList.ClearColorTarget(0, new RgbaFloat(view.pose.position.x, view.pose.position.y, view.pose.position.z, 1));
             commandList.ClearDepthStencil(1);
 
             Matrix4x4 objectmatrix = Matrix4x4.Identity;// * Matrix4x4.CreateRotationX((float)timer.Elapsed.TotalSeconds);
 
-            float angleWidth = MathF.Tan(view.fov.angleRight) - MathF.Tan(view.fov.angleLeft);
-            float angleHeight = MathF.Tan(view.fov.angleDown) - MathF.Tan(view.fov.angleUp);
-
-            //Matrix4x4 projectionMatrix = new()
-            //{
-            //    M11 = 2.0f / angleWidth,
-            //    M31 = (MathF.Tan(view.fov.angleRight) + MathF.Tan(view.fov.angleLeft)) / angleWidth,
-            //    M22 = 2.0f / angleHeight,
-            //    M32 = (MathF.Tan(view.fov.angleUp) + MathF.Tan(view.fov.angleDown)) / angleHeight,
-            //    M33 = -farDistance / (farDistance - nearDistance),
-            //    M43 = -(farDistance * nearDistance) / (farDistance - nearDistance),
-            //    M34 = -1
-            //};
             Matrix4x4 projectionMatrix = XRMath.ComposeProjectionMatrix(view.fov, nearDistance, farDistance);
 
-            projectionMatrix = Matrix4x4.Transpose(projectionMatrix);
+            XrPosef invertedPose = XRMath.InvertXrPosef(view.pose);
+            Matrix4x4 viewMatrix = Matrix4x4.CreateTranslation(invertedPose.position) * Matrix4x4.CreateFromQuaternion(invertedPose.orientation);
 
-            Matrix4x4 viewMatrix = Matrix4x4.CreateTranslation(Unsafe.As<XrVector3f, Vector3>(ref view.pose.position)) * Matrix4x4.CreateFromQuaternion(Unsafe.As<XrQuaternionf, Quaternion>(ref view.pose.orientation));
             Matrix4x4 matrix = viewMatrix * projectionMatrix;
             commandList.UpdateBuffer(ProjectionMatrixBuffer, 0, matrix);
 
             MeshPrimitives.cube.Draw(Matrix4x4.CreateTranslation(objectPosition) * Matrix4x4.CreateFromQuaternion(objectRotation));
+
+            Random r = new(0);
+            for(int i = 0; i < 100; i++)
+            {
+                MeshPrimitives.cube.Draw(
+                    Matrix4x4.CreateTranslation(new(r.NextSingle() * 10 - 5, r.NextSingle() * 10 - 5, r.NextSingle() * 10 - 5)));
+                    //* Matrix4x4.CreateFromQuaternion(Quaternion.CreateFromYawPitchRoll(r.NextSingle() * 10 - 5, r.NextSingle() * 10 - 5, r.NextSingle() * 10 - 5)));
+            }
 
             commandList.End();
             graphicsDevice.SubmitCommands(commandList);
@@ -619,8 +615,8 @@ public static partial class Program
             return true;
         }
     }
-    private static Vector3 objectPosition;
-    private static Quaternion objectRotation;
+    private static Vector3 objectPosition = Vector3.Zero;
+    private static Quaternion objectRotation = Quaternion.Identity;
 }
 class ConsoleSpace
 {
