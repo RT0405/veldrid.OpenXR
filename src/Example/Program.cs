@@ -71,6 +71,8 @@ public static partial class Program
     }
     private static unsafe void Main()
     {
+        Environment.SetEnvironmentVariable("XR_RUNTIME_JSON", "D:\\GameDev\\_Tools\\meta xr sim\\meta_xr_simulator_v60\\com.meta.xr.simulator-60.0.0\\package\\MetaXRSimulator\\meta_openxr_simulator.json");
+
         if (!OpenXRUtils.IsBackendSupported(ChosenBackend))
             throw OpenXRUtils.NewInvalidBackendException("Unable To Start Program", ChosenBackend);
         ConsoleLineProgress progIndicator = new();

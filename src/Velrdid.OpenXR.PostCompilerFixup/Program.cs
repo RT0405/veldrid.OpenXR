@@ -28,15 +28,6 @@ internal class Program
             Console.ReadKey();
         }
     }
-    //private static void AddIgnoreAccessChecksToAttribute(ModuleDefinition module)
-    //{
-    //    module.Assembly.CustomAttributes.Add(
-    //        new CustomAttribute(
-    //            module.ImportReference(
-    //                module.GetType("System.Runtime.CompilerServices", "IgnoresAccessChecksToAttribute")
-    //                .GetConstructors()
-    //                .Single((m) => m.Parameters.Count == 1 && m.Parameters[0].ParameterType.Name.Equals("string", StringComparison.OrdinalIgnoreCase)))));
-    //}
     public static void RemoveBaseConstructors(ModuleDefinition module)
     {
         Instruction systemObjectConstructor;

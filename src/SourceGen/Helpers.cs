@@ -105,9 +105,8 @@ public static class Helpers
             }
         }
 
-        if (pointerlevel > 0)
-            for (int i = 0; i < pointerlevel; i++)
-                result += "*";
+        for (int i = 0; i < pointerlevel; i++)
+            result += "*";
 
         return result;
     }

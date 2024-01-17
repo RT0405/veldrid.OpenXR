@@ -450,7 +450,6 @@ internal static partial class Program
     private static void WriteToFile(string dir, StringBuilder sb) { WriteToFile(dir, sb.ToString()); sb.Clear(); }
     private static void WriteToFile(string dir, string text)
     {
-
         text = text.Replace("\t", "    "); //replace tabs
 
         text = text.Replace("\r\n", "\n"); //replace nl
