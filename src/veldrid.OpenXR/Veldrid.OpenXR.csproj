@@ -1,0 +1,58 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+	
+    <PropertyGroup>
+        <TargetFramework>net8.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>annotations</Nullable>
+        <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+        <AssemblyName>$(MSBuildProjectName)</AssemblyName>
+    </PropertyGroup>
+
+    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+        <DebugType>portable</DebugType>
+    </PropertyGroup>
+
+    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+        <DebugType>portable</DebugType>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <Compile Remove="Structs\**" />
+      <EmbeddedResource Remove="Structs\**" />
+      <None Remove="Structs\**" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Vk" Version="1.0.25" />
+        <PackageReference Include="Vortice.D3DCompiler" Version="2.4.2" />
+        <PackageReference Include="Vortice.Direct3D11" Version="2.4.2" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\veldrid.OpenXR.Native\Veldrid.OpenXR.Native.csproj" />
+    </ItemGroup>
+	
+	<!-- the following two blocks are for internal veldrid access -->
+    <ItemGroup>
+		<InternalsAssemblyName Include="Veldrid" />
+    </ItemGroup>
+    <ItemGroup>
+      <Reference Include="Veldrid">
+        <HintPath>libs\Veldrid.dll</HintPath>
+      </Reference>
+    </ItemGroup>
+	<PropertyGroup>
+		<InternalsAssemblyUseEmptyMethodBodies>false</InternalsAssemblyUseEmptyMethodBodies>
+		<PublicizeAssembly>false</PublicizeAssembly>
+	</PropertyGroup>
+
+    <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+        <ItemGroup>
+            <DLLName Include="$(OutDir)$(MSBuildProjectName).dll" />
+        </ItemGroup>
+        <Move SourceFiles="@(DLLName)" DestinationFiles="@(DLLName -&gt; Replace('dll', 'dll2'))" />
+        <Exec Command="start ..\Velrdid.OpenXR.PostCompilerFixup\bin\$(Configuration)\net8.0\Veldrid.OpenXR.PostCompileFixup.exe $(Configuration)" />
+        <Delete Files="@(DLLName -&gt; Replace('dll', 'dll2'))" />
+    </Target>
+	
+</Project>

@@ -1,0 +1,46 @@
+﻿using System.Reflection;
+using System.Runtime.InteropServices;
+using System.Text;
+//using static Veldrid.OpenXR.Native.OperatingSystemHelper;
+
+namespace Veldrid.OpenXR.Native;
+public static unsafe partial class OpenXRNative
+{
+    private const string dllName = "openxr_loader";
+    private const CallingConvention callConv = CallingConvention.StdCall;
+    private static XrInstance resolverInstance;
+    private static XrInstance ResolverInstance
+    {
+        get
+        {
+            //if (resolverInstance != default)
+                return resolverInstance;
+
+        }
+    }
+    public static void SetOpenXRInstanceForMethods(XrInstance instance)
+    {
+        resolverInstance = instance;
+        NativeLibrary.SetDllImportResolver(Assembly.GetExecutingAssembly(), ResolveDLLImport);
+    }
+    private static IntPtr ResolveDLLImport(string libraryName, Assembly assembly, DllImportSearchPath? searchPath)
+    {
+        IntPtr ptr = IntPtr.Zero;
+        try
+        {
+            ptr = NativeLibrary.Load(libraryName, assembly, searchPath);//attempt default
+        }
+        catch (EntryPointNotFoundException) { }
+
+        if (ptr == IntPtr.Zero)
+        {
+            IntPtr name = Marshal.StringToHGlobalAnsi(libraryName);
+
+            xrGetInstanceProcAddr(ResolverInstance, (byte*)name, new IntPtr(&ptr));
+
+            Marshal.FreeHGlobal(name);
+        }
+
+        return ptr;
+    }
+}
